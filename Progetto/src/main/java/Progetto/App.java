@@ -5,8 +5,7 @@ package Progetto;
  *
  */
 public class App{
-    public static void main( String[] args )
-    {
-        System.out.println( "Test Github2" );
+    public static void main( String[] args ){
+        System.out.println( "Test Github3" );
     }
 }
