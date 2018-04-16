@@ -1,1 +1,0 @@
-# ing-sw-2018-scelsi-ricci-verrieri
