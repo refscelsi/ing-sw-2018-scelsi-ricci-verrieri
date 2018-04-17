@@ -16,6 +16,11 @@ public class Match {
         initializeTable();
 
         shuffleCard();
+
+        Round r = new Round();
+
+        //ora devo aspettare che round mi dica di finire
+        endMatch();
     }
 
     public void initializeTable(){
@@ -31,5 +36,9 @@ public class Match {
         //distribuire in modo casuale le carte ai giocatori e sul tavolo
 
         //controllare che i conti tornino (difficoltà carte ecc)
+    }
+
+    public void endMatch(){
+       // qui calcolo il punteggio
     }
 }
