@@ -3,9 +3,11 @@ package Progetto;
 public class Match {
 
     private int id;
+    private int numPlayer;
 
-    public Match(int id) {
+    public Match(int id, int numPlayer) {
         this.id=id;
+        this.numPlayer=numPlayer;
     }
 
     public void startMatch(){
