@@ -54,5 +54,13 @@ public class Player {
     public void setPlayerId(int playerId) {
         this.playerId = playerId;
     }
+
+    public void drawDice(){
+    }
+
+    @Override
+    public String toString() {
+        return "ID:"+this.getPlayerId()+"\nORDINE"+this.getOrderInRound()+"\nTOKEN"+"\nSCORE:"+this.getScore()+"inGame?"+this.isInGame();
+    }
 }
 
