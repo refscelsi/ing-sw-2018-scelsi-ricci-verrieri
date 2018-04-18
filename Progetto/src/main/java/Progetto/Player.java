@@ -15,6 +15,10 @@ public class Player {
         this.inGame=inGame;
     }
 
+    public void login(){
+
+    }
+
     public boolean isInGame() {
         return inGame;
     }
@@ -60,7 +64,7 @@ public class Player {
 
     @Override
     public String toString() {
-        return "ID:"+this.getPlayerId()+"\nORDINE"+this.getOrderInRound()+"\nTOKEN"+"\nSCORE:"+this.getScore()+"inGame?"+this.isInGame();
+        return "ID:"+this.getPlayerId()+"\nORDINE"+this.getOrderInRound()+"\nTOKEN"+this.getNumOfToken()+"\nSCORE:"+this.getScore()+"\ninGame?"+this.isInGame();
     }
 }
 

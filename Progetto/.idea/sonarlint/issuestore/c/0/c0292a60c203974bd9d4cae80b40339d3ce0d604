@@ -1,0 +1,4 @@
+
+Psquid:EmptyStatementUsageCheck"Remove this empty statement.(€À¨Æúÿÿÿÿ8…­±Å­,
+ssquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(ž‚õe8°Ý­Å­,
+¢squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(€À¨Æúÿÿÿÿ8ý¶®Å­,

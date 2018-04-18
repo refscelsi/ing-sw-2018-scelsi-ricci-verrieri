@@ -33,9 +33,7 @@ public class Match {
         Scanner input= new Scanner(System.in);
         numPlayer=input.nextInt();
         while(i<=numPlayer){
-            Player player1=new Player(i++,i,i,0,false);
-            String s=player1.toString();
-            System.out.println(s);
+
         }
     }
 
