@@ -1,18 +1,15 @@
 package Progetto;
 
 public class Player {
-    private int playerId;
-    private int orderInRound;
+    private final String nickname;
+    private final int orderInRound;    // ordine che viene assegnato al giocatore nel primo round. Questo numero identifica il giocatore ed è molto più comodo gestire tutta la parte di passaggio da un giocatore all'altro utilizzando questo
     private int numOfToken;
     private int score;
     private boolean inGame;
 
-    public Player(int playerId, int orderInRound, int numOfToken, int score, boolean inGame){
-        this.playerId=playerId;
+    public Player(String nickname, int orderInRound){
+        this.nickname=nickname;
         this.orderInRound=orderInRound;
-        this.numOfToken=numOfToken;
-        this.score=score;
-        this.inGame=inGame;
     }
 
     public void login(){
@@ -31,8 +28,8 @@ public class Player {
         return orderInRound;
     }
 
-    public int getPlayerId() {
-        return playerId;
+    public String getNickname() {
+        return nickname;
     }
 
     public int getScore() {
@@ -51,20 +48,12 @@ public class Player {
         this.numOfToken = numOfToken;
     }
 
-    public void setOrderInRound(int orderInRound) {
-        this.orderInRound = orderInRound;
-    }
-
-    public void setPlayerId(int playerId) {
-        this.playerId = playerId;
-    }
-
     public void drawDice(){
     }
 
     @Override
     public String toString() {
-        return "ID:"+this.getPlayerId()+"\nORDINE"+this.getOrderInRound()+"\nTOKEN"+this.getNumOfToken()+"\nSCORE:"+this.getScore()+"\ninGame?"+this.isInGame();
+        return "ID:"+this.nickname()+"\nORDINE"+this.getOrderInRound()+"\nTOKEN"+this.getNumOfToken()+"\nSCORE:"+this.getScore()+"\ninGame?"+this.isInGame();
     }
 }
 

@@ -10,8 +10,5 @@
         <module name="Progetto" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="ing.sw.polimi.it" target="1.7" />
-    </bytecodeTargetLevel>
   </component>
 </project>
