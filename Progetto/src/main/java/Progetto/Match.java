@@ -17,7 +17,7 @@ public class Match {
     }
 
     public String startMatch(){
-        System.out.println("l'id della partita ?: " + id);
+        System.out.println("l'id della partita è: " + id);
 
         inizializePlayer();
 
@@ -48,14 +48,14 @@ public class Match {
             System.out.println("\nInserisci nickname "+i);
             nickname=input.nextLine();
             Random random = new Random();
-            int order = random.nextInt(numPlayers); // order sar? uguale a 0, 1, 2 o 3 (se ho 4 giocatori)
+            int order = random.nextInt(numPlayers); // order sarà uguale a 0, 1, 2 o 3 (se ho 4 giocatori)
             if (possibleNumbers[order]!=0) {
                 players[i] = new Player(nickname, possibleNumbers[order]);
-                possibleNumbers[order]=0;         // metto 0 al posto di ogni numero che ho in possibleNumbers, cos? tengo traccia dei numeri che gi? ho assegnato ad altri giocatori
+                possibleNumbers[order]=0;         // metto 0 al posto di ogni numero che ho in possibleNumbers, così tengo traccia dei numeri che già ho assegnato ad altri giocatori
                 i++;
             }
         }
-        playerPlaying = 1;       // all'inizio del gioco il primo giocatore sar? il numero 1
+        playerPlaying = 1;       // all'inizio del gioco il primo giocatore sarà il numero 1
 
     }
 
@@ -70,7 +70,7 @@ public class Match {
     public void shuffleCard(){
         //distribuire in modo casuale le carte ai giocatori e sul tavolo
 
-        //controllare che i conti tornino (difficolt? carte ecc)
+        //controllare che i conti tornino (difficoltà carte ecc)
     }
 
     /*public int startRound(int firstPlayer) {

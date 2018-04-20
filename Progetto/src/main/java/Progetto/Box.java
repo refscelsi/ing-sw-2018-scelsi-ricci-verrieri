@@ -7,7 +7,9 @@ public class Box {
     private Color color;
     private int shade;
 
-    public Box(){}
+    public Box(){
+        this.color=Color.WHITE;
+    }
 
     public boolean isEmpty(){
         if(this.dice!=null){
