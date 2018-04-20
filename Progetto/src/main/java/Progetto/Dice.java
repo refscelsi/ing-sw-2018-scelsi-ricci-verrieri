@@ -3,7 +3,7 @@ import java.util.Random;
 
 
 public class Dice {
-    private short  numFacciaUp;
+    private int  numFacciaUp;
     private boolean riserva, usatoSuSchema;
     private Color diceColor;
 
@@ -13,7 +13,8 @@ public class Dice {
     public int throwDice(){
         int possibleValues[]={1,2,3,4,5,6}; //valori possibili del dado
         Random random=new Random();
-        int indice=random.nextInt(6); //genero indice casuale
+        int indice=random.nextInt(6);//genero indice casuale
+        this.setNumFacciaUp(possibleValues[indice]);
         return possibleValues[indice]; //ritorno valore dell'indice casuale
     }
 
@@ -33,11 +34,11 @@ public class Dice {
         return usatoSuSchema;
     }
 
-    public short getNumFacciaUp() {
+    public int getNumFacciaUp() {
         return numFacciaUp;
     }
 
-    public void setNumFacciaUp(short numFacciaUp) {
+    public void setNumFacciaUp(int numFacciaUp) {
         this.numFacciaUp = numFacciaUp;
     }
 

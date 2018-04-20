@@ -1,29 +1,30 @@
 package Progetto;
 
 public class Scheme {
-    private short id, difficulty;
-    private Box caselle [];
+    private int id, difficulty;
+    private Box boxes[][];
 
-    public Scheme(short id, short difficulty, Box caselle[]){
+    public Scheme(int id, int difficulty, Box boxes[][]){
         this.id=id;
         this.difficulty=difficulty;
-        this.caselle=caselle;
+        this.boxes =boxes;
     }
 
-    public Box[] getCaselle() {
-        return caselle;
+    public Box[][] getboxes() {
+        return boxes;
     }
 
-    public short getDifficulty() {
+    public int getDifficulty() {
         return difficulty;
     }
 
-    public short getId() {
+    public int getId() {
         return id;
     }
 
-    public void setCaselle(Box[] caselle) {
-        this.caselle = caselle;
+    public void setboxes(Box[][] boxes
+    ) {
+        this.boxes = boxes;
     }
 
     public void setDifficulty(short difficulty) {

@@ -20,7 +20,7 @@ public class Box {
     public void placeDice(Dice dice) {
         this.dice=dice;
     }
-    
+
     public int getX() {
         return x;
     }

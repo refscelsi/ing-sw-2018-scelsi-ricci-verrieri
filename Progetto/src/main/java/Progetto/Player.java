@@ -6,6 +6,7 @@ public class Player {
     private int numOfToken;
     private int score;
     private boolean inGame;
+    private Scheme scheme;
 
     public Player(String nickname, int orderInRound){
         this.nickname=nickname;

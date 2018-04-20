@@ -5,8 +5,11 @@ public class Play {
     public void moveToNext(){
     }
 
-    public void useDice(Box box,Dice dice ){
-        if(box.isEmpty()==true){
+    public void useDice(Box box,Dice dice){
+        if(box.isEmpty()){
+            //if --> tutti i controlli del cazzo
+            box.setDice(dice);
+
         }
 
         else
