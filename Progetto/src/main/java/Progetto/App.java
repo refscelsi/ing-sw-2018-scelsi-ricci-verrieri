@@ -1,7 +1,6 @@
 package Progetto;
 
-import java.util.*;
-public class App{
+public class App {
     public static void main( String[] args ){
         System.out.println( "Ciao sono bellissima" );
         /*Random r = new Random();
