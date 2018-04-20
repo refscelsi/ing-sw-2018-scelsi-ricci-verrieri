@@ -39,9 +39,12 @@ public class Bag {
         }
     }
 
-    public Dice drow(){
+    public ArrayList<dice> draw (int numPlayers){
         Collections.shuffle(dices);
-        return dices.get(0);
+        ArrayList<Dice> drawnDices;
+        drawnDices = dices.subList(0, (numPlayers*2)+1);
+        dices.removeRange(0, (numPlayers*2)+1);
+        return drawnDices;
     }
 
     public int getSize(){
