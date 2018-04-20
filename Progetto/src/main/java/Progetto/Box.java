@@ -1,57 +1,63 @@
 package Progetto;
 
 public class Box {
-    private short x,y,idDado,idSchema,restrizioneNumero;
-    //da aggiungere colore
+    private int x;
+    private int y;
+    private Dice dice;
+    private Color color;
+    private int shade;
 
-    public Box(short x, short y, short idDado, short idSchema, short restrizioneNumero /* colore*/){
-        this.x=x;
-        this.y=y;
-        this.idDado=idDado;
-        this.idSchema=idSchema;
-        this.restrizioneNumero=restrizioneNumero;
-        // colore
+    public Box(){}
+
+    public boolean isEmpty(){
+        if(this.dice!=null){
+            return false;
+        }
+        else
+            return true;
     }
 
-    public short getIdDado() {
-        return idDado;
+    public void placeDice(Dice dice) {
+        this.dice=dice;
     }
-
-    public short getIdSchema() {
-        return idSchema;
-    }
-
-    public short getRestrizioneNumero() {
-        return restrizioneNumero;
-    }
-
-    public short getX() {
+    
+    public int getX() {
         return x;
     }
 
-    public short getY() {
+    public int getY() {
         return y;
     }
 
-    public void setIdDado(short idDado) {
-        this.idDado = idDado;
+    public int getShade() {
+        return shade;
     }
 
-    public void setIdSchema(short idSchema) {
-        this.idSchema = idSchema;
+    public Color getColor() {
+        return color;
     }
 
-    public void setRestrizioneNumero(short restrizioneNumero) {
-        this.restrizioneNumero = restrizioneNumero;
+    public Dice getDice() {
+        return dice;
     }
 
-    public void setX(short x) {
+    public void setX(int x) {
         this.x = x;
     }
 
-    public void setY(short y) {
+    public void setY(int y) {
         this.y = y;
     }
 
+    public void setShade(int shade) {
+        this.shade = shade;
+    }
 
+    public void setDice(Dice dice) {
+        this.dice = dice;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
 }
