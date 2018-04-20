@@ -1,6 +1,0 @@
-
-Nsquid:S1068"-Remove this unused "diceColor" private field.(Ç›ÚŞüÿÿÿÿ8Åí˜ô­,
-Bsquid:S1172"&Remove these unused method parameters.(çšî8–Ø§ô­,
-Gsquid:S1659"+Declare "usatoSuSchema" on a separate line.(¿ıïì8÷ùÅò­,
-lsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ûÌ Úúÿÿÿÿ8–Ø§ô­,
-ssquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(‚õe8÷ùÅò­,

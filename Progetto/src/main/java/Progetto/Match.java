@@ -2,8 +2,6 @@ package Progetto;
 
 import java.util.Scanner;
 import java.util.Random;
-import Progetto.Player;
-import Progetto.Round;
 
 public class Match {
 
@@ -18,7 +16,7 @@ public class Match {
         this.numPlayers=numPlayers;
     }
 
-    public void startMatch(){
+    public String startMatch(){
         System.out.println("l'id della partita è: " + id);
 
         inizializePlayer();
@@ -36,6 +34,7 @@ public class Match {
 
         //ora devo aspettare che round mi dica di finire
         endMatch();
+        return null;
     }
 
     public void inizializePlayer(){
@@ -74,9 +73,8 @@ public class Match {
         //controllare che i conti tornino (difficoltà carte ecc)
     }
 
-    public int startRound(int firstPlayer) {
-
-    }
+    /*public int startRound(int firstPlayer) {
+    }*/
 
     public void endMatch(){
        // qui calcolo il punteggio

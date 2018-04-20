@@ -53,7 +53,7 @@ public class Player {
 
     @Override
     public String toString() {
-        return "ID:"+this.nickname()+"\nORDINE"+this.getOrderInRound()+"\nTOKEN"+this.getNumOfToken()+"\nSCORE:"+this.getScore()+"\ninGame?"+this.isInGame();
+        return "ID:"+this.getNickname()+"\nORDINE"+this.getOrderInRound()+"\nTOKEN"+this.getNumOfToken()+"\nSCORE:"+this.getScore()+"\ninGame?"+this.isInGame();
     }
 }
 
