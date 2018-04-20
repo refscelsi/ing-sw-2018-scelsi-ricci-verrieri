@@ -44,7 +44,7 @@ public class Match {
         System.out.println("\nCiao, quanti siete a giocare?");
         Scanner input= new Scanner(System.in);
         numPlayers=input.nextInt();
-        players = new Player[numPlayer];
+        players = new Player[numPlayers];
         while(i<=numPlayers){
             System.out.println("\nInserisci nickname "+i);
             nickname=input.nextLine();

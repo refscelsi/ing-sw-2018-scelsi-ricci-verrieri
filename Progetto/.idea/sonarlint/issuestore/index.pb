@@ -1,23 +1,25 @@
 
 7
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
-Q
-!src\main\java\Progetto\Round.java,c\0\c0292a60c203974bd9d4cae80b40339d3ce0d604
 O
 src\main\java\Progetto\Box.java,0\2\02cac4dd0bf6cb7d03241e2596a51b587e7a8ffb
-P
- src\main\java\Progetto\Play.java,e\9\e97d7968b413ed2618a7b0e58d239a8d8969c3c4
 R
 "src\main\java\Progetto\Scheme.java,4\4\44a8e3216c7594305b54c14dff20aa97e3c01cfb
+O
+src\main\java\Progetto\App.java,f\9\f993ce6e959db870e14a6e1d18d4ffba650de2f1
 V
 &src\main\java\Progetto\RoundTrack.java,f\0\f0e7c85f912df45d8b5055418b0632dfed263bc9
 Y
 )src\main\java\Progetto\ObjectiveCard.java,a\d\ad866ff6d098c600d9a1c17dbf4ba96ba6a71513
-P
- src\main\java\Progetto\Dice.java,0\4\048a4311c04178b5ec26ddd26e5e021d0a6c8ba5
-O
-src\main\java\Progetto\App.java,f\9\f993ce6e959db870e14a6e1d18d4ffba650de2f1
+Q
+!src\main\java\Progetto\Round.java,c\0\c0292a60c203974bd9d4cae80b40339d3ce0d604
 Q
 !src\main\java\Progetto\Match.java,1\f\1f05c8e3c8a8edfa09e0d5445ce7ee1f3fba4b56
 R
 "src\main\java\Progetto\Player.java,5\8\587f2d0c5a6f98023ce7b20b004d00cd4ae200ba
+Q
+!src\main\java\Progetto\Color.java,7\e\7ed208f3a01d007510a07188630a5eb9bc5a29a6
+P
+ src\main\java\Progetto\Dice.java,0\4\048a4311c04178b5ec26ddd26e5e021d0a6c8ba5
+O
+src\main\java\Progetto\Bag.java,0\5\0527e538dfdf58f9ec023430920f5ae1aa1c0337
