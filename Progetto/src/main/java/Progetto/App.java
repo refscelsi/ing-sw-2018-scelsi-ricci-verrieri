@@ -14,11 +14,11 @@ public class App{
         int i=bag.getSize();
         System.out.print(i);
 
-        System.out.println("\n"+bag.draw();
+        System.out.println("Colore"+bag.draw(4));
+        System.out.println(bag.getSize());
+
         Dice dice= new Dice();
         System.out.println(dice.throwDice());
-        System.out.println("color"+bag.draw(4));
-
 
         //m.startMatch();
     }

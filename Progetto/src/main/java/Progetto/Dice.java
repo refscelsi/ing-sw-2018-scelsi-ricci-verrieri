@@ -9,6 +9,7 @@ public class Dice {
 
     public Dice(){}
 
+    //tira il dado
     public int throwDice(){
         int possibleValues[]={1,2,3,4,5,6}; //valori possibili del dado
         Random random=new Random();

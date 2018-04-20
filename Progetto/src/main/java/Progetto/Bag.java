@@ -1,8 +1,7 @@
 package Progetto;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
+import java.lang.reflect.Array;
+import java.util.*;
 
 public class Bag {
     private ArrayList<Dice> dices;
@@ -39,11 +38,17 @@ public class Bag {
         }
     }
 
-    public ArrayList<dice> draw (int numPlayers){
+    //estrae tot dadi casuali in base al numero dei giocatori
+    public ArrayList<Dice> draw (int numPlayers){ //da sistemare --> subList+removeRange, non sono riuscita a usarle
+        int bound=(numPlayers*2)+1;
         Collections.shuffle(dices);
-        ArrayList<Dice> drawnDices;
-        drawnDices = dices.subList(0, (numPlayers*2)+1);
-        dices.removeRange(0, (numPlayers*2)+1);
+        ArrayList<Dice> drawnDices= new ArrayList<Dice>();
+        for(int i=0;i<bound;i++){
+            drawnDices.add(dices.get(i));
+        }
+        for(int i=0;i<bound;i++){
+            dices.remove(i);
+        }
         return drawnDices;
     }
 
