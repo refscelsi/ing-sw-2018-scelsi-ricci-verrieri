@@ -13,9 +13,12 @@ public class App{
         bag.setDices();
         int i=bag.getSize();
         System.out.print(i);
-        System.out.println("\n"+bag.drow());
+
+        System.out.println("\n"+bag.draw();
         Dice dice= new Dice();
         System.out.println(dice.throwDice());
+        System.out.println("color"+bag.draw(4));
+
 
         //m.startMatch();
     }
