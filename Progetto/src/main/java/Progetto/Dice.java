@@ -14,7 +14,7 @@ public class Dice {
         int possibleValues[]={1,2,3,4,5,6}; //valori possibili del dado
         Random random=new Random();
         int indice=random.nextInt(6);//genero indice casuale
-        this.setNumFacciaUp(possibleValues[indice]);
+        setNumFacciaUp(possibleValues[indice]);
         return possibleValues[indice]; //ritorno valore dell'indice casuale
     }
 

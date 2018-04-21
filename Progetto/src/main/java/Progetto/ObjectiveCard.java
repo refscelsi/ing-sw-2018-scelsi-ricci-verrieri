@@ -2,16 +2,16 @@ package Progetto;
 
 public class ObjectiveCard {
     private String name;
-    private short points;
-    //comportamento
+    private int points;
+    private boolean isPrivate;
 
-    public ObjectiveCard(String name, short points){
+    public ObjectiveCard(String name, int points, boolean isPrivate){
         this.name=name;
         this.points=points;
-        //comportamento
+        this.isPrivate=isPrivate;
     }
 
-    public short getPoints() {
+    public int getPoints() {
         return points;
     }
 
@@ -19,13 +19,19 @@ public class ObjectiveCard {
         return name;
     }
 
-    public void setName(String name) {
+    public boolean isPrivate() {
+        return isPrivate;
+    }
+
+    /*public void setName(String name) {
         this.name = name;
     }
 
-    public void setPoints(short points) {
+    public void setPoints(int points) {
         this.points = points;
-    }
+    }*/
 
-    //da aggiungere il comportamento
+    public void comportamento () {
+        // switch (name) : in base al nome definiamo un comportamento
+    }
 }

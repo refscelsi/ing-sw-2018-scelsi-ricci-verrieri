@@ -5,10 +5,10 @@ import java.util.*;
 
 public class Bag {
     private ArrayList<Dice> dices;
-    private ArrayList<Dice>  drawnDices;
+    private ArrayList<Dice> drawnDices;
 
-    public Bag(){
-        this.dices= new ArrayList<Dice>();
+    public Bag() {
+        dices= new ArrayList<Dice>();
     }
 
     public void setDices(){
@@ -43,7 +43,7 @@ public class Bag {
     public ArrayList<Dice> draw (int numPlayers){ //da sistemare --> subList+removeRange, non sono riuscita a usarle
         int bound=(numPlayers*2)+1;
         Collections.shuffle(dices);
-        this.drawnDices= new ArrayList<Dice>();
+        drawnDices= new ArrayList<Dice>();
         for(int i=0;i<bound;i++){
             drawnDices.add(dices.get(i));
         }
