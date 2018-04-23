@@ -19,6 +19,9 @@ public class App {
         Dice dice= new Dice();
         System.out.println(dice.throwDice());
 
+        Match match = new Match(00);
+        match.inizializePlayer();
+
         //m.startMatch();
     }
 }

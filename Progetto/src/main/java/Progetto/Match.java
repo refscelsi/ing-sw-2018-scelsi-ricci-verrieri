@@ -9,7 +9,6 @@ public class Match {
 
     private int id;
     private int numPlayers;
-    private int i=1 ;
     private ArrayList<Player> players;
     private int playerPlaying;
     private Bag bag;
@@ -29,7 +28,7 @@ public class Match {
 
         shuffleCard();
 
-        for (i=0; i<10; i++) {
+        for (int i=0; i<10; i++) {
             Round round = new Round (playerPlaying);
             playerPlaying += 1;
             if (playerPlaying > numPlayers)
@@ -45,35 +44,77 @@ public class Match {
 
         // inizializzo i dati di un giocatore
 
+        /*Integer[] array = new Integer[]{1, 2, 3, 4};
+        List<Integer> possibleNumbers = Arrays.asList(array);
+        System.out.println(possibleNumbers);
+        Collections.shuffle(possibleNumbers);
+        System.out.println(possibleNumbers);*/
+
         int possibleNumbers[]={1,2,3,4};
+        int i=1;
+        int order, oldOrder;
+        //boolean find;
         String nickname;
-        System.out.println("\nCiao, quanti siete a giocare?");
+        System.out.println("Ciao, quanti siete a giocare?");
         Scanner input= new Scanner(System.in);
         numPlayers=input.nextInt();
         players = new ArrayList<Player>();
         while(i<=numPlayers){
-            System.out.println("\nInserisci nickname "+i);
-            nickname=input.nextLine();
-            Random random = new Random();
+            Scanner input1= new Scanner(System.in);
+            System.out.println("Inserisci nickname "+i);
+            nickname=input1.nextLine();
+            System.out.println(nickname);
+            do {
+                Random random = new Random();
+                order = random.nextInt(numPlayers); // order sarà uguale a 0, 1, 2 o 3 (se ho 4 giocatori)
+                if (possibleNumbers[order]<=numPlayers&&possibleNumbers[order]!=0) {
+                    System.out.println(possibleNumbers[order]);
+                    Player player = new Player(nickname,possibleNumbers[order]);
+                    players.add(player);
+                    //players.add(new Player(nickname, possibleNumbers.get(j-1)));
+                    i++;
+                    System.out.println(player.getNickname());
+                }
+                oldOrder = possibleNumbers[order];
+                possibleNumbers[order] = 0;
+            } while (oldOrder>numPlayers||oldOrder==0);
+
+            /*Random random = new Random();
             int order = random.nextInt(numPlayers); // order sar? uguale a 0, 1, 2 o 3 (se ho 4 giocatori)
-            if (possibleNumbers[order]!=0) {
-                players.add(new Player(nickname, possibleNumbers[order]));
-                possibleNumbers[order]=0;         // metto 0 al posto di ogni numero che ho in possibleNumbers, cos? tengo traccia dei numeri che gi? ho assegnato ad altri giocatori
-                i++;
-            }
+            do {
+                if (order != 0) {
+                    players.add(new Player(nickname, possibleNumbers[order]));
+                    possibleNumbers[order] = 0;         // metto 0 al posto di ogni numero che ho in possibleNumbers, cos? tengo traccia dei numeri che gi? ho assegnato ad altri giocatori
+                    i++;
+                }
+            } while (possibleNumbers[order]==0);*/
         }
         playerPlaying = 1; // all'inizio del gioco il primo giocatore sar? il numero 1
 
         // preparo tutte le carte, segnalini, ecc del giocatore
 
+
+        i=0;
+        System.out.println("ok1");
         ObjectiveCardDeck objectiveCardDeck = new ObjectiveCardDeck();
+        System.out.println("ok2");
         ArrayList<ObjectiveCard> privateObjectives = new ArrayList<ObjectiveCard>();
+        System.out.println("ok3");
         privateObjectives = objectiveCardDeck.drawObjectiveCard(numPlayers, true);
+        System.out.println("ok4");
         while (i<numPlayers) {
+            System.out.println("ok10");
             players.get(i).setPrivateObjective(privateObjectives.get(i));
             /* il giocatore sceglie il suo schema:
             players.get(i).setScheme(un certo schema che ha scelto); */
-            players.get(i).setNumOfToken(players.get(i).getScheme().getDifficulty());
+            System.out.println("ok5");
+            //players.get(i).setNumOfToken(players.get(i).getScheme().getDifficulty());  ancora non si può eseguire
+            System.out.println("ok6");
+            System.out.println(players.get(i).getNickname());
+            //System.out.println(players.get(i).getNumOfToken());            ancora non si può eseguire
+            System.out.println(players.get(i).getOrderInRound());
+            System.out.println(players.get(i).getPrivateObjective().getName());
+            i++;
         }
 
     }
