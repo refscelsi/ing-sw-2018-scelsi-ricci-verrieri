@@ -9,7 +9,6 @@ public class Scheme {
         this.difficulty=difficulty;
         this.boxes =boxes;
     }
-
     public Box[][] getboxes() {
         return boxes;
     }
