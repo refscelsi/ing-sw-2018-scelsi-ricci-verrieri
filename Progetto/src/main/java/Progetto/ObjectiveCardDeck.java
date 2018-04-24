@@ -21,7 +21,7 @@ public class ObjectiveCardDeck {
         ObjectiveCard oc4=new ObjectiveCard("Sfumature diverse - Colonna", 5, true);
         deck.add(oc4);
 
-        // continua così per tutte le 15 carte obiettivo
+        // continua così per tutte le 15 carte obiettivo --> dobbiamo caricarle da file?
     }
 
     public ArrayList<ObjectiveCard> drawObjectiveCard (int num, boolean isPrivate){  // mettiamo num=numPlayers e isPrivate=1 quando vogliamo estrarre le carte obiettivo privato e num=3 e isPrivate=0 quando vogliamo estrarre le 3 carte obiettivo pubblico

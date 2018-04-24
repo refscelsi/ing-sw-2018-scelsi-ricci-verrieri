@@ -59,8 +59,5 @@ public class Box {
         this.dice = dice;
     }
 
-    public void setColor(Color color) {
-        this.color = color;
-    }
 
 }

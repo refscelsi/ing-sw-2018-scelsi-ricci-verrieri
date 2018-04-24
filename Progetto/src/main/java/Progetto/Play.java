@@ -9,10 +9,11 @@ public class Play {
         if(box.isEmpty()){
             if(box.getColor().equals(dice.getDiceColor()) || box.getColor().equals(Color.WHITE)){
                 if(box.getShade()==dice.getNumFacciaUp()){
+
                     //check posizione (dado adiacente e dado di colore/sfumatura diversa) --> tutti metodi check che chiamo qui giusto?
                 }
             }
-            box.setDice(dice);
+            box.placeDice(dice);
 
         }
 

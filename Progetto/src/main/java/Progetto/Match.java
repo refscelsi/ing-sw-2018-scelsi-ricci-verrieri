@@ -31,7 +31,7 @@ public class Match {
         for (int i=0; i<10; i++) {
             Round round = new Round (playerPlaying);
             playerPlaying += 1;
-            if (playerPlaying > numPlayers)
+            if (playerPlaying > numPlayers) //perchè =1??
                 playerPlaying = 1;
         }
 
