@@ -13,6 +13,23 @@ public class Scheme {
         return boxes;
     }
 
+    public boolean checkAdjacent(Dice dice, Box box){
+        int row=box.getX();
+        int column=box.getY();
+
+        if(!(boxes[row][column-1].getColor().equals(dice.getDiceColor()))){
+            if(!(boxes[row][column+1].getColor().equals(dice.getDiceColor())){
+                
+            }
+        }
+    }
+
+
+
+
+
+
+
     public int getDifficulty() {
         return difficulty;
     }

@@ -3,10 +3,13 @@ package Progetto;
 import static org.junit.Assert.*;
 
 public class BagTest {
-    Bag bag=new Bag();
+    private Bag bag;
+    private Dice dice;
 
     @org.junit.Before
     public void setUp() throws Exception {
+        bag=new Bag();
+        dice=new Dice();
     }
 
     @org.junit.Test
@@ -18,9 +21,13 @@ public class BagTest {
 
     @org.junit.Test
     public void draw() {
+        bag.setDices();
+        bag.draw(3);
+        assertTrue(bag.getSize()==83);
     }
 
     @org.junit.Test
     public void getSize() {
+
     }
 }
