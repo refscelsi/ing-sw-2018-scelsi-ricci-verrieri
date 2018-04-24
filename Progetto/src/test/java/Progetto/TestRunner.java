@@ -5,7 +5,7 @@ import org.junit.runner.notification.Failure;
 
 public class TestRunner {
     public static void main(String[] args) {
-        org.junit.runner.Result result = JUnitCore.runClasses(DiceTest.class);
+        org.junit.runner.Result result = JUnitCore.runClasses(Dice.class);
 
         for (Failure failure : result.getFailures()) {
             System.out.println(failure.toString());
