@@ -22,22 +22,6 @@ public class Box {
         this.dice=dice;
     }
 
-    public boolean checkColor(Dice dice){
-        if(dice.getDiceColor()==this.getColor() || this.getColor().equals("WHITE"))
-        {
-            return true;
-        }
-        else
-            return false;
-    }
-
-    public boolean checkShade(Dice dice){
-        if(this.getColor().equals("WHITE") || this.getShade()==dice.getNumFacciaUp()){
-            return true;
-        }
-        else
-            return false;
-    }
     public int getX() {
         return x;
     }
