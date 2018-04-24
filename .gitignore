@@ -115,3 +115,7 @@ Progetto/.idea/sonarlint/issuestore/index.pb
 Progetto/.idea/sonarlint/issuestore/4/4/442292b8a7efeabbe4cc176709b833b1792140ec
 Progetto/Sagrada.iml
 *.iml
+/addScheme/addScheme/nbproject/private/
+*.form
+/addScheme/nbproject/private/
+/addScheme/build/

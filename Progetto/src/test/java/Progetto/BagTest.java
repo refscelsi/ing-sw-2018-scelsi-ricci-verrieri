@@ -7,7 +7,7 @@ public class BagTest {
 
     @org.junit.Before
     public void setUp() throws Exception{
-        Bag bag=new Bag();
+        bag=new Bag();
 
     }
 
