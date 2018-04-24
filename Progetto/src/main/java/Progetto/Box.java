@@ -6,7 +6,6 @@ public class Box {
     private Dice dice;
     private Color color;
     private int shade;
-
     public Box(){
         this.color=Color.WHITE;
     }

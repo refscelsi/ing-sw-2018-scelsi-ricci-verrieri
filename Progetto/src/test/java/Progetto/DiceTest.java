@@ -18,33 +18,7 @@ public class DiceTest {
 
     @org.junit.Test
     public void setDiceColor() {
-    }
-
-    @org.junit.Test
-    public void getDiceColor() {
-    }
-
-    @org.junit.Test
-    public void isRiserva() {
-    }
-
-    @org.junit.Test
-    public void isUsatoSuSchema() {
-    }
-
-    @org.junit.Test
-    public void getNumFacciaUp() {
-    }
-
-    @org.junit.Test
-    public void setNumFacciaUp() {
-    }
-
-    @org.junit.Test
-    public void setRiserva() {
-    }
-
-    @org.junit.Test
-    public void setUsatoSuSchema() {
+        dice.setDiceColor(Color.RED);
+        assertEquals(Color.RED,dice.getDiceColor());
     }
 }
