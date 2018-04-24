@@ -3,10 +3,12 @@ package Progetto;
 import static org.junit.Assert.*;
 
 public class BagTest {
-    Bag bag=new Bag();
+    private Bag bag;
 
     @org.junit.Before
-    public void setUp() throws Exception {
+    public void setUp() throws Exception{
+        Bag bag=new Bag();
+
     }
 
     @org.junit.Test
