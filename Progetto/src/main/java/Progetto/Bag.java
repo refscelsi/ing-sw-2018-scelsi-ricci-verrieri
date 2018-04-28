@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Bag {
     private ArrayList<Dice> dices;
-    private ArrayList<Dice> drawnDices;
+    private DraftPool draftPool;
     public Bag() {
         dices= new ArrayList<Dice>();
     }
@@ -42,17 +42,16 @@ public class Bag {
     }
 
     //estrae tot dadi casuali in base al numero dei giocatori
-    public ArrayList<Dice> draw (int numPlayers){ //da sistemare --> subList+removeRange, non sono riuscita a usarle
+    public DraftPool draw (int numPlayers){ //da sistemare --> subList+removeRange, non sono riuscita a usarle
         int bound=(numPlayers*2)+1;
         Collections.shuffle(dices);
-        drawnDices= new ArrayList<Dice>();
         for(int i=0;i<bound;i++){
-            drawnDices.add(dices.get(i));
+            draftPool.addDice(dices.get(i));
         }
         for(int i=0;i<bound;i++){
             dices.remove(i);
         }
-        return drawnDices;
+        return draftPool;
     }
 
     public int getSize(){

@@ -6,9 +6,9 @@ public class Play {
     }
 
     public void useDice(Box box,Dice dice,Scheme scheme) {
-    //controllo sulla casella (bianca, colorata o sfumata)
-        //controllo sulle caselle adiacenti (c'è un cazzo di dado?) --> se c'è
-            //controllo sulle 4 "punte"
+        if((scheme.checkBox(box,dice)) && scheme.checkPosition(box) && scheme.checkAdjacent(box,dice)){
+            box.placeDice(dice);
+        }
     }
 
     public void useCard(){

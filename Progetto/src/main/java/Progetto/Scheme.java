@@ -13,7 +13,54 @@ public class Scheme {
         return boxes;
     }
 
+    public boolean checkBox(Box box, Dice dice){
+        if(box.getColor().equals(Color.WHITE)){
+            return true;
+        }
+        else if(box.getColor().equals(dice.getDiceColor())){
+            return true;
+        }
+        else if(box.getShade()==dice.getNumFacciaUp()){
+            return true;
+        }
+        else
+            return false;
+    }
 
+    public boolean checkPosition(Box box){
+        int row=box.getX();
+        int column=box.getY();
+
+        if(!(boxes[row-1][column].isEmpty() && boxes[row-1][column-1].isEmpty() && boxes[row-1][column+1].isEmpty() &&
+                boxes[row+1][column-1].isEmpty() && boxes[row+1][column+1].isEmpty() && boxes[row+1][column].isEmpty()
+                && boxes[row][column-1].isEmpty() && boxes[row][column+1].isEmpty())) {
+            return true;
+        }
+        return false;
+    } //manca tutta gestione bordi e angoli
+
+    public boolean checkAdjacent(Box box,Dice dice){
+        int row=box.getX();
+        int column=box.getY();
+
+        if(!(boxes[row-1][column].isEmpty())) {
+            if (boxes[row - 1][column].getColor().equals(dice.getDiceColor()) || boxes[row - 1][column].getShade() == dice.getNumFacciaUp())
+                return false;
+        }
+        else if(!(boxes[row+1][column].isEmpty())) {
+            if (boxes[row+1][column].getColor().equals(dice.getDiceColor()) || boxes[row+1][column].getShade() == dice.getNumFacciaUp())
+                return false;
+        }
+        else if(!(boxes[row][column-1].isEmpty())) {
+            if (boxes[row][column - 1].getColor().equals(dice.getDiceColor()) || boxes[row][column - 1].getShade() == dice.getNumFacciaUp())
+                return false;
+        }
+        else if(!(boxes[row][column+1].isEmpty())) {
+            if (boxes[row][column+1].getColor().equals(dice.getDiceColor()) || boxes[row][column+1].getShade() == dice.getNumFacciaUp())
+                return false;
+        }
+        return true;
+    }
 
     public int getDifficulty() {
         return difficulty;
