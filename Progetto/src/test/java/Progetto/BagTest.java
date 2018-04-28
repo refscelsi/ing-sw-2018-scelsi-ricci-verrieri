@@ -1,5 +1,8 @@
 package Progetto;
 
+import Progetto.Model.Bag;
+import Progetto.Model.Dice;
+
 import static org.junit.Assert.*;
 
 public class BagTest {

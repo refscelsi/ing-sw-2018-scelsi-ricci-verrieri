@@ -1,0 +1,54 @@
+
+esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(¨üÅÈÿÿÿÿÿ
+Msquid:S1197"8Move the array designator from the variable to the type.(‘Ğ‚–
+R
+squid:S106"9Replace this use of System.out or System.err by a logger.(­–Ù½øÿÿÿÿ
+M
+squid:S106"9Replace this use of System.out or System.err by a logger.(ûºÍÑ
+R
+squid:S106"9Replace this use of System.out or System.err by a logger.(Šâıÿÿÿÿ
+`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(³”Ô†
+R
+squid:S106"9Replace this use of System.out or System.err by a logger.(å€ì›ıÿÿÿÿ
+nsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(³»›Ğ
+ysquid:S1450"_Remove the "publicObjectives" field and declare it as a local variable in the relevant methods.(İ˜İèûÿÿÿÿ
+rsquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(øÌûàøÿÿÿÿ
+`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ëòÄà
+R
+squid:S106"9Replace this use of System.out or System.err by a logger.(¡Ì¨×ÿÿÿÿÿ
+<squid:S1068"'Remove this unused "bag" private field.(ÖÉ‡ª
+M
+squid:S106"9Replace this use of System.out or System.err by a logger.(ıòœ›
+R
+squid:S106"9Replace this use of System.out or System.err by a logger.(òå’€şÿÿÿÿ
+M
+squid:S106"9Replace this use of System.out or System.err by a logger.(ö×Ôù
+M
+squid:S106"9Replace this use of System.out or System.err by a logger.(Å›Ö”
+M
+squid:S106"9Replace this use of System.out or System.err by a logger.(ÜËÖ°
+M
+squid:S106"9Replace this use of System.out or System.err by a logger.(§àÎ£
+Nsquid:S1068"4Remove this unused "publicObjectives" private field.(İ˜İèûÿÿÿÿ
+R
+squid:S106"9Replace this use of System.out or System.err by a logger.(Ñöûùÿÿÿÿ
+gsquid:S1450"RRemove the "bag" field and declare it as a local variable in the relevant methods.(ÖÉ‡ª
+>squid:S1481"*Remove this unused "round" local variable.(»‘…B
+nsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(õÈ£Ú
+esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(â¶ı¨øÿÿÿÿ
+Zsquid:S1854"ERemove this useless assignment to local variable "privateObjectives".(õÈ£Ú
+`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ºÊÁ¢
+M
+squid:S106"9Replace this use of System.out or System.err by a logger.(«üßÕ
+esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ì‹‹ ûÿÿÿÿ
+M
+squid:S106"9Replace this use of System.out or System.err by a logger.(àéÔ”
+ssquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(¬òæøÿÿÿÿ
+L
+squid:S106"9Replace this use of System.out or System.err by a logger.(²ªÈ
+Msquid:S1854"9Remove this useless assignment to local variable "round".(»‘…B
+`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(‘Éúí
+;squid:S1659"&Declare "oldOrder" on a separate line.(”“‰ì
+M
+squid:S106"9Replace this use of System.out or System.err by a logger.(ğ—àÚ
+ksquid:S1450"VRemove the "players" field and declare it as a local variable in the relevant methods.(°Í™ñ

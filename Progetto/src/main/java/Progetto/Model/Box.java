@@ -1,4 +1,4 @@
-package Progetto;
+package Progetto.Model;
 
 public class Box {
     private int x;
@@ -8,10 +8,11 @@ public class Box {
     private int shade;
     public Box(){
         this.color=Color.WHITE;
+        this.shade=0;
     }
 
-    public boolean isEmpty(){
-        if(this.dice!=null){
+    public boolean isFull(){
+        if(this.dice==null){
             return false;
         }
         else
@@ -52,6 +53,10 @@ public class Box {
 
     public void setShade(int shade) {
         this.shade = shade;
+    }
+
+    public void setColor(Color color){
+        this.color=color;
     }
 
 }

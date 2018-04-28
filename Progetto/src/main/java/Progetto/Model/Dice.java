@@ -1,4 +1,4 @@
-package Progetto;
+package Progetto.Model;
 import java.util.Random;
 
 
@@ -26,14 +26,6 @@ public class Dice {
         return diceColor;
     }
 
-    public boolean isRiserva() {
-        return riserva;
-    }
-
-    public boolean isUsatoSuSchema() {
-        return usatoSuSchema;
-    }
-
     public int getNumFacciaUp() {
         return numFacciaUp;
     }
@@ -42,10 +34,14 @@ public class Dice {
         this.numFacciaUp = numFacciaUp;
     }
 
+    //servono davvero questi metodi?
+    public boolean isRiserva() {return riserva; }
+    public boolean isUsatoSuSchema() {
+        return usatoSuSchema;
+    }
     public void setRiserva(boolean riserva) {
         this.riserva = riserva;
     }
-
     public void setUsatoSuSchema(boolean usatoSuSchema) {
         this.usatoSuSchema = usatoSuSchema;
     }

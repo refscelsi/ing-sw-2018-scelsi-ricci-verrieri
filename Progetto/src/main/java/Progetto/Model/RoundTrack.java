@@ -1,4 +1,4 @@
-package Progetto;
+package Progetto.Model;
 
 public class RoundTrack {
     private Dice dadi[]= new Dice[10];

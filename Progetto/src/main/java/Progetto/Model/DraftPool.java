@@ -1,4 +1,4 @@
-package Progetto;
+package Progetto.Model;
 
 import java.util.ArrayList;
 
@@ -19,10 +19,6 @@ public class DraftPool {
 
     public ArrayList<Dice> getDraftPool() {
         return draftPool;
-    }
-
-    public void setDraftPool(ArrayList<Dice> draftPool) {
-        this.draftPool = draftPool;
     }
 
 }

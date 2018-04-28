@@ -1,6 +1,5 @@
-package Progetto;
+package Progetto.Model;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class ObjectiveCardDeck {

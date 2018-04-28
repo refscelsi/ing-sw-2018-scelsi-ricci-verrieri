@@ -1,5 +1,8 @@
 package Progetto;
 
+import Progetto.Model.Color;
+import Progetto.Model.Dice;
+
 import static org.junit.Assert.*;
 
 public class DiceTest {

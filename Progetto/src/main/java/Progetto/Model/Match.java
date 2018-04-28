@@ -1,8 +1,7 @@
-package Progetto;
+package Progetto.Model;
 
 import java.util.Scanner;
 import java.util.Random;
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class Match {

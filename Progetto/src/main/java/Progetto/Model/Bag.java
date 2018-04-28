@@ -1,17 +1,17 @@
-package Progetto;
+package Progetto.Model;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class Bag {
     private ArrayList<Dice> dices;
     private DraftPool draftPool;
+
     public Bag() {
         dices= new ArrayList<Dice>();
     }
 
+    //inizializza il sacchetto coi dati
     public void setDices(){
-
         Dice dice;
 
         for(int i=0; i<18; i++){
@@ -41,7 +41,7 @@ public class Bag {
         }
     }
 
-    //estrae tot dadi casuali in base al numero dei giocatori
+    //estrae tot dadi casuali in base al numero dei giocatori e li inserisce nella riserva
     public DraftPool draw (int numPlayers){ //da sistemare --> subList+removeRange, non sono riuscita a usarle
         int bound=(numPlayers*2)+1;
         Collections.shuffle(dices);
