@@ -6,9 +6,17 @@ public class Box {
     private Dice dice;
     private Color color;
     private int shade;
+
     public Box(){
         this.color=Color.WHITE;
         this.shade=0;
+    }
+
+    public Box(int x, int y, Color color, int shade){
+        this.x=x;
+        this.y=y;
+        this.color=color;
+        this.shade=shade;
     }
 
     public boolean isFull(){

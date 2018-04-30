@@ -14,92 +14,97 @@ public class Scheme {
         return boxes;
     }
 
+    public Boolean checkColor (Color color1, Color color2) {
+        if (color1==color2)
+            return true;
+        else
+            return false;
+    }
+
+    public Boolean checkShade (int shade1, int shade2) {
+        if (shade1==shade2)
+            return true;
+        else
+            return false;
+    }
+
     public boolean checkBox(Box box, Dice dice){
-        if(box.getColor().equals(Color.WHITE)){
+        if((checkColor(box.getColor(),Color.WHITE) || checkColor(box.getColor(),dice.getDiceColor())) && (checkShade(box.getShade(),0) || checkShade(box.getShade(),dice.getNumFacciaUp()))) {
             return true;
         }
-        else if(box.getColor().equals(dice.getDiceColor()) || box.getShade()==dice.getNumFacciaUp()) {
-            return true;
-        }
-        else
-            return false;
+        return false;
     }
 
-    public boolean checkDiceAdjacent(Box box){
+    public boolean checkDiceAdjacent(Box box, Dice dice){
         int row=box.getX();
         int column=box.getY();
+        Boolean right, left, up, down, upRight, upLeft, downRight, downLeft;
 
-        if(row==0 || row==3 || column==0 || column==4){
-            return checkBorder(box);
-        }
+        if (row==3)
+            down=false;
         else
-            return ((boxes[row][column+1].isFull()) || (boxes[row][column-1].isFull())|| (boxes[row+1][column].isFull()) ||
-                    (boxes[row-1][column].isFull()) || (boxes[row+1][column+1].isFull()) || (boxes[row+1][column-1].isFull()) ||
-                    (boxes[row-1][column+1].isFull()) || (boxes[row-1][column-1].isFull()));
+            down=boxes[row+1][column].isFull();
+
+        if (row==0)
+            up=false;
+        else
+            up=boxes[row-1][column].isFull();
+
+        if (column==0)
+            left=false;
+        else
+            left=boxes[row][column-1].isFull();
+
+        if (column==4)
+            right=false;
+        else
+            right=boxes[row][column+1].isFull();
+
+        if (column==4 || row==0)
+            upRight=false;
+        else
+            upRight=boxes[row-1][column+1].isFull();
+
+        if (column==4 || row==3)
+            downRight=false;
+        else
+            downRight=boxes[row+1][column+1].isFull();
+
+        if (column==0 || row==0)
+            upLeft=false;
+        else
+            upLeft=boxes[row-1][column-1].isFull();
+
+        if (column==0 || row==3)
+            downLeft=false;
+        else
+            downLeft=boxes[row+1][column-1].isFull();
+
+        if (right || left || up || down || upRight || upLeft || downRight || downLeft) {
+
+            if (right)
+                right = checkOrthogonal(row, column+1, dice);
+            if (right&&left)     // metto tutte queste condizioni nell'if così entra solo se già ha passato tutti i controlli precedenti
+                left = checkOrthogonal(row, column-1, dice);
+            if (right&&left&&up)
+                up = checkOrthogonal(row-1, column, dice);
+            if (right&&left&&up&&down) {
+                down = checkOrthogonal(row+1, column, dice);
+                return down;
+            }
+
+        }
+
+        return false;
+
     }
 
-    public boolean checkBorder(Box box){
-        int row=box.getX();
-        int column=box.getY();
-
-        if(row==0){
-            if(column==0){
-                return (boxes[row+1][column].isFull() || boxes[row+1][column+1].isFull() || boxes[row][column+1].isFull());
-            }
-            else if(column==4){
-                return (boxes[row+1][column].isFull() || boxes[row+1][column-1].isFull() || boxes[row][column-1].isFull());
-            }
-            else
-                return (boxes[row+1][column].isFull() || boxes[row+1][column-1].isFull() || boxes[row][column-1].isFull()
-                        || boxes[row][column+1].isFull() || boxes[row+1][column+1].isFull());
-        }
-        else if(row==3){
-            if(column==0){
-                return (boxes[row-1][column].isFull() || boxes[row-1][column+1].isFull() || boxes[row][column+1].isFull());
-            }
-            else if(column==4){
-                return (boxes[row-1][column].isFull() || boxes[row-1][column-1].isFull() || boxes[row][column-1].isFull());
-            }
-            else
-                return (boxes[row-1][column].isFull() || boxes[row-1][column-1].isFull() || boxes[row][column-1].isFull()
-                        || boxes[row][column+1].isFull() || boxes[row+1][column+1].isFull());
-        }
-        else if(column==0 &&(row==1 || row==2)){
-            return (boxes[row-1][column].isFull() || boxes[row+1][column].isFull() || boxes[row][column+1].isFull()
-                    || boxes[row-1][column+1].isFull() || boxes[row+1][column+1].isFull());
-        }
-
-        else if (column==4 &&(row==1 || row==2)){
-            return (boxes[row-1][column].isFull() || boxes[row+1][column].isFull() || boxes[row][column-1].isFull()
-                    || boxes[row-1][column-1].isFull() || boxes[row+1][column-1].isFull());
-        }
-        else
+    public Boolean checkOrthogonal(int i, int y, Dice dice) {
+        if (checkColor(boxes[i][y].getColor(),dice.getDiceColor()) || checkColor(boxes[i][y].getDice().getDiceColor(),dice.getDiceColor()))
             return false;
-    }
-
-    public boolean checkOrthogonal(Box box, Dice dice){
-        int row=box.getX();
-        int column=box.getY();
-        //dal primo in alto in senso orario
-        Box box1=boxes[row][column+1];
-        Box box2=boxes[row+1][column];
-        Box box3=boxes[row][column-1];
-        Box box4=boxes[row-1][column];
-
-        if(box1.isFull()){
-            return (!((box1.getDice().getDiceColor().equals(dice.getDiceColor()))||(box1.getDice().getNumFacciaUp()==dice.getNumFacciaUp())));
-        }
-        else if(box2.isFull()){
-            return (!((box2.getDice().getDiceColor().equals(dice.getDiceColor()))||(box2.getDice().getNumFacciaUp()==dice.getNumFacciaUp())));
-        }
-        else if(box3.isFull()){
-            return (!((box3.getDice().getDiceColor().equals(dice.getDiceColor()))||(box3.getDice().getNumFacciaUp()==dice.getNumFacciaUp())));
-        }
-        else if(box4.isFull()){
-            return (!((box4.getDice().getDiceColor().equals(dice.getDiceColor()))||(box4.getDice().getNumFacciaUp()==dice.getNumFacciaUp())));
-        }
-        else
+        else if (checkShade(boxes[i][y].getShade(),dice.getNumFacciaUp()) || checkShade(boxes[i][y].getDice().getNumFacciaUp(),dice.getNumFacciaUp()))
             return false;
+        return true;
     }
 
     public void setboxes(Box[][] boxes) {

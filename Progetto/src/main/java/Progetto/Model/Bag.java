@@ -7,7 +7,8 @@ public class Bag {
     private DraftPool draftPool;
 
     public Bag() {
-        dices= new ArrayList<Dice>();
+        dices = new ArrayList<Dice>();
+        draftPool = new DraftPool();
     }
 
     //inizializza il sacchetto coi dati

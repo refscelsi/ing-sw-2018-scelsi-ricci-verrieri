@@ -6,7 +6,7 @@ public class DraftPool {
     private ArrayList<Dice> draftPool;
 
     public DraftPool(){
-        this.draftPool=new ArrayList<Dice>();
+        draftPool=new ArrayList<Dice>();
     }
 
     public void addDice(Dice dice){
@@ -19,6 +19,10 @@ public class DraftPool {
 
     public ArrayList<Dice> getDraftPool() {
         return draftPool;
+    }
+
+    public int getSize(){
+        return draftPool.size();
     }
 
 }
