@@ -1,5 +1,0 @@
-
-Œsquid:S1319"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(ïæù©8òÏ§ç°,
-ysquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(øÌûàøÿÿÿÿ8òÏ§ç°,
-9squid:S1700"Rename field "draftPool"(‰§‹ıÿÿÿÿ8òÏ§ç°,
-usquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(”±Ë„8òÏ§ç°,

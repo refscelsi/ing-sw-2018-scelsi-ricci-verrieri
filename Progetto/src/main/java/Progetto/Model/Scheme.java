@@ -3,36 +3,41 @@ package Progetto.Model;
 public class Scheme {
     private int id, difficulty;
     private Box boxes[][];
+    private boolean isEmpty;
 
     public Scheme(int id, int difficulty, Box boxes[][]){
         this.id=id;
         this.difficulty=difficulty;
         this.boxes =boxes;
+        this.isEmpty=true;
     }
 
     public Box[][] getboxes() {
         return boxes;
     }
 
-    public Boolean checkColor (Color color1, Color color2) {
-        if (color1==color2)
-            return true;
+    public boolean checkFirst(Box box, Dice dice){
+        int row=box.getX();
+        int column=box.getY();
+
+        if(row==0 || row==3 || column==0 || column==4){
+            return (checkBox(box,dice));
+        }
         else
             return false;
     }
 
-    public Boolean checkShade (int shade1, int shade2) {
-        if (shade1==shade2)
-            return true;
-        else
-            return false;
+    public boolean checkColor (Color color1, Color color2) {
+        return (color1==color2);
+    }
+
+    public boolean checkShade (int shade1, int shade2) {
+        return (shade1==shade2);
     }
 
     public boolean checkBox(Box box, Dice dice){
-        if((checkColor(box.getColor(),Color.WHITE) || checkColor(box.getColor(),dice.getDiceColor())) && (checkShade(box.getShade(),0) || checkShade(box.getShade(),dice.getNumFacciaUp()))) {
-            return true;
-        }
-        return false;
+        return ((checkColor(box.getColor(),Color.WHITE) ||
+                checkColor(box.getColor(),dice.getDiceColor())) && (checkShade(box.getShade(),0) || checkShade(box.getShade(),dice.getNumFacciaUp())));
     }
 
     public boolean checkDiceAdjacent(Box box, Dice dice){
@@ -81,7 +86,6 @@ public class Scheme {
             downLeft=boxes[row+1][column-1].isFull();
 
         if (right || left || up || down || upRight || upLeft || downRight || downLeft) {
-
             if (right)
                 right = checkOrthogonal(row, column+1, dice);
             if (right&&left)     // metto tutte queste condizioni nell'if così entra solo se già ha passato tutti i controlli precedenti
@@ -111,6 +115,13 @@ public class Scheme {
         this.boxes = boxes;
     }
 
+    public boolean isEmpty(){
+        return this.isEmpty;
+    }
+
+    public void setNotEmpty(){
+        this.isEmpty=false;
+    }
     public int getDifficulty() {
         return difficulty;
     }
