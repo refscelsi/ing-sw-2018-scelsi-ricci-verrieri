@@ -55,7 +55,7 @@ public class SchemeTest {
         dice2.setDiceColor(Color.GREEN);
         dice2.setNumFacciaUp(4);
         boxes[0][3].placeDice(dice2);
-        assertTrue(!scheme.checkDiceAdjacent(boxes[0][1],dice1)&&!scheme.checkDiceAdjacent(boxes[0][2],dice1)&&!scheme.checkDiceAdjacent(boxes[0][2],dice2));
+        assertTrue(!scheme.checkDiceAdjacent(boxes[0][1],dice1)&&scheme.checkDiceAdjacent(boxes[0][2],dice1)&&!scheme.checkDiceAdjacent(boxes[0][2],dice2));
     }
 
 }
