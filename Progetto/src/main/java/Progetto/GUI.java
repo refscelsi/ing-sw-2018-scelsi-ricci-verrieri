@@ -1,9 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package addscheme;
+package Progetto;
+
+import Progetto.Model.Scheme;
+
+import java.io.File;
 
 import java.awt.Color;
 import java.awt.event.FocusEvent;
@@ -19,26 +18,27 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 
-/**
- *
- * @author Riccardo
- */
 public class GUI extends javax.swing.JFrame implements FocusListener,MouseListener, KeyListener{
 
-    private final JLabel box[][]=new JLabel[4][5];
-    private final JLabel c1[][]=new JLabel[4][5];
-    private final JLabel c2[][]=new JLabel[4][5];
-    private final JLabel c3[][]=new JLabel[4][5];
-    private final JLabel c4[][]=new JLabel[4][5];
-    private final JLabel c5[][]=new JLabel[4][5];
-    private final JLabel c6[][]=new JLabel[4][5];
+    private JLabel box[][]=new JLabel[4][5];
+    private JLabel c1[][]=new JLabel[4][5];
+    private JLabel c2[][]=new JLabel[4][5];
+    private JLabel c3[][]=new JLabel[4][5];
+    private JLabel c4[][]=new JLabel[4][5];
+    private JLabel c5[][]=new JLabel[4][5];
+    private JLabel c6[][]=new JLabel[4][5];
     private int sfumatura[][]=new int[4][5];
     private int colore[][]=new int[4][5];
-    private ArrayList<Scheme> schemi =new ArrayList<Scheme>();
+    
+    private static String ROOT = "C:";
+    private static char   FS = File.separatorChar;
+    private static String SPACE = " ";
     
     public GUI() {
         initComponents();
-                
+
+
+
         pBox.setLayout(null);
         int nameBox=0;
         
@@ -66,12 +66,12 @@ public class GUI extends javax.swing.JFrame implements FocusListener,MouseListen
                 box[i][j].setName(String.valueOf(nameBox));
                 box[i][j].setText("0");
                 
-                c1[i][j].setName("c1"+String.valueOf(nameBox));
-                c2[i][j].setName("c2"+String.valueOf(nameBox));
-                c3[i][j].setName("c3"+String.valueOf(nameBox));
-                c4[i][j].setName("c4"+String.valueOf(nameBox));
-                c5[i][j].setName("c5"+String.valueOf(nameBox));
-                c6[i][j].setName("c6"+String.valueOf(nameBox));
+                c1[i][j].setName(String.valueOf(nameBox));
+                c2[i][j].setName(String.valueOf(nameBox));
+                c3[i][j].setName(String.valueOf(nameBox));
+                c4[i][j].setName(String.valueOf(nameBox));
+                c5[i][j].setName(String.valueOf(nameBox));
+                c6[i][j].setName(String.valueOf(nameBox));
                 
                 nameBox++;
                 
@@ -113,12 +113,12 @@ public class GUI extends javax.swing.JFrame implements FocusListener,MouseListen
                     @Override
                     public void mouseEntered(java.awt.event.MouseEvent evt) {
 
-                        elementoMouseEntered(evt);
+                        //elementoMouseEntered(evt);
                     }
                     @Override
                     public void mouseExited(java.awt.event.MouseEvent evt) {
 
-                        elementoMouseExited(evt);
+                        //elementoMouseExited(evt);
                     }
                     @Override
                     public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -130,16 +130,16 @@ public class GUI extends javax.swing.JFrame implements FocusListener,MouseListen
                     @Override
                     public void mouseEntered(java.awt.event.MouseEvent evt) {
 
-                        elementoMouseEntered(evt);
+                        //elementoMouseEntered(evt);
                     }
                     @Override
                     public void mouseExited(java.awt.event.MouseEvent evt) {
 
-                        elementoMouseExited(evt);
+                        //elementoMouseExited(evt);
                     }
                     @Override
                     public void mouseClicked(java.awt.event.MouseEvent evt) {
-                        boxMouseClicked(evt);
+                        //boxMouseClicked(evt);
                     }
                 });
                 
@@ -147,16 +147,16 @@ public class GUI extends javax.swing.JFrame implements FocusListener,MouseListen
                     @Override
                     public void mouseEntered(java.awt.event.MouseEvent evt) {
 
-                        elementoMouseEntered(evt);
+                        //elementoMouseEntered(evt);
                     }
                     @Override
                     public void mouseExited(java.awt.event.MouseEvent evt) {
 
-                        elementoMouseExited(evt);
+                        //elementoMouseExited(evt);
                     }
                     @Override
                     public void mouseClicked(java.awt.event.MouseEvent evt) {
-                        boxMouseClicked(evt);
+                        //boxMouseClicked(evt);
                     }
                 });
                 
@@ -164,16 +164,16 @@ public class GUI extends javax.swing.JFrame implements FocusListener,MouseListen
                     @Override
                     public void mouseEntered(java.awt.event.MouseEvent evt) {
 
-                        elementoMouseEntered(evt);
+                        //elementoMouseEntered(evt);
                     }
                     @Override
                     public void mouseExited(java.awt.event.MouseEvent evt) {
 
-                        elementoMouseExited(evt);
+                        //elementoMouseExited(evt);
                     }
                     @Override
                     public void mouseClicked(java.awt.event.MouseEvent evt) {
-                        boxMouseClicked(evt);
+                        //boxMouseClicked(evt);
                     }
                 });
                 
@@ -181,16 +181,16 @@ public class GUI extends javax.swing.JFrame implements FocusListener,MouseListen
                     @Override
                     public void mouseEntered(java.awt.event.MouseEvent evt) {
 
-                        elementoMouseEntered(evt);
+                        //elementoMouseEntered(evt);
                     }
                     @Override
                     public void mouseExited(java.awt.event.MouseEvent evt) {
 
-                        elementoMouseExited(evt);
+                        //elementoMouseExited(evt);
                     }
                     @Override
                     public void mouseClicked(java.awt.event.MouseEvent evt) {
-                        boxMouseClicked(evt);
+                        //boxMouseClicked(evt);
                     }
                 });
                 
@@ -198,16 +198,16 @@ public class GUI extends javax.swing.JFrame implements FocusListener,MouseListen
                     @Override
                     public void mouseEntered(java.awt.event.MouseEvent evt) {
 
-                        elementoMouseEntered(evt);
+                        //elementoMouseEntered(evt);
                     }
                     @Override
                     public void mouseExited(java.awt.event.MouseEvent evt) {
 
-                        elementoMouseExited(evt);
+                        //elementoMouseExited(evt);
                     }
                     @Override
                     public void mouseClicked(java.awt.event.MouseEvent evt) {
-                        boxMouseClicked(evt);
+                        //boxMouseClicked(evt);
                     }
                 });
                 
@@ -215,16 +215,16 @@ public class GUI extends javax.swing.JFrame implements FocusListener,MouseListen
                     @Override
                     public void mouseEntered(java.awt.event.MouseEvent evt) {
 
-                        elementoMouseEntered(evt);
+                        //elementoMouseEntered(evt);
                     }
                     @Override
                     public void mouseExited(java.awt.event.MouseEvent evt) {
 
-                        elementoMouseExited(evt);
+                        //elementoMouseExited(evt);
                     }
                     @Override
                     public void mouseClicked(java.awt.event.MouseEvent evt) {
-                        boxMouseClicked(evt);
+                        //boxMouseClicked(evt);
                     }
                 });
             }
@@ -363,129 +363,29 @@ public class GUI extends javax.swing.JFrame implements FocusListener,MouseListen
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_saveButtonActionPerformed
+    }
 
     private void saveButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveButtonMouseClicked
-        saveStateActualScheme();
-        
+
+        String folder = "myDir";
+        String fileName = "myFile.txt";
+        System.out.println("File separator:"+FS);
+        File winFile = new File(ROOT + FS + folder + FS + fileName );
+        System.out.println("Costruzione file path:");
+        System.out.println(winFile);
+
+        ArrayList<Scheme> schemes =new ArrayList();
+
         ObjectOutputStream oss;
         try{
             oss = new ObjectOutputStream(new FileOutputStream("Schemes"));
-            oss.writeObject(schemi );
+            oss.writeObject(schemes );
             oss.close();
         }
         catch(Exception e){
             //messaggio di errore
         }
     }//GEN-LAST:event_saveButtonMouseClicked
-
-    public void elementoMouseEntered(java.awt.event.MouseEvent evt){
-        for (int i=0; i<4;i++){
-            for(int j=0;j<5;j++){
-                if (evt.getComponent().getName().equals(c1[i][j].getName())){
-                    c1[i][j].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 255, 204), 2));
-                    break;
-                }
-                if (evt.getComponent().getName().equals(c2[i][j].getName())){
-                    c2[i][j].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 255, 204), 2));
-                    break;
-                }
-                if (evt.getComponent().getName().equals(c3[i][j].getName())){
-                    c3[i][j].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 255, 204), 2));
-                    break;
-                }
-                if (evt.getComponent().getName().equals(c4[i][j].getName())){
-                    c4[i][j].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 255, 204), 2));
-                    break;
-                }
-                if (evt.getComponent().getName().equals(c5[i][j].getName())){
-                    c5[i][j].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 255, 204), 2));
-                    break;
-                }
-                if (evt.getComponent().getName().equals(c6[i][j].getName())){
-                    c6[i][j].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 255, 204), 2));
-                    break;
-                }
-            }
-        }
-    }
-    
-    public void elementoMouseExited(java.awt.event.MouseEvent evt){
-        for (int i=0; i<4;i++){
-            for(int j=0;j<5;j++){
-                if (evt.getComponent().getName().equals(c1[i][j].getName())){
-                    c1[i][j].setBorder(null);
-                    break;
-                }
-                if (evt.getComponent().getName().equals(c2[i][j].getName())){
-                    c2[i][j].setBorder(null);
-                    break;
-                }
-                if (evt.getComponent().getName().equals(c3[i][j].getName())){
-                    c3[i][j].setBorder(null);
-                    break;
-                }
-                if (evt.getComponent().getName().equals(c4[i][j].getName())){
-                    c4[i][j].setBorder(null);
-                    break;
-                }
-                if (evt.getComponent().getName().equals(c5[i][j].getName())){
-                    c5[i][j].setBorder(null);
-                    break;
-                }
-                if (evt.getComponent().getName().equals(c6[i][j].getName())){
-                    c6[i][j].setBorder(null);
-                    break;
-                }
-            }
-        }
-    }
-    
-    public void saveStateActualScheme(){
-        //Scheme schema = new Scheme();
-        Box boxes[][]=new Box[4][5];
-        
-        for (int i=0; i<4;i++){            
-            for(int j=0;j<5;j++){
-                boxes[i][j].setShade(3);
-            }
-        }
-        
-        //schema.setboxes(boxes);
-        //schemi.add(schema);
-    }
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GUI().setVisible(true);
-            }
-        });
-    }
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel DiffLabel;

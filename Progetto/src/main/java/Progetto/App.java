@@ -13,6 +13,8 @@ public class App {
         int id = r.nextInt(5000);
         int numPlayer=4;
         Match m=new Match(id,numPlayer);*/
+        GUI g=new GUI();
+        g.setVisible(true);
 
         Bag bag= new Bag();
         bag.setDices();
@@ -29,6 +31,7 @@ public class App {
         deck.setDeck();
         deck.drawObjectiveCard(3,true);
         System.out.println(deck.getDrawnCardsSize());
+
 
         //Match match = new Match(00);
         //match.inizializePlayer();
