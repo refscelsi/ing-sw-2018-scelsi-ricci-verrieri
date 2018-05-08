@@ -17,7 +17,7 @@ public class ObjectiveCardDeckTest {
     @org.junit.Test
     public void setDeck() {
         deck.setDeck();
-        assertEquals(4,deck.getSize());
+        assertEquals(15,deck.getSize());
     }
 
 

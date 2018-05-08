@@ -104,9 +104,9 @@ public class Scheme {
     }
 
     public Boolean checkOrthogonal(int i, int y, Dice dice) {
-        if (checkColor(boxes[i][y].getColor(),dice.getDiceColor()) || checkColor(boxes[i][y].getDice().getDiceColor(),dice.getDiceColor()))
+        if (checkColor(boxes[i][y].getDice().getDiceColor(),dice.getDiceColor()))
             return false;
-        else if (checkShade(boxes[i][y].getShade(),dice.getNumFacciaUp()) || checkShade(boxes[i][y].getDice().getNumFacciaUp(),dice.getNumFacciaUp()))
+        else if (checkShade(boxes[i][y].getDice().getNumFacciaUp(),dice.getNumFacciaUp()))
             return false;
         return true;
     }
@@ -122,15 +122,19 @@ public class Scheme {
     public void setNotEmpty(){
         this.isEmpty=false;
     }
+
     public int getDifficulty() {
         return difficulty;
     }
+
     public int getId() {
         return id;
     }
+
     public void setDifficulty(short difficulty) {
         this.difficulty = difficulty;
     }
+
     public void setId(short id) {
         this.id = id;
     }
