@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package addscheme;
 
 import java.awt.Color;
@@ -19,10 +14,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 
-/**
- *
- * @author Riccardo
- */
 public class GUI extends javax.swing.JFrame implements FocusListener,MouseListener, KeyListener{
 
     private final JLabel box[][]=new JLabel[4][5];
@@ -35,6 +26,12 @@ public class GUI extends javax.swing.JFrame implements FocusListener,MouseListen
     private int sfumatura[][]=new int[4][5];
     private int colore[][]=new int[4][5];
     private ArrayList<Scheme> schemi =new ArrayList<Scheme>();
+    private boolean bc1[][]=new boolean[4][5];
+    private boolean bc2[][]=new boolean[4][5];
+    private boolean bc3[][]=new boolean[4][5];
+    private boolean bc4[][]=new boolean[4][5];
+    private boolean bc5[][]=new boolean[4][5];
+    private boolean bc6[][]=new boolean[4][5];
     
     public GUI() {
         initComponents();
@@ -46,8 +43,7 @@ public class GUI extends javax.swing.JFrame implements FocusListener,MouseListen
         int y=10;
         int dist=10;
         int h=30;
-        int k=120;
-        
+        int k=120;        
         int h1=45;
         int k1=20;
         
@@ -72,6 +68,8 @@ public class GUI extends javax.swing.JFrame implements FocusListener,MouseListen
                 c4[i][j].setName("c4"+String.valueOf(nameBox));
                 c5[i][j].setName("c5"+String.valueOf(nameBox));
                 c6[i][j].setName("c6"+String.valueOf(nameBox));
+                
+                colore[i][j]=0;
                 
                 nameBox++;
                 
@@ -109,15 +107,20 @@ public class GUI extends javax.swing.JFrame implements FocusListener,MouseListen
                 c6[i][j].setBounds(x+(k*j)+(dist*j)+(k1*5), y+h+(75*i)+(dist*i), k1, h1);
                 //120x75
                 
+                bc1[i][j]=false;
+                bc2[i][j]=false;
+                bc3[i][j]=false;
+                bc4[i][j]=false;
+                bc5[i][j]=false;
+                bc6[i][j]=false;
+                
                 box[i][j].addMouseListener(new java.awt.event.MouseAdapter() {            
                     @Override
                     public void mouseEntered(java.awt.event.MouseEvent evt) {
-
                         elementoMouseEntered(evt);
                     }
                     @Override
                     public void mouseExited(java.awt.event.MouseEvent evt) {
-
                         elementoMouseExited(evt);
                     }
                     @Override
@@ -129,102 +132,90 @@ public class GUI extends javax.swing.JFrame implements FocusListener,MouseListen
                 c1[i][j].addMouseListener(new java.awt.event.MouseAdapter() {            
                     @Override
                     public void mouseEntered(java.awt.event.MouseEvent evt) {
-
                         elementoMouseEntered(evt);
                     }
                     @Override
                     public void mouseExited(java.awt.event.MouseEvent evt) {
-
                         elementoMouseExited(evt);
                     }
                     @Override
                     public void mouseClicked(java.awt.event.MouseEvent evt) {
-                        boxMouseClicked(evt);
+                        cMouseClicked(evt);
                     }
                 });
                 
                 c2[i][j].addMouseListener(new java.awt.event.MouseAdapter() {            
                     @Override
                     public void mouseEntered(java.awt.event.MouseEvent evt) {
-
                         elementoMouseEntered(evt);
                     }
                     @Override
                     public void mouseExited(java.awt.event.MouseEvent evt) {
-
                         elementoMouseExited(evt);
                     }
                     @Override
                     public void mouseClicked(java.awt.event.MouseEvent evt) {
-                        boxMouseClicked(evt);
+                        cMouseClicked(evt);
                     }
                 });
                 
                 c3[i][j].addMouseListener(new java.awt.event.MouseAdapter() {            
                     @Override
                     public void mouseEntered(java.awt.event.MouseEvent evt) {
-
                         elementoMouseEntered(evt);
                     }
                     @Override
                     public void mouseExited(java.awt.event.MouseEvent evt) {
-
                         elementoMouseExited(evt);
                     }
                     @Override
                     public void mouseClicked(java.awt.event.MouseEvent evt) {
-                        boxMouseClicked(evt);
+                        cMouseClicked(evt);
                     }
                 });
                 
                 c4[i][j].addMouseListener(new java.awt.event.MouseAdapter() {            
                     @Override
                     public void mouseEntered(java.awt.event.MouseEvent evt) {
-
                         elementoMouseEntered(evt);
                     }
                     @Override
                     public void mouseExited(java.awt.event.MouseEvent evt) {
-
                         elementoMouseExited(evt);
                     }
                     @Override
                     public void mouseClicked(java.awt.event.MouseEvent evt) {
-                        boxMouseClicked(evt);
+                        cMouseClicked(evt);
                     }
                 });
                 
                 c5[i][j].addMouseListener(new java.awt.event.MouseAdapter() {            
                     @Override
                     public void mouseEntered(java.awt.event.MouseEvent evt) {
-
                         elementoMouseEntered(evt);
                     }
                     @Override
                     public void mouseExited(java.awt.event.MouseEvent evt) {
-
                         elementoMouseExited(evt);
                     }
                     @Override
                     public void mouseClicked(java.awt.event.MouseEvent evt) {
-                        boxMouseClicked(evt);
+                        cMouseClicked(evt);
                     }
                 });
                 
                 c6[i][j].addMouseListener(new java.awt.event.MouseAdapter() {            
                     @Override
                     public void mouseEntered(java.awt.event.MouseEvent evt) {
-
                         elementoMouseEntered(evt);
                     }
                     @Override
                     public void mouseExited(java.awt.event.MouseEvent evt) {
-
                         elementoMouseExited(evt);
                     }
                     @Override
                     public void mouseClicked(java.awt.event.MouseEvent evt) {
-                        boxMouseClicked(evt);
+                        cMouseClicked(evt);
                     }
                 });
             }
@@ -382,30 +373,37 @@ public class GUI extends javax.swing.JFrame implements FocusListener,MouseListen
     public void elementoMouseEntered(java.awt.event.MouseEvent evt){
         for (int i=0; i<4;i++){
             for(int j=0;j<5;j++){
-                if (evt.getComponent().getName().equals(c1[i][j].getName())){
-                    c1[i][j].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 255, 204), 2));
-                    break;
-                }
-                if (evt.getComponent().getName().equals(c2[i][j].getName())){
-                    c2[i][j].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 255, 204), 2));
-                    break;
-                }
-                if (evt.getComponent().getName().equals(c3[i][j].getName())){
-                    c3[i][j].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 255, 204), 2));
-                    break;
-                }
-                if (evt.getComponent().getName().equals(c4[i][j].getName())){
-                    c4[i][j].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 255, 204), 2));
-                    break;
-                }
-                if (evt.getComponent().getName().equals(c5[i][j].getName())){
-                    c5[i][j].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 255, 204), 2));
-                    break;
-                }
-                if (evt.getComponent().getName().equals(c6[i][j].getName())){
-                    c6[i][j].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 255, 204), 2));
-                    break;
-                }
+                    if (evt.getComponent().getName().equals(c1[i][j].getName())){
+                        if (bc1[i][j]==false)
+                            c1[i][j].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 255, 204), 2));
+                        break;
+                    }
+                    if (evt.getComponent().getName().equals(c2[i][j].getName())){
+                        if (bc2[i][j]==false)
+                            c2[i][j].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 255, 204), 2));
+                        break;
+                    }
+                    if (evt.getComponent().getName().equals(c3[i][j].getName())){
+                        if (bc3[i][j]==false)
+                            c3[i][j].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 255, 204), 2));
+                        break;
+                    }
+                    if (evt.getComponent().getName().equals(c4[i][j].getName())){
+                        if (bc4[i][j]==false)
+                            c4[i][j].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 255, 204), 2));
+                        break;
+                    }
+                    if (evt.getComponent().getName().equals(c5[i][j].getName())){
+                        if (bc5[i][j]==false)
+                            c5[i][j].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 255, 204), 2));
+                        break;
+                    }
+                    if (evt.getComponent().getName().equals(c6[i][j].getName())){
+                        if (bc6[i][j]==false)
+                            c6[i][j].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 255, 204), 2));
+                        break;
+                    }
+                //}
             }
         }
     }
@@ -413,47 +411,143 @@ public class GUI extends javax.swing.JFrame implements FocusListener,MouseListen
     public void elementoMouseExited(java.awt.event.MouseEvent evt){
         for (int i=0; i<4;i++){
             for(int j=0;j<5;j++){
+                    if (evt.getComponent().getName().equals(c1[i][j].getName())){
+                        if (bc1[i][j]==false)
+                            c1[i][j].setBorder(null);
+                        break;
+                    }
+                    if (evt.getComponent().getName().equals(c2[i][j].getName())){
+                        if (bc2[i][j]==false)
+                            c2[i][j].setBorder(null);
+                        break;
+                    }
+                    if (evt.getComponent().getName().equals(c3[i][j].getName())){
+                        if (bc3[i][j]==false)
+                            c3[i][j].setBorder(null);
+                        break;
+                    }
+                    if (evt.getComponent().getName().equals(c4[i][j].getName())){
+                        if (bc4[i][j]==false)
+                            c4[i][j].setBorder(null);
+                        break;
+                    }
+                    if (evt.getComponent().getName().equals(c5[i][j].getName())){
+                        if (bc5[i][j]==false)
+                            c5[i][j].setBorder(null);
+                        break;
+                    }
+                    if (evt.getComponent().getName().equals(c6[i][j].getName())){
+                        if (bc6[i][j]==false)
+                            c6[i][j].setBorder(null);
+                        break;
+                    }
+                //}
+            }
+        }
+    }
+    
+    public void cMouseClicked(java.awt.event.MouseEvent evt){
+        for (int i=0; i<4;i++){
+            for(int j=0;j<5;j++){
+                //JLabel temp=uncheck(i,j, evt);
+                
                 if (evt.getComponent().getName().equals(c1[i][j].getName())){
-                    c1[i][j].setBorder(null);
+                    uncheck(i,j);
+                    c1[i][j].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+                    colore[i][j]=1;
+                    bc6[i][j]=true;
                     break;
                 }
                 if (evt.getComponent().getName().equals(c2[i][j].getName())){
-                    c2[i][j].setBorder(null);
+                    uncheck(i,j);
+                    c2[i][j].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+                    colore[i][j]=2;
+                    bc2[i][j]=true;
                     break;
                 }
                 if (evt.getComponent().getName().equals(c3[i][j].getName())){
-                    c3[i][j].setBorder(null);
+                    uncheck(i,j);
+                    c3[i][j].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+                    colore[i][j]=3;
+                    bc3[i][j]=true;
                     break;
                 }
                 if (evt.getComponent().getName().equals(c4[i][j].getName())){
-                    c4[i][j].setBorder(null);
+                    uncheck(i,j);
+                    c4[i][j].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+                    colore[i][j]=4;
+                    bc4[i][j]=true;
                     break;
                 }
                 if (evt.getComponent().getName().equals(c5[i][j].getName())){
-                    c5[i][j].setBorder(null);
+                    uncheck(i,j);
+                    c5[i][j].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+                    colore[i][j]=5;
+                    bc5[i][j]=true;
                     break;
                 }
                 if (evt.getComponent().getName().equals(c6[i][j].getName())){
-                    c6[i][j].setBorder(null);
+                    uncheck(i,j);
+                    c6[i][j].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+                    colore[i][j]=6;
+                    bc6[i][j]=true;
                     break;
                 }
             }
         }
     }
     
+    public void uncheck(int i, int j){
+        if(bc1[i][j]==true){
+            c1[i][j].setBorder(null);
+            bc1[i][j]=false;
+        }if(bc2[i][j]==true){
+            c2[i][j].setBorder(null);
+            bc2[i][j]=false;
+        }if(bc3[i][j]==true){
+            c3[i][j].setBorder(null);
+            bc3[i][j]=false;
+        }if(bc4[i][j]==true){
+            c4[i][j].setBorder(null);
+            bc4[i][j]=false;
+        }if(bc5[i][j]==true){
+            c5[i][j].setBorder(null);
+            bc5[i][j]=false;
+        }if(bc6[i][j]==true){
+            c6[i][j].setBorder(null);
+            bc6[i][j]=false;
+        }
+    }
+    
     public void saveStateActualScheme(){
-        //Scheme schema = new Scheme();
+        
         Box boxes[][]=new Box[4][5];
         
         for (int i=0; i<4;i++){            
             for(int j=0;j<5;j++){
-                boxes[i][j].setShade(3);
+                boxes[i][j]=new Box();
+                boxes[i][j].setShade(Integer.parseInt(box[i][j].getText()));
+                boxes[i][j].setColor(toColor(colore[i][j]));
             }
         }
+        //inserire controllo sull id e difficoltà che siano solo numeri
+        Scheme schema = new Scheme(Integer.parseInt(IDSPanel.getText()),Integer.parseInt(DiffPanel.getText()),boxes);
+        schemi.add(schema);
         
-        //schema.setboxes(boxes);
-        //schemi.add(schema);
     }
+    
+    public addscheme.Color toColor(int i){
+        switch(i){
+                case 1: return addscheme.Color.PURPLE;
+                case 2: return addscheme.Color.RED;
+                case 3: return addscheme.Color.BLUE;
+                case 4: return addscheme.Color.GREEN;
+                case 5: return addscheme.Color.YELLOW;
+                case 6: return addscheme.Color.WHITE;
+                default: return addscheme.Color.WHITE;
+        }
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -554,21 +648,16 @@ public class GUI extends javax.swing.JFrame implements FocusListener,MouseListen
     }
     
     public void boxMouseClicked(MouseEvent evt){
-        System.out.println("Added");
-        
         try{          
             for (int i=0;i<4;i++){
                 for (int j=0;j<5;j++){
                     if (evt.getComponent().getName().equals(box[i][j].getName())){
-                        int temp;                        
-                        temp=Integer.valueOf(box[i][j].getText());
-                        
-                        if (temp==6){
-                            temp=0;
+                        if (sfumatura[i][j]==6){
+                            sfumatura[i][j]=0;
                         }else{
-                            temp++;
+                            sfumatura[i][j]++;
                         }
-                        box[i][j].setText(String.valueOf(temp));
+                        box[i][j].setText(String.valueOf(sfumatura[i][j]));
                     }
                 }            
             }
