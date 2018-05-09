@@ -1,0 +1,14 @@
+
+9squid:S1659"$Declare "upLeft" on a separate line.(ãÒŸà
+Rsquid:S1197"8Move the array designator from the variable to the type.(şÆîúûÿÿÿÿ
+5squid:S1659" Declare "up" on a separate line.(ãÒŸà
+7squid:S1659""Declare "left" on a separate line.(ãÒŸà
+Rsquid:S1197"8Move the array designator from the variable to the type.(¦¨¶àÿÿÿÿÿ
+:squid:S1659"%Declare "upRight" on a separate line.(ãÒŸà
+Bsquid:S1659"(Declare "difficulty" on a separate line.(×Ã÷Çùÿÿÿÿ
+rsquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(øÌûàøÿÿÿÿ
+psquid:S3923"[Remove this conditional structure or edit its code blocks so that they're not all the same.(Õü¼à
+<squid:S1659"'Declare "downRight" on a separate line.(ãÒŸà
+fsquid:S3776"RRefactor this method to reduce its Cognitive Complexity from 33 to the 15 allowed.(›Íé
+7squid:S1659""Declare "down" on a separate line.(ãÒŸà
+;squid:S1659"&Declare "downLeft" on a separate line.(ãÒŸà

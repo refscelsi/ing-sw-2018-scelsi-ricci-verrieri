@@ -1,0 +1,67 @@
+
+Msquid:S1197"8Move the array designator from the variable to the type.(ğîàÖ
+Rsquid:S1197"8Move the array designator from the variable to the type.(™†¬ƒúÿÿÿÿ
+Rsquid:S1197"8Move the array designator from the variable to the type.(¾šŠšüÿÿÿÿ
+Rsquid:S1197"8Move the array designator from the variable to the type.(íûĞÏúÿÿÿÿ
+Rsquid:S1197"8Move the array designator from the variable to the type.(©Ø—ßşÿÿÿÿ
+Rsquid:S1197"8Move the array designator from the variable to the type.(°ËÜıÿÿÿÿ
+Rsquid:S1197"8Move the array designator from the variable to the type.(ÈŸÖúÿÿÿÿ
+Rsquid:S1197"8Move the array designator from the variable to the type.(õ½¨àùÿÿÿÿ
+Rsquid:S1197"8Move the array designator from the variable to the type.(Ô’ªüúÿÿÿÿ
+nsquid:S1192"TDefine a constant instead of duplicating this literal "Not supported yet." 10 times.(¦’ëªùÿÿÿÿ
+isquid:S3008"ORename this field "ROOT" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(²ÛÊÓùÿÿÿÿ
+bsquid:S3008"MRename this field "FS" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(éÅ–œ
+jsquid:S3008"PRename this field "SPACE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(İ¦Õ„ÿÿÿÿÿ
+Csquid:S1068")Remove this unused "SPACE" private field.(İ¦Õ„ÿÿÿÿÿ
+rsquid:S1450"XRemove the "DiffLabel" field and declare it as a local variable in the relevant methods.(ËÕÁâùÿÿÿÿ
+msquid:S1450"XRemove the "DiffPanel" field and declare it as a local variable in the relevant methods.(¯áĞ
+qsquid:S1450"WRemove the "IDSPanel" field and declare it as a local variable in the relevant methods.(¬™ÿÊøÿÿÿÿ
+qsquid:S1450"\Remove the "IDSchemaLabel" field and declare it as a local variable in the relevant methods.(…ê¿ù
+psquid:S1450"[Remove the "cancelButton" field and declare it as a local variable in the relevant methods.(÷Ì•°
+nsquid:S1450"YRemove the "findButton" field and declare it as a local variable in the relevant methods.(ŞöÍ™
+lsquid:S1450"WRemove the "jButton1" field and declare it as a local variable in the relevant methods.(å……¶
+usquid:S1450"[Remove the "jScrollPane1" field and declare it as a local variable in the relevant methods.(¤á×ÿÿÿÿÿ
+usquid:S1450"[Remove the "jScrollPane2" field and declare it as a local variable in the relevant methods.(ŠÌ«·şÿÿÿÿ
+jsquid:S1450"PRemove the "p" field and declare it as a local variable in the relevant methods.(ş¶Çæùÿÿÿÿ
+tsquid:S1450"ZRemove the "resetButton" field and declare it as a local variable in the relevant methods.(Üæ¼üÿÿÿÿ
+ssquid:S1450"YRemove the "saveButton" field and declare it as a local variable in the relevant methods.(Á„·áøÿÿÿÿ
+jsquid:S2095"PUse try-with-resources or close this "ObjectOutputStream" in a "finally" clause.(şı„ıÿÿÿÿ
+`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Ô‰ë°
+esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ıõÓ„şÿÿÿÿ
+`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Ô‰ë°
+esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ıõÓ„şÿÿÿÿ
+esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(‹‚„øÿÿÿÿ
+`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Ô‰ë°
+esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ıõÓ„şÿÿÿÿ
+esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(‹‚„øÿÿÿÿ
+`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Ô‰ë°
+esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ıõÓ„şÿÿÿÿ
+esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(‹‚„øÿÿÿÿ
+`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Ô‰ë°
+esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ıõÓ„şÿÿÿÿ
+esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(‹‚„øÿÿÿÿ
+`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Ô‰ë°
+esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ıõÓ„şÿÿÿÿ
+esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(‹‚„øÿÿÿÿ
+`squid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Ô‰ë°
+esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ıõÓ„şÿÿÿÿ
+esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(‹‚„øÿÿÿÿ
+M
+squid:S106"9Replace this use of System.out or System.err by a logger.(œÿ¼
+L
+squid:S106"9Replace this use of System.out or System.err by a logger.(Áñ÷
+R
+squid:S106"9Replace this use of System.out or System.err by a logger.(¢ê¨‰ûÿÿÿÿ
+R
+squid:S106"9Replace this use of System.out or System.err by a logger.(›¤ÌØıÿÿÿÿ
+Lsquid:S1135"2Complete the task associated to this TODO comment.(ÜÀ†áûÿÿÿÿ
+?squid:S1172"*Remove this unused method parameter "evt".(ì–‚Û
+?squid:S1172"*Remove this unused method parameter "evt".(ƒµºñ
+Bsquid:S1604"(Make this anonymous inner class a lambda(‘»úáşÿÿÿÿ
+osquid:S00116"TRename this field "DiffLabel" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ËÕÁâùÿÿÿÿ
+jsquid:S00116"TRename this field "DiffPanel" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¯áĞ
+nsquid:S00116"SRename this field "IDSPanel" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¬™ÿÊøÿÿÿÿ
+nsquid:S00116"XRename this field "IDSchemaLabel" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(…ê¿ù
+lsquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(‚õe
+Osquid:S1161":Add the "@Override" annotation above this method signature(†ŒË³
+csquid:MaximumInheritanceDepth"<This class has 6 parents which is greater than 5 authorized.(‚æıÌ

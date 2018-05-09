@@ -10,5 +10,10 @@ public class RoundTrack {
     public Dice getDadoRound(int round){
         return dadi[round];
     }
+
+    public Dice[] getDices(){
+        return dadi;
+    }
+
 }
 
