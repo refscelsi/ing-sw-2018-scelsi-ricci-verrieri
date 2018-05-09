@@ -1,4 +1,5 @@
 
-rsquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(øÌûàøÿÿÿÿ
 –squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¾¯ğ“
-nsquid:UselessImportCheck"@Remove this unused import 'javax.swing.plaf.metal.MetalBorders'.(ªªíúÿÿÿÿ8ú´«´,
+gsquid:UselessImportCheck"@Remove this unused import 'javax.swing.plaf.metal.MetalBorders'.(ªªíúÿÿÿÿ
+rsquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(øÌûàøÿÿÿÿ
+‚%squid:RedundantThrowsDeclarationCheck"GRemove the redundant '!unknownSymbol!' thrown exception declaration(s).(§¥í¾ûÿÿÿÿ8±õÑ¶´,

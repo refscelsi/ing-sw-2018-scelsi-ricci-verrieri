@@ -1,8 +1,0 @@
-
-3squid:S1659"Declare "i" on a separate line.(…™öz
-nsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(í÷­ÿ
-ssquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÎÌÚŸûÿÿÿÿ
-esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ì—‚¾ÿÿÿÿÿ
-esquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(’éµŒÿÿÿÿÿ
-…squid:S1319"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(úìþÂ
-rsquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(øÌûàøÿÿÿÿ
