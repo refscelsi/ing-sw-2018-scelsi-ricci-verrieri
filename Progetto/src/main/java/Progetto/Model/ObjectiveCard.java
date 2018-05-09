@@ -31,7 +31,7 @@ public class ObjectiveCard {
         this.points = points;
     }*/
 
-    public void comportamento () {
+    public void behavior () {
         // switch (name) : in base al nome definiamo un comportamento
     }
 }

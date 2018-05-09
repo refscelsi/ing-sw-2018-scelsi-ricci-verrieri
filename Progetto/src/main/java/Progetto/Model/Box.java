@@ -27,6 +27,10 @@ public class Box {
             return true;
     }
 
+    public void removeDice(){
+        this.dice=null;
+    }
+
     public void placeDice(Dice dice) {
         this.dice=dice;
     }
