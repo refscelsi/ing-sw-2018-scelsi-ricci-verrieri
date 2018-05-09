@@ -7,7 +7,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.*;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -228,6 +230,33 @@ public class GUI extends javax.swing.JFrame implements FocusListener,MouseListen
             }
         }      
         setLocationRelativeTo(null);
+        
+        openFile();
+        fillLista();
+    }
+    
+    public void openFile(){
+        String path = "Schemes";
+        try{
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream("Schemes"));
+            schemi = (ArrayList<Scheme>) ois.readObject();
+        }
+        catch(Exception e){
+            //messaggio di errore
+        }
+    }
+    
+    public void fillLista(){
+        int j = schemi.size();
+        String nomi[] = null;
+        for(int i =0;i<j;i++){
+            nomi[i]=new String(String.valueOf(schemi.get(i).getId()));
+        }        
+        DefaultListModel data = new DefaultListModel();
+        for (int i=0; i < j; i++){
+            data.add(i, nomi[i]);
+        }
+        lista= new JList(data);
     }
     
     @SuppressWarnings("unchecked")
@@ -247,6 +276,8 @@ public class GUI extends javax.swing.JFrame implements FocusListener,MouseListen
         findButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        lista = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -284,6 +315,8 @@ public class GUI extends javax.swing.JFrame implements FocusListener,MouseListen
 
         jButton1.setText("Salva come nuovo");
 
+        jScrollPane3.setViewportView(lista);
+
         javax.swing.GroupLayout pLayout = new javax.swing.GroupLayout(p);
         p.setLayout(pLayout);
         pLayout.setHorizontalGroup(
@@ -308,7 +341,9 @@ public class GUI extends javax.swing.JFrame implements FocusListener,MouseListen
                             .addComponent(findButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(resetButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 202, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(saveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -319,22 +354,25 @@ public class GUI extends javax.swing.JFrame implements FocusListener,MouseListen
             .addGroup(pLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(pLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(IDSchemaLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(findButton)
-                        .addComponent(resetButton)
-                        .addComponent(saveButton))
-                    .addComponent(jScrollPane1))
+                    .addGroup(pLayout.createSequentialGroup()
+                        .addGroup(pLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(pLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(IDSchemaLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(findButton)
+                                .addComponent(resetButton)
+                                .addComponent(saveButton))
+                            .addComponent(jScrollPane1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(pLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(DiffLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cancelButton))
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jButton1)))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(pLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(DiffLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cancelButton))
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pBox, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
+                .addComponent(pBox, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -533,7 +571,6 @@ public class GUI extends javax.swing.JFrame implements FocusListener,MouseListen
         //inserire controllo sull id e difficoltà che siano solo numeri
         Scheme schema = new Scheme(Integer.parseInt(IDSPanel.getText()),Integer.parseInt(DiffPanel.getText()),boxes);
         schemi.add(schema);
-        
     }
     
     public addscheme.Color toColor(int i){
@@ -591,6 +628,8 @@ public class GUI extends javax.swing.JFrame implements FocusListener,MouseListen
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JList<String> lista;
     private javax.swing.JPanel p;
     private javax.swing.JPanel pBox;
     private javax.swing.JButton resetButton;
