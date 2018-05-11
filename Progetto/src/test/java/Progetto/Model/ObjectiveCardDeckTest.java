@@ -1,4 +1,4 @@
-package Progetto;
+package Progetto.Model;
 
 import static org.junit.Assert.*;
 import Progetto.Model.ObjectiveCard.*;
@@ -6,25 +6,17 @@ import Progetto.Model.ObjectiveCardDeck;
 
 public class ObjectiveCardDeckTest {
     private ObjectiveCardDeck deck;
-    //private ObjectiveCard objectiveCard;
 
     @org.junit.Before
     public void setUp() throws Exception {
         deck=new ObjectiveCardDeck();
-        //objectiveCard=new ObjectiveCard("Prova", 7, false);
+        assertEquals(10,deck.getSize());
     }
-
-    @org.junit.Test
-    public void setDeck() {
-        deck.setDeck();
-        assertEquals(15,deck.getSize());
-    }
-
 
     @org.junit.Test
     public void drawObjectiveCard() {
         deck.setDeck();
-        deck.drawObjectiveCard(/*3, true*/);
+        deck.drawObjectiveCard();
         assertEquals(3,deck.getDrawnCardsSize());
     }
 

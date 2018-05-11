@@ -10,7 +10,7 @@ public class PrivateObjectiveCardDeck {
     public PrivateObjectiveCardDeck() {
         deck = new ArrayList<PrivateObjectiveCard>();
         drawnCards= new ArrayList<PrivateObjectiveCard>();
-        //setDeck();
+        setDeck();
     }
 
     public void setDeck () {

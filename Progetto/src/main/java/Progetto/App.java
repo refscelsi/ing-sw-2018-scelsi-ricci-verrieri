@@ -1,13 +1,10 @@
 package Progetto;
 
-import Progetto.Model.Bag;
-import Progetto.Model.Dice;
 /*
 import Progetto.Model.Match;
 import Progetto.Model.ObjectiveCard;*/
 
-import Progetto.Model.ObjectiveCardDeck;
-import Progetto.view.Menu;
+import Progetto.View.Menu;
 
 public class App {
     public static Menu menu;

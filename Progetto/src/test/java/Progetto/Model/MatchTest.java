@@ -1,4 +1,4 @@
-package Progetto;
+package Progetto.Model;
 
 public class MatchTest {
 }

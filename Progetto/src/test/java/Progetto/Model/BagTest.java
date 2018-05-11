@@ -1,4 +1,4 @@
-package Progetto;
+package Progetto.Model;
 
 import Progetto.Model.Bag;
 import Progetto.Model.Dice;

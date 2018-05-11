@@ -1,4 +1,4 @@
-package Progetto;
+package Progetto.Model;
 
 import org.junit.Before;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package Progetto.view;
+package Progetto.View;
 
 import java.awt.*;
 
@@ -116,7 +116,7 @@ public class NewMatchForm extends javax.swing.JFrame {
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Progetto/view/sagrada.png")));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Progetto/View/sagrada.png")));
         this.setTitle("Sagrada Boardgame - New Match");
 
         pack();

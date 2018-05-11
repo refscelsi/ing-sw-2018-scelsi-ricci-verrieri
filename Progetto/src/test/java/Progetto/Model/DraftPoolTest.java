@@ -1,4 +1,4 @@
-package Progetto;
+package Progetto.Model;
 
 import static org.junit.Assert.*;
 import Progetto.Model.Dice;

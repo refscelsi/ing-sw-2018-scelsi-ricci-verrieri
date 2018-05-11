@@ -1,4 +1,4 @@
-package Progetto.view;
+package Progetto.View;
 
 import Progetto.Model.Scheme;
 

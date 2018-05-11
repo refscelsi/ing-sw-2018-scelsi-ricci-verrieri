@@ -59,17 +59,17 @@ public class Match {
         //#### Locale
 
         while(i<=numPlayers){
-            if (k==0){
-                nickname=np1;
-            }else
-                nickname=splayer.concat(String.valueOf(k));
-            k++;
-            System.out.println(nickname);
             do {
                 Random random = new Random();
                 order = random.nextInt(numPlayers); // order sarà uguale a 0, 1, 2 o 3 (se ho 4 giocatori)
                 if (possibleNumbers[order]<=numPlayers&&possibleNumbers[order]!=0) {
                     System.out.println(possibleNumbers[order]);
+                    if (k==0){
+                        nickname=np1;
+                    } else
+                        nickname=splayer.concat(String.valueOf(k));
+                    k++;
+                    System.out.println(nickname);
                     //players.add(new Player(nickname, possibleNumbers.get(j-1)));
                     players.add(new Player(nickname,possibleNumbers[order]));
                     i++;
@@ -78,15 +78,6 @@ public class Match {
                 possibleNumbers[order] = 0;
             } while (oldOrder>numPlayers||oldOrder==0);
 
-            Random random = new Random();
-            order = random.nextInt(numPlayers); // order sar? uguale a 0, 1, 2 o 3 (se ho 4 giocatori)
-            do {
-                if (order != 0) {
-                    players.add(new Player(nickname, possibleNumbers[order]));
-                    possibleNumbers[order] = 0;         // metto 0 al posto di ogni numero che ho in possibleNumbers, cos? tengo traccia dei numeri che gi? ho assegnato ad altri giocatori
-                    i++;
-                }
-            } while (possibleNumbers[order]==0);
         }
 
         //# svuoto la ram
@@ -109,21 +100,14 @@ public class Match {
         // preparo tutte le carte, segnalini, ecc del giocatore
 
         i=0;
-        System.out.println("ok1");
         PrivateObjectiveCardDeck privateObjectiveCardDeck = new PrivateObjectiveCardDeck();
-        System.out.println("ok2");
         ArrayList<PrivateObjectiveCard> privateObjectives = new ArrayList<PrivateObjectiveCard>();
-        System.out.println("ok3");
         privateObjectives = privateObjectiveCardDeck.drawObjectiveCard(numPlayers);
-        System.out.println("ok4");
         while (i<numPlayers) {
-            System.out.println("ok10");
             players.get(i).setPrivateObjective(privateObjectives.get(i));
             // il giocatore sceglie il suo schema:
             //players.get(i).setScheme(un certo schema che ha scelto);
-            System.out.println("ok5");
             //players.get(i).setNumOfToken(players.get(i).getScheme().getDifficulty());  ancora non si può eseguire
-            System.out.println("ok6");
             System.out.println(players.get(i).getNickname());
             //System.out.println(players.get(i).getNumOfToken());            ancora non si può eseguire
             System.out.println(players.get(i).getOrderInRound());
@@ -144,6 +128,7 @@ public class Match {
         ObjectiveCardDeck objectiveCardDeck = new ObjectiveCardDeck();
         publicObjectives = new ArrayList<ObjectiveCard>();
         publicObjectives = objectiveCardDeck.drawObjectiveCard();
+        System.out.println(publicObjectives.size());
 
         bag.setDices();
         int i=bag.getSize();
@@ -154,11 +139,6 @@ public class Match {
 
         Dice dice= new Dice();
         System.out.println(dice.throwDice());
-
-        ObjectiveCardDeck deck = new ObjectiveCardDeck();
-        deck.setDeck();
-        deck.drawObjectiveCard(/*3,true*/);
-        System.out.println(deck.getDrawnCardsSize());
 
     }
 

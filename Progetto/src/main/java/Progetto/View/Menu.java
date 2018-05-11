@@ -1,4 +1,4 @@
-package Progetto.view;
+package Progetto.View;
 
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -15,38 +15,38 @@ public class Menu extends javax.swing.JFrame {
     }
     
     public void setIcons(){
-        ImageIcon icon = new javax.swing.ImageIcon(getClass().getResource("/Progetto/view/home.png"));
+        ImageIcon icon = new javax.swing.ImageIcon(getClass().getResource("/Progetto/View/home.png"));
         Image scaledImage = icon.getImage().getScaledInstance(100,100, Image.SCALE_DEFAULT);
         icon.setImage(scaledImage);
         
         newmatch.setIcon(icon);
         newmatch.repaint();
         
-        icon = new javax.swing.ImageIcon(getClass().getResource("/Progetto/view/settings.png"));
+        icon = new javax.swing.ImageIcon(getClass().getResource("/Progetto/View/settings.png"));
         scaledImage = icon.getImage().getScaledInstance(53,53, Image.SCALE_DEFAULT);
         icon.setImage(scaledImage);
         settings.setIcon(icon);
         settings.repaint();
         
-        icon = new javax.swing.ImageIcon(getClass().getResource("/Progetto/view/globe.png"));
+        icon = new javax.swing.ImageIcon(getClass().getResource("/Progetto/View/globe.png"));
         scaledImage = icon.getImage().getScaledInstance(53,53, Image.SCALE_DEFAULT);
         icon.setImage(scaledImage);
         multiplayer.setIcon(icon);
         multiplayer.repaint();
         
-        icon = new javax.swing.ImageIcon(getClass().getResource("/Progetto/view/find.png"));
+        icon = new javax.swing.ImageIcon(getClass().getResource("/Progetto/View/find.png"));
         scaledImage = icon.getImage().getScaledInstance(53,53, Image.SCALE_DEFAULT);
         icon.setImage(scaledImage);
         loadmatch.setIcon(icon);
         loadmatch.repaint();
         
-        icon = new javax.swing.ImageIcon(getClass().getResource("/Progetto/view/add.png"));
+        icon = new javax.swing.ImageIcon(getClass().getResource("/Progetto/View/add.png"));
         scaledImage = icon.getImage().getScaledInstance(53,53, Image.SCALE_DEFAULT);
         icon.setImage(scaledImage);
         addmap.setIcon(icon);
         addmap.repaint();
         
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Progetto/view/sagrada.png")));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Progetto/View/sagrada.png")));
         this.setTitle("Sagrada Boardgame");
     }
     
@@ -121,7 +121,7 @@ public class Menu extends javax.swing.JFrame {
         p1.add(multiplayer);
         multiplayer.setBounds(370, 367, 53, 53);
 
-        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Progetto/view/menu.jpg"))); // NOI18N
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Progetto/View/menu.jpg"))); // NOI18N
         p1.add(background);
         background.setBounds(0, 0, 480, 630);
 

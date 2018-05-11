@@ -1,4 +1,4 @@
-package Progetto;
+package Progetto.Model;
 
 import Progetto.Model.Dice;
 import Progetto.Model.Box;
