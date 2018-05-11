@@ -1,5 +1,6 @@
 package Progetto.Model;
 
+import Progetto.Model.ObjectiveCard.*;
 import Progetto.Model.Exceptions.NotValidException;
 
 public class Player {
@@ -9,7 +10,7 @@ public class Player {
     private int score;
     //private boolean inGame;      credo non sia necessario visto che dobbiamo gestire solo una partita alla volta
     private Scheme scheme;
-    private ObjectiveCard privateObjective;
+    private PrivateObjectiveCard privateObjective;
 
 
     public Player (String nickname, int orderInRound) {
@@ -39,7 +40,7 @@ public class Player {
         return score;
     }
 
-    public ObjectiveCard getPrivateObjective() {
+    public PrivateObjectiveCard getPrivateObjective() {
         return privateObjective;
     }
 
@@ -59,7 +60,7 @@ public class Player {
         this.numOfToken = numOfToken;
     }
 
-    public void setPrivateObjective(ObjectiveCard objectiveCard) {
+    public void setPrivateObjective(PrivateObjectiveCard objectiveCard) {
         privateObjective = objectiveCard;
     }
 

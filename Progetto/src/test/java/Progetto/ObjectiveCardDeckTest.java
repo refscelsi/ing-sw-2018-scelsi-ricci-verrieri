@@ -1,7 +1,7 @@
 package Progetto;
 
 import static org.junit.Assert.*;
-import Progetto.Model.ObjectiveCard;
+import Progetto.Model.ObjectiveCard.*;
 import Progetto.Model.ObjectiveCardDeck;
 
 public class ObjectiveCardDeckTest {

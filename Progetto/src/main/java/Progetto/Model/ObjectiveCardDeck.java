@@ -1,5 +1,6 @@
 package Progetto.Model;
 
+import Progetto.Model.ObjectiveCard.*;
 import java.util.*;
 
 public class ObjectiveCardDeck {
@@ -13,51 +14,32 @@ public class ObjectiveCardDeck {
     }
 
     public void setDeck () {
-        ObjectiveCard oc=new ObjectiveCard("Colori diversi - Riga", 6, false);
+        ObjectiveCard oc=new DifferentColorRow();
         deck.add(oc);
-        oc=new ObjectiveCard("Colori diversi - Colonna", 5, false);
+        oc=new DifferentColorColumn();
         deck.add(oc);
-        oc=new ObjectiveCard("Sfumature diverse - Riga", 5, false);
+        oc=new DifferentShadeRow();
         deck.add(oc);
-        oc=new ObjectiveCard("Sfumature diverse - Colonna", 4, false);
+        oc=new DifferentShadeColumn();
         deck.add(oc);
-        oc=new ObjectiveCard("Sfumature chiare", 2, false);
+        oc=new Shades(1);
         deck.add(oc);
-        oc=new ObjectiveCard("Sfumature medie", 2, false);
+        oc=new Shades(3);
         deck.add(oc);
-        oc=new ObjectiveCard("Sfumature scure", 2, false);
+        oc=new Shades(5);
         deck.add(oc);
-        oc=new ObjectiveCard("Sfumature diverse", 5, false);
+        oc=new DifferentShades();
         deck.add(oc);
-        oc=new ObjectiveCard("Diagonali colorate", 0, false);
+        oc=new DifferentColors();
         deck.add(oc);
-        oc=new ObjectiveCard("Varietà di colore", 4, false);
+        oc=new ColoredDiagonals();
         deck.add(oc);
-        oc=new ObjectiveCard("Sfumature rosse", 0, true);
-        deck.add(oc);
-        oc=new ObjectiveCard("Sfumature gialle", 0, true);
-        deck.add(oc);
-        oc=new ObjectiveCard("Sfumature verdi", 0, true);
-        deck.add(oc);
-        oc=new ObjectiveCard("Sfumature blu", 0, true);
-        deck.add(oc);
-        oc=new ObjectiveCard("Sfumature viola", 0, true);
-        deck.add(oc);
-
-        // continua così per tutte le 15 carte obiettivo --> dobbiamo caricarle da file?
     }
 
-    public ArrayList<ObjectiveCard> drawObjectiveCard (int num, boolean isPrivate){  // mettiamo num=numPlayers e isPrivate=1 quando vogliamo estrarre le carte obiettivo privato e num=3 e isPrivate=0 quando vogliamo estrarre le 3 carte obiettivo pubblico
+    public ArrayList<ObjectiveCard> drawObjectiveCard (){
         Collections.shuffle(deck);
-        int j=0, i=0;   // j è il contatore delle posizioni di deck, i è il contatore delle carte che metto in drawnCards
-        while (i<num) {
-            if (deck.get(j).isPrivate()==isPrivate) {
-                drawnCards.add(deck.get(j));
-                //deck.remove(j);
-                i++;
-            }
-            j++;
-        }
+        for (int i=0; i<3; i++)
+            drawnCards.add(deck.get(i));
         return drawnCards;
     }
 

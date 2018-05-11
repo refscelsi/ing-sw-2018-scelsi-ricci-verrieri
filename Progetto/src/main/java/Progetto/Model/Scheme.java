@@ -12,7 +12,7 @@ public class Scheme {
         this.isEmpty=true;
     }
 
-    public Box[][] getboxes() {
+    public Box[][] getBoxes() {
         return boxes;
     }
 
@@ -86,17 +86,27 @@ public class Scheme {
             downLeft=boxes[row+1][column-1].isFull();
 
         if (right || left || up || down || upRight || upLeft || downRight || downLeft) {
-            if (right)
-                right = checkOrthogonal(row, column+1, dice);
-            if (right&&left)     // metto tutte queste condizioni nell'if così entra solo se già ha passato tutti i controlli precedenti
-                left = checkOrthogonal(row, column-1, dice);
-            if (right&&left&&up)
-                up = checkOrthogonal(row-1, column, dice);
-            if (right&&left&&up&&down) {
-                down = checkOrthogonal(row+1, column, dice);
-                return down;
+            if (right) {
+                right = checkOrthogonal(row, column + 1, dice);
+                if (!right)
+                    return false;
             }
-
+            if (left) {   // metto tutte queste condizioni nell'if così entra solo se già ha passato tutti i controlli precedenti
+                left = checkOrthogonal(row, column - 1, dice);
+                if (!left)
+                    return false;
+            }
+            if (up) {
+                up = checkOrthogonal(row - 1, column, dice);
+                if (!up)
+                    return false;
+            }
+            if (down) {
+                down = checkOrthogonal(row+1, column, dice);
+                if (!down)
+                    return false;
+            }
+            return true;
         }
 
         return false;
@@ -104,14 +114,12 @@ public class Scheme {
     }
 
     public Boolean checkOrthogonal(int i, int y, Dice dice) {
-        if (checkColor(boxes[i][y].getDice().getDiceColor(),dice.getDiceColor()))
-            return false;
-        else if (checkShade(boxes[i][y].getDice().getNumFacciaUp(),dice.getNumFacciaUp()))
+        if (checkColor(boxes[i][y].getDice().getDiceColor(),dice.getDiceColor()) || checkShade(boxes[i][y].getDice().getNumFacciaUp(),dice.getNumFacciaUp()))
             return false;
         return true;
     }
 
-    public void setboxes(Box[][] boxes) {
+    public void setBoxes(Box[][] boxes) {
         this.boxes = boxes;
     }
 
@@ -137,6 +145,15 @@ public class Scheme {
 
     public void setId(short id) {
         this.id = id;
+    }
+
+    public int countFreeBoxes() {
+        int free = 0;
+        for (int i=0; i<4; i++)
+            for (int j=0; j<5; j++)
+                if (!boxes[i][j].isFull())
+                    free++;
+        return free;
     }
 
 

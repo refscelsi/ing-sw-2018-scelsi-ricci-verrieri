@@ -1,5 +1,6 @@
 package Progetto.Model;
 
+import Progetto.Model.ObjectiveCard.*;
 import java.util.Scanner;
 import java.util.Random;
 import java.util.*;
@@ -9,7 +10,7 @@ public class Match {
     private int id;
     private int numPlayers;
     private ArrayList<Player> players;
-    private int playerPlaying;
+    private int firstPlayer;    // primo giocatore del round. Se sono 4 giocatori può essere 0, 1, 2 o 3
     private Bag bag;
     private ArrayList<ObjectiveCard> publicObjectives;
 
@@ -28,10 +29,10 @@ public class Match {
         shuffleCard();
 
         for (int i=0; i<10; i++) {
-            Round round = new Round (playerPlaying);
-            playerPlaying += 1;
-            if (playerPlaying > numPlayers) //perchè =1??
-                playerPlaying = 1;
+            Round round = new Round (firstPlayer);
+            firstPlayer += 1;
+            if (firstPlayer >= numPlayers)
+                firstPlayer = 0;
         }
 
         //ora devo aspettare che round mi dica di finire
@@ -88,18 +89,18 @@ public class Match {
                 }
             } while (possibleNumbers[order]==0);*/
         }
-        playerPlaying = 1; // all'inizio del gioco il primo giocatore sar? il numero 1
+        firstPlayer = 0; // all'inizio del gioco il primo giocatore sar? il numero 0
 
         // preparo tutte le carte, segnalini, ecc del giocatore
 
 
         i=0;
         System.out.println("ok1");
-        ObjectiveCardDeck objectiveCardDeck = new ObjectiveCardDeck();
+        PrivateObjectiveCardDeck privateObjectiveCardDeck = new PrivateObjectiveCardDeck();
         System.out.println("ok2");
-        ArrayList<ObjectiveCard> privateObjectives = new ArrayList<ObjectiveCard>();
+        ArrayList<PrivateObjectiveCard> privateObjectives = new ArrayList<PrivateObjectiveCard>();
         System.out.println("ok3");
-        privateObjectives = objectiveCardDeck.drawObjectiveCard(numPlayers, true);
+        privateObjectives = privateObjectiveCardDeck.drawObjectiveCard(numPlayers);
         System.out.println("ok4");
         while (i<numPlayers) {
             System.out.println("ok10");
@@ -112,7 +113,7 @@ public class Match {
             System.out.println(players.get(i).getNickname());
             //System.out.println(players.get(i).getNumOfToken());            ancora non si può eseguire
             System.out.println(players.get(i).getOrderInRound());
-            System.out.println(players.get(i).getPrivateObjective().getName());
+            System.out.println(players.get(i).getPrivateObjective().getColor());
             i++;
         }
 
@@ -128,7 +129,7 @@ public class Match {
         bag = new Bag();
         ObjectiveCardDeck objectiveCardDeck = new ObjectiveCardDeck();
         publicObjectives = new ArrayList<ObjectiveCard>();
-        publicObjectives = objectiveCardDeck.drawObjectiveCard(3, false);
+        publicObjectives = objectiveCardDeck.drawObjectiveCard();
 
     }
 
@@ -141,7 +142,54 @@ public class Match {
     /*public int startRound(int firstPlayer) {
     }*/
 
-    public void endMatch(){
+    public ArrayList<Player> getRanking() {   // ritorna un array di giocatori ordinato dal punteggio massimo al minimo
+        int scores[] = new int[numPlayers];
+        ArrayList<Player> ranking = new ArrayList<Player>();
+        int i, j, max, k=1;
+        boolean found = false;
+        for (i=0; i<numPlayers; i++) {
+            scores[i] = calculateScore(players.get(i));
+        }
+        for(i=0; i<numPlayers; i++) {
+            max = 0;
+            for(j=1; j<numPlayers; j++) {
+                if (scores[j] > scores[max])
+                    max = j;
+                else if (scores[j]==scores[max])
+                    if (players.get(j).getPrivateObjective().calculateScore(players.get(j).getScheme())>players.get(max).getPrivateObjective().calculateScore(players.get(max).getScheme()))
+                        max = j;
+                    else if (players.get(j).getPrivateObjective().calculateScore(players.get(j).getScheme())==players.get(max).getPrivateObjective().calculateScore(players.get(max).getScheme()))
+                        if (players.get(j).getNumOfToken()>players.get(max).getNumOfToken())
+                            max = j;
+                        else if (players.get(j).getNumOfToken()==players.get(max).getNumOfToken())
+                            while (k<=numPlayers&&!found)
+                                if (players.get(firstPlayer-k)==players.get(j)) {
+                                    max = j;
+                                    found = true;
+                                }
+                                else if (players.get(firstPlayer-k)==players.get(max))
+                                    found = true;
+                                k++;
+            }
+
+            ranking.add(players.get(max));
+        }
+
+        return ranking;
+    }
+
+    public int calculateScore(Player player) {
+        int score = 0;
+        for (int i=0; i<3; i++)
+            score = score + publicObjectives.get(i).calculateScore();
+        score = score + player.getPrivateObjective().calculateScore(player.getScheme());
+        score = score + player.getNumOfToken();
+        score = score - player.getScheme().countFreeBoxes();
+        player.setScore(score);
+        return score;
+    }
+
+    public void endMatch() {
        // qui calcolo il punteggio
     }
 }
