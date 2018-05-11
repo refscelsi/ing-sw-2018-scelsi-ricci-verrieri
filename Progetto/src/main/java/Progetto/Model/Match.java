@@ -7,16 +7,18 @@ import java.util.*;
 
 public class Match {
 
-    private int id;
+    private String id;
     private int numPlayers;
     private ArrayList<Player> players;
     private int firstPlayer;    // primo giocatore del round. Se sono 4 giocatori può essere 0, 1, 2 o 3
     private Bag bag;
     private ArrayList<ObjectiveCard> publicObjectives;
+    private String np1;
 
-    public Match(int id /*, int numPlayers */) {   /* Match non può avere un costruttore che prende in input anche il numero dei giocatori, perché altrimenti la classe Match non può essere creata finché non si sa il numero dei giocatori */
+    public Match(String id , int numPlayers , String np1) {
         this.id=id;
-        /* this.numPlayers=numPlayers; */
+        this.numPlayers=numPlayers;
+        this.np1=np1;
     }
 
     public String startMatch(){
@@ -28,6 +30,7 @@ public class Match {
 
         shuffleCard();
 
+        //inizializzare un array con l'ordine dei player fino al decimo round e scorrerlo per svolgere i turni
         for (int i=0; i<10; i++) {
             Round round = new Round (firstPlayer);
             firstPlayer += 1;
@@ -35,12 +38,73 @@ public class Match {
                 firstPlayer = 0;
         }
 
-        //ora devo aspettare che round mi dica di finire
+        //aspettare che round mi dica di finire
         endMatch();
         return null;
     }
 
     public void inizializePlayer(){
+        //Bisogna distinguere se si tratta di una partita locale o su un server
+        players=new ArrayList<Player>();
+
+        //#### Locale
+        Player p= new Player(np1,0);
+        System.out.println(np1);
+        players.add(p);
+
+        //# Creo i nomi per i giocatori oltre al primo
+        String player= "Player";
+        for (int i=0;i<numPlayers-1;i++){
+            p=new Player(player.concat(String.valueOf(i)),0);
+            System.out.println(player.concat(String.valueOf(i)));
+            players.add(p);
+        }
+
+        //# svuoto la ram
+        p=null;
+        player=null;
+
+        //# assegno ordine ai giocatori
+
+        Random random = new Random();
+        int k = random.nextInt(numPlayers);
+        System.out.println(k);
+
+
+        //Questa funzione dovrebbe riordinare i giocatori in maniera appropriata al numero e al numero casuale di inizio estratto
+        // DA FINIRE
+        switch (k){
+            case 0: for (int j=1;j<numPlayers-1;j++){
+                players.get(k-1).setOrderInRound(j);
+            }
+                break;
+            case 1: for (int j=1;j<numPlayers-1;j++){
+                players.get(k-1).setOrderInRound(j);
+            }
+                break;
+            case 2: for (int j=1;j<numPlayers-1;j++){
+                players.get(k-1).setOrderInRound(j);
+            }
+                break;
+            case 3: for (int j=1;j<numPlayers-1;j++){
+                players.get(k-1).setOrderInRound(j);
+            }
+                break;
+        }
+
+
+
+            players.get(k-1).setOrderInRound(0);
+
+        //#### fine locale
+
+        //#### server
+
+        //da implementare
+
+        //#### fine server
+
+        //############################################################################### cose che boh
 
         // inizializzo i dati di un giocatore
 
@@ -49,15 +113,19 @@ public class Match {
         System.out.println(possibleNumbers);
         Collections.shuffle(possibleNumbers);
         System.out.println(possibleNumbers);*/
-
+/*
         int possibleNumbers[]={1,2,3,4};
         int i=1;
         int order, oldOrder;
         //boolean find;
-        String nickname;
+        String nickname;*/
+
+        /*
         System.out.println("Ciao, quanti siete a giocare?");
         Scanner input= new Scanner(System.in);
-        numPlayers=input.nextInt();
+        numPlayers=input.nextInt();*/
+
+        /*
         players = new ArrayList<Player>();
         while(i<=numPlayers){
             Scanner input1= new Scanner(System.in);
@@ -79,7 +147,7 @@ public class Match {
                 possibleNumbers[order] = 0;
             } while (oldOrder>numPlayers||oldOrder==0);
 
-            /*Random random = new Random();
+            Random random = new Random();
             int order = random.nextInt(numPlayers); // order sar? uguale a 0, 1, 2 o 3 (se ho 4 giocatori)
             do {
                 if (order != 0) {
@@ -87,13 +155,14 @@ public class Match {
                     possibleNumbers[order] = 0;         // metto 0 al posto di ogni numero che ho in possibleNumbers, cos? tengo traccia dei numeri che gi? ho assegnato ad altri giocatori
                     i++;
                 }
-            } while (possibleNumbers[order]==0);*/
-        }
-        firstPlayer = 0; // all'inizio del gioco il primo giocatore sar? il numero 0
+            } while (possibleNumbers[order]==0);
+        }*/
+
+        //firstPlayer = 0; // all'inizio del gioco il primo giocatore sar? il numero 0
 
         // preparo tutte le carte, segnalini, ecc del giocatore
 
-
+        /*
         i=0;
         System.out.println("ok1");
         PrivateObjectiveCardDeck privateObjectiveCardDeck = new PrivateObjectiveCardDeck();
@@ -105,8 +174,8 @@ public class Match {
         while (i<numPlayers) {
             System.out.println("ok10");
             players.get(i).setPrivateObjective(privateObjectives.get(i));
-            /* il giocatore sceglie il suo schema:
-            players.get(i).setScheme(un certo schema che ha scelto); */
+            // il giocatore sceglie il suo schema:
+            //players.get(i).setScheme(un certo schema che ha scelto);
             System.out.println("ok5");
             //players.get(i).setNumOfToken(players.get(i).getScheme().getDifficulty());  ancora non si può eseguire
             System.out.println("ok6");
@@ -116,7 +185,7 @@ public class Match {
             System.out.println(players.get(i).getPrivateObjective().getColor());
             i++;
         }
-
+        */
     }
 
     public void initializeTable(){
@@ -130,6 +199,21 @@ public class Match {
         ObjectiveCardDeck objectiveCardDeck = new ObjectiveCardDeck();
         publicObjectives = new ArrayList<ObjectiveCard>();
         publicObjectives = objectiveCardDeck.drawObjectiveCard();
+
+        bag.setDices();
+        int i=bag.getSize();
+        System.out.println(i);
+
+        System.out.println("Colore"+bag.draw(4));
+        System.out.println(bag.getSize());
+
+        Dice dice= new Dice();
+        System.out.println(dice.throwDice());
+
+        ObjectiveCardDeck deck = new ObjectiveCardDeck();
+        deck.setDeck();
+        deck.drawObjectiveCard(/*3,true*/);
+        System.out.println(deck.getDrawnCardsSize());
 
     }
 

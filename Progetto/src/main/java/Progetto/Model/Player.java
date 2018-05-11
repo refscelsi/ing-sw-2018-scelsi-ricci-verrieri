@@ -5,7 +5,7 @@ import Progetto.Model.Exceptions.NotValidException;
 
 public class Player {
     private final String nickname;
-    private final int orderInRound;    // ordine che viene assegnato al giocatore nel primo round. Questo numero identifica il giocatore ed è molto più comodo gestire tutta la parte di passaggio da un giocatore all'altro utilizzando questo
+    private int orderInRound;    // ordine che viene assegnato al giocatore nel primo round. Questo numero identifica il giocatore ed è molto più comodo gestire tutta la parte di passaggio da un giocatore all'altro utilizzando questo
     private int numOfToken;
     private int score;
     //private boolean inGame;      credo non sia necessario visto che dobbiamo gestire solo una partita alla volta
@@ -38,6 +38,10 @@ public class Player {
 
     public int getScore() {
         return score;
+    }
+
+    public void setOrderInRound(int i){
+        orderInRound=i;
     }
 
     public PrivateObjectiveCard getPrivateObjective() {

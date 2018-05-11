@@ -6,13 +6,12 @@ import javax.swing.ImageIcon;
 
 public class Menu extends javax.swing.JFrame {
 
-    private NewMatchForm nmf;
+    private NewMatchForm nmf = new NewMatchForm();
     
     public Menu() {
         initComponents();
         setLocationRelativeTo(null);        
-        setIcons();  
-        
+        setIcons();          
     }
     
     public void setIcons(){
@@ -142,7 +141,6 @@ public class Menu extends javax.swing.JFrame {
 
     private void newmatchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_newmatchMouseClicked
         scompareMenu();
-        nmf= new NewMatchForm();
         nmf.setVisible(true);
     }//GEN-LAST:event_newmatchMouseClicked
 

@@ -10,6 +10,7 @@ import Progetto.Model.ObjectiveCardDeck;
 import Progetto.view.Menu;
 
 public class App {
+    public static Menu menu;
     public static void main( String[] args ){
         //System.out.println( "Ciao sono bellissima" );
         /*Random r = new Random();
@@ -23,7 +24,7 @@ public class App {
         */
         //################################### classe vera
 
-        Menu menu =new Menu();
+        menu =new Menu();
         menu.setVisible(true);
 
 
