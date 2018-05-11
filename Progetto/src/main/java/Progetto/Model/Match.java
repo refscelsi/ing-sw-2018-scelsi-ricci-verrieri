@@ -46,55 +46,50 @@ public class Match {
     public void inizializePlayer(){
         //Bisogna distinguere se si tratta di una partita locale o su un server
         players=new ArrayList<Player>();
+        int possibleNumbers[]={1,2,3,4};
+        int i=1;
+        int order, oldOrder;
+        //boolean find;
+        String nickname;
+        String splayer= "Player";
+        int k = 0;
 
         //#### Locale
-        Player p= new Player(np1,0);
-        System.out.println(np1);
-        players.add(p);
 
-        //# Creo i nomi per i giocatori oltre al primo
-        String player= "Player";
-        for (int i=0;i<numPlayers-1;i++){
-            p=new Player(player.concat(String.valueOf(i)),0);
-            System.out.println(player.concat(String.valueOf(i)));
-            players.add(p);
+        while(i<=numPlayers){
+            /*Scanner input1= new Scanner(System.in);
+            System.out.println("Inserisci nickname "+i);*/
+            if (k==0){
+                nickname=np1;
+            }else
+                nickname=splayer.concat(String.valueOf(k));
+            k++;
+            System.out.println(nickname);
+            do {
+                Random random = new Random();
+                order = random.nextInt(numPlayers); // order sarà uguale a 0, 1, 2 o 3 (se ho 4 giocatori)
+                if (possibleNumbers[order]<=numPlayers&&possibleNumbers[order]!=0) {
+                    System.out.println(possibleNumbers[order]);
+                    //players.add(new Player(nickname, possibleNumbers.get(j-1)));
+                    players.add(new Player(nickname,possibleNumbers[order]));
+                    i++;
+                }
+                oldOrder = possibleNumbers[order];
+                possibleNumbers[order] = 0;
+            } while (oldOrder>numPlayers||oldOrder==0);
+
+            Random random = new Random();
+            order = random.nextInt(numPlayers); // order sar? uguale a 0, 1, 2 o 3 (se ho 4 giocatori)
+            do {
+                if (order != 0) {
+                    players.add(new Player(nickname, possibleNumbers[order]));
+                    possibleNumbers[order] = 0;         // metto 0 al posto di ogni numero che ho in possibleNumbers, cos? tengo traccia dei numeri che gi? ho assegnato ad altri giocatori
+                    i++;
+                }
+            } while (possibleNumbers[order]==0);
         }
 
         //# svuoto la ram
-        p=null;
-        player=null;
-
-        //# assegno ordine ai giocatori
-
-        Random random = new Random();
-        int k = random.nextInt(numPlayers);
-        System.out.println(k);
-
-
-        //Questa funzione dovrebbe riordinare i giocatori in maniera appropriata al numero e al numero casuale di inizio estratto
-        // DA FINIRE
-        switch (k){
-            case 0: for (int j=1;j<numPlayers-1;j++){
-                players.get(k-1).setOrderInRound(j);
-            }
-                break;
-            case 1: for (int j=1;j<numPlayers-1;j++){
-                players.get(k-1).setOrderInRound(j);
-            }
-                break;
-            case 2: for (int j=1;j<numPlayers-1;j++){
-                players.get(k-1).setOrderInRound(j);
-            }
-                break;
-            case 3: for (int j=1;j<numPlayers-1;j++){
-                players.get(k-1).setOrderInRound(j);
-            }
-                break;
-        }
-
-
-
-            players.get(k-1).setOrderInRound(0);
 
         //#### fine locale
 
@@ -106,57 +101,10 @@ public class Match {
 
         //############################################################################### cose che boh
 
-        // inizializzo i dati di un giocatore
 
-        /*Integer[] array = new Integer[]{1, 2, 3, 4};
-        List<Integer> possibleNumbers = Arrays.asList(array);
-        System.out.println(possibleNumbers);
-        Collections.shuffle(possibleNumbers);
-        System.out.println(possibleNumbers);*/
-/*
-        int possibleNumbers[]={1,2,3,4};
-        int i=1;
-        int order, oldOrder;
-        //boolean find;
-        String nickname;*/
 
-        /*
-        System.out.println("Ciao, quanti siete a giocare?");
-        Scanner input= new Scanner(System.in);
-        numPlayers=input.nextInt();*/
 
-        /*
-        players = new ArrayList<Player>();
-        while(i<=numPlayers){
-            Scanner input1= new Scanner(System.in);
-            System.out.println("Inserisci nickname "+i);
-            nickname=input1.nextLine();
-            System.out.println(nickname);
-            do {
-                Random random = new Random();
-                order = random.nextInt(numPlayers); // order sarà uguale a 0, 1, 2 o 3 (se ho 4 giocatori)
-                if (possibleNumbers[order]<=numPlayers&&possibleNumbers[order]!=0) {
-                    System.out.println(possibleNumbers[order]);
-                    Player player = new Player(nickname,possibleNumbers[order]);
-                    players.add(player);
-                    //players.add(new Player(nickname, possibleNumbers.get(j-1)));
-                    i++;
-                    System.out.println(player.getNickname());
-                }
-                oldOrder = possibleNumbers[order];
-                possibleNumbers[order] = 0;
-            } while (oldOrder>numPlayers||oldOrder==0);
 
-            Random random = new Random();
-            int order = random.nextInt(numPlayers); // order sar? uguale a 0, 1, 2 o 3 (se ho 4 giocatori)
-            do {
-                if (order != 0) {
-                    players.add(new Player(nickname, possibleNumbers[order]));
-                    possibleNumbers[order] = 0;         // metto 0 al posto di ogni numero che ho in possibleNumbers, cos? tengo traccia dei numeri che gi? ho assegnato ad altri giocatori
-                    i++;
-                }
-            } while (possibleNumbers[order]==0);
-        }*/
 
         //firstPlayer = 0; // all'inizio del gioco il primo giocatore sar? il numero 0
 
