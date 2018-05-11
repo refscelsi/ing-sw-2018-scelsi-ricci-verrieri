@@ -45,6 +45,8 @@ public class Match {
 
     public void inizializePlayer(){
         //Bisogna distinguere se si tratta di una partita locale o su un server
+
+        //##iniz var
         players=new ArrayList<Player>();
         int possibleNumbers[]={1,2,3,4};
         int i=1;
@@ -57,8 +59,6 @@ public class Match {
         //#### Locale
 
         while(i<=numPlayers){
-            /*Scanner input1= new Scanner(System.in);
-            System.out.println("Inserisci nickname "+i);*/
             if (k==0){
                 nickname=np1;
             }else
@@ -90,6 +90,9 @@ public class Match {
         }
 
         //# svuoto la ram
+        splayer=null;
+        nickname=null;
+        possibleNumbers= null;
 
         //#### fine locale
 
@@ -101,16 +104,10 @@ public class Match {
 
         //############################################################################### cose che boh
 
-
-
-
-
-
-        //firstPlayer = 0; // all'inizio del gioco il primo giocatore sar? il numero 0
+        firstPlayer = 0; // all'inizio del gioco il primo giocatore sar? il numero 0
 
         // preparo tutte le carte, segnalini, ecc del giocatore
 
-        /*
         i=0;
         System.out.println("ok1");
         PrivateObjectiveCardDeck privateObjectiveCardDeck = new PrivateObjectiveCardDeck();
@@ -133,7 +130,7 @@ public class Match {
             System.out.println(players.get(i).getPrivateObjective().getColor());
             i++;
         }
-        */
+
     }
 
     public void initializeTable(){
