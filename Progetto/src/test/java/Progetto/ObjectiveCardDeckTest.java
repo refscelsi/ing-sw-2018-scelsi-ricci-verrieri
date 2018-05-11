@@ -24,7 +24,7 @@ public class ObjectiveCardDeckTest {
     @org.junit.Test
     public void drawObjectiveCard() {
         deck.setDeck();
-        deck.drawObjectiveCard(3, true);
+        deck.drawObjectiveCard(/*3, true*/);
         assertEquals(3,deck.getDrawnCardsSize());
     }
 
