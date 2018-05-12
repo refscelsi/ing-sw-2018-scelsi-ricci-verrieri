@@ -2,11 +2,15 @@ package Progetto.View;
 
 import java.awt.Image;
 import java.awt.Toolkit;
-import javax.swing.ImageIcon;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import javax.swing.*;
 
 public class Menu extends javax.swing.JFrame {
 
     private NewMatchForm nmf;
+    private AddScheme as;
     
     public Menu() {
         initComponents();
@@ -15,38 +19,38 @@ public class Menu extends javax.swing.JFrame {
     }
     
     public void setIcons(){
-        ImageIcon icon = new javax.swing.ImageIcon(getClass().getResource("/Progetto/View/home.png"));
+        ImageIcon icon = new javax.swing.ImageIcon(getClass().getResource("/Progetto/View/img/home.png"));
         Image scaledImage = icon.getImage().getScaledInstance(100,100, Image.SCALE_DEFAULT);
         icon.setImage(scaledImage);
         
         newmatch.setIcon(icon);
         newmatch.repaint();
         
-        icon = new javax.swing.ImageIcon(getClass().getResource("/Progetto/View/settings.png"));
+        icon = new javax.swing.ImageIcon(getClass().getResource("/Progetto/View/img/settings.png"));
         scaledImage = icon.getImage().getScaledInstance(53,53, Image.SCALE_DEFAULT);
         icon.setImage(scaledImage);
         settings.setIcon(icon);
         settings.repaint();
         
-        icon = new javax.swing.ImageIcon(getClass().getResource("/Progetto/View/globe.png"));
+        icon = new javax.swing.ImageIcon(getClass().getResource("/Progetto/View/img/globe.png"));
         scaledImage = icon.getImage().getScaledInstance(53,53, Image.SCALE_DEFAULT);
         icon.setImage(scaledImage);
         multiplayer.setIcon(icon);
         multiplayer.repaint();
         
-        icon = new javax.swing.ImageIcon(getClass().getResource("/Progetto/View/find.png"));
+        icon = new javax.swing.ImageIcon(getClass().getResource("/Progetto/View/img/find.png"));
         scaledImage = icon.getImage().getScaledInstance(53,53, Image.SCALE_DEFAULT);
         icon.setImage(scaledImage);
         loadmatch.setIcon(icon);
         loadmatch.repaint();
         
-        icon = new javax.swing.ImageIcon(getClass().getResource("/Progetto/View/add.png"));
+        icon = new javax.swing.ImageIcon(getClass().getResource("/Progetto/View/img/add.png"));
         scaledImage = icon.getImage().getScaledInstance(53,53, Image.SCALE_DEFAULT);
         icon.setImage(scaledImage);
         addmap.setIcon(icon);
         addmap.repaint();
         
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Progetto/View/sagrada.png")));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Progetto/View/img/sagrada.png")));
         this.setTitle("Sagrada Boardgame");
     }
     
@@ -62,7 +66,22 @@ public class Menu extends javax.swing.JFrame {
         multiplayer = new javax.swing.JLabel();
         background = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        //setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        WindowListener exitListener = new WindowAdapter() {
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int confirm = JOptionPane.showOptionDialog(
+                        null, "Are You Sure to Close Application?",
+                        "Exit Confirmation", JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE, null, null, null);
+                if (confirm == 0) {
+                    System.exit(0);
+                }
+            }
+        };
+        addWindowListener(exitListener);
+
         setIconImages(null);
         setMinimumSize(new java.awt.Dimension(480, 658));
         setPreferredSize(new java.awt.Dimension(480, 658));
@@ -121,7 +140,7 @@ public class Menu extends javax.swing.JFrame {
         p1.add(multiplayer);
         multiplayer.setBounds(370, 367, 53, 53);
 
-        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Progetto/View/menu.jpg"))); // NOI18N
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Progetto/View/img/menu.jpg"))); // NOI18N
         p1.add(background);
         background.setBounds(0, 0, 480, 630);
 
@@ -147,6 +166,8 @@ public class Menu extends javax.swing.JFrame {
 
     private void addmapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addmapMouseClicked
         scompareMenu();
+        as=new AddScheme();
+        as.setVisible(true);
     }//GEN-LAST:event_addmapMouseClicked
 
     private void loadmatchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loadmatchMouseClicked

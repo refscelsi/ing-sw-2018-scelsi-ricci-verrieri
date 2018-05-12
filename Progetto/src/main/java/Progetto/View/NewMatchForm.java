@@ -1,13 +1,16 @@
 package Progetto.View;
 
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 public class NewMatchForm extends javax.swing.JFrame {
     public NewMatchForm() {
         initComponents();
         setLocationRelativeTo(null);
     }
-    @SuppressWarnings("unchecked")
+    
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
 
@@ -22,7 +25,14 @@ public class NewMatchForm extends javax.swing.JFrame {
         annulla = new javax.swing.JButton();
         avviaMatch = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        //setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        WindowListener exitListener = new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                tornaMenu();
+            }
+        };
+        addWindowListener(exitListener);
 
         jPanel1.setBackground(new java.awt.Color(204, 255, 255));
 
@@ -116,7 +126,7 @@ public class NewMatchForm extends javax.swing.JFrame {
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Progetto/View/sagrada.png")));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Progetto/View/img/sagrada.png")));
         this.setTitle("Sagrada Boardgame - New Match");
 
         pack();
