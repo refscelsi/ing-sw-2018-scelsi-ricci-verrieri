@@ -16,7 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 
-public class GUI extends javax.swing.JFrame implements FocusListener,MouseListener, KeyListener{
+public class AddScheme extends javax.swing.JFrame implements FocusListener,MouseListener, KeyListener{
 
     private final JLabel box[][]=new JLabel[4][5];
     private final JLabel c1[][]=new JLabel[4][5];
@@ -35,7 +35,7 @@ public class GUI extends javax.swing.JFrame implements FocusListener,MouseListen
     private boolean bc5[][]=new boolean[4][5];
     private boolean bc6[][]=new boolean[4][5];
     
-    public GUI() {
+    public AddScheme() {
         initComponents();
                 
         pBox.setLayout(null);
@@ -599,20 +599,21 @@ public class GUI extends javax.swing.JFrame implements FocusListener,MouseListen
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddScheme.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddScheme.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddScheme.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddScheme.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GUI().setVisible(true);
+                new AddScheme().setVisible(true);
             }
         });
     }

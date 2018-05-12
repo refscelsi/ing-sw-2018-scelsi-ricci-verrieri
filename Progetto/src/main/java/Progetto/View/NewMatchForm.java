@@ -6,6 +6,10 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 public class NewMatchForm extends javax.swing.JFrame {
+
+    private TableFrame tf;
+    private boolean controllo=true;
+
     public NewMatchForm() {
         initComponents();
         setLocationRelativeTo(null);
@@ -17,7 +21,7 @@ public class NewMatchForm extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         nameMatchTF = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        playerNameTF = new javax.swing.JTextField();
         nuumPlayerCB = new javax.swing.JComboBox<>();
         nameMatch = new javax.swing.JLabel();
         nomePlayer1 = new javax.swing.JLabel();
@@ -39,8 +43,32 @@ public class NewMatchForm extends javax.swing.JFrame {
         jLabel1.setOpaque(true);
 
         nameMatchTF.setText("Nome partita");
+        nameMatchTF.setForeground(new java.awt.Color(153, 153, 153));
+        nameMatchTF.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                nameMatchTFMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                nameMatchTFMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                nameMatchTFMouseExited(evt);
+            }
+        });
 
-        jTextField2.setText("Nome Giocatore 1");
+        playerNameTF.setText("Nome Giocatore 1");
+        playerNameTF.setForeground(new java.awt.Color(153, 153, 153));
+        playerNameTF.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                playerNameTFMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                playerNameTFMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                playerNameTFMouseExited(evt);
+            }
+        });
 
         nuumPlayerCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4" }));
 
@@ -83,7 +111,7 @@ public class NewMatchForm extends javax.swing.JFrame {
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                         .addComponent(nameMatchTF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(playerNameTF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         .addComponent(nuumPlayerCB, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                                 .addComponent(avviaMatch)
@@ -102,7 +130,7 @@ public class NewMatchForm extends javax.swing.JFrame {
                                         .addComponent(nameMatch))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(playerNameTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(nomePlayer1))
                                 .addGap(31, 31, 31)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -137,7 +165,13 @@ public class NewMatchForm extends javax.swing.JFrame {
         //this.setVisible(false);
         Progetto.Model.Match match=new Progetto.Model.Match(nameMatchTF.getText(),nuumPlayerCB.getSelectedIndex()+1,nomePlayer1.getText());
         System.out.println(nuumPlayerCB.getSelectedIndex());
+        
+        tf=new TableFrame(match);
+        
+        tf.setVisible(true);
+        this.setVisible(false);
         match.startMatch();
+        
         //nel caso ci siano ulteriori informazioni da passare  verranno inserite qui
     }
 
@@ -150,31 +184,34 @@ public class NewMatchForm extends javax.swing.JFrame {
         Progetto.App.menu.setVisible(true);
     }
 
-    public static void main(String args[]) {
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NewMatchForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NewMatchForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NewMatchForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NewMatchForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void nameMatchTFMouseEntered(java.awt.event.MouseEvent evt) {
+        if (controllo)
+            nameMatchTF.setText("");
+    }
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new NewMatchForm().setVisible(true);
-            }
-        });
+    private void nameMatchTFMouseClicked(java.awt.event.MouseEvent evt) {
+        controllo=false;
+        nameMatchTF.setForeground(new java.awt.Color(0, 0, 0));
+    }
+
+    private void nameMatchTFMouseExited(java.awt.event.MouseEvent evt) {
+        if (controllo)
+            nameMatchTF.setText("Nome partita");
+    }
+
+    private void playerNameTFMouseEntered(java.awt.event.MouseEvent evt) {
+        if (controllo)
+            playerNameTF.setText("");
+    }
+
+    private void playerNameTFMouseClicked(java.awt.event.MouseEvent evt) {
+        controllo=false;
+        playerNameTF.setForeground(new java.awt.Color(0, 0, 0));
+    }
+
+    private void playerNameTFMouseExited(java.awt.event.MouseEvent evt) {
+        if (controllo)
+            playerNameTF.setText("Name Player 1");
     }
 
     // Variables declaration - do not modify
@@ -183,7 +220,7 @@ public class NewMatchForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel nomePlayer1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField playerNameTF;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JLabel nameMatch;
     private javax.swing.JTextField nameMatchTF;

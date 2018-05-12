@@ -68,7 +68,6 @@ public class Menu extends javax.swing.JFrame {
 
         //setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         WindowListener exitListener = new WindowAdapter() {
-
             @Override
             public void windowClosing(WindowEvent e) {
                 int confirm = JOptionPane.showOptionDialog(
@@ -156,42 +155,37 @@ public class Menu extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }// </editor-fold>
 
-    private void newmatchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_newmatchMouseClicked
+    private void newmatchMouseClicked(java.awt.event.MouseEvent evt) {
         scompareMenu();
         nmf= new NewMatchForm();
         nmf.setVisible(true);
-    }//GEN-LAST:event_newmatchMouseClicked
+    }
 
-    private void addmapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addmapMouseClicked
+    private void addmapMouseClicked(java.awt.event.MouseEvent evt) {
         scompareMenu();
         as=new AddScheme();
         as.setVisible(true);
-    }//GEN-LAST:event_addmapMouseClicked
+    }
 
-    private void loadmatchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loadmatchMouseClicked
+    private void loadmatchMouseClicked(java.awt.event.MouseEvent evt) {
         scompareMenu();
-    }//GEN-LAST:event_loadmatchMouseClicked
+    }
 
-    private void settingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseClicked
+    private void settingsMouseClicked(java.awt.event.MouseEvent evt) {
         scompareMenu();
-    }//GEN-LAST:event_settingsMouseClicked
+    }
 
-    private void multiplayerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_multiplayerMouseClicked
+    private void multiplayerMouseClicked(java.awt.event.MouseEvent evt) {
         scompareMenu();
-    }//GEN-LAST:event_multiplayerMouseClicked
+    }
 
     public void scompareMenu(){
         this.setVisible(false);
     }
     
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
