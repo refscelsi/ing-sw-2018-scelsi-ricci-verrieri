@@ -1,5 +1,0 @@
-
-\squid:UselessImportCheck".Remove this unused import 'java.io.DataInput'.(Š…šœüÿÿÿÿ8¡èÔµ´,
-‚%squid:RedundantThrowsDeclarationCheck"GRemove the redundant '!unknownSymbol!' thrown exception declaration(s).(Ó—ê§üÿÿÿÿ8ÔÚ¢¶´,
-rsquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(ü²‚Šúÿÿÿÿ
-Dsquid:S1068"(Remove this unused "play" private field.(€Ü¥­8´ÒÒ¶´,

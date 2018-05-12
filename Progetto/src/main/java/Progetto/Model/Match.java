@@ -1,11 +1,16 @@
 package Progetto.Model;
 
+import Progetto.Controller.Observable;
+import Progetto.Model.Exceptions.NotValidException;
+import Progetto.Model.Exceptions.ToolCardException;
 import Progetto.Model.ObjectiveCard.*;
+import Progetto.Model.ToolCard.ToolCard;
+
 import java.util.Scanner;
 import java.util.Random;
 import java.util.*;
 
-public class Match {
+public class Match extends Observable{
 
     private String id;
     private int numPlayers;
@@ -37,7 +42,7 @@ public class Match {
             if (firstPlayer >= numPlayers)
                 firstPlayer = 0;
         }
-
+        this.notifyObserver();
         //aspettare che round mi dica di finire
         endMatch();
         return null;
@@ -197,6 +202,29 @@ public class Match {
         player.setScore(score);
         return score;
     }
+
+    public void moveToNext(){
+    }
+
+    public void useDice(Box box, Dice dice, Scheme scheme, DraftPool draftPool) throws NotValidException {
+        if(scheme.isEmpty()){
+            if(scheme.checkFirst(box, dice)){
+                box.placeDice(dice);
+                draftPool.removeDice(dice);
+                scheme.setNotEmpty();
+            }
+        }
+        else if(!box.isFull()&& scheme.checkBox(box,dice) && scheme.checkDiceAdjacent(box,dice)){
+            box.placeDice(dice);
+            draftPool.removeDice(dice);
+        }
+        else throw new NotValidException("L'inserimento non è corretto");
+    }
+
+    public void useToolCard(ToolCard toolCard) throws ToolCardException, NotValidException { //il controller passa la tool che mi serve e che creo ogni volta che devo usare
+        toolCard.execute();
+    }
+
 
     public void endMatch() {
        // qui calcolo il punteggio
