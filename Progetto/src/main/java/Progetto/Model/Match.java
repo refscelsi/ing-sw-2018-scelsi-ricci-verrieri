@@ -13,12 +13,13 @@ import java.util.*;
 public class Match extends Observable{
 
     private String id;
-    private int numPlayers;
+    private int numPlayers, numRound=1;
     private ArrayList<Player> players;
     private int firstPlayer;    // primo giocatore del round. Se sono 4 giocatori può essere 0, 1, 2 o 3
     private Bag bag;
     private ArrayList<ObjectiveCard> publicObjectives;
     private String np1;
+    private State gameState;
 
     public Match(String id , int numPlayers , String np1) {
         this.id=id;
@@ -26,26 +27,44 @@ public class Match extends Observable{
         this.np1=np1;
     }
 
-    public String startMatch(){
+
+
+    /*public String startMatch(){
+
         System.out.println("l'id della partita ?: " + id);
 
         inizializePlayer();
 
         initializeTable();
 
-        shuffleCard();
-
-        //inizializzare un array con l'ordine dei player fino al decimo round e scorrerlo per svolgere i turni
         for (int i=0; i<10; i++) {
-            Round round = new Round (firstPlayer);
+            gameState = State.START_ROUND;
+            notifyObserver(gameState);
+            Round round = new Round(firstPlayer);
             firstPlayer += 1;
             if (firstPlayer >= numPlayers)
                 firstPlayer = 0;
+            gameState = State.CHANGE_ROUND;
+            notifyObserver(gameState);
         }
-        this.notifyObserver();
+
+        gameState = State.END_MATCH;
+        notifyObserver(gameState);  
+
+        //this.notifyObserver();
         //aspettare che round mi dica di finire
         endMatch();
         return null;
+    }*/
+
+    public void startRound() {
+        Round round = new Round(firstPlayer);
+        firstPlayer ++;
+        numRound ++;
+        if (firstPlayer >= numPlayers)
+            firstPlayer = 0;
+        gameState = State.CHANGE_ROUND;
+        notifyObserver(gameState);
     }
 
     public void inizializePlayer(){
@@ -56,7 +75,6 @@ public class Match extends Observable{
         int possibleNumbers[]={1,2,3,4};
         int i=1;
         int order, oldOrder;
-        //boolean find;
         String nickname;
         String splayer= "Player";
         int k = 0;
@@ -75,7 +93,6 @@ public class Match extends Observable{
                         nickname=splayer.concat(String.valueOf(k));
                     k++;
                     System.out.println(nickname);
-                    //players.add(new Player(nickname, possibleNumbers.get(j-1)));
                     players.add(new Player(nickname,possibleNumbers[order]));
                     i++;
                 }
@@ -110,17 +127,24 @@ public class Match extends Observable{
         privateObjectives = privateObjectiveCardDeck.drawObjectiveCard(numPlayers);
         while (i<numPlayers) {
             players.get(i).setPrivateObjective(privateObjectives.get(i));
-            // il giocatore sceglie il suo schema:
+            //assegno al giocatore le 2 carte schema da cui deve scegliere
+            gameState = State.CHOOSE_SCHEME;
+            notifyObserver(gameState);
+            i++;
+
+            // TUTTA LA PARTE SOTTO È INUTILE
+
             //players.get(i).setScheme(un certo schema che ha scelto);
             //players.get(i).setNumOfToken(players.get(i).getScheme().getDifficulty());  ancora non si può eseguire
             System.out.println(players.get(i).getNickname());
             //System.out.println(players.get(i).getNumOfToken());            ancora non si può eseguire
             System.out.println(players.get(i).getOrderInRound());
             System.out.println(players.get(i).getPrivateObjective().getColor());
-            i++;
         }
 
     }
+
+
 
     public void initializeTable(){
         //ripescare dal db le carte
@@ -147,14 +171,6 @@ public class Match extends Observable{
 
     }
 
-    public void shuffleCard(){
-        //distribuire in modo casuale le carte ai giocatori e sul tavolo
-
-        //controllare che i conti tornino (difficolt? carte ecc)
-    }
-
-    /*public int startRound(int firstPlayer) {
-    }*/
 
     public ArrayList<Player> getRanking() {   // ritorna un array di giocatori ordinato dal punteggio massimo al minimo
         int scores[] = new int[numPlayers];

@@ -19,9 +19,8 @@ public abstract class Observable {
     }
 
     public void notifyObserver(){
-        for(Observer observer: this.observers){
+        for(Observer observer: this.observers)
             observer.update();
-        }
     }
 
     public void notifyObserver(Object o){
@@ -30,3 +29,4 @@ public abstract class Observable {
         }
     }
 }
+
