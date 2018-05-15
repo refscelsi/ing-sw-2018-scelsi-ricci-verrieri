@@ -1,5 +1,7 @@
 package Progetto.Controller;
 
+import Progetto.Model.State;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +20,7 @@ public abstract class Observable {
         observers.remove(observer);
     }
 
-    public void notifyObserver(){
+    public void notifyObserver(State gameState){
         for(Observer observer: this.observers)
             observer.update();
     }

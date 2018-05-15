@@ -89,5 +89,6 @@ public class Player {
     public String toString() {
         return "ID:"+this.getNickname()+"\nORDINE"+this.getOrderInRound()+"\nTOKEN"+this.getNumOfToken()+"\nSCORE:"+this.getScore();
     }
+
 }
 

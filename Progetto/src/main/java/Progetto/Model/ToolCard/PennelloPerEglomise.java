@@ -1,15 +1,16 @@
 package Progetto.Model.ToolCard;
 
 import Progetto.Model.*;
+import Progetto.Model.Exceptions.NotValidException;
 import Progetto.Model.Exceptions.ToolCardException;
 
-public class PennelloPerEglomise implements ToolCard{
+public class PennelloPerEglomise extends ToolCard{
     private Dice dice;
     private Player player;
     private Box source;
     private Box destination;
 
-    public PennelloPerEglomise(Dice dice, Player player, Box box1, Box box2){
+    public PennelloPerEglomise(Dice dice, Player player, Box box1, Box box2)throws ToolCardException, NotValidException {
         this.dice=dice;
         this.player=player;
         this.source=box1;
