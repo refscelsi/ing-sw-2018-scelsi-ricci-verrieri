@@ -23,10 +23,10 @@ public abstract class Observable {
             observer.update();
     }
 
-    public void notifyObserver(Object o){
+    /*public void notifyObserver(Object o){
         for(Observer observer: this.observers){
             observer.update(o);
         }
-    }
+    }*/
 }
 

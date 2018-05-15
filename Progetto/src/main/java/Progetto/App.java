@@ -1,9 +1,6 @@
 package Progetto;
 
-/*
 import Progetto.Model.Match;
-import Progetto.Model.ObjectiveCard;*/
-
 import Progetto.View.Menu;
 
 public class App {
@@ -23,10 +20,6 @@ public class App {
 
         menu =new Menu();
         menu.setVisible(true);
-
-
-
-
 
         //#################################### cose per testing
         /*

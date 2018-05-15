@@ -1,6 +1,6 @@
 package Progetto.View;
 
-import Progetto.Controller.Observer;
+import Progetto.Controller.*;
 
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -9,7 +9,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import javax.swing.*;
 
-public class Menu extends javax.swing.JFrame{
+public class Menu extends javax.swing.JFrame {
 
     private NewMatchForm nmf;
     private AddScheme as;

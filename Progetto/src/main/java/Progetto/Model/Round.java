@@ -2,8 +2,9 @@ package Progetto.Model;
 
 public class Round{
 
-    public Round (int firstPlayer) {
+    private DraftPool draftPool;
 
+    public Round (int firstPlayer, DraftPool draftPool) {
 
     }
 

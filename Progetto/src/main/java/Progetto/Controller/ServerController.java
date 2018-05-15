@@ -20,9 +20,20 @@ public class ServerController implements Observer {
     public void update() {
     }
 
-    @Override
-    public <Object> void update(Object o) {
-        if (o.equals(State.START_MATCH.toString())) {
+    public void update (String changePlayer) {
+        if (changePlayer.equals("change player"))
+            match.changePlayer();
+    }
+
+
+
+
+
+
+
+    /*public <Object> void update(Object o) {
+        switch (o) {
+        }
             match.initializeTable();
             match.inizializePlayer();
         } else
@@ -33,7 +44,7 @@ public class ServerController implements Observer {
                 if (o.equals(State.USE_DICE.toString()))
                     //match.useDice();    devo passare dadi e
 
-    /*
+
     public void handle(Dice dice, Box box){
         match.usedice(dice,box)}
 

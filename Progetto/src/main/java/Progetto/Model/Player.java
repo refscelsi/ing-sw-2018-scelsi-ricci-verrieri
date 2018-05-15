@@ -72,17 +72,15 @@ public class Player {
         this.scheme = scheme;
     }
 
-    public void useDice(Box box, Dice dice, DraftPool draftPool) throws NotValidException {
+    public void useDice(Box box, Dice dice) throws NotValidException {
         if(scheme.isEmpty()){
             if(scheme.checkFirst(box, dice)){
                 box.placeDice(dice);
-                draftPool.removeDice(dice);
                 scheme.setNotEmpty();
             }
         }
         else if(!box.isFull()&& scheme.checkBox(box,dice) && scheme.checkDiceAdjacent(box,dice)){
             box.placeDice(dice);
-            draftPool.removeDice(dice);
         }
         else throw new NotValidException("L'inserimento non è corretto");
     }

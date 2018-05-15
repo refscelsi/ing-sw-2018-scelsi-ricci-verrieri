@@ -5,6 +5,7 @@ import Progetto.Model.Exceptions.NotValidException;
 import Progetto.Model.Exceptions.ToolCardException;
 import Progetto.Model.ObjectiveCard.*;
 import Progetto.Model.ToolCard.ToolCard;
+import Progetto.Model.*;
 
 import java.util.Scanner;
 import java.util.Random;
@@ -15,11 +16,14 @@ public class Match extends Observable{
     private String id;
     private int numPlayers, numRound=1;
     private ArrayList<Player> players;
-    private int firstPlayer;    // primo giocatore del round. Se sono 4 giocatori può essere 0, 1, 2 o 3
+    private int[] playersRound;
+    private int firstPlayer, playerPlaying;    // primo giocatore del round. Se sono 4 giocatori può essere 0, 1, 2 o 3
     private Bag bag;
     private ArrayList<ObjectiveCard> publicObjectives;
     private String np1;
     private State gameState;
+    private DraftPool draftPool;
+    private ToolCardDeck toolCardDeck;
 
     public Match(String id , int numPlayers , String np1) {
         this.id=id;
@@ -58,25 +62,26 @@ public class Match extends Observable{
     }*/
 
     public void startRound() {
-        Round round = new Round(firstPlayer);
+        draftPool = bag.draw(numPlayers);
         firstPlayer ++;
         numRound ++;
         if (firstPlayer >= numPlayers)
             firstPlayer = 0;
         gameState = State.CHANGE_ROUND;
-        notifyObserver(gameState);
+        //notifyObserver(gameState);
     }
 
     public void inizializePlayer(){
         //Bisogna distinguere se si tratta di una partita locale o su un server
 
         //##iniz var
-        players=new ArrayList<Player>();
-        int possibleNumbers[]={1,2,3,4};
-        int i=1;
+        players = new ArrayList<Player>();
+        playersRound = new int[numPlayers*2];
+        int possibleNumbers[] = {1,2,3,4};
+        int i = 1;
         int order, oldOrder;
         String nickname;
-        String splayer= "Player";
+        String splayer = "Player";
         int k = 0;
 
         //#### Locale
@@ -129,7 +134,7 @@ public class Match extends Observable{
             players.get(i).setPrivateObjective(privateObjectives.get(i));
             //assegno al giocatore le 2 carte schema da cui deve scegliere
             gameState = State.CHOOSE_SCHEME;
-            notifyObserver(gameState);
+            //notifyObserver(gameState);
             i++;
 
             // TUTTA LA PARTE SOTTO È INUTILE
@@ -169,6 +174,30 @@ public class Match extends Observable{
         Dice dice= new Dice();
         System.out.println(dice.throwDice());
 
+    }
+
+    public void changePlayer () {
+        playerPlaying++;
+        if (playerPlaying >= numPlayers)
+            playerPlaying = 0;
+    }
+
+    public void changeRound (int firstPlayer) {
+        int i=0, j;
+        while (i<numPlayers) {
+            playersRound[i] = i + firstPlayer;
+            if (playersRound[i] >= numPlayers)
+                for (j = 0; i < numPlayers; i++)
+                    playersRound[i]=j;
+            i++;
+        }
+        for (i=0; i<numPlayers; i++)
+            playersRound[i+numPlayers] = playersRound[numPlayers-i];
+    }
+
+    public void useDice (Box box, Dice dice, Player player) throws NotValidException {
+        player.useDice(box, dice);
+        draftPool.removeDice(dice);
     }
 
 
@@ -222,7 +251,7 @@ public class Match extends Observable{
     public void moveToNext(){
     }
 
-    public void useDice(Box box, Dice dice, Scheme scheme, DraftPool draftPool) throws NotValidException {
+    /*public void useDice(Box box, Dice dice, Scheme scheme, DraftPool draftPool) throws NotValidException {
         if(scheme.isEmpty()){
             if(scheme.checkFirst(box, dice)){
                 box.placeDice(dice);
@@ -239,7 +268,7 @@ public class Match extends Observable{
 
     public void useToolCard(ToolCard toolCard) throws ToolCardException, NotValidException { //il controller passa la tool che mi serve e che creo ogni volta che devo usare
         toolCard.execute();
-    }
+    }*/
 
 
     public void endMatch() {

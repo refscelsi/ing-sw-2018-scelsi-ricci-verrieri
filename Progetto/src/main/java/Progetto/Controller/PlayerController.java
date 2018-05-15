@@ -1,6 +1,41 @@
 package Progetto.Controller;
 
-public class PlayerController {
+import Progetto.Model.*;
+import Progetto.Model.ToolCard.ToolCard;
+import Progetto.View.*;
+import Progetto.Model.Exceptions.*;
+
+import javax.swing.text.View;
+
+public class PlayerController implements Observer {
+
+    private Player player;
+    private View view;
+    private Match match;
+
+    public PlayerController (Player player, View view, Match match) {
+        this.player = player;
+        this.view = view;
+        this.match = match;
+    }
+
+    @Override
+    public void update() {
+    }
+
+    public void update (Scheme scheme) {  // il giocatore sceglie lo schema
+        player.setScheme(scheme);
+    }
+
+    public void update (Dice dice, Box box) throws NotValidException {  // il giocatore usa un dado
+        match.useDice(box, dice, player);
+    }
+
+    public void update (ToolCard toolCard) {
+
+    }
+
+
     /*
         public ClientController(Client client) {
         this.client = client;
