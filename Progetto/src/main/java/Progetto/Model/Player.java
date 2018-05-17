@@ -13,9 +13,8 @@ public class Player {
     private PrivateObjectiveCard privateObjective;
 
 
-    public Player (String nickname, int orderInRound) {
+    public Player (String nickname) {
         this.nickname=nickname;
-        this.orderInRound=orderInRound;
     }
 
     //public void login(){}       credo non sia necessario

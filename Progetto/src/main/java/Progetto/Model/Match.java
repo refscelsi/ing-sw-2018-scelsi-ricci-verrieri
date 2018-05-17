@@ -13,11 +13,13 @@ import java.util.*;
 
 public class Match extends Observable{
 
-    private String id;
-    private int numPlayers, numRound=1;
+    private static int last_id=0;   // non so se va bene mettere =0 qui
+    private int id;
+    private int numPlayers=0, numRound=1;
     private ArrayList<Player> players;
     private int[] playersRound;
-    private int firstPlayer, playerPlaying;    // primo giocatore del round. Se sono 4 giocatori può essere 0, 1, 2 o 3
+    private int firstPlayer;   // primo giocatore del round. Se sono 4 giocatori può essere 0, 1, 2 o 3
+    private int playerPlaying; // indice dell'array playersRound -> giocatore che sta giocando il turno
     private Bag bag;
     private ArrayList<ObjectiveCard> publicObjectives;
     private String np1;
@@ -25,15 +27,16 @@ public class Match extends Observable{
     private DraftPool draftPool;
     private ToolCardDeck toolCardDeck;
 
-    public Match(String id , int numPlayers , String np1) {
-        this.id=id;
-        this.numPlayers=numPlayers;
-        this.np1=np1;
+    public Match() {
+        id = last_id;
+        last_id++;
     }
 
+    public int getNumPlayers() {
+        return numPlayers;
+    }
 
-
-    public String startMatch(){
+    /*public String startMatch(){
 
         System.out.println("l'id della partita ?: " + id);
 
@@ -59,51 +62,71 @@ public class Match extends Observable{
         //aspettare che round mi dica di finire
         endMatch();
         return null;
-    }
+    }*/
 
     public void startRound() {
         draftPool = bag.draw(numPlayers);
         firstPlayer ++;
+        playerPlaying=firstPlayer;
         numRound ++;
         if (firstPlayer >= numPlayers)
             firstPlayer = 0;
-        gameState = State.CHANGE_ROUND;
-        //notifyObserver(gameState);
+        changeRound(firstPlayer);
+        notifyObserver(players.get(firstPlayer), draftPool);
+    }
+
+    public void createNewPlayer (String nickname) {
+        numPlayers++;
+        players.add(new Player(nickname));
     }
 
     public void inizializePlayer(){
         //Bisogna distinguere se si tratta di una partita locale o su un server
 
         //##iniz var
+        SchemeCardDeck schemeCardDeck = new SchemeCardDeck();
+        ArrayList<SchemeCard> schemes = new ArrayList<SchemeCard>();
         players = new ArrayList<Player>();
         playersRound = new int[numPlayers*2];
         int possibleNumbers[] = {1,2,3,4};
-        int i = 1;
+        int i = 0;
         int order, oldOrder;
         String nickname;
         String splayer = "Player";
         int k = 0;
+        PrivateObjectiveCardDeck privateObjectiveCardDeck = new PrivateObjectiveCardDeck();
+        ArrayList<PrivateObjectiveCard> privateObjectives = new ArrayList<PrivateObjectiveCard>();
+        privateObjectives = privateObjectiveCardDeck.drawObjectiveCard(numPlayers);
+        firstPlayer=-1;
+        playerPlaying=-1;
 
         //#### Locale
 
-        while(i<=numPlayers){
+        while(i<numPlayers){
+
+            players.get(i).setPrivateObjective(privateObjectives.get(i));
+            schemes = schemeCardDeck.drawSchemeCard();
+
             do {
                 Random random = new Random();
                 order = random.nextInt(numPlayers); // order sarà uguale a 0, 1, 2 o 3 (se ho 4 giocatori)
                 if (possibleNumbers[order]<=numPlayers&&possibleNumbers[order]!=0) {
-                    System.out.println(possibleNumbers[order]);
+
+                    // Ricky questa cosa dei 4 nomi non l'ho capita perché l'hai fatta così
+
                     if (k==0){
                         nickname=np1;
                     } else
                         nickname=splayer.concat(String.valueOf(k));
                     k++;
-                    System.out.println(nickname);
-                    players.add(new Player(nickname,possibleNumbers[order]));
+                    players.get(i).setOrderInRound(possibleNumbers[order]);
                     i++;
                 }
                 oldOrder = possibleNumbers[order];
                 possibleNumbers[order] = 0;
             } while (oldOrder>numPlayers||oldOrder==0);
+
+            notifyObserver(schemes,players.get(i));
 
         }
 
@@ -121,31 +144,6 @@ public class Match extends Observable{
         //#### fine server
 
         //############################################################################### cose che boh
-
-        firstPlayer = 0; // all'inizio del gioco il primo giocatore sar? il numero 0
-
-        // preparo tutte le carte, segnalini, ecc del giocatore
-
-        i=0;
-        PrivateObjectiveCardDeck privateObjectiveCardDeck = new PrivateObjectiveCardDeck();
-        ArrayList<PrivateObjectiveCard> privateObjectives = new ArrayList<PrivateObjectiveCard>();
-        privateObjectives = privateObjectiveCardDeck.drawObjectiveCard(numPlayers);
-        while (i<numPlayers) {
-            players.get(i).setPrivateObjective(privateObjectives.get(i));
-            //assegno al giocatore le 2 carte schema da cui deve scegliere
-            gameState = State.CHOOSE_SCHEME;
-            //notifyObserver(gameState);
-            i++;
-
-            // TUTTA LA PARTE SOTTO È INUTILE
-
-            //players.get(i).setScheme(un certo schema che ha scelto);
-            //players.get(i).setNumOfToken(players.get(i).getScheme().getDifficulty());  ancora non si può eseguire
-            System.out.println(players.get(i).getNickname());
-            //System.out.println(players.get(i).getNumOfToken());            ancora non si può eseguire
-            System.out.println(players.get(i).getOrderInRound());
-            System.out.println(players.get(i).getPrivateObjective().getColor());
-        }
 
     }
 
@@ -173,13 +171,13 @@ public class Match extends Observable{
 
         Dice dice= new Dice();
         System.out.println(dice.throwDice());
+        notifyObserver1(publicObjectives);
 
     }
 
     public void changePlayer () {
         playerPlaying++;
-        if (playerPlaying >= numPlayers)
-            playerPlaying = 0;
+        notifyObserver(players.get(playersRound[playerPlaying]));
     }
 
     public void changeRound (int firstPlayer) {
@@ -198,8 +196,8 @@ public class Match extends Observable{
     public void useDice (Box box, Dice dice, Player player) throws NotValidException {
         player.useDice(box, dice);
         draftPool.removeDice(dice);
+        notifyObserver(dice);
     }
-
 
     public ArrayList<Player> getRanking() {   // ritorna un array di giocatori ordinato dal punteggio massimo al minimo
         int scores[] = new int[numPlayers];
@@ -272,6 +270,7 @@ public class Match extends Observable{
 
 
     public void endMatch() {
-       // qui calcolo il punteggio
+       ArrayList<Player> ranking = getRanking();
+       notifyObserver(ranking);
     }
 }

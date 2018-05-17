@@ -7,7 +7,7 @@ import Progetto.Model.Exceptions.*;
 
 import javax.swing.text.View;
 
-public class PlayerController implements Observer {
+public class PlayerController /*implements Observer*/ {
 
     private Player player;
     private View view;
@@ -19,21 +19,19 @@ public class PlayerController implements Observer {
         this.match = match;
     }
 
-    @Override
-    public void update() {
-    }
-
-    public void update (Scheme scheme) {  // il giocatore sceglie lo schema
+    public void setScheme (Scheme scheme) {  // il giocatore sceglie lo schema
         player.setScheme(scheme);
+        player.setNumOfToken(player.getScheme().getDifficulty());
     }
 
-    public void update (Dice dice, Box box) throws NotValidException {  // il giocatore usa un dado
+    public void useDice (Dice dice, Box box) throws NotValidException {  // il giocatore usa un dado
         match.useDice(box, dice, player);
     }
 
-    public void update (ToolCard toolCard) {
+    public void useToolCard (ToolCard toolCard) {
 
     }
+
 
 
     /*

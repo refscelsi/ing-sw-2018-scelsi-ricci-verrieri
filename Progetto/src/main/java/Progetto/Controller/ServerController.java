@@ -5,7 +5,7 @@ import Progetto.View.*;
 
 import javax.swing.text.View;
 
-public class ServerController implements Observer {
+public class ServerController /*implements Observer*/ {
 
     private Match match;
     private View view;       // ci va?
@@ -16,19 +16,14 @@ public class ServerController implements Observer {
         this.view=view;        // se non ci va lo cambio col comando sopra
     }
 
-    @Override
-    public void update() {
+    public void newPlayer (String nickname) {
+        match.createNewPlayer(nickname);
     }
 
-    public void update (String changePlayer) {
+    public void changePlayer (String changePlayer) {
         if (changePlayer.equals("change player"))
             match.changePlayer();
     }
-
-
-
-
-
 
 
     /*public <Object> void update(Object o) {
