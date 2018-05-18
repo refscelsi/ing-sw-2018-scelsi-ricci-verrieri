@@ -5,7 +5,7 @@ import Progetto.View.*;
 
 import javax.swing.text.View;
 
-public class ServerController /*implements Observer*/ {
+public class ServerController {
 
     private Match match;
     private View view;       // ci va?
@@ -16,23 +16,17 @@ public class ServerController /*implements Observer*/ {
         this.view=view;        // se non ci va lo cambio col comando sopra
     }
 
-    public void newPlayer (String nickname) {
-        match.createNewPlayer(nickname);
+    //@Override
+    public void update() {
     }
 
-    public void changePlayer (String changePlayer) {
-        if (changePlayer.equals("change player"))
-            match.changePlayer();
-    }
-
-
-    /*public <Object> void update(Object o) {
-        switch (o) {
-        }
+    /*@Override
+    public <Object> void update(Object o) {
+        if (o.equals(State.START_MATCH.toString())) {
             match.initializeTable();
             match.inizializePlayer();
         } else
-            if (o.equals(State.SCHEME_CHOOSEN.toString()))
+            if (o.equals(State.SCHEME_CH OOSEN.toString()))
                 match.startRound();
 
             else
@@ -49,11 +43,14 @@ public class ServerController /*implements Observer*/ {
 
     etc..
 
-     */
 
+<<<<<<< HEAD
     // aggiungo una riga per committare e provare a sovrascrivere l'ultimo commit di Arianna involontario
 
-
-
+=======
 }
+     */
+>>>>>>> c4248cee6cd73d90adc88b44cab1aa6eea42bf60
+
+
 
