@@ -226,7 +226,7 @@ public class Match extends Observable{
                                 }
                                 else if (players.get(firstPlayer-k)==players.get(max))
                                     found = true;
-                                k++;
+                k++;
             }
 
             ranking.add(players.get(max));
@@ -270,7 +270,8 @@ public class Match extends Observable{
 
 
     public void endMatch() {
-       ArrayList<Player> ranking = getRanking();
-       notifyObserver(ranking);
+        ArrayList<Player> ranking = getRanking();
+        notifyObserver(ranking);
     }
 }
+
