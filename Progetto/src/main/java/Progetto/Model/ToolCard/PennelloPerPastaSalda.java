@@ -12,7 +12,6 @@ public class PennelloPerPastaSalda implements ToolCard {
     private Player player;
     private DraftPool draftPool;
     private Box destination;
-    private Play play;
 
     public PennelloPerPastaSalda(Dice dice, Player player, DraftPool draftPool){
         this.dice=dice;
