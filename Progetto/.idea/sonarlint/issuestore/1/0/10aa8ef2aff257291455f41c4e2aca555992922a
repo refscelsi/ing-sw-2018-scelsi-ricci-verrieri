@@ -1,0 +1,20 @@
+
+Qsquid:S1161a":Add the "@Override" annotation above this method signature(†ŒË³
+Rsquid:S1161‰":Add the "@Override" annotation above this method signature(†ŒË³
+nsquid:S1450Å"QRemove the "p1" field and declare it as a local variable in the relevant methods.(¢Œ¸Äýÿÿÿÿ
+qsquid:S00120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(÷ìú
+isquid:S1450"RRemove the "nmf" field and declare it as a local variable in the relevant methods.(»Âú¢
+gsquid:S1450"QRemove the "as" field and declare it as a local variable in the relevant methods.(¹è 
+
+Bsquid:S1172³"*Remove this unused method parameter "evt".(Û‘ï»
+qsquid:S1450Á"YRemove the "background" field and declare it as a local variable in the relevant methods.(×ã·ô
+Bsquid:S1172£"*Remove this unused method parameter "evt".(ñ…Þè
+Bsquid:S1172·"*Remove this unused method parameter "evt".(´ŽûÐ
+esquid:MaximumInheritanceDepth"<This class has 6 parents which is greater than 5 authorized.(ñÍÂ™
+Bsquid:S1172©"*Remove this unused method parameter "evt".(ëÿ“¬
+Qsquid:S1161":Add the "@Override" annotation above this method signature(†ŒË³
+Qsquid:S1161k":Add the "@Override" annotation above this method signature(†ŒË³
+Ksquid:S2387Á"3"background" is the name of a field in "Component".(×ã·ô
+Qsquid:S1161u":Add the "@Override" annotation above this method signature(†ŒË³
+bsquid:CommentedOutCodeLineG"<This block of commented-out lines of code should be removed.(³—šÂ
+Gsquid:S1172¯"*Remove this unused method parameter "evt".(ê°ûÿÿÿÿ

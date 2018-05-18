@@ -1,6 +1,6 @@
 package Progetto.View;
 
-import Progetto.Controller.Observer;
+import Progetto.Controller.*;
 
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -9,7 +9,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import javax.swing.*;
 
-public class Menu extends javax.swing.JFrame{
+public class Menu extends javax.swing.JFrame implements Observer {
 
     private NewMatchForm nmf;
     private AddScheme as;
@@ -141,7 +141,8 @@ public class Menu extends javax.swing.JFrame{
         p1.add(multiplayer);
         multiplayer.setBounds(370, 367, 53, 53);
 
-        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Progetto/View/img/menu.jpg"))); // NOI18N
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Progetto/View/img/menu.jpg"))); //\Progetto\View\img
+        //background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Progetto/View/img/menu.jpg"))); // NOI18N
         p1.add(background);
         background.setBounds(0, 0, 480, 630);
 
@@ -187,33 +188,6 @@ public class Menu extends javax.swing.JFrame{
         this.setVisible(false);
     }
     
-    public static void main(String args[]) {
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Menu().setVisible(true);
-            }
-        });
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel addmap;
     private javax.swing.JLabel background;

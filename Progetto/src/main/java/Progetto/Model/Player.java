@@ -13,9 +13,8 @@ public class Player {
     private PrivateObjectiveCard privateObjective;
 
 
-    public Player (String nickname, int orderInRound) {
+    public Player (String nickname) {
         this.nickname=nickname;
-        this.orderInRound=orderInRound;
     }
 
     //public void login(){}       credo non sia necessario
@@ -72,17 +71,15 @@ public class Player {
         this.scheme = scheme;
     }
 
-    public void useDice(Box box, Dice dice, DraftPool draftPool) throws NotValidException {
+    public void useDice(Box box, Dice dice) throws NotValidException {
         if(scheme.isEmpty()){
             if(scheme.checkFirst(box, dice)){
                 box.placeDice(dice);
-                draftPool.removeDice(dice);
                 scheme.setNotEmpty();
             }
         }
         else if(!box.isFull()&& scheme.checkBox(box,dice) && scheme.checkDiceAdjacent(box,dice)){
             box.placeDice(dice);
-            draftPool.removeDice(dice);
         }
         else throw new NotValidException("L'inserimento non è corretto");
     }
@@ -91,5 +88,6 @@ public class Player {
     public String toString() {
         return "ID:"+this.getNickname()+"\nORDINE"+this.getOrderInRound()+"\nTOKEN"+this.getNumOfToken()+"\nSCORE:"+this.getScore();
     }
+
 }
 

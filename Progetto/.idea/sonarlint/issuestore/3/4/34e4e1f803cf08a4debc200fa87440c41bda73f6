@@ -1,0 +1,31 @@
+
+Gsquid:S1172Ê"*Remove this unused method parameter "evt".(À¶Éûÿÿÿÿ
+Gsquid:S1172»"*Remove this unused method parameter "evt".(³¬üîüÿÿÿÿ
+msquid:S1450
+"QRemove the "tf" field and declare it as a local variable in the relevant methods.( µÇ‚ÿÿÿÿÿ
+Gsquid:S1172Ô"*Remove this unused method parameter "evt".(ÄØ§­ıÿÿÿÿ
+Qsquid:S11613":Add the "@Override" annotation above this method signature(—¶Ğé
+jsquid:MaximumInheritanceDepth"<This class has 6 parents which is greater than 5 authorized.(”èğ¨øÿÿÿÿ
+ssquid:S1450Ú"VRemove the "annulla" field and declare it as a local variable in the relevant methods.(¸–èÊùÿÿÿÿ
+hsquid:CommentedOutCodeLine¥"<This block of commented-out lines of code should be removed.(ø”±ıÿÿÿÿ
+vsquid:S1450ã"YRemove the "numplayers" field and declare it as a local variable in the relevant methods.(Ü«¿‰ùÿÿÿÿ
+bsquid:CommentedOutCodeLine "<This block of commented-out lines of code should be removed.(³—šÂ
+Gsquid:S1172²"*Remove this unused method parameter "evt".(†ÅÜ°ÿÿÿÿÿ
+Bsquid:S1172Ï"*Remove this unused method parameter "evt".(Á‡›Æ
+Qsquid:S11610":Add the "@Override" annotation above this method signature(†ŒË³
+dsquid:S1192-"MDefine a constant instead of duplicating this literal "Nome partita" 3 times.(úÆÚ
+Gsquid:S1172Å"*Remove this unused method parameter "evt".(àØÂ«ùÿÿÿÿ
+U
+squid:S106§"9Replace this use of System.out or System.err by a logger.(»¹¡ûÿÿÿÿ
+Qsquid:S1161A":Add the "@Override" annotation above this method signature(—¶Ğé
+qsquid:S1450Û"YRemove the "avviaMatch" field and declare it as a local variable in the relevant methods.(ÓÃá˜
+Gsquid:S1172£"*Remove this unused method parameter "evt".(«é˜úüÿÿÿÿ
+Qsquid:S1161>":Add the "@Override" annotation above this method signature(†ŒË³
+Vsquid:S11616":Add the "@Override" annotation above this method signature(™ÅšÊûÿÿÿÿ
+ssquid:S1450Ş"VRemove the "jPanel1" field and declare it as a local variable in the relevant methods.(´œ½ÿÿÿÿÿ
+qsquid:S00120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(÷ìú
+Lsquid:S1068à"/Remove this unused "jTextField3" private field.(ˆ‘ó©ÿÿÿÿÿ
+ssquid:S1450Ü"VRemove the "jLabel1" field and declare it as a local variable in the relevant methods.(°ãÉ¸ÿÿÿÿÿ
+psquid:S1450á"XRemove the "nameMatch" field and declare it as a local variable in the relevant methods.(´ù‘ì
+Bsquid:S1172À"*Remove this unused method parameter "evt".(œ©‘ƒ
+Vsquid:S1161D":Add the "@Override" annotation above this method signature(™ÅšÊûÿÿÿÿ

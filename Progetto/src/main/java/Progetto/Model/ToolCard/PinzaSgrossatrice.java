@@ -1,12 +1,14 @@
 package Progetto.Model.ToolCard;
 
 import Progetto.Model.Dice;
+import Progetto.Model.Exceptions.NotValidException;
+import Progetto.Model.Exceptions.ToolCardException;
 
-public class PinzaSgrossatrice implements ToolCard {
+public class PinzaSgrossatrice extends ToolCard {
     private Dice dice;
     private char operation;
 
-    public PinzaSgrossatrice(Dice dice, char operation) {
+    public PinzaSgrossatrice(Dice dice, char operation)throws ToolCardException, NotValidException {
         this.dice = dice;
         this.operation = operation;
     }

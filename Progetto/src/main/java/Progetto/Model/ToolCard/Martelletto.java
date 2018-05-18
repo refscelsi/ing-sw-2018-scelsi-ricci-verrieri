@@ -4,18 +4,24 @@ import Progetto.Model.Box;
 import Progetto.Model.Dice;
 import Progetto.Model.DraftPool;
 import Progetto.Model.Exceptions.NotValidException;
+import Progetto.Model.Exceptions.ToolCardException;
 import Progetto.Model.Player;
 
 
-public class Martelletto implements ToolCard {
+public class Martelletto extends ToolCard {
     private DraftPool draftPool;
     private Player player;
     private Box destination;
     private Dice dice;
 
 
-
+/*
     public Martelletto(DraftPool draftPool, Player player){
+        this.draftPool=draftPool;
+        this.player=player;
+    }*/
+
+    public Martelletto(DraftPool draftPool, Player player) throws ToolCardException, NotValidException {
         this.draftPool=draftPool;
         this.player=player;
     }
@@ -25,7 +31,7 @@ public class Martelletto implements ToolCard {
         for(Dice dice: draftPool.getDraftPool()){
             dice.throwDice();
         }
-        player.useDice(destination,dice,draftPool);
+        player.useDice(destination,dice/*,draftPool*/);
     }
 
     public void setDice(Dice dice){

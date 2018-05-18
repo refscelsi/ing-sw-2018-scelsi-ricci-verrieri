@@ -1,9 +1,10 @@
 package Progetto.Model.ToolCard;
 
 import Progetto.Model.*;
+import Progetto.Model.Exceptions.NotValidException;
 import Progetto.Model.Exceptions.ToolCardException;
 
-public class Lathekin implements ToolCard {
+public class Lathekin extends ToolCard {
     private Dice dice1;
     private Dice dice2;
     private Player player;
@@ -11,8 +12,18 @@ public class Lathekin implements ToolCard {
     private Box destination1;
     private Box source2;
     private Box destination2;
-
+/*
     public Lathekin(Dice dice1, Dice dice2, Player player, Box source1, Box destination1, Box source2, Box destination2){
+        this.dice1=dice1;
+        this.dice2=dice2;
+        this.player=player;
+        this.source1=source1;
+        this.destination1=destination1;
+        this.source2=source2;
+        this.destination2=destination2;
+    }*/
+
+    public Lathekin(Dice dice1, Dice dice2, Player player, Box source1, Box destination1, Box source2, Box destination2) throws ToolCardException, NotValidException {
         this.dice1=dice1;
         this.dice2=dice2;
         this.player=player;
