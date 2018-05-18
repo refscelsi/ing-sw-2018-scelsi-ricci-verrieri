@@ -13,9 +13,9 @@ import java.util.*;
 
 public class Match extends Observable{
 
-    private static int last_id=0;   // non so se va bene mettere =0 qui
+    private static int last_id=0;
     private int id;
-    private int numPlayers=0, numRound=1;
+    private int numPlayers=0, numRound=0;
     private ArrayList<Player> players;
     private int[] playersRound;
     private int firstPlayer;   // primo giocatore del round. Se sono 4 giocatori può essere 0, 1, 2 o 3
@@ -25,7 +25,6 @@ public class Match extends Observable{
     private String np1;
     private State gameState;
     private DraftPool draftPool;
-    private ToolCardDeck toolCardDeck;
 
     public Match() {
         id = last_id;
@@ -67,10 +66,10 @@ public class Match extends Observable{
     public void startRound() {
         draftPool = bag.draw(numPlayers);
         firstPlayer ++;
-        playerPlaying=firstPlayer;
         numRound ++;
         if (firstPlayer >= numPlayers)
             firstPlayer = 0;
+        playerPlaying=firstPlayer;
         changeRound(firstPlayer);
         notifyObserver(players.get(firstPlayer), draftPool);
     }

@@ -1,28 +1,41 @@
 package Progetto.Controller;
 
 import Progetto.Model.*;
+import Progetto.Model.Exceptions.NotValidException;
+import Progetto.Model.ToolCard.ToolCard;
 import Progetto.View.*;
 
 import javax.swing.text.View;
 
-public class ServerController /*implements Observer*/ {
+public class Controller {
 
     private Match match;
     private View view;       // ci va?
+    private Player player;
 
-    public ServerController(Match match, View view){
+    public Controller(Match match, View view, Player player){
         this.match=match;
         //view.registerObserver(this);
         this.view=view;        // se non ci va lo cambio col comando sopra
-    }
-
-    public void newPlayer (String nickname) {
-        match.createNewPlayer(nickname);
+        this.player=player;
     }
 
     public void changePlayer (String changePlayer) {
         if (changePlayer.equals("change player"))
             match.changePlayer();
+    }
+
+    public void setScheme (Scheme scheme) {  // il giocatore sceglie lo schema
+        player.setScheme(scheme);
+        player.setNumOfToken(player.getScheme().getDifficulty());
+    }
+
+    public void useDice (Dice dice, Box box) throws NotValidException {  // il giocatore usa un dado
+        match.useDice(box, dice, player);
+    }
+
+    public void useToolCard (ToolCard toolCard) {
+
     }
 
 

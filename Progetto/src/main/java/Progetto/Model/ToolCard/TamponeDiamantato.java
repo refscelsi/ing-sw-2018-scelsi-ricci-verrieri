@@ -10,50 +10,38 @@ public class TamponeDiamantato extends ToolCard {
         super();
     }
 
-    public void execute(Dice dice, int newFace, Player player) throws ToolCardException {
+    public void execute(Dice dice, Player player) throws ToolCardException {
 
         switch (dice.getNumFacciaUp()){
             case 1:
-                if (newFace == 6) {
-                    player.setNumOfToken(player.getNumOfToken() - getNumOfTokens());
-                    setNumOfTokens(2);
-                    dice.setNumFacciaUp(newFace);
-                }
+                player.setNumOfToken(player.getNumOfToken() - getNumOfTokens());
+                setNumOfTokens(2);
+                dice.setNumFacciaUp(6);
                 break;
             case 2:
-                if (newFace == 5) {
-                    player.setNumOfToken(player.getNumOfToken()-getNumOfTokens());
-                    setNumOfTokens(2);
-                    dice.setNumFacciaUp(newFace);
-                }
+                player.setNumOfToken(player.getNumOfToken()-getNumOfTokens());
+                setNumOfTokens(2);
+                dice.setNumFacciaUp(5);
                 break;
             case 3:
-                if (newFace == 4) {
-                    player.setNumOfToken(player.getNumOfToken()-getNumOfTokens());
-                    setNumOfTokens(2);
-                    dice.setNumFacciaUp(newFace);
-                }
+                player.setNumOfToken(player.getNumOfToken()-getNumOfTokens());
+                setNumOfTokens(2);
+                dice.setNumFacciaUp(4);
                 break;
             case 4:
-                if (newFace == 3) {
-                    player.setNumOfToken(player.getNumOfToken()-getNumOfTokens());
-                    setNumOfTokens(2);
-                    dice.setNumFacciaUp(newFace);
-                }
+                player.setNumOfToken(player.getNumOfToken()-getNumOfTokens());
+                setNumOfTokens(2);
+                dice.setNumFacciaUp(3);
                 break;
             case 5:
-                if (newFace == 2) {
-                    player.setNumOfToken(player.getNumOfToken()-getNumOfTokens());
-                    setNumOfTokens(2);
-                    dice.setNumFacciaUp(newFace);
-                }
+                player.setNumOfToken(player.getNumOfToken()-getNumOfTokens());
+                setNumOfTokens(2);
+                dice.setNumFacciaUp(2);
                 break;
             case 6:
-                if (newFace == 1) {
-                    player.setNumOfToken(player.getNumOfToken()-getNumOfTokens());
-                    setNumOfTokens(2);
-                    dice.setNumFacciaUp(newFace);
-                }
+                player.setNumOfToken(player.getNumOfToken()-getNumOfTokens());
+                setNumOfTokens(2);
+                dice.setNumFacciaUp(1);
                 break;
 
             default:
