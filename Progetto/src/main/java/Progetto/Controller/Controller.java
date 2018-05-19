@@ -10,17 +10,88 @@ import javax.swing.text.View;
 public class Controller {
 
     private Match match;
-    private View view;       // ci va?
+    private View view;
     private Player player;
+
+    private Dice dice;
+    private Box box;
+    private ToolCard card;
+
+    private State chosenDice;
+    private State chosenBox;
+    private State chosenCard;
+    private State startedTurn;
+
+    private State state;
 
     public Controller(Match match, View view, Player player){
         this.match=match;
         //view.registerObserver(this);
         this.view=view;        // se non ci va lo cambio col comando sopra
         this.player=player;
+
+        chosenBox= new ChosenBox(this);
+        chosenCard= new ChosenCard(this);
+        chosenDice= new ChosenDice(this);
+        startedTurn = new StartedTurn(this);
+
+        this.state= startedTurn;
     }
 
-    public void changePlayer (String changePlayer) {
+    public void setDice(Dice dice) {
+        this.dice = dice;
+    }
+
+    public void setBox(Box box) {
+        this.box = box;
+    }
+
+    public void setCard(ToolCard card) {
+        this.card = card;
+    }
+// gestione gioco
+    public Dice getDice() {
+        return dice;
+    }
+    public Box getBox() {
+        return box;
+    }
+    public Match getMatch() {
+        return match;
+    }
+
+    public ToolCard getCard() {
+        return card;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    //gestione stati
+    public State getChosenBox() {
+        return chosenBox;
+    }
+
+    public State getChosenCard() {
+        return chosenCard;
+    }
+
+    public State getChosenDice() {
+        return chosenDice;
+    }
+
+    public State getStartedTurn() {
+        return startedTurn;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
+
+
+    /*public void changePlayer (String changePlayer) {
         if (changePlayer.equals("change player"))
             match.changePlayer();
     }
@@ -36,35 +107,7 @@ public class Controller {
 
     public void useToolCard (ToolCard toolCard) {
 
-    }
-
-
-    /*public <Object> void update(Object o) {
-        switch (o) {
-        }
-            match.initializeTable();
-            match.inizializePlayer();
-        } else
-            if (o.equals(State.SCHEME_CHOOSEN.toString()))
-                match.startRound();
-
-            else
-                if (o.equals(State.USE_DICE.toString()))
-                    //match.useDice();    devo passare dadi e
-
-
-    public void handle(Dice dice, Box box){
-        match.usedice(dice,box)}
-
-    public void handle (Toolcard card){
-        match.useCard(card);
-    }
-
-    etc..
-
-     */
-
-    // aggiungo una riga per committare e provare a sovrascrivere l'ultimo commit di Arianna involontario
+    }*/
 
 
 

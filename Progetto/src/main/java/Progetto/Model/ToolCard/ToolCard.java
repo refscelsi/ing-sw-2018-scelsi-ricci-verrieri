@@ -11,6 +11,11 @@ public abstract class ToolCard {
         numOfTokens = 1;
     }
 
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
     public int getNumOfTokens () {
         return numOfTokens;
     }
