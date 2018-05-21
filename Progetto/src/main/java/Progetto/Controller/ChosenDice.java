@@ -14,7 +14,7 @@ public class ChosenDice implements State {
 
     @Override
     public void chooseDice(Dice dice) {
-        //ritorno mex --> non puoi farlo
+        controller.getMatch().notifyObserver("Hai già scelto il dado");
     }
 
     @Override
@@ -22,18 +22,23 @@ public class ChosenDice implements State {
         if(checkBox(box)){
             controller.setBox(box);
             controller.getMatch().useDice(box,controller.getDice(),controller.getPlayer());
-            controller.setState(controller.getChosenBox());
         }
     }
 
     @Override
     public void chooseCard(ToolCard toolCard) {
-        //balzi
+        controller.getMatch().notifyObserver("Hai già scelto la tua mossa");
     }
 
     @Override
     public void endTurn() {
-        //che cazzo fai?
+        if (controller.getBox() == null) {
+            controller.getMatch().notifyObserver("termina la mossa");
+        } else {
+            controller.getMatch().changePlayer();
+            controller.setPlayer(controller.getMatch().getPlayerPlaying());
+            controller.setState(controller.getStartedTurn());
+        }
     }
 
     public boolean checkBox(Box box){

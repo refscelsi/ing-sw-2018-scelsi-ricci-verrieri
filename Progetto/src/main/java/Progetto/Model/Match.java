@@ -31,6 +31,11 @@ public class Match extends Observable{
         last_id++;
     }
 
+    public Player getPlayerPlaying(){
+        return players.get(playerPlaying);
+    }
+
+
     public int getNumPlayers() {
         return numPlayers;
     }

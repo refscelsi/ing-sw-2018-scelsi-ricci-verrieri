@@ -57,10 +57,10 @@ public abstract class Observable {
             observer.update(dice);
     }
 
-    /*public void notifyObserver(Object o){
+    public void notifyObserver(String s){
         for(Observer observer: this.observers){
-            observer.update(o);
+            observer.notifyMessage(s);
         }
-    }*/
+    }
 }
 

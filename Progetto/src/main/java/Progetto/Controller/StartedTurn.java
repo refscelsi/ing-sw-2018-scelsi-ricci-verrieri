@@ -32,6 +32,8 @@ public class StartedTurn implements State {
 
     @Override
     public void endTurn() {
-        //sicuro di voler passare il turno??
+        controller.getMatch().changePlayer();
+        controller.setPlayer(controller.getMatch().getPlayerPlaying());
+        controller.setState(controller.getStartedTurn());
     }
 }

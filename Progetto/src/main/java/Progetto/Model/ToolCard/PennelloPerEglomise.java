@@ -5,19 +5,12 @@ import Progetto.Model.Exceptions.NotValidException;
 import Progetto.Model.Exceptions.ToolCardException;
 
 public class PennelloPerEglomise extends ToolCard{
-    private Dice dice;
-    private Player player;
-    private Box source;
-    private Box destination;
 
     public PennelloPerEglomise(Dice dice, Player player, Box box1, Box box2)throws ToolCardException, NotValidException {
-        this.dice=dice;
-        this.player=player;
-        this.source=box1;
-        this.destination=box2;
+        super();
     }
 
-    public void execute() throws ToolCardException{
+    public void execute(Dice dice, Player player, Box source, Box destination) throws ToolCardException{
         Scheme scheme=player.getScheme();
         if(scheme.isEmpty()){
             throw new ToolCardException("Non hai dadi da spostare babbazzo");
@@ -27,6 +20,8 @@ public class PennelloPerEglomise extends ToolCard{
                 ((scheme.checkShade(destination.getShade(),dice.getNumFacciaUp()))
                 || (scheme.checkShade(dice.getNumFacciaUp(),0)))){
             destination.placeDice(dice);
+            player.setNumOfToken(player.getNumOfToken()-getNumOfTokens());
+            setNumOfTokens(2);
         }
         else
             source.placeDice(dice);

@@ -7,23 +7,16 @@ import Progetto.Model.Exceptions.ToolCardException;
 
 import java.io.DataInput;
 
-public class PennelloPerPastaSalda implements ToolCard {
-    private Dice dice;
-    private Player player;
-    private DraftPool draftPool;
+public class PennelloPerPastaSalda extends ToolCard {
     private Box destination;
-    //private Play play;
 
-    public PennelloPerPastaSalda(Dice dice, Player player, DraftPool draftPool){
-        this.dice=dice;
-        this.draftPool=draftPool;
-        this.player=player;
+    public PennelloPerPastaSalda(Dice dice, Player player, DraftPool draftPool) throws ToolCardException, NotValidException {
+        super();
     }
 
-    public void execute() throws ToolCardException, NotValidException {
-        this.dice=this.getDice();
+    public void execute(Dice dice, Player player, DraftPool draftPool) throws ToolCardException, NotValidException {
         try {
-            player.useDice(destination,dice,draftPool);
+            player.useDice(destination,dice);
         } catch (NotValidException e) {
             e.printStackTrace();
         }
@@ -33,8 +26,4 @@ public class PennelloPerPastaSalda implements ToolCard {
         this.destination=box;
     }
 
-    public Dice getDice() {
-        dice.throwDice();
-        return dice;
-    }
 }

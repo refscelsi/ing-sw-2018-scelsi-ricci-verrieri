@@ -18,7 +18,6 @@ public class Controller {
     private ToolCard card;
 
     private State chosenDice;
-    private State chosenBox;
     private State chosenCard;
     private State startedTurn;
 
@@ -30,7 +29,6 @@ public class Controller {
         this.view=view;        // se non ci va lo cambio col comando sopra
         this.player=player;
 
-        chosenBox= new ChosenBox(this);
         chosenCard= new ChosenCard(this);
         chosenDice= new ChosenDice(this);
         startedTurn = new StartedTurn(this);
@@ -44,6 +42,10 @@ public class Controller {
 
     public void setBox(Box box) {
         this.box = box;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
     public void setCard(ToolCard card) {
@@ -69,9 +71,6 @@ public class Controller {
     }
 
     //gestione stati
-    public State getChosenBox() {
-        return chosenBox;
-    }
 
     public State getChosenCard() {
         return chosenCard;

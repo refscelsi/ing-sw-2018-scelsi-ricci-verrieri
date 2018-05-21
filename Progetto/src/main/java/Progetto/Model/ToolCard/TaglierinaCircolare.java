@@ -9,13 +9,11 @@ public class TaglierinaCircolare extends ToolCard {
     private DraftPool draftPool;
     private RoundTrack roundTrack;
 
-    public TaglierinaCircolare(Dice dice, DraftPool draftPool, RoundTrack roundTrack)throws ToolCardException, NotValidException {
-        this.dice=dice;
-        this.draftPool=draftPool;
-        this.roundTrack=roundTrack;
+    public TaglierinaCircolare()throws ToolCardException, NotValidException {
+        super();
     }
 
-    public void execute () throws ToolCardException{
+    public void execute (Dice dice, DraftPool draftPool, RoundTrack roundTrack) throws ToolCardException{
         draftPool.removeDice(dice);
 
         //sistemare roundtrack per permettere lo switch

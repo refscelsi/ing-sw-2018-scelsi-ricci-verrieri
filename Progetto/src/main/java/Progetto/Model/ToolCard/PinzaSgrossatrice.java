@@ -5,15 +5,13 @@ import Progetto.Model.Exceptions.NotValidException;
 import Progetto.Model.Exceptions.ToolCardException;
 
 public class PinzaSgrossatrice extends ToolCard {
-    private Dice dice;
-    private char operation;
 
-    public PinzaSgrossatrice(Dice dice, char operation)throws ToolCardException, NotValidException {
-        this.dice = dice;
-        this.operation = operation;
+
+    public PinzaSgrossatrice()throws ToolCardException, NotValidException {
+        super();
     }
 
-    public void execute() { //gestire eccezioni per 1 e 6 --> valori non validi
+    public void execute(Dice dice, char operation) { //gestire eccezioni per 1 e 6 --> valori non validi
         int value = dice.getNumFacciaUp();
 
         switch(operation){
