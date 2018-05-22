@@ -21,7 +21,7 @@ public class StartedTurn implements State {
 
     @Override
     public void chooseBox(Box box) {
-        //che vuoi fare?
+        controller.getMatch().notifyObserver("mossa non consentita");
     }
 
     @Override

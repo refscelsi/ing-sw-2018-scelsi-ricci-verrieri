@@ -6,6 +6,7 @@ import Progetto.Model.Exceptions.ToolCardException;
 public abstract class ToolCard {
 
     private int numOfTokens;
+    private int id;
 
     public ToolCard () throws ToolCardException, NotValidException {
         numOfTokens = 1;
@@ -22,6 +23,10 @@ public abstract class ToolCard {
 
     public void setNumOfTokens (int num) {
         numOfTokens = num;
+    }
+
+    public int getId(){
+        return id;
     }
 
 }

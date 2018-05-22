@@ -5,8 +5,9 @@ import Progetto.Model.Exceptions.NotValidException;
 import Progetto.Model.Exceptions.ToolCardException;
 
 public class PennelloPerEglomise extends ToolCard{
+    final int id=2;
 
-    public PennelloPerEglomise(Dice dice, Player player, Box box1, Box box2)throws ToolCardException, NotValidException {
+    public PennelloPerEglomise()throws ToolCardException, NotValidException {
         super();
     }
 

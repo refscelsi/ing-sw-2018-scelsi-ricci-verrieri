@@ -5,7 +5,7 @@ import Progetto.Model.Exceptions.NotValidException;
 import Progetto.Model.Exceptions.ToolCardException;
 
 public class PinzaSgrossatrice extends ToolCard {
-
+    final int id=1;
 
     public PinzaSgrossatrice()throws ToolCardException, NotValidException {
         super();

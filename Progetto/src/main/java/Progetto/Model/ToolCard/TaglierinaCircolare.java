@@ -8,6 +8,7 @@ public class TaglierinaCircolare extends ToolCard {
     private Dice dice;
     private DraftPool draftPool;
     private RoundTrack roundTrack;
+    final int id=5;
 
     public TaglierinaCircolare()throws ToolCardException, NotValidException {
         super();

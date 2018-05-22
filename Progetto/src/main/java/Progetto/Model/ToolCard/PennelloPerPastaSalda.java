@@ -9,8 +9,9 @@ import java.io.DataInput;
 
 public class PennelloPerPastaSalda extends ToolCard {
     private Box destination;
+    final int id=6;
 
-    public PennelloPerPastaSalda(Dice dice, Player player, DraftPool draftPool) throws ToolCardException, NotValidException {
+    public PennelloPerPastaSalda() throws ToolCardException, NotValidException {
         super();
     }
 

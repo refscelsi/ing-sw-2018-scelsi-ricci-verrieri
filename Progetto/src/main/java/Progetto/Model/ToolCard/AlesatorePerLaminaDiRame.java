@@ -6,6 +6,7 @@ import Progetto.Model.Exceptions.ToolCardException;
 
 
 public class AlesatorePerLaminaDiRame extends ToolCard{
+    final int id=3;
 
     public AlesatorePerLaminaDiRame () throws ToolCardException, NotValidException {
         super();

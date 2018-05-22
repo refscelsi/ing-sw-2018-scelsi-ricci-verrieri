@@ -11,6 +11,7 @@ import Progetto.Model.Player;
 public class Martelletto extends ToolCard {
     private Box destination;
     private Dice dice;
+    final int id=7;
 
 
 

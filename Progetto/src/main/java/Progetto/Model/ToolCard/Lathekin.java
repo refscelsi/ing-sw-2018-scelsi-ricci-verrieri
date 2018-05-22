@@ -5,6 +5,7 @@ import Progetto.Model.Exceptions.NotValidException;
 import Progetto.Model.Exceptions.ToolCardException;
 
 public class Lathekin extends ToolCard {
+    final int id=4;
 
     public Lathekin() throws ToolCardException, NotValidException {
         super();

@@ -5,6 +5,7 @@ import Progetto.Model.ToolCard.*;
 import Progetto.Model.Exceptions.*;
 
 public class TamponeDiamantato extends ToolCard {
+    private int id=10;
 
     public TamponeDiamantato() throws ToolCardException, NotValidException {
         super();

@@ -4,8 +4,9 @@ import Progetto.Controller.Observable;
 import Progetto.Model.Exceptions.NotValidException;
 import Progetto.Model.Exceptions.ToolCardException;
 import Progetto.Model.ObjectiveCard.*;
-import Progetto.Model.ToolCard.ToolCard;
+import Progetto.Model.ToolCard.*;
 import Progetto.Model.*;
+import javafx.print.Printer;
 
 import java.util.Scanner;
 import java.util.Random;
@@ -17,6 +18,7 @@ public class Match extends Observable{
     private int id;
     private int numPlayers=0, numRound=0;
     private ArrayList<Player> players;
+    private int[] toolCardTokens; //tiene traccia del costo di ogni toolcard
     private int[] playersRound;
     private int firstPlayer;   // primo giocatore del round. Se sono 4 giocatori può essere 0, 1, 2 o 3
     private int playerPlaying; // indice dell'array playersRound -> giocatore che sta giocando il turno
@@ -35,6 +37,9 @@ public class Match extends Observable{
         return players.get(playerPlaying);
     }
 
+    public int[] getToolCardTokens() {
+        return toolCardTokens;
+    }
 
     public int getNumPlayers() {
         return numPlayers;
@@ -153,7 +158,7 @@ public class Match extends Observable{
 
 
 
-    public void initializeTable(){
+    public void initializeTable() throws ToolCardException, NotValidException {
         //ripescare dal db le carte
         //caricarle in adeguate strutture dati
         //costruire le coppie di schemi e le carte scheme --> chiamo metodo createSchemeCard()
@@ -166,6 +171,9 @@ public class Match extends Observable{
         publicObjectives = objectiveCardDeck.drawObjectiveCard();
         System.out.println(publicObjectives.size());
 
+        for(int i=0; i<13; i++){
+            toolCardTokens[i]=1;
+        }
         bag.setDices();
         int i=bag.getSize();
         System.out.println(i);
@@ -248,9 +256,6 @@ public class Match extends Observable{
         score = score - player.getScheme().countFreeBoxes();
         player.setScore(score);
         return score;
-    }
-
-    public void moveToNext(){
     }
 
 
