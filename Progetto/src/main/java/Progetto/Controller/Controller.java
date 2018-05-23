@@ -36,22 +36,20 @@ public class Controller {
         this.state= startedTurn;
     }
 
+
+    //gestione oggetti del gioco
     public void setDice(Dice dice) {
         this.dice = dice;
     }
-
     public void setBox(Box box) {
         this.box = box;
     }
-
     public void setPlayer(Player player) {
         this.player = player;
     }
-
     public void setCard(ToolCard card) {
         this.card = card;
     }
-// gestione gioco
     public Dice getDice() {
         return dice;
     }
@@ -61,52 +59,27 @@ public class Controller {
     public Match getMatch() {
         return match;
     }
-
     public ToolCard getCard() {
         return card;
     }
-
     public Player getPlayer() {
         return player;
     }
 
     //gestione stati
-
     public State getChosenCard() {
         return chosenCard;
     }
-
     public State getChosenDice() {
         return chosenDice;
     }
-
     public State getStartedTurn() {
         return startedTurn;
     }
-
     public void setState(State state) {
         this.state = state;
     }
-
-
-
-    /*public void changePlayer (String changePlayer) {
-        if (changePlayer.equals("change player"))
-            match.changePlayer();
-    }
-
-    public void setScheme (Scheme scheme) {  // il giocatore sceglie lo schema
-        player.setScheme(scheme);
-        player.setNumOfToken(player.getScheme().getDifficulty());
-    }
-
-    public void useDice (Dice dice, Box box) throws NotValidException {  // il giocatore usa un dado
-        match.useDice(box, dice, player);
-    }
-
-    public void useToolCard (ToolCard toolCard) {
-
-    }*/
+    
 
 
 

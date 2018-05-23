@@ -18,12 +18,12 @@ public class Match extends Observable{
     private int id;
     private int numPlayers=0, numRound=0;
     private ArrayList<Player> players;
-    private int[] toolCardTokens; //tiene traccia del costo di ogni toolcard
     private int[] playersRound;
     private int firstPlayer;   // primo giocatore del round. Se sono 4 giocatori può essere 0, 1, 2 o 3
     private int playerPlaying; // indice dell'array playersRound -> giocatore che sta giocando il turno
     private Bag bag;
     private ArrayList<ObjectiveCard> publicObjectives;
+    private ArrayList<ToolCard> toolCards;
     private String np1;
     private State gameState;
     private DraftPool draftPool;
@@ -37,12 +37,12 @@ public class Match extends Observable{
         return players.get(playerPlaying);
     }
 
-    public int[] getToolCardTokens() {
-        return toolCardTokens;
-    }
-
     public int getNumPlayers() {
         return numPlayers;
+    }
+
+    public ArrayList<ToolCard> getToolCards() {
+        return toolCards;
     }
 
     /*public String startMatch(){
@@ -170,10 +170,7 @@ public class Match extends Observable{
         publicObjectives = new ArrayList<ObjectiveCard>();
         publicObjectives = objectiveCardDeck.drawObjectiveCard();
         System.out.println(publicObjectives.size());
-
-        for(int i=0; i<13; i++){
-            toolCardTokens[i]=1;
-        }
+        inizializeToolCard();
         bag.setDices();
         int i=bag.getSize();
         System.out.println(i);
@@ -186,6 +183,75 @@ public class Match extends Observable{
         notifyObserver1(publicObjectives);
 
     }
+
+    public void inizializeToolCard() throws ToolCardException, NotValidException {
+        toolCards=new ArrayList<ToolCard>();
+        ArrayList<Integer> values= new ArrayList<Integer>(); //meglio usare random ma posso estrarne 3 diversi??
+        for(int i=1; i<13;i++){
+            values.add(i);
+        }
+        Collections.shuffle(values);
+        for(int i=0;i<3;i++){
+            int id=values.get(i);
+            addCard(id);
+        }
+    }
+
+    //aggiungo le toolcard
+    public void addCard(int id) throws ToolCardException, NotValidException {
+        switch (id){
+            case 1:
+                PinzaSgrossatrice pinzaSgrossatrice=new PinzaSgrossatrice();
+                toolCards.add(pinzaSgrossatrice);
+                break;
+            case 2:
+                PennelloPerEglomise pennelloPerEglomise= new PennelloPerEglomise();
+                toolCards.add(pennelloPerEglomise);
+                break;
+            case 3:
+                AlesatorePerLaminaDiRame alesatorePerLaminaDiRame= new AlesatorePerLaminaDiRame();
+                toolCards.add(alesatorePerLaminaDiRame);
+                break;
+            case 4:
+                Lathekin lathekin= new Lathekin();
+                toolCards.add(lathekin);
+                break;
+            case 5:
+                TaglierinaCircolare taglierinaCircolare=new TaglierinaCircolare();
+                toolCards.add(taglierinaCircolare);
+                break;
+            case 6:
+                PennelloPerPastaSalda pennelloPerPastaSalda= new PennelloPerPastaSalda();
+                toolCards.add(pennelloPerPastaSalda);
+                break;
+            case 7:
+                Martelletto martelletto= new Martelletto();
+                toolCards.add(martelletto);
+                break;
+            case 8:
+                TenagliaARotelle tenagliaARotelle= new TenagliaARotelle();
+                toolCards.add(tenagliaARotelle);
+                break;
+            case 9:
+                RigaInSughero rigaInSughero= new RigaInSughero();
+                toolCards.add(rigaInSughero);
+                break;
+            case 10:
+                TamponeDiamantato tamponeDiamantato= new TamponeDiamantato();
+                toolCards.add(tamponeDiamantato);
+                break;
+            case 11:
+                DiluentePerPastaSalda diluentePerPastaSalda= new DiluentePerPastaSalda();
+                toolCards.add(diluentePerPastaSalda);
+                break;
+            case 12:
+                TaglierinaManuale taglierinaManuale= new TaglierinaManuale();
+                toolCards.add(taglierinaManuale);
+                break;
+        }
+
+    }
+
 
     public void changePlayer () {
         playerPlaying++;

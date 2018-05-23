@@ -21,7 +21,8 @@ public interface Observer {
 
     public void update (Dice dice);
 
-    public void notifyMessage(String message);
+    //mostra messaggio di errore
+    public void showMessage(String message);
 
     //public <Object> void update(Object o);
 

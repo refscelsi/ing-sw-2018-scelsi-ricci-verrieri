@@ -57,9 +57,9 @@ public abstract class Observable {
             observer.update(dice);
     }
 
-    public void notifyObserver(String s){
+    public void notifyMessage(String s){
         for(Observer observer: this.observers){
-            observer.notifyMessage(s);
+            observer.showMessage(s);
         }
     }
 }

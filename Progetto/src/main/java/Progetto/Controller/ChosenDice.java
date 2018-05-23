@@ -14,7 +14,7 @@ public class ChosenDice implements State {
 
     @Override
     public void chooseDice(Dice dice) {
-        controller.getMatch().notifyObserver("Hai già scelto il dado");
+        controller.getMatch().notifyMessage("Hai già scelto il dado");
     }
 
     @Override
@@ -27,13 +27,13 @@ public class ChosenDice implements State {
 
     @Override
     public void chooseCard(ToolCard toolCard) {
-        controller.getMatch().notifyObserver("Hai già scelto la tua mossa");
+        controller.getMatch().notifyMessage("Hai già scelto la tua mossa");
     }
 
     @Override
     public void endTurn() {
         if (controller.getBox() == null) {
-            controller.getMatch().notifyObserver("termina la mossa");
+            controller.getMatch().notifyMessage("termina la mossa");
         } else {
             controller.getMatch().changePlayer();
             controller.setPlayer(controller.getMatch().getPlayerPlaying());
