@@ -18,6 +18,7 @@ public class PlayerView implements Observer {
     }
 
     //l'unica che parla col controller??
+    /*
     @Override
     public void update() {
 
@@ -56,5 +57,40 @@ public class PlayerView implements Observer {
     @Override
     public void notifyMessage(String message) {
         System.out.println(message);
+    }
+*/
+    @Override
+    public void updateChoiseScheme(ArrayList<SchemeCard> scheme, Player player) {
+
+    }
+
+    @Override
+    public void updateNewRound(Player firstPlayer, DraftPool draftPool) {
+
+    }
+
+    @Override
+    public void updateRanking(ArrayList<Player> ranking) {
+
+    }
+
+    @Override
+    public void updateNextPlayer(Player player) {
+
+    }
+
+    @Override
+    public void updatePublicObjectivesChoosen(ArrayList<ObjectiveCard> publicObjectives) {
+
+    }
+
+    @Override
+    public void updateUsedDice(boolean ok) {
+
+    }
+
+    @Override
+    public void showMessage(String message) {
+
     }
 }

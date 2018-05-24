@@ -33,6 +33,10 @@ public class Match extends Observable{
         last_id++;
     }
 
+    public Match(String text, int i, String text1) {
+
+    }
+
     public Player getPlayerPlaying(){
         return players.get(playerPlaying);
     }

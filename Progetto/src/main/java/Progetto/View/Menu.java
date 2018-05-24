@@ -1,12 +1,17 @@
 package Progetto.View;
 
 import Progetto.Controller.*;
+import Progetto.Model.DraftPool;
+import Progetto.Model.ObjectiveCard.ObjectiveCard;
+import Progetto.Model.Player;
+import Progetto.Model.SchemeCard;
 
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.ArrayList;
 import javax.swing.*;
 
 public class Menu extends javax.swing.JFrame implements Observer {
@@ -196,5 +201,40 @@ public class Menu extends javax.swing.JFrame implements Observer {
     private javax.swing.JLabel newmatch;
     private javax.swing.JPanel p1;
     private javax.swing.JLabel settings;
+
+    @Override
+    public void updateChoiseScheme(ArrayList<SchemeCard> scheme, Player player) {
+
+    }
+
+    @Override
+    public void updateNewRound(Player firstPlayer, DraftPool draftPool) {
+
+    }
+
+    @Override
+    public void updateRanking(ArrayList<Player> ranking) {
+
+    }
+
+    @Override
+    public void updateNextPlayer(Player player) {
+
+    }
+
+    @Override
+    public void updatePublicObjectivesChoosen(ArrayList<ObjectiveCard> publicObjectives) {
+
+    }
+
+    @Override
+    public void updateUsedDice(boolean ok) {
+
+    }
+
+    @Override
+    public void showMessage(String message) {
+
+    }
     // End of variables declaration//GEN-END:variables
 }
