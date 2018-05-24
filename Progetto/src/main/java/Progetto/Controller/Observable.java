@@ -27,34 +27,34 @@ public abstract class Observable {
             observer.update();
     }*/
 
-    public void notifyObserver (ArrayList<SchemeCard> schemes, Player player) {
+    public void notifyChoiseScheme (ArrayList<SchemeCard> schemes, Player player) {
         for(Observer observer: this.observers)
-            observer.update(schemes, player);
+            observer.updateChoiseScheme(schemes, player);
     }
 
-    public void notifyObserver (Player firstPlayer, DraftPool draftPool) {
+    public void notifyNewRound (Player firstPlayer, DraftPool draftPool) {
         for(Observer observer: this.observers)
-            observer.update(firstPlayer, draftPool);
+            observer.updateNewRound(firstPlayer, draftPool);
     }
 
-    public void notifyObserver (ArrayList<Player> ranking) {
+    public void notifyRanking (ArrayList<Player> ranking) {
         for(Observer observer: this.observers)
-            observer.update(ranking);
+            observer.updateRanking(ranking);
     }
 
-    public void notifyObserver (Player player) {
+    public void notifyNextPlayer (Player player) {
         for(Observer observer: this.observers)
-            observer.update(player);
+            observer.updateNextPlayer(player);
     }
 
-    public void notifyObserver1 (ArrayList<ObjectiveCard> publicObjectives) {
+    public void notifyPublicObjectivesChoosen (ArrayList<ObjectiveCard> publicObjectives) {
         for(Observer observer: this.observers)
-            observer.update1(publicObjectives);
+            observer.updatePublicObjectivesChoosen(publicObjectives);
     }
 
-    public void notifyObserver (Dice dice) {
+    public void notifyUsedDice (boolean ok) {
         for(Observer observer: this.observers)
-            observer.update(dice);
+            observer.updateUsedDice(ok);
     }
 
     public void notifyMessage(String s){

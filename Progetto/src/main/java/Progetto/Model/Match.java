@@ -81,7 +81,7 @@ public class Match extends Observable{
             firstPlayer = 0;
         playerPlaying=firstPlayer;
         changeRound(firstPlayer);
-        notifyObserver(players.get(firstPlayer), draftPool);
+        notifyNewRound(players.get(firstPlayer), draftPool);
     }
 
     public void createNewPlayer (String nickname) {
@@ -135,7 +135,7 @@ public class Match extends Observable{
                 possibleNumbers[order] = 0;
             } while (oldOrder>numPlayers||oldOrder==0);
 
-            notifyObserver(schemes,players.get(i));
+            notifyChoiseScheme(schemes,players.get(i));
 
         }
 
@@ -180,7 +180,7 @@ public class Match extends Observable{
 
         Dice dice= new Dice();
         System.out.println(dice.throwDice());
-        notifyObserver1(publicObjectives);
+        notifyPublicObjectivesChoosen(publicObjectives);
 
     }
 
@@ -255,7 +255,7 @@ public class Match extends Observable{
 
     public void changePlayer () {
         playerPlaying++;
-        notifyObserver(players.get(playersRound[playerPlaying]));
+        notifyNextPlayer(players.get(playersRound[playerPlaying]));
     }
 
     public void changeRound (int firstPlayer) {
@@ -272,9 +272,9 @@ public class Match extends Observable{
     }
 
     public void useDice (Box box, Dice dice, Player player) throws NotValidException {
-        player.useDice(box, dice);
+        boolean ok = player.useDice(box, dice);
         draftPool.removeDice(dice);
-        notifyObserver(dice);
+        notifyUsedDice(ok);
     }
 
     public ArrayList<Player> getRanking() {   // ritorna un array di giocatori ordinato dal punteggio massimo al minimo
@@ -332,7 +332,7 @@ public class Match extends Observable{
 
     public void endMatch() {
         ArrayList<Player> ranking = getRanking();
-        notifyObserver(ranking);
+        notifyRanking(ranking);
     }
 }
 

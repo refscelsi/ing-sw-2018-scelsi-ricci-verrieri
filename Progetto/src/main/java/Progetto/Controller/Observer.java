@@ -7,19 +7,17 @@ import java.util.*;
 
 public interface Observer {
 
-    public void update();
+    public void updateChoiseScheme (ArrayList<SchemeCard> scheme, Player player);
 
-    public void update(ArrayList<SchemeCard> scheme, Player player);
+    public void updateNewRound (Player firstPlayer, DraftPool draftPool);
 
-    public void update(Player firstPlayer, DraftPool draftPool);
+    public void updateRanking (ArrayList<Player> ranking);
 
-    public void update (ArrayList<Player> ranking);
+    public void updateNextPlayer (Player player);
 
-    public void update (Player player);
+    public void updatePublicObjectivesChoosen (ArrayList<ObjectiveCard> publicObjectives);
 
-    public void update1 (ArrayList<ObjectiveCard> publicObjectives);
-
-    public void update (Dice dice);
+    public void updateUsedDice (boolean ok);
 
     //mostra messaggio di errore
     public void showMessage(String message);

@@ -1,5 +1,7 @@
 package Progetto.Controller;
 
+import Progetto.Model.Exceptions.NotValidException;
+import Progetto.Model.Exceptions.ToolCardException;
 import Progetto.Model.Match;
 
 public class Server {
@@ -10,7 +12,7 @@ public class Server {
         match.createNewPlayer(nickname);
     }
 
-    public /*static*/ void main(String[] args) {
+    public /*static*/ void main(String[] args)  throws ToolCardException, NotValidException {
 
         match = new Match();
         //View view = new View()
