@@ -1,13 +1,11 @@
-package Progetto.Controller;
+package Progetto.Server.Controller;
 
 import Progetto.Model.*;
-import Progetto.Model.Exceptions.NotValidException;
 import Progetto.Model.ToolCard.ToolCard;
-import Progetto.View.*;
 
 import javax.swing.text.View;
 
-public class Controller {
+public class TurnController {
 
     private Match match;
     private View view;
@@ -23,7 +21,7 @@ public class Controller {
 
     private State state;
 
-    public Controller(Match match, View view, Player player){
+    public TurnController(Match match, View view, Player player){
         this.match=match;
         //view.registerObserver(this);
         this.view=view;        // se non ci va lo cambio col comando sopra
@@ -33,7 +31,7 @@ public class Controller {
         chosenDice= new ChosenDice(this);
         startedTurn = new StartedTurn(this);
 
-        this.state= startedTurn;
+        this.state = startedTurn;
     }
 
 
@@ -79,9 +77,6 @@ public class Controller {
     public void setState(State state) {
         this.state = state;
     }
-    
-
-
 
 }
 

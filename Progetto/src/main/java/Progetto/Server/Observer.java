@@ -1,4 +1,4 @@
-package Progetto.Controller;
+package Progetto.Server;
 
 import Progetto.Model.*;
 import Progetto.Model.ObjectiveCard.ObjectiveCard;

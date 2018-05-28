@@ -1,4 +1,4 @@
-package Progetto.Controller;
+package Progetto.Server.Controller;
 
 import Progetto.Model.*;
 import Progetto.Model.Exceptions.NotValidException;

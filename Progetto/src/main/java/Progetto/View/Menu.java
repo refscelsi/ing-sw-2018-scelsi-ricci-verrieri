@@ -1,6 +1,6 @@
 package Progetto.View;
 
-import Progetto.Controller.*;
+import Progetto.Server.*;
 import Progetto.Model.DraftPool;
 import Progetto.Model.ObjectiveCard.ObjectiveCard;
 import Progetto.Model.Player;

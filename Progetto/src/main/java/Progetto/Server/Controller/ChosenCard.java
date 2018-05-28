@@ -1,4 +1,4 @@
-package Progetto.Controller;
+package Progetto.Server.Controller;
 
 import Progetto.Model.Box;
 import Progetto.Model.Dice;
@@ -6,17 +6,15 @@ import Progetto.Model.Exceptions.NotValidException;
 import Progetto.Model.Exceptions.ToolCardException;
 import Progetto.Model.ToolCard.*;
 
-import javax.swing.text.html.HTML;
-
 public class ChosenCard implements State {
-    Controller controller;
+    TurnController turnController;
 
-    public ChosenCard(Controller newStateController){
-        controller=newStateController;
+    public ChosenCard(TurnController newStateTurnController){
+        turnController = newStateTurnController;
     }
 
     public void handleCard() throws ToolCardException, NotValidException {
-    int id=controller.getCard().getId();
+    int id= turnController.getCard().getId();
         //devo già avere le varie toolcard, oppure devo ritornare all'interfaccia per chiamare execute!
     }
 
@@ -33,14 +31,14 @@ public class ChosenCard implements State {
 
     @Override
     public void chooseCard(ToolCard toolCard) {
-        controller.getMatch().notifyMessage("hai già scelto una carta");
+        turnController.getMatch().notifyMessage("hai già scelto una carta");
     }
 
     @Override
     public void endTurn() {
         //controllare che abbia veramente finito
-        controller.getMatch().changePlayer();
-        controller.setPlayer(controller.getMatch().getPlayerPlaying());
-        controller.setState(controller.getStartedTurn());
+        turnController.getMatch().changePlayer();
+        turnController.setPlayer(turnController.getMatch().getPlayerPlaying());
+        turnController.setState(turnController.getStartedTurn());
     }
 }

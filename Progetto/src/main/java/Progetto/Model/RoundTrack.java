@@ -1,19 +1,31 @@
 package Progetto.Model;
 
+import java.util.ArrayList;
+
 public class RoundTrack {
-    private Dice dadi[]= new Dice[10];
+    private ArrayList<DraftPool> roundTrack;
 
-    public void setDadoRound(int round, Dice dado){
-        dadi[round]=dado;
+    public RoundTrack(){
+        this.roundTrack= new ArrayList<DraftPool>();
     }
 
-    public Dice getDadoRound(int round){
-        return dadi[round];
+    //
+    public void addDice(int round, Dice dice){
+        roundTrack.get(round).addDice(dice);
     }
 
-    public Dice[] getDices(){
-        return dadi;
+    public ArrayList<DraftPool> getRoundTrack() {
+        return roundTrack;
     }
+
+    public DraftPool getDicesRound(int round){
+        return roundTrack.get(round);
+    }
+
+    public int getNumberOfDice(int round){
+        return roundTrack.get(round).getSize();
+    }
+
 
 }
 

@@ -1,13 +1,12 @@
-package Progetto.Controller;
+package Progetto.Server;
 
 import Progetto.Model.ObjectiveCard.ObjectiveCard;
-import Progetto.Model.State;
 import Progetto.Model.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Observable {
+public abstract class Observable { //eliminabile, chiamo direttamente dal model e bona
     public List<Observer> observers;
 
     public Observable(){

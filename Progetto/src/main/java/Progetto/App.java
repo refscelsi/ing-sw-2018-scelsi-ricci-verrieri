@@ -1,10 +1,6 @@
 package Progetto;
 
-import Progetto.Controller.*;
-import Progetto.Model.Match;
 import Progetto.View.Menu;
-
-import javax.swing.text.View;
 
 public class App {
     public static Menu menu;

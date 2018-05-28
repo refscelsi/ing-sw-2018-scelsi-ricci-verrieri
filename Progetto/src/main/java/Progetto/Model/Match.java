@@ -1,14 +1,11 @@
 package Progetto.Model;
 
-import Progetto.Controller.Observable;
+import Progetto.Server.Observable;
 import Progetto.Model.Exceptions.NotValidException;
 import Progetto.Model.Exceptions.ToolCardException;
 import Progetto.Model.ObjectiveCard.*;
 import Progetto.Model.ToolCard.*;
-import Progetto.Model.*;
-import javafx.print.Printer;
 
-import java.util.Scanner;
 import java.util.Random;
 import java.util.*;
 
@@ -18,7 +15,7 @@ public class Match extends Observable{
     private int id;
     private int numPlayers=0, numRound=0;
     private ArrayList<Player> players;
-    private int[] playersRound;
+    private int[] playersRound; 
     private int firstPlayer;   // primo giocatore del round. Se sono 4 giocatori può essere 0, 1, 2 o 3
     private int playerPlaying; // indice dell'array playersRound -> giocatore che sta giocando il turno
     private Bag bag;
@@ -27,6 +24,7 @@ public class Match extends Observable{
     private String np1;
     private State gameState;
     private DraftPool draftPool;
+    private RoundTrack roundTrack;
 
     public Match() {
         id = last_id;
@@ -84,8 +82,15 @@ public class Match extends Observable{
         if (firstPlayer >= numPlayers)
             firstPlayer = 0;
         playerPlaying=firstPlayer;
-        changeRound(firstPlayer);
+        //changeRound(firstPlayer);
         notifyNewRound(players.get(firstPlayer), draftPool);
+    }
+
+    public void endRound(){
+        for(Dice dice : draftPool.getDraftPool()){
+            roundTrack.addDice(numRound,dice);
+        }
+        changeRound(firstPlayer);
     }
 
     public void createNewPlayer (String nickname) {
@@ -328,10 +333,6 @@ public class Match extends Observable{
         return score;
     }
 
-
-    public void useToolCard(ToolCard toolCard) throws ToolCardException, NotValidException { //il controller passa la tool che mi serve e che creo ogni volta che devo usare
-
-    }
 
 
     public void endMatch() {
