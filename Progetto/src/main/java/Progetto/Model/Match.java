@@ -47,33 +47,10 @@ public class Match extends Observable{
         return toolCards;
     }
 
-    /*public String startMatch(){
-
-        System.out.println("l'id della partita ?: " + id);
-
+    public void startMatch() throws ToolCardException, NotValidException {
         inizializePlayer();
-
         initializeTable();
-
-        for (int i=0; i<10; i++) {
-            gameState = State.START_ROUND;
-            notifyObserver(gameState);
-            Round round = new Round(firstPlayer,draftPool);
-            firstPlayer += 1;
-            if (firstPlayer >= numPlayers)
-                firstPlayer = 0;
-            gameState = State.CHANGE_ROUND;
-            notifyObserver(gameState);
-        }
-
-        gameState = State.END_MATCH;
-        notifyObserver(gameState);  
-
-        //this.notifyObserver();
-        //aspettare che round mi dica di finire
-        endMatch();
-        return null;
-    }*/
+    }
 
     public void startRound() {
         draftPool = bag.draw(numPlayers);

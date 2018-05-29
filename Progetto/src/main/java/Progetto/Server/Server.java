@@ -43,7 +43,6 @@ public class Server implements ServerInterface{
             }
             try {
                 registry.bind("userController", (Remote) this);
-                registry.bind("turnController", (Remote) turnController );
             } catch (RemoteException e) {
                 e.printStackTrace();
             } catch (AlreadyBoundException e) {

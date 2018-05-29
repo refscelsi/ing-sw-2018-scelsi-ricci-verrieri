@@ -34,17 +34,6 @@ public class Dice {
         this.numFacciaUp = numFacciaUp;
     }
 
-    //servono davvero questi metodi?
-    public boolean isRiserva() {return riserva; }
-    public boolean isUsatoSuSchema() {
-        return usatoSuSchema;
-    }
-    public void setRiserva(boolean riserva) {
-        this.riserva = riserva;
-    }
-    public void setUsatoSuSchema(boolean usatoSuSchema) {
-        this.usatoSuSchema = usatoSuSchema;
-    }
 
     @Override
     public String toString() {
