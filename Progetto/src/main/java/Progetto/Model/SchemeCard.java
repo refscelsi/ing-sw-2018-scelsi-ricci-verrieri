@@ -2,7 +2,8 @@ package Progetto.Model;
 
 public class SchemeCard {
    private short id1,id2;
-   private Scheme a,b;
+   private Scheme front, back;
+
 
    public SchemeCard(short id1,short id2){
        this.id1=id1;
@@ -12,19 +13,18 @@ public class SchemeCard {
    }
 
     public Scheme getA() {
-        return a;
+        return front;
     }
 
-    public Scheme getB() {
-        return b;
+    public Scheme getBack() {
+        return back;
     }
 
-    public void setA(Scheme a) {
-        this.a = a;
-    }
+    public void setA(Scheme front) {
+        this.front = front; }
 
-    public void setB(Scheme b) {
-        this.b = b;
+    public void setBack(Scheme back) {
+        this.back = back;
     }
 
     public short getId1() {

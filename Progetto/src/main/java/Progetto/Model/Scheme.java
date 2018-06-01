@@ -124,6 +124,14 @@ public class Scheme {
     }
 
     public boolean isEmpty(){
+        this.isEmpty=true;
+        for(int i=0;i<boxes.length;i++){
+            for(int j=0;j<boxes[i].length;j++){
+                if(boxes[i][j].isFull()){
+                    setNotEmpty();
+                }
+            }
+        }
         return this.isEmpty;
     }
 
@@ -149,8 +157,8 @@ public class Scheme {
 
     public int countFreeBoxes() {
         int free = 0;
-        for (int i=0; i<4; i++)
-            for (int j=0; j<5; j++)
+        for (int i=0; i<boxes.length; i++)
+            for (int j=0; j<boxes[i].length; j++)
                 if (!boxes[i][j].isFull())
                     free++;
         return free;

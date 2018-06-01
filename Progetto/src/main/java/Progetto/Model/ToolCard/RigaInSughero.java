@@ -17,7 +17,7 @@ public class RigaInSughero extends ToolCard {
         if(scheme.isEmpty()){
             if(scheme.checkFirst(box, dice)){
                 box.placeDice(dice);
-                scheme.setNotEmpty();
+                //scheme.setNotEmpty();
             }
         }
         else if(scheme.checkBox(box, dice) && !scheme.checkDiceAdjacent(box,dice)){

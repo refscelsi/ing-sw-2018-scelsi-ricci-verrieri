@@ -11,7 +11,7 @@ import java.util.*;
 
 public class Match extends Observable{
 
-    private static int last_id=0;
+    private static int last_id=0; // a cosa serve?
     private int id;
     private int numPlayers=0, numRound=0;
     private ArrayList<Player> players;
@@ -22,7 +22,6 @@ public class Match extends Observable{
     private ArrayList<ObjectiveCard> publicObjectives;
     private ArrayList<ToolCard> toolCards;
     private String np1;
-    private State gameState;
     private DraftPool draftPool;
     private RoundTrack roundTrack;
 
@@ -31,9 +30,9 @@ public class Match extends Observable{
         last_id++;
     }
 
-    public Match(String text, int i, String text1) {
-
+    public Match(String text1, int i, String text2) {
     }
+
 
     public Player getPlayerPlaying(){
         return players.get(playerPlaying);

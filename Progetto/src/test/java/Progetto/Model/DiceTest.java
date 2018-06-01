@@ -1,7 +1,6 @@
 package Progetto.Model;
 
-import Progetto.Model.Color;
-import Progetto.Model.Dice;
+import org.junit.Test;
 
 import static org.junit.Assert.*;
 
@@ -12,16 +11,29 @@ public class DiceTest {
         dice=new Dice();
     }
 
-    @org.junit.Test
+
+    @Test
     public void throwDice() {
         dice.throwDice();
         int mynum=dice.getNumFacciaUp();
         assertTrue(1 <= mynum && mynum <= 6);
     }
 
-    @org.junit.Test
+    @Test
     public void setDiceColor() {
         dice.setDiceColor(Color.RED);
         assertEquals(Color.RED,dice.getDiceColor());
+    }
+
+    @Test
+    public void getDiceColor() {
+    }
+
+    @Test
+    public void getNumFacciaUp() {
+    }
+
+    @Test
+    public void setNumFacciaUp() {
     }
 }

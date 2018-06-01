@@ -8,7 +8,7 @@ public class Player {
     private int orderInRound;    // ordine che viene assegnato al giocatore nel primo round. Questo numero identifica il giocatore ed è molto più comodo gestire tutta la parte di passaggio da un giocatore all'altro utilizzando questo
     private int numOfToken;
     private int score;
-    //private boolean inGame;      credo non sia necessario visto che dobbiamo gestire solo una partita alla volta
+    private boolean inGame; //true quando sta giocando (posso ricevere i comandi) false altrimenti
     private Scheme scheme;
     private PrivateObjectiveCard privateObjective;
 
@@ -19,9 +19,9 @@ public class Player {
 
     //public void login(){}       credo non sia necessario
 
-    /*public boolean isInGame() {       credo non sia necessario visto che dobbiamo gestire solo una partita alla volta
+    public boolean isInGame() {
         return inGame;
-    }*/
+    }
 
     public int getNumOfToken() {
         return numOfToken;
@@ -86,6 +86,7 @@ public class Player {
         else throw new NotValidException("L'inserimento non è corretto");
         return false;
     }
+
 
     @Override
     public String toString() {

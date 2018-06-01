@@ -25,4 +25,13 @@ public class DraftPool {
         return draftPool.size();
     }
 
+    public boolean diceInDraftpool(Dice diceToFind){
+        for(Dice dice: draftPool){
+            if(diceToFind.equals(dice)){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
