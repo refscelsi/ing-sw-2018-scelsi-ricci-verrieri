@@ -13,7 +13,6 @@ import javax.swing.*;
 
 public class AddScheme extends javax.swing.JFrame implements FocusListener,MouseListener, KeyListener{
 
-
     private final JLabel box[][]=new JLabel[4][5];
     private final JLabel c1[][]=new JLabel[4][5];
     private final JLabel c2[][]=new JLabel[4][5];
@@ -283,6 +282,7 @@ public class AddScheme extends javax.swing.JFrame implements FocusListener,Mouse
             }
         };
         addWindowListener(exitListener);
+        setResizable(false);
 
         p.setBackground(new java.awt.Color(204, 255, 204));
         p.setPreferredSize(new java.awt.Dimension(775, 400));
