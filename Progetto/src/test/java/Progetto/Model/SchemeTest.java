@@ -1,12 +1,6 @@
-package Progetto.Model;
+package progetto.model;
 
-import Progetto.Model.Scheme;
-import Progetto.Model.Dice;
-import Progetto.Model.Box;
-import Progetto.Model.Color;
 import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 
 import static org.junit.Assert.*;
 

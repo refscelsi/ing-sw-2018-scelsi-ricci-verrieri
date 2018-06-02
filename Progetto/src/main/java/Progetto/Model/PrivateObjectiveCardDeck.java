@@ -1,6 +1,7 @@
-package Progetto.Model;
+package progetto.model;
 
-import Progetto.Model.ObjectiveCard.*;
+import progetto.model.objectiveCard.PrivateObjectiveCard;
+
 import java.util.*;
 
 public class PrivateObjectiveCardDeck {

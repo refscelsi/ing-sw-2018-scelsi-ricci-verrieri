@@ -1,6 +1,4 @@
-package Progetto.Model.ObjectiveCard;
-import Progetto.Model.*;
-import java.util.*;
+package progetto.model.objectiveCard;
 
 public abstract class ObjectiveCard {
 

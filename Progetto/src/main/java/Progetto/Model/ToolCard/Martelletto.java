@@ -1,12 +1,11 @@
-package Progetto.Model.ToolCard;
+package progetto.model.toolCard;
 
-import Progetto.Model.Box;
-import Progetto.Model.Dice;
-import Progetto.Model.DraftPool;
-import Progetto.Model.Exceptions.NotValidException;
-import Progetto.Model.Exceptions.ToolCardException;
-import Progetto.Model.Player;
-
+import progetto.model.Box;
+import progetto.model.Dice;
+import progetto.model.DraftPool;
+import progetto.model.Player;
+import progetto.model.exceptions.NotValidException;
+import progetto.model.exceptions.ToolCardException;
 
 public class Martelletto extends ToolCard {
     private Box destination;

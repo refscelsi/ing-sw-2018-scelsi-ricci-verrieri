@@ -1,5 +1,4 @@
-package Progetto.Model;
-
+package progetto.model;
 public class SchemeCard {
    private short id1,id2;
    private Scheme front, back;

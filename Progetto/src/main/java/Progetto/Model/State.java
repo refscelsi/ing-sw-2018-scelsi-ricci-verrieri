@@ -1,4 +1,4 @@
-package Progetto.Model;
+package progetto.model;
 
 public enum State {
 

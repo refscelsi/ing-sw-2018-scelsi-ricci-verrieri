@@ -1,8 +1,11 @@
-package Progetto.Model.ToolCard;
+package progetto.model.toolCard;
 
-import Progetto.Model.*;
-import Progetto.Model.Exceptions.NotValidException;
-import Progetto.Model.Exceptions.ToolCardException;
+import progetto.model.Box;
+import progetto.model.Dice;
+import progetto.model.DraftPool;
+import progetto.model.Player;
+import progetto.model.exceptions.NotValidException;
+import progetto.model.exceptions.ToolCardException;
 
 
 import java.io.DataInput;

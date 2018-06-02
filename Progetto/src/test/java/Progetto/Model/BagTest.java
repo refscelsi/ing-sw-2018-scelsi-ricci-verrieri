@@ -1,7 +1,5 @@
-package Progetto.Model;
+package progetto.model;
 
-import Progetto.Model.Bag;
-import Progetto.Model.Dice;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

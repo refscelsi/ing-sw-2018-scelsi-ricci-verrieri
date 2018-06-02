@@ -1,9 +1,8 @@
-package Progetto.View.Client;
+package progetto.view.client;
 
-import Progetto.Server.*;
-import Progetto.Server.Exceptions.NotValidNicknameException;
+import progetto.server.ServerInterface;
+import progetto.server.exceptions.NotValidNicknameException;
 
-import javax.naming.NamingException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;

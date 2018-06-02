@@ -1,7 +1,7 @@
-package Progetto.Model.ToolCard;
+package progetto.model.toolCard;
 
-import Progetto.Model.Exceptions.NotValidException;
-import Progetto.Model.Exceptions.ToolCardException;
+import progetto.model.exceptions.NotValidException;
+import progetto.model.exceptions.ToolCardException;
 
 public class TaglierinaManuale extends ToolCard {
     final int id=12;

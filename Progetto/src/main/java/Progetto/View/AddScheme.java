@@ -1,10 +1,9 @@
-package Progetto.View;
+package progetto.view;
 
-import Progetto.Model.Scheme;
+import progetto.model.Scheme;
 
 import java.awt.event.*;
 import java.io.*;
-import Progetto.*;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -395,7 +394,7 @@ public class AddScheme extends javax.swing.JFrame implements FocusListener,Mouse
 
     public void tornaMenu(){
         this.setVisible(false);
-        Progetto.App.menu.setVisible(true);
+        progetto.App.menu.setVisible(true);
     }
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -567,11 +566,11 @@ public class AddScheme extends javax.swing.JFrame implements FocusListener,Mouse
 
     public void saveStateActualScheme(){
 
-        Progetto.Model.Box boxes[][]= new Progetto.Model.Box[4][5];
+        progetto.model.Box boxes[][]= new progetto.model.Box[4][5];
 
         for (int i=0; i<4;i++){
             for(int j=0;j<5;j++){
-                boxes[i][j]=new Progetto.Model.Box();
+                boxes[i][j]=new progetto.model.Box();
                 boxes[i][j].setShade(Integer.parseInt(box[i][j].getText()));
                 boxes[i][j].setColor(toColor(colore[i][j]));
             }
@@ -581,15 +580,15 @@ public class AddScheme extends javax.swing.JFrame implements FocusListener,Mouse
         schemi.add(schema);
     }
 
-    public Progetto.Model.Color toColor(int i){
+    public progetto.model.Color toColor(int i){
         switch(i){
-            case 1: return Progetto.Model.Color.PURPLE;
-            case 2: return Progetto.Model.Color.RED;
-            case 3: return Progetto.Model.Color.BLUE;
-            case 4: return Progetto.Model.Color.GREEN;
-            case 5: return Progetto.Model.Color.YELLOW;
-            case 6: return Progetto.Model.Color.WHITE;
-            default: return Progetto.Model.Color.WHITE;
+            case 1: return progetto.model.Color.PURPLE;
+            case 2: return progetto.model.Color.RED;
+            case 3: return progetto.model.Color.BLUE;
+            case 4: return progetto.model.Color.GREEN;
+            case 5: return progetto.model.Color.YELLOW;
+            case 6: return progetto.model.Color.WHITE;
+            default: return progetto.model.Color.WHITE;
         }
     }
 

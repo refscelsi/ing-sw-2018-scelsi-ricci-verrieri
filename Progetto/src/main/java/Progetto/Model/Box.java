@@ -1,5 +1,4 @@
-package Progetto.Model;
-
+package progetto.model;
 public class Box {
     private int x;
     private int y;

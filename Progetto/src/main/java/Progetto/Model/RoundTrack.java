@@ -1,5 +1,4 @@
-package Progetto.Model;
-
+package progetto.model;
 import java.util.ArrayList;
 
 public class RoundTrack {

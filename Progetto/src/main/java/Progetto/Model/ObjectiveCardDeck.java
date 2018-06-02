@@ -1,7 +1,8 @@
-package Progetto.Model;
+package progetto.model;
+import progetto.model.objectiveCard.*;
 
-import Progetto.Model.ObjectiveCard.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class ObjectiveCardDeck {
     private ArrayList<ObjectiveCard> deck;

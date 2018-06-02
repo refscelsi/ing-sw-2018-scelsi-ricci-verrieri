@@ -1,10 +1,13 @@
-package Progetto.Server;
+package progetto.server;
 
-import Progetto.Model.ObjectiveCard.ObjectiveCard;
-import Progetto.Model.*;
+import progetto.model.DraftPool;
+import progetto.model.Player;
+import progetto.model.SchemeCard;
+import progetto.model.objectiveCard.ObjectiveCard;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public abstract class Observable { //eliminabile, chiamo direttamente dal model e bona
     public List<Observer> observers;

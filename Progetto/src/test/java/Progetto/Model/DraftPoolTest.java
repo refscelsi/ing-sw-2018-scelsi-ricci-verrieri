@@ -1,8 +1,6 @@
-package Progetto.Model;
+package progetto.model;
 
-import static org.junit.Assert.*;
-import Progetto.Model.Dice;
-import Progetto.Model.DraftPool;
+import static org.junit.Assert.assertEquals;
 
 public class DraftPoolTest {
     private DraftPool draftPool;
@@ -19,7 +17,6 @@ public class DraftPoolTest {
         draftPool.addDice(dice);
         assertEquals(1,draftPool.getSize());
     }
-
 
     @org.junit.Test
     public void removeDice() {
@@ -42,5 +39,4 @@ public class DraftPoolTest {
         assertEquals(draftPool.diceInDraftpool(dice),false);
         assertEquals(draftPool.diceInDraftpool(dice1),true);
     }
-
 }

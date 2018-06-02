@@ -1,15 +1,17 @@
-package Progetto.Model;
+package progetto.model;
 
-import Progetto.Server.Observable;
-import Progetto.Model.Exceptions.NotValidException;
-import Progetto.Model.Exceptions.ToolCardException;
-import Progetto.Model.ObjectiveCard.*;
-import Progetto.Model.ToolCard.*;
+import progetto.model.exceptions.NotValidException;
+import progetto.model.exceptions.ToolCardException;
+import progetto.model.objectiveCard.ObjectiveCard;
+import progetto.model.objectiveCard.PrivateObjectiveCard;
+import progetto.model.toolCard.*;
+import progetto.server.Observable;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
-import java.util.*;
 
-public class Match extends Observable{
+public class Match extends Observable {
 
     private static int last_id=0; // a cosa serve?
     private int id;

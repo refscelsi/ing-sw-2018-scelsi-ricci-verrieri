@@ -1,5 +1,5 @@
-package Progetto.Model.ObjectiveCard;
-import Progetto.Model.*;
+package progetto.model.objectiveCard;
+import progetto.model.*;
 
 public class PrivateObjectiveCard {
 

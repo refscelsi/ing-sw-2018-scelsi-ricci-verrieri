@@ -1,8 +1,9 @@
-package Progetto.Model.ToolCard;
+package progetto.model.toolCard;
 
-import Progetto.Model.*;
-import Progetto.Model.ToolCard.*;
-import Progetto.Model.Exceptions.*;
+import progetto.model.Dice;
+import progetto.model.Player;
+import progetto.model.exceptions.NotValidException;
+import progetto.model.exceptions.ToolCardException;
 
 public class TamponeDiamantato extends ToolCard {
     private int id=10;

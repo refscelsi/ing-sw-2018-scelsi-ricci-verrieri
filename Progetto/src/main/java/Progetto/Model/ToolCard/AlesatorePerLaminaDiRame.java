@@ -1,9 +1,9 @@
-package Progetto.Model.ToolCard;
+package progetto.model.toolCard;
 
-import Progetto.Model.*;
-import Progetto.Model.Exceptions.NotValidException;
-import Progetto.Model.Exceptions.ToolCardException;
 
+import progetto.model.*;
+import progetto.model.exceptions.NotValidException;
+import progetto.model.exceptions.ToolCardException;
 
 public class AlesatorePerLaminaDiRame extends ToolCard{
     final int id=3;

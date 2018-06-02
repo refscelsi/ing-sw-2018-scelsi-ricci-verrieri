@@ -1,7 +1,6 @@
-package Progetto.Model.ObjectiveCard;
-
-import Progetto.Model.*;
-import java.util.*;
+package progetto.model.objectiveCard;
+import progetto.model.Box;
+import progetto.model.Scheme;
 
 public class DifferentColors extends ObjectiveCard {
 

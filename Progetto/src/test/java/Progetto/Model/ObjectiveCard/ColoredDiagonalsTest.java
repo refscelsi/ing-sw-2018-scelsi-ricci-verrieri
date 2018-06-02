@@ -1,8 +1,6 @@
-package Progetto.Model.ObjectiveCard;
+package progetto.model.objectiveCard;
 
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class ColoredDiagonalsTest {
 

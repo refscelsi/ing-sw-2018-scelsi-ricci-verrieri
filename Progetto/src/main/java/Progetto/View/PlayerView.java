@@ -1,11 +1,11 @@
-package Progetto.View;
+package progetto.view;
 
-import Progetto.Server.Controller.TurnController;
-import Progetto.Server.Observer;
-import Progetto.Model.DraftPool;
-import Progetto.Model.ObjectiveCard.ObjectiveCard;
-import Progetto.Model.Player;
-import Progetto.Model.SchemeCard;
+import progetto.model.DraftPool;
+import progetto.model.Player;
+import progetto.model.SchemeCard;
+import progetto.model.objectiveCard.ObjectiveCard;
+import progetto.server.Observer;
+import progetto.server.controller.TurnController;
 
 import java.util.ArrayList;
 

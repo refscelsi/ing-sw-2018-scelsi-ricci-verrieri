@@ -1,7 +1,9 @@
-package Progetto.Server;
+package progetto.server;
 
-import Progetto.Model.*;
-import Progetto.Model.ObjectiveCard.ObjectiveCard;
+import progetto.model.DraftPool;
+import progetto.model.Player;
+import progetto.model.SchemeCard;
+import progetto.model.objectiveCard.ObjectiveCard;
 
 import java.util.*;
 

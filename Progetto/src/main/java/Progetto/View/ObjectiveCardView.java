@@ -1,4 +1,4 @@
-package Progetto.View;
+package progetto.view;
 
 import javax.swing.*;
 

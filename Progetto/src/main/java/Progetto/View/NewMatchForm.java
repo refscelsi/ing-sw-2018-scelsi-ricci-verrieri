@@ -1,6 +1,6 @@
-package Progetto.View;
+package progetto.view;
 
-import Progetto.Model.Match;
+import progetto.model.Match;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -184,7 +184,7 @@ public class NewMatchForm extends javax.swing.JFrame {
 
     public void tornaMenu(){
         this.setVisible(false);
-        Progetto.App.menu.setVisible(true);
+        progetto.App.menu.setVisible(true);
     }
 
     private void nameMatchTFMouseEntered(java.awt.event.MouseEvent evt) {

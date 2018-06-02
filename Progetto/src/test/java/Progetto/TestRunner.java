@@ -1,5 +1,5 @@
-package Progetto;
-import Progetto.Model.BagTest;
+package progetto;
+import progetto.model.BagTest;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.notification.Failure;
 

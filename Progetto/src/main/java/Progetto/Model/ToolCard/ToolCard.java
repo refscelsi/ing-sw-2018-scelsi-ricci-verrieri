@@ -1,7 +1,7 @@
-package Progetto.Model.ToolCard;
-import Progetto.Model.*;
-import Progetto.Model.Exceptions.NotValidException;
-import Progetto.Model.Exceptions.ToolCardException;
+package progetto.model.toolCard;
+
+import progetto.model.exceptions.NotValidException;
+import progetto.model.exceptions.ToolCardException;
 
 public abstract class ToolCard {
 

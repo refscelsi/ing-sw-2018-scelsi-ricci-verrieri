@@ -1,9 +1,9 @@
-package Progetto.Server.Controller;
+package progetto.server.controller;
 
-import Progetto.Model.Box;
-import Progetto.Model.Dice;
-import Progetto.Model.Exceptions.NotValidException;
-import Progetto.Model.ToolCard.ToolCard;
+import progetto.model.Box;
+import progetto.model.Dice;
+import progetto.model.exceptions.NotValidException;
+import progetto.model.toolCard.ToolCard;
 
 public class ChosenDice implements State {
     TurnController turnController;

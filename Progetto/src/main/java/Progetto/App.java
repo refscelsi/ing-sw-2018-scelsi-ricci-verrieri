@@ -1,6 +1,7 @@
-package Progetto;
+package progetto;
 
-import Progetto.View.Menu;
+
+import progetto.view.Menu;
 
 public class App {
     public static Menu menu;
@@ -19,7 +20,7 @@ public class App {
         */
         //################################### classe vera
 
-        menu =new Menu();
+        menu =  new Menu();
         menu.setVisible(true);
 
         //#################################### cose per testing

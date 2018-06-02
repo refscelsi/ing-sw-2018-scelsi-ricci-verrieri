@@ -1,10 +1,7 @@
-package Progetto.Model;
+package progetto.model;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
-
-import static org.junit.Assert.*;
 
 public class MatchTest {
 
@@ -14,9 +11,10 @@ public class MatchTest {
     @Before
     public void setUp(){
         match=new Match();
+        /*
         player = Mockito.mock(Player.class);
         Mockito.when(player.getNumOfToken()).thenReturn(3);
-        player = Mockito.spy(new Player("zazzi"));
+        player = Mockito.spy(new Player("zazzi"));*/
     }
 
     @Test

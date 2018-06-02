@@ -1,10 +1,10 @@
-package Progetto.Server.Controller;
+package progetto.server.controller;
 
-import Progetto.Model.Box;
-import Progetto.Model.Dice;
-import Progetto.Model.Exceptions.NotValidException;
-import Progetto.Model.Exceptions.ToolCardException;
-import Progetto.Model.ToolCard.*;
+import progetto.model.Box;
+import progetto.model.Dice;
+import progetto.model.exceptions.NotValidException;
+import progetto.model.exceptions.ToolCardException;
+import progetto.model.toolCard.ToolCard;
 
 public class ChosenCard implements State {
     TurnController turnController;
@@ -23,9 +23,8 @@ public class ChosenCard implements State {
 
     }
 
-
     @Override
-    public void chooseBox(Box box) {
+    public void chooseBox(Box box) throws NotValidException {
 
     }
 

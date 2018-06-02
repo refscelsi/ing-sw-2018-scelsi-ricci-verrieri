@@ -1,7 +1,6 @@
-package Progetto.Model;
-
-import Progetto.Model.ObjectiveCard.*;
-import Progetto.Model.Exceptions.NotValidException;
+package progetto.model;
+import progetto.model.objectiveCard.*;
+import progetto.model.exceptions.NotValidException;
 
 public class Player {
     private final String nickname;

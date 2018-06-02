@@ -1,8 +1,9 @@
-package Progetto.Server.Controller;
+package progetto.server.controller;
 
-import Progetto.Model.*;
-import Progetto.Model.Exceptions.NotValidException;
-import Progetto.Model.ToolCard.ToolCard;
+import progetto.model.Box;
+import progetto.model.Dice;
+import progetto.model.exceptions.NotValidException;
+import progetto.model.toolCard.ToolCard;
 
 public interface State {
 

@@ -1,5 +1,4 @@
-package Progetto.Model;
-
+package progetto.model;
 public class Round{
 
     private DraftPool draftPool;

@@ -1,10 +1,10 @@
-package Progetto.Server;
+package progetto.server;
 
-import Progetto.Model.Exceptions.NotValidException;
-import Progetto.Model.Exceptions.ToolCardException;
-import Progetto.Model.Match;
-import Progetto.Server.Controller.TurnController;
-import Progetto.Server.Exceptions.NotValidNicknameException;
+import progetto.model.Match;
+import progetto.model.exceptions.NotValidException;
+import progetto.model.exceptions.ToolCardException;
+import progetto.server.controller.TurnController;
+import progetto.server.exceptions.NotValidNicknameException;
 
 import java.rmi.*;
 import java.rmi.registry.*;

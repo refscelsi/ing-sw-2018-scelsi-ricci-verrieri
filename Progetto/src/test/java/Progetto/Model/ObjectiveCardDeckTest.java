@@ -1,8 +1,6 @@
-package Progetto.Model;
+package progetto.model;
 
-import static org.junit.Assert.*;
-import Progetto.Model.ObjectiveCard.*;
-import Progetto.Model.ObjectiveCardDeck;
+import static junit.framework.TestCase.assertEquals;
 
 public class ObjectiveCardDeckTest {
     private ObjectiveCardDeck deck;

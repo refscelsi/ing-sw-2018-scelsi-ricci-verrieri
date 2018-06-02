@@ -1,7 +1,10 @@
-package Progetto.Server.Controller;
+package progetto.server.controller;
 
-import Progetto.Model.*;
-import Progetto.Model.ToolCard.ToolCard;
+import progetto.model.Box;
+import progetto.model.Dice;
+import progetto.model.Match;
+import progetto.model.Player;
+import progetto.model.toolCard.ToolCard;
 
 import javax.swing.text.View;
 

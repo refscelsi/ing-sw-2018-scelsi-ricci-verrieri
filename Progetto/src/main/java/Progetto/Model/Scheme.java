@@ -1,5 +1,4 @@
-package Progetto.Model;
-
+package progetto.model;
 public class Scheme {
     private int id, difficulty;
     private Box boxes[][];

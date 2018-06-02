@@ -1,6 +1,6 @@
-package Progetto.Server;
+package progetto.server;
 
-import Progetto.Server.Exceptions.NotValidNicknameException;
+import progetto.server.exceptions.NotValidNicknameException;
 
 import java.rmi.Remote;
 

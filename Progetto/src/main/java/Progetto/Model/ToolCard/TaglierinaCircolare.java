@@ -1,8 +1,10 @@
-package Progetto.Model.ToolCard;
+package progetto.model.toolCard;
 
-import Progetto.Model.*;
-import Progetto.Model.Exceptions.NotValidException;
-import Progetto.Model.Exceptions.ToolCardException;
+import progetto.model.Dice;
+import progetto.model.DraftPool;
+import progetto.model.RoundTrack;
+import progetto.model.exceptions.NotValidException;
+import progetto.model.exceptions.ToolCardException;
 
 public class TaglierinaCircolare extends ToolCard {
     private Dice dice;

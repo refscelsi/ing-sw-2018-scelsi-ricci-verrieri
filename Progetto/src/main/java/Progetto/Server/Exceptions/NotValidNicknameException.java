@@ -1,4 +1,4 @@
-package Progetto.Server.Exceptions;
+package progetto.server.exceptions;
 
 public class NotValidNicknameException extends Exception {
     public NotValidNicknameException(String message){

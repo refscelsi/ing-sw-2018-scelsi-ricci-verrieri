@@ -1,6 +1,8 @@
-package Progetto.Model.ObjectiveCard;
+package progetto.model.objectiveCard;
 
-import Progetto.Model.*;
+import progetto.model.Box;
+import progetto.model.Scheme;
+
 import java.util.*;
 
 public class DifferentShadeRow extends ObjectiveCard {
