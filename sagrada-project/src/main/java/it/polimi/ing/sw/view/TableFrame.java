@@ -37,26 +37,20 @@ public class TableFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         tableFramePanel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        backgroundTableFRameLabel = new javax.swing.JLabel();
 
-        WindowListener exitListener = new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                tornaMenu();
-            }
-        };
-        addWindowListener(exitListener);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1024, 768));
         setResizable(false);
 
         tableFramePanel.setBackground(new java.awt.Color(116, 65, 65));
         tableFramePanel.setLayout(null);
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/sagrada.png"))); // NOI18N
-        jLabel1.setAlignmentY(0.0F);
-        tableFramePanel.add(jLabel1);
-        jLabel1.setBounds(0, 0, 1024, 768);
+        backgroundTableFRameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        backgroundTableFRameLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/sagrada.png"))); // NOI18N
+        backgroundTableFRameLabel.setAlignmentY(0.0F);
+        tableFramePanel.add(backgroundTableFRameLabel);
+        backgroundTableFRameLabel.setBounds(0, 0, 1024, 768);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -78,7 +72,7 @@ public class TableFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel backgroundTableFRameLabel;
     private javax.swing.JPanel tableFramePanel;
     // End of variables declaration//GEN-END:variables
 }

@@ -6,12 +6,20 @@ import javax.swing.ImageIcon;
 
 public class CardField extends javax.swing.JPanel {
     
-    private static final String IMAGE_PATH="/img/po/";
-
+    private static final String IMAGE_PATH="/img/";
+    private static String FINAL_IMAGE_PATH;
 
     public CardField() {
         initComponents();
+        FINAL_IMAGE_PATH = IMAGE_PATH.concat("po/");
         setIcons("po01.png");//default icon
+    }
+
+    //cardType should be defined as "po/" or "tc/"
+    public CardField(String cardName, String cardType) {
+        initComponents();
+        FINAL_IMAGE_PATH = IMAGE_PATH.concat(cardType);
+        setIcons(cardName);
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -37,7 +45,7 @@ public class CardField extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
     public void setIcons(String nameIcon){
-        ImageIcon icon =new javax.swing.ImageIcon(getClass().getResource(IMAGE_PATH+nameIcon)) ;
+        ImageIcon icon =new javax.swing.ImageIcon(getClass().getResource(FINAL_IMAGE_PATH+nameIcon)) ;
         Image scaledImage = icon.getImage().getScaledInstance(173,242, Image.SCALE_DEFAULT);
         icon.setImage(scaledImage);
         cardFieldLabel.setIcon(icon );
