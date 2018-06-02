@@ -1,7 +1,0 @@
-package progetto.model;
-
-public enum State {
-
-    START_MATCH, CHOOSE_SCHEME, SCHEME_CHOOSEN, START_ROUND, CHANGE_PLAYER, USE_DICE, USE_TOOL_CARD, CHANGE_ROUND, END_MATCH;
-
-}
