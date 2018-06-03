@@ -1,18 +1,19 @@
 package it.polimi.ing.sw.view;
 
+import com.google.gson.Gson;
 import it.polimi.ing.sw.App;
 import it.polimi.ing.sw.model.Scheme;
 
+import java.awt.*;
 import java.awt.event.*;
-import java.io.*;
-import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 
-public class AddScheme extends javax.swing.JFrame implements FocusListener,MouseListener, KeyListener{
-
+public class AddScheme extends javax.swing.JFrame {
+    
     private final JLabel box[][]=new JLabel[4][5];
     private final JLabel c1[][]=new JLabel[4][5];
     private final JLabel c2[][]=new JLabel[4][5];
@@ -22,21 +23,210 @@ public class AddScheme extends javax.swing.JFrame implements FocusListener,Mouse
     private final JLabel c6[][]=new JLabel[4][5];
     private int sfumatura[][]=new int[4][5];
     private int colore[][]=new int[4][5];
-    private ArrayList<Scheme> schemi =new ArrayList<Scheme>();
+    private ArrayList<Scheme> schemeArrayList;
     private boolean bc1[][]=new boolean[4][5];
     private boolean bc2[][]=new boolean[4][5];
     private boolean bc3[][]=new boolean[4][5];
     private boolean bc4[][]=new boolean[4][5];
     private boolean bc5[][]=new boolean[4][5];
     private boolean bc6[][]=new boolean[4][5];
+    private String json ;
 
+    private static final String IMAGE_PATH="/img/";
+    
     public AddScheme() {
         initComponents();
+        setLocationRelativeTo(null);
+        setIcons();
+        setBoxesModules();
+        openFile();
+        fillLista();
+    }
+    
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
 
-        pBox.setLayout(null);
+        addSchemePanel = new javax.swing.JPanel();
+        pBox = new javax.swing.JPanel();
+        difficultiesTextField = new javax.swing.JTextField();
+        idSchemeTextField = new javax.swing.JTextField();
+        diffLabel = new javax.swing.JLabel();
+        idSchemeLAbel = new javax.swing.JLabel();
+        findButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
+        resetButton = new javax.swing.JButton();
+        separator2 = new javax.swing.JSeparator();
+        saveButton = new javax.swing.JButton();
+        saveAsNewButton = new javax.swing.JButton();
+        schemeList = new javax.swing.JScrollPane();
+        schemeInnerList = new javax.swing.JList<>();
+        separator1 = new javax.swing.JSeparator();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        addSchemePanel.setBackground(new java.awt.Color(204, 204, 204));
+
+        pBox.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+
+        javax.swing.GroupLayout pBoxLayout = new javax.swing.GroupLayout(pBox);
+        pBox.setLayout(pBoxLayout);
+        pBoxLayout.setHorizontalGroup(
+            pBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        pBoxLayout.setVerticalGroup(
+            pBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 356, Short.MAX_VALUE)
+        );
+
+        diffLabel.setText("Difficulties");
+
+        idSchemeLAbel.setText("ID Scheme");
+
+        findButton.setText("Find");
+
+        deleteButton.setText("Delete");
+
+        resetButton.setText("Reset");
+
+        saveButton.setText("Save");
+        saveButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                saveButtonMouseClicked(evt);
+            }
+        });
+
+        saveAsNewButton.setText("Save as New");
+
+        schemeInnerList.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        schemeList.setViewportView(schemeInnerList);
+
+        javax.swing.GroupLayout addSchemePanelLayout = new javax.swing.GroupLayout(addSchemePanel);
+        addSchemePanel.setLayout(addSchemePanelLayout);
+        addSchemePanelLayout.setHorizontalGroup(
+            addSchemePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(addSchemePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(addSchemePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(separator2)
+                    .addComponent(pBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(addSchemePanelLayout.createSequentialGroup()
+                        .addGroup(addSchemePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(addSchemePanelLayout.createSequentialGroup()
+                                .addComponent(difficultiesTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(diffLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(addSchemePanelLayout.createSequentialGroup()
+                                .addComponent(idSchemeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(idSchemeLAbel)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(addSchemePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(addSchemePanelLayout.createSequentialGroup()
+                                .addComponent(findButton, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(resetButton)))
+                        .addGap(204, 204, 204)
+                        .addGroup(addSchemePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(saveAsNewButton, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
+                            .addComponent(saveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(schemeList)
+                    .addComponent(separator1))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        addSchemePanelLayout.setVerticalGroup(
+            addSchemePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addSchemePanelLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(addSchemePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(idSchemeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(idSchemeLAbel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(findButton)
+                    .addComponent(resetButton)
+                    .addComponent(saveButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(addSchemePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(difficultiesTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(diffLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(deleteButton)
+                    .addComponent(saveAsNewButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(separator1, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addComponent(schemeList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(separator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(addSchemePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(addSchemePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+    
+
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new AddScheme().setVisible(true);
+            }
+        });
+    }
+
+    //<editor-fold defaultstate="collapsed" desc=" openFile Method ">
+    public void openFile(){
+        try{
+            //ObjectInputStream ois = new ObjectInputStream(new FileInputStream("Schemes"));
+            //schemi = (ArrayList<Scheme>) ois.readObject();
+            Gson gson = new Gson();
+            //Type collectionType = new ArrayList<Scheme>().getType();
+            schemeArrayList=gson.fromJson(json, Scheme);
+        }
+        catch(Exception e){
+            //messaggio di errore
+            System.out.println("Eh no");
+        }
+    }
+
+    public void fillLista(){
+        int j = schemeArrayList.size();
+        String nomi[] = null;
+        for(int i =0;i<j;i++){
+            nomi[i]=new String(String.valueOf(schemeArrayList.get(i).getId()));
+        }
+        DefaultListModel data = new DefaultListModel();
+        for (int i=0; i < j; i++){
+            data.add(i, nomi[i]);
+        }
+        //lista= new JList(data);
+    }
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc=" setBoxesModules Method ">
+    private void setBoxesModules(){
         int nameBox=0;
 
-        int x=20;
+        int x=7;
         int y=10;
         int dist=10;
         int h=30;
@@ -104,12 +294,14 @@ public class AddScheme extends javax.swing.JFrame implements FocusListener,Mouse
                 c6[i][j].setBounds(x+(k*j)+(dist*j)+(k1*5), y+h+(75*i)+(dist*i), k1, h1);
                 //120x75
 
+                c6[i][j].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+
                 bc1[i][j]=false;
                 bc2[i][j]=false;
                 bc3[i][j]=false;
                 bc4[i][j]=false;
                 bc5[i][j]=false;
-                bc6[i][j]=false;
+                bc6[i][j]=true;
 
                 box[i][j].addMouseListener(new java.awt.event.MouseAdapter() {
                     @Override
@@ -224,198 +416,48 @@ public class AddScheme extends javax.swing.JFrame implements FocusListener,Mouse
                 colore[i][j]=6;
             }
         }
-        setLocationRelativeTo(null);
-
-        openFile();
-        fillLista();
     }
+    //</editor-fold>
 
-    public void openFile(){
-        String path = "Schemes";
-        try{
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream("Schemes"));
-            schemi = (ArrayList<Scheme>) ois.readObject();
-        }
-        catch(Exception e){
-            //messaggio di errore
-        }
+    //<editor-fold defaultstate="collapsed" desc=" setIcons Method ">
+    private void setIcons(){
+        ImageIcon icon;
+        Image scaledImage ;
+        //icon.setImage(scaledImage);
+
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource(IMAGE_PATH+"sagrada.png")));
+        this.setTitle("Sagrada Boardgame");
     }
+    //</editor-fold>
 
-    public void fillLista(){
-        int j = schemi.size();
-        String nomi[] = null;
-        for(int i =0;i<j;i++){
-            nomi[i]=new String(String.valueOf(schemi.get(i).getId()));
-        }
-        DefaultListModel data = new DefaultListModel();
-        for (int i=0; i < j; i++){
-            data.add(i, nomi[i]);
-        }
-        lista= new JList(data);
-    }
-
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">
-    private void initComponents() {
-
-        p = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        IDSPanel = new javax.swing.JTextPane();
-        IDSchemaLabel = new javax.swing.JLabel();
-        DiffLabel = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        DiffPanel = new javax.swing.JTextPane();
-        pBox = new javax.swing.JPanel();
-        saveButton = new javax.swing.JButton();
-        resetButton = new javax.swing.JButton();
-        findButton = new javax.swing.JButton();
-        cancelButton = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        lista = new javax.swing.JList<>();
-
-        //setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        WindowListener exitListener = new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                tornaMenu();
-            }
-        };
-        addWindowListener(exitListener);
-        setResizable(false);
-
-        p.setBackground(new java.awt.Color(204, 255, 204));
-        p.setPreferredSize(new java.awt.Dimension(775, 400));
-
-        jScrollPane1.setViewportView(IDSPanel);
-
-        IDSchemaLabel.setText("ID Schema");
-
-        DiffLabel.setText("Difficoltà");
-
-        jScrollPane2.setViewportView(DiffPanel);
-
-        pBox.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
-        pBox.setLayout(null);
-
-        saveButton.setText("Salva");
-        saveButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                saveButtonMouseClicked(evt);
-            }
-        });
-        saveButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveButtonActionPerformed(evt);
-            }
-        });
-
-        resetButton.setText("Resetta");
-
-        findButton.setText("Cerca");
-
-        cancelButton.setText("Cancella");
-
-        jButton1.setText("Salva come nuovo");
-
-        jScrollPane3.setViewportView(lista);
-
-        javax.swing.GroupLayout pLayout = new javax.swing.GroupLayout(p);
-        p.setLayout(pLayout);
-        pLayout.setHorizontalGroup(
-                pLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(pLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(pLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(pBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(pLayout.createSequentialGroup()
-                                                .addGroup(pLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addGroup(pLayout.createSequentialGroup()
-                                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                .addComponent(IDSchemaLabel))
-                                                        .addGroup(pLayout.createSequentialGroup()
-                                                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                .addComponent(DiffLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(pLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addComponent(cancelButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(findButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(resetButton)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(pLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addComponent(saveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                                .addContainerGap())
-        );
-        pLayout.setVerticalGroup(
-                pLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(pLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(pLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addGroup(pLayout.createSequentialGroup()
-                                                .addGroup(pLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addGroup(pLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                                .addComponent(IDSchemaLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(findButton)
-                                                                .addComponent(resetButton)
-                                                                .addComponent(saveButton))
-                                                        .addComponent(jScrollPane1))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(pLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addGroup(pLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                                .addGroup(pLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                                        .addComponent(DiffLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                        .addComponent(cancelButton))
-                                                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                        .addComponent(jButton1)))
-                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(pBox, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
-                                .addContainerGap())
-        );
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(p, javax.swing.GroupLayout.DEFAULT_SIZE, 693, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(p, javax.swing.GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE)
-        );
-
-        pack();
-    }// </editor-fold>
-
+    //<editor-fold defaultstate="collapsed" desc=" tornaMenu Method ">
     public void tornaMenu(){
         this.setVisible(false);
         App.menu.setVisible(true);
     }
+    //</editor-fold>
 
-    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
-
+    //<editor-fold defaultstate="collapsed" desc=" saveButtonMouseClicked Method ">
     private void saveButtonMouseClicked(java.awt.event.MouseEvent evt) {
         saveStateActualScheme();
-
-        ObjectOutputStream oss;
-        try{
+        System.out.println("Ci siamo");
+        //ObjectOutputStream oss;
+        try{/*
             oss = new ObjectOutputStream(new FileOutputStream("Schemes"));
             oss.writeObject(schemi );
-            oss.close();
+            oss.close();*/
+            Gson gson = new Gson();
+            json=gson.toJson(schemeArrayList);
+            System.out.println("ancora meglio");
+            System.out.println(json);
         }
         catch(Exception e){
             //messaggio di errore
         }
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" elementoMouseEntered Method ">
     public void elementoMouseEntered(java.awt.event.MouseEvent evt){
         for (int i=0; i<4;i++){
             for(int j=0;j<5;j++){
@@ -453,7 +495,9 @@ public class AddScheme extends javax.swing.JFrame implements FocusListener,Mouse
             }
         }
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" elementoMouseExited Method ">
     public void elementoMouseExited(java.awt.event.MouseEvent evt){
         for (int i=0; i<4;i++){
             for(int j=0;j<5;j++){
@@ -491,17 +535,18 @@ public class AddScheme extends javax.swing.JFrame implements FocusListener,Mouse
             }
         }
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" cMouseClicked Method ">
     public void cMouseClicked(java.awt.event.MouseEvent evt){
         for (int i=0; i<4;i++){
             for(int j=0;j<5;j++){
                 //JLabel temp=uncheck(i,j, evt);
-
                 if (evt.getComponent().getName().equals(c1[i][j].getName())){
                     uncheck(i,j);
                     c1[i][j].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
                     colore[i][j]=1;
-                    bc6[i][j]=true;
+                    bc1[i][j]=true;
                     break;
                 }
                 if (evt.getComponent().getName().equals(c2[i][j].getName())){
@@ -542,7 +587,31 @@ public class AddScheme extends javax.swing.JFrame implements FocusListener,Mouse
             }
         }
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" boxMouseClicked Method ">
+    public void boxMouseClicked(MouseEvent evt){
+        
+        //TODO use lambdas
+        try{
+            for (int i=0;i<4;i++){
+                for (int j=0;j<5;j++){
+                    if (evt.getComponent().getName().equals(box[i][j].getName())){
+                        if (sfumatura[i][j]==6){
+                            sfumatura[i][j]=0;
+                        }else{
+                            sfumatura[i][j]++;
+                        }
+                        box[i][j].setText(String.valueOf(sfumatura[i][j]));
+                    }
+                }
+            }
+        }
+        catch(Exception exc){Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,exc.getMessage());}
+    }
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc=" uncheck Method ">
     public void uncheck(int i, int j){
         if(bc1[i][j]==true){
             c1[i][j].setBorder(null);
@@ -564,7 +633,9 @@ public class AddScheme extends javax.swing.JFrame implements FocusListener,Mouse
             bc6[i][j]=false;
         }
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" saveStateActualScheme Method ">
     public void saveStateActualScheme(){
 
         it.polimi.ing.sw.model.Box boxes[][]= new it.polimi.ing.sw.model.Box[4][5];
@@ -574,13 +645,39 @@ public class AddScheme extends javax.swing.JFrame implements FocusListener,Mouse
                 boxes[i][j]=new it.polimi.ing.sw.model.Box();
                 boxes[i][j].setShade(Integer.parseInt(box[i][j].getText()));
                 boxes[i][j].setColor(toColor(colore[i][j]));
+                boxes[i][j].setX(i);
+                boxes[i][j].setY(j);
+                System.out.println("Box: "+i+" - "+j+" Shade: "+Integer.parseInt(box[i][j].getText())+" Color: "+toColor(colore[i][j]));
+
             }
         }
         //inserire controllo sull id e difficoltà che siano solo numeri
-        Scheme schema = new Scheme(Integer.parseInt(IDSPanel.getText()),Integer.parseInt(DiffPanel.getText()),boxes);
-        schemi.add(schema);
+        int difficulty, idScheme;
+        try{
+            difficulty=Integer.parseInt(difficultiesTextField.getText());
+            System.out.println("Difficolt: "+difficultiesTextField.getText());
+        }catch (Exception e){
+            difficulty=3;
+            System.out.println("Errore nel caricamento difficolt");
+        }
+        try{
+            idScheme=Integer.parseInt(idSchemeTextField.getText());
+            System.out.println("ID: "+idSchemeTextField.getText());
+        }catch (Exception e){
+            idScheme=12345;
+            System.out.println("Errore nel caricamento id");
+        }
+        Scheme schema = new Scheme(idScheme,difficulty,boxes);
+        schema.setId(idScheme);
+        schema.setDifficulty(difficulty);
+        schema.setBoxes(boxes);
+        System.out.println(schema);
+        schemeArrayList=new ArrayList<Scheme>();
+        schemeArrayList.add(schema);
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc=" toColor Method ">
     public it.polimi.ing.sw.model.Color toColor(int i){
         switch(i){
             case 1: return it.polimi.ing.sw.model.Color.PURPLE;
@@ -592,90 +689,23 @@ public class AddScheme extends javax.swing.JFrame implements FocusListener,Mouse
             default: return it.polimi.ing.sw.model.Color.WHITE;
         }
     }
+    //</editor-fold>
 
-    // Variables declaration - do not modify
-    private javax.swing.JLabel DiffLabel;
-    private javax.swing.JTextPane DiffPanel;
-    private javax.swing.JTextPane IDSPanel;
-    private javax.swing.JLabel IDSchemaLabel;
-    private javax.swing.JButton cancelButton;
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel addSchemePanel;
+    private javax.swing.JButton deleteButton;
+    private javax.swing.JLabel diffLabel;
+    private javax.swing.JTextField difficultiesTextField;
     private javax.swing.JButton findButton;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JList<String> lista;
-    private javax.swing.JPanel p;
+    private javax.swing.JLabel idSchemeLAbel;
+    private javax.swing.JTextField idSchemeTextField;
     private javax.swing.JPanel pBox;
     private javax.swing.JButton resetButton;
+    private javax.swing.JButton saveAsNewButton;
     private javax.swing.JButton saveButton;
-    // End of variables declaration
-
-    @Override
-    public void focusGained(FocusEvent fe) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void focusLost(FocusEvent fe) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent me) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void mousePressed(MouseEvent me) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent me) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent me) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void mouseExited(MouseEvent me) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void keyTyped(KeyEvent ke) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void keyPressed(KeyEvent ke) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void keyReleased(KeyEvent ke) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public void boxMouseClicked(MouseEvent evt){
-        try{
-            for (int i=0;i<4;i++){
-                for (int j=0;j<5;j++){
-                    if (evt.getComponent().getName().equals(box[i][j].getName())){
-                        if (sfumatura[i][j]==6){
-                            sfumatura[i][j]=0;
-                        }else{
-                            sfumatura[i][j]++;
-                        }
-                        box[i][j].setText(String.valueOf(sfumatura[i][j]));
-                    }
-                }
-            }
-        }
-        catch(Exception exc){Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,exc.getMessage());}
-    }
+    private javax.swing.JList<String> schemeInnerList;
+    private javax.swing.JScrollPane schemeList;
+    private javax.swing.JSeparator separator1;
+    private javax.swing.JSeparator separator2;
+    // End of variables declaration//GEN-END:variables
 }

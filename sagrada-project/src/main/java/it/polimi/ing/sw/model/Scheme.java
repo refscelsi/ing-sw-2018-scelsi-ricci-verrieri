@@ -146,11 +146,11 @@ public class Scheme {
         return id;
     }
 
-    public void setDifficulty(short difficulty) {
+    public void setDifficulty(int difficulty) {
         this.difficulty = difficulty;
     }
 
-    public void setId(short id) {
+    public void setId(int id) {
         this.id = id;
     }
 
