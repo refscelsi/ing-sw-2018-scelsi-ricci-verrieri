@@ -1,19 +1,16 @@
 package it.polimi.ing.sw.view;
 
-import com.google.gson.Gson;
 import it.polimi.ing.sw.App;
 import it.polimi.ing.sw.model.Scheme;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 
 public class AddScheme extends javax.swing.JFrame {
-    
+
     private final JLabel box[][]=new JLabel[4][5];
     private final JLabel c1[][]=new JLabel[4][5];
     private final JLabel c2[][]=new JLabel[4][5];
@@ -39,8 +36,8 @@ public class AddScheme extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setIcons();
         setBoxesModules();
-        openFile();
-        fillLista();
+        //openFile();
+        //fillLista();
     }
     
     @SuppressWarnings("unchecked")
@@ -184,7 +181,23 @@ public class AddScheme extends javax.swing.JFrame {
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
-
+        
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            //java.util.logging.Logger.getLogger(AddScheme.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            //java.util.logging.Logger.getLogger(AddScheme.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            //java.util.logging.Logger.getLogger(AddScheme.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            //java.util.logging.Logger.getLogger(AddScheme.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -196,11 +209,8 @@ public class AddScheme extends javax.swing.JFrame {
     //<editor-fold defaultstate="collapsed" desc=" openFile Method ">
     public void openFile(){
         try{
-            //ObjectInputStream ois = new ObjectInputStream(new FileInputStream("Schemes"));
-            //schemi = (ArrayList<Scheme>) ois.readObject();
-            Gson gson = new Gson();
-            //Type collectionType = new ArrayList<Scheme>().getType();
-            schemeArrayList=gson.fromJson(json, Scheme);
+            SchemeListFileConverter schemeListFileConverter = new SchemeListFileConverter();
+            schemeArrayList = schemeListFileConverter.readFromFile();
         }
         catch(Exception e){
             //messaggio di errore
@@ -442,14 +452,12 @@ public class AddScheme extends javax.swing.JFrame {
         saveStateActualScheme();
         System.out.println("Ci siamo");
         //ObjectOutputStream oss;
-        try{/*
-            oss = new ObjectOutputStream(new FileOutputStream("Schemes"));
-            oss.writeObject(schemi );
-            oss.close();*/
-            Gson gson = new Gson();
-            json=gson.toJson(schemeArrayList);
+        try{
             System.out.println("ancora meglio");
-            System.out.println(json);
+
+            SchemeListFileConverter schemeListFileConverter= new SchemeListFileConverter();
+
+            schemeListFileConverter.writeToFile(schemeArrayList);
         }
         catch(Exception e){
             //messaggio di errore
