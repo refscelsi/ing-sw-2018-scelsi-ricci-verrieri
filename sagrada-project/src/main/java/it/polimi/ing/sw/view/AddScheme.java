@@ -5,6 +5,7 @@ import it.polimi.ing.sw.model.Scheme;
 
 import java.awt.event.*;
 import java.io.*;
+import Progetto.*;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -395,7 +396,11 @@ public class AddScheme extends javax.swing.JFrame implements FocusListener,Mouse
 
     public void tornaMenu(){
         this.setVisible(false);
+<<<<<<< HEAD:sagrada-project/src/main/java/it/polimi/ing/sw/view/AddScheme.java
         App.menu.setVisible(true);
+=======
+        Progetto.App.menu.setVisible(true);
+>>>>>>> parent of 30b3cf2... package corrections:Progetto/src/main/java/Progetto/View/AddScheme.java
     }
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -567,11 +572,19 @@ public class AddScheme extends javax.swing.JFrame implements FocusListener,Mouse
 
     public void saveStateActualScheme(){
 
+<<<<<<< HEAD:sagrada-project/src/main/java/it/polimi/ing/sw/view/AddScheme.java
         it.polimi.ing.sw.model.Box boxes[][]= new it.polimi.ing.sw.model.Box[4][5];
 
         for (int i=0; i<4;i++){
             for(int j=0;j<5;j++){
                 boxes[i][j]=new it.polimi.ing.sw.model.Box();
+=======
+        Progetto.Model.Box boxes[][]= new Progetto.Model.Box[4][5];
+
+        for (int i=0; i<4;i++){
+            for(int j=0;j<5;j++){
+                boxes[i][j]=new Progetto.Model.Box();
+>>>>>>> parent of 30b3cf2... package corrections:Progetto/src/main/java/Progetto/View/AddScheme.java
                 boxes[i][j].setShade(Integer.parseInt(box[i][j].getText()));
                 boxes[i][j].setColor(toColor(colore[i][j]));
             }
@@ -581,6 +594,7 @@ public class AddScheme extends javax.swing.JFrame implements FocusListener,Mouse
         schemi.add(schema);
     }
 
+<<<<<<< HEAD:sagrada-project/src/main/java/it/polimi/ing/sw/view/AddScheme.java
     public it.polimi.ing.sw.model.Color toColor(int i){
         switch(i){
             case 1: return it.polimi.ing.sw.model.Color.PURPLE;
@@ -590,6 +604,17 @@ public class AddScheme extends javax.swing.JFrame implements FocusListener,Mouse
             case 5: return it.polimi.ing.sw.model.Color.YELLOW;
             case 6: return it.polimi.ing.sw.model.Color.WHITE;
             default: return it.polimi.ing.sw.model.Color.WHITE;
+=======
+    public Progetto.Model.Color toColor(int i){
+        switch(i){
+            case 1: return Progetto.Model.Color.PURPLE;
+            case 2: return Progetto.Model.Color.RED;
+            case 3: return Progetto.Model.Color.BLUE;
+            case 4: return Progetto.Model.Color.GREEN;
+            case 5: return Progetto.Model.Color.YELLOW;
+            case 6: return Progetto.Model.Color.WHITE;
+            default: return Progetto.Model.Color.WHITE;
+>>>>>>> parent of 30b3cf2... package corrections:Progetto/src/main/java/Progetto/View/AddScheme.java
         }
     }
 

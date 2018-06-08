@@ -3,6 +3,7 @@ package it.polimi.ing.sw.model.objectiveCard;
 import it.polimi.ing.sw.model.Box;
 import it.polimi.ing.sw.model.Scheme;
 
+
 public class DifferentShades extends ObjectiveCard {
 
     public DifferentShades () {

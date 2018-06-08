@@ -1,6 +1,7 @@
 package it.polimi.ing.sw.model.objectiveCard;
 import it.polimi.ing.sw.model.*;
 
+
 public class PrivateObjectiveCard {
 
     Color color;

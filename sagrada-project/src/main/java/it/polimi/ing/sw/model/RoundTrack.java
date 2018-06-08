@@ -1,4 +1,5 @@
 package it.polimi.ing.sw.model;
+
 import java.util.ArrayList;
 
 public class RoundTrack {

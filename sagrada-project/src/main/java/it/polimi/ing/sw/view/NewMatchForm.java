@@ -185,7 +185,11 @@ public class NewMatchForm extends javax.swing.JFrame {
 
     public void tornaMenu(){
         this.setVisible(false);
+<<<<<<< HEAD:sagrada-project/src/main/java/it/polimi/ing/sw/view/NewMatchForm.java
         App.menu.setVisible(true);
+=======
+        Progetto.App.menu.setVisible(true);
+>>>>>>> parent of 30b3cf2... package corrections:Progetto/src/main/java/Progetto/View/NewMatchForm.java
     }
 
     private void nameMatchTFMouseEntered(java.awt.event.MouseEvent evt) {

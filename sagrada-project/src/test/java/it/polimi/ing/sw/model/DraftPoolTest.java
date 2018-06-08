@@ -1,6 +1,9 @@
-package it.polimi.ing.sw.model;
+package java.it.polimi.ing.sw.model;
 
-import static org.junit.Assert.assertEquals;
+
+import static org.junit.Assert.*;
+import it.polimi.ing.sw.model.Dice;
+import it.polimi.ing.sw.model.DraftPool;
 
 public class DraftPoolTest {
     private DraftPool draftPool;
@@ -17,6 +20,7 @@ public class DraftPoolTest {
         draftPool.addDice(dice);
         assertEquals(1,draftPool.getSize());
     }
+
 
     @org.junit.Test
     public void removeDice() {
@@ -39,4 +43,5 @@ public class DraftPoolTest {
         assertEquals(draftPool.diceInDraftpool(dice),false);
         assertEquals(draftPool.diceInDraftpool(dice1),true);
     }
+
 }

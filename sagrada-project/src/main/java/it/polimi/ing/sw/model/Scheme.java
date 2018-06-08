@@ -1,4 +1,5 @@
 package it.polimi.ing.sw.model;
+
 public class Scheme {
     private int id, difficulty;
     private Box boxes[][];

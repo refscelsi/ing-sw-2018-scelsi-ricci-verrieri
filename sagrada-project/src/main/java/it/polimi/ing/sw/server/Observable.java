@@ -5,9 +5,9 @@ import it.polimi.ing.sw.model.Player;
 import it.polimi.ing.sw.model.SchemeCard;
 import it.polimi.ing.sw.model.objectiveCard.ObjectiveCard;
 
+
 import java.util.ArrayList;
 import java.util.List;
-
 
 public abstract class Observable { //eliminabile, chiamo direttamente dal model e bona
     public List<Observer> observers;

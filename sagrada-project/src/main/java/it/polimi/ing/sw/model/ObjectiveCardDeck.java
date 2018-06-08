@@ -1,8 +1,7 @@
 package it.polimi.ing.sw.model;
 import it.polimi.ing.sw.model.objectiveCard.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 
 public class ObjectiveCardDeck {
     private ArrayList<ObjectiveCard> deck;

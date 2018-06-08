@@ -1,8 +1,16 @@
+<<<<<<< HEAD:sagrada-project/src/main/java/it/polimi/ing/sw/view/client/RMIClient.java
 package it.polimi.ing.sw.view.client;
 
 import it.polimi.ing.sw.server.ServerInterface;
 import it.polimi.ing.sw.server.exceptions.NotValidNicknameException;
+=======
+package Progetto.View.Client;
 
+import Progetto.Server.*;
+import Progetto.Server.Exceptions.NotValidNicknameException;
+>>>>>>> parent of 30b3cf2... package corrections:Progetto/src/main/java/Progetto/View/Client/RMIClient.java
+
+import javax.naming.NamingException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;

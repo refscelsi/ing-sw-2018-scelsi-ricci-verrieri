@@ -2,6 +2,7 @@ package it.polimi.ing.sw.model.objectiveCard;
 import it.polimi.ing.sw.model.Box;
 import it.polimi.ing.sw.model.Scheme;
 
+
 public class DifferentColors extends ObjectiveCard {
 
     public DifferentColors () {

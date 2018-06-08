@@ -1,3 +1,4 @@
+
 package it.polimi.ing.sw.model;
 
 import it.polimi.ing.sw.model.exceptions.NotValidException;
@@ -7,11 +8,10 @@ import it.polimi.ing.sw.model.objectiveCard.PrivateObjectiveCard;
 import it.polimi.ing.sw.model.toolCard.*;
 import it.polimi.ing.sw.server.Observable;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Random;
+import java.util.*;
 
-public class Match extends Observable {
+public class Match extends Observable{
 
     private static int last_id=0; // a cosa serve?
     private int id;

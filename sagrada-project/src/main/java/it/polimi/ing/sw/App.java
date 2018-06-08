@@ -2,6 +2,7 @@ package it.polimi.ing.sw;
 
 import it.polimi.ing.sw.view.Menu;
 
+
 public class App {
     public static Menu menu;
 
@@ -19,7 +20,7 @@ public class App {
         */
         //################################### classe vera
 
-        menu =  new Menu();
+        menu =new Menu();
         menu.setVisible(true);
 
         //#################################### cose per testing

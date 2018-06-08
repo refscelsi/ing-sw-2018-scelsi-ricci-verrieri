@@ -6,6 +6,7 @@ import it.polimi.ing.sw.model.RoundTrack;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.model.exceptions.ToolCardException;
 
+
 public class TaglierinaCircolare extends ToolCard {
     private Dice dice;
     private DraftPool draftPool;

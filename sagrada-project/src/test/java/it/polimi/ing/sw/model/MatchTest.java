@@ -1,7 +1,12 @@
-package it.polimi.ing.sw.model;
+package java.it.polimi.ing.sw.model;
 
+import it.polimi.ing.sw.model.Match;
+import it.polimi.ing.sw.model.Player;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.*;
+
+
 
 public class MatchTest {
 
@@ -11,10 +16,9 @@ public class MatchTest {
     @Before
     public void setUp(){
         match=new Match();
-        /*
         player = Mockito.mock(Player.class);
         Mockito.when(player.getNumOfToken()).thenReturn(3);
-        player = Mockito.spy(new Player("zazzi"));*/
+        player = Mockito.spy(new Player("zazzi"));
     }
 
     @Test

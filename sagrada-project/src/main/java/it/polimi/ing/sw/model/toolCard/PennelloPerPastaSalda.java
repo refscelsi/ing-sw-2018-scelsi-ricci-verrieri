@@ -8,8 +8,6 @@ import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.model.exceptions.ToolCardException;
 
 
-import java.io.DataInput;
-
 public class PennelloPerPastaSalda extends ToolCard {
     private Box destination;
     final int id=6;

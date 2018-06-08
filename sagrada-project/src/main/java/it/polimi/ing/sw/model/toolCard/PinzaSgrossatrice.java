@@ -4,6 +4,7 @@ import it.polimi.ing.sw.model.Dice;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.model.exceptions.ToolCardException;
 
+
 public class PinzaSgrossatrice extends ToolCard {
     final int id=1;
 

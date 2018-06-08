@@ -5,6 +5,7 @@ import it.polimi.ing.sw.model.Player;
 import it.polimi.ing.sw.model.SchemeCard;
 import it.polimi.ing.sw.model.objectiveCard.ObjectiveCard;
 
+
 import java.util.*;
 
 public interface Observer {

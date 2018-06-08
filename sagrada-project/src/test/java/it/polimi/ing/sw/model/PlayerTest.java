@@ -1,7 +1,10 @@
-package it.polimi.ing.sw.model;
+package java.it.polimi.ing.sw.model;
+
 
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 public class PlayerTest {
 

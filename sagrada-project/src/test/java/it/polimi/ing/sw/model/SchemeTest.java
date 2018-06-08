@@ -1,5 +1,9 @@
-package it.polimi.ing.sw.model;
+package java.it.polimi.ing.sw.model;
 
+import it.polimi.ing.sw.model.Box;
+import it.polimi.ing.sw.model.Color;
+import it.polimi.ing.sw.model.Dice;
+import it.polimi.ing.sw.model.Scheme;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -22,7 +26,7 @@ public class SchemeTest {
         boxes[0][2] = box;
         box = new Box(0,3,Color.GREEN,0);
         boxes[0][3] = box;
-        box = new Box(0,4,Color.WHITE,5);
+        box = new Box(0,4, Color.WHITE,5);
         boxes[0][4] = box;
         for (i=1; i<4; i++)
             for (j=0; j<5; j++) {

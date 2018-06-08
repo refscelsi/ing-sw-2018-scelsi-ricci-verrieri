@@ -1,6 +1,9 @@
-package it.polimi.ing.sw.model;
+package java.it.polimi.ing.sw.model;
 
-import static junit.framework.TestCase.assertEquals;
+
+import static org.junit.Assert.*;
+
+import it.polimi.ing.sw.model.ObjectiveCardDeck;
 
 public class ObjectiveCardDeckTest {
     private ObjectiveCardDeck deck;

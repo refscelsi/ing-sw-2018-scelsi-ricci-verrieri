@@ -6,6 +6,7 @@ import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.model.exceptions.ToolCardException;
 import it.polimi.ing.sw.model.toolCard.ToolCard;
 
+
 public class ChosenCard implements State {
     TurnController turnController;
 
@@ -23,8 +24,9 @@ public class ChosenCard implements State {
 
     }
 
+
     @Override
-    public void chooseBox(Box box) throws NotValidException {
+    public void chooseBox(Box box) {
 
     }
 
