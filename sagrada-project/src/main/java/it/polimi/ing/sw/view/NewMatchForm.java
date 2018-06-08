@@ -41,7 +41,6 @@ public class NewMatchForm extends javax.swing.JFrame {
             }
         };
         addWindowListener(exitListener);
-        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(204, 255, 255));
 
