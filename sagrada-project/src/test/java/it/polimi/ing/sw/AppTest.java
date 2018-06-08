@@ -1,4 +1,4 @@
-package Progetto;
+package it.polimi.ing.sw;
 
 import static org.junit.Assert.assertTrue;
 

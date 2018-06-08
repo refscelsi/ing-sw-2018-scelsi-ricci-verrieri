@@ -1,11 +1,10 @@
-package java.it.polimi.ing.sw.model;
+package it.polimi.ing.sw.model;
 
 import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.model.Player;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.*;
-
+import org.mockito.Mockito;
 
 
 public class MatchTest {

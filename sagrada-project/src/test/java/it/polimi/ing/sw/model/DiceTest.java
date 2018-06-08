@@ -1,31 +1,31 @@
-package java.it.polimi.ing.sw.model;
+package it.polimi.ing.sw.model;
 
 
-import it.polimi.ing.sw.model.Color;
-import it.polimi.ing.sw.model.Dice;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class DiceTest {
     private Dice dice;
+
     @org.junit.Before
     public void setUp() throws Exception {
-        dice=new Dice();
+        dice = new Dice();
     }
 
 
     @Test
     public void throwDice() {
         dice.throwDice();
-        int mynum=dice.getNumFacciaUp();
+        int mynum = dice.getNumFacciaUp();
         assertTrue(1 <= mynum && mynum <= 6);
     }
 
     @Test
     public void setDiceColor() {
         dice.setDiceColor(Color.RED);
-        assertEquals(Color.RED,dice.getDiceColor());
+        assertEquals(Color.RED, dice.getDiceColor());
     }
 
     @Test

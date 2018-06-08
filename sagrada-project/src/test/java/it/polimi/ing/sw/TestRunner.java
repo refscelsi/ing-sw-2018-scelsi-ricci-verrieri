@@ -1,5 +1,5 @@
-package Progetto;
-import Progetto.Model.BagTest;
+package it.polimi.ing.sw;
+import it.polimi.ing.sw.model.BagTest;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.notification.Failure;
 

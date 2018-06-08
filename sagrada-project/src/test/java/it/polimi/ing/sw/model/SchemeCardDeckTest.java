@@ -1,4 +1,4 @@
-package java.it.polimi.ing.sw.model;
+package it.polimi.ing.sw.model;
 
 
 import org.junit.Test;

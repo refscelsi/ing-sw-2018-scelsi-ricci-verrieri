@@ -676,8 +676,8 @@ public class AddScheme extends javax.swing.JFrame {
             System.out.println("Errore nel caricamento id");
         }
         Scheme schema = new Scheme(idScheme,difficulty,boxes);
-        schema.setId(idScheme);
-        schema.setDifficulty(difficulty);
+        //schema.setId(idScheme);
+        //schema.setDifficulty(difficulty);
         schema.setBoxes(boxes);
         System.out.println(schema);
         schemeArrayList=new ArrayList<Scheme>();

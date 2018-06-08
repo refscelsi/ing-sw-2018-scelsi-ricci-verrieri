@@ -1,7 +1,4 @@
-package java.it.polimi.ing.sw.model;
-import it.polimi.ing.sw.model.Bag;
-import it.polimi.ing.sw.model.Color;
-import it.polimi.ing.sw.model.Dice;
+package it.polimi.ing.sw.model;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
