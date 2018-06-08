@@ -7,7 +7,6 @@ import it.polimi.ing.sw.model.objectiveCard.ObjectiveCard;
 import it.polimi.ing.sw.server.Observer;
 import it.polimi.ing.sw.server.controller.TurnController;
 
-
 import java.util.ArrayList;
 
 public class PlayerView implements Observer {
