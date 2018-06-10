@@ -9,7 +9,6 @@ public class RoundTrack {
         this.roundTrack= new ArrayList<DraftPool>();
     }
 
-    //
     public void addDice(int round, Dice dice){
         roundTrack.get(round).addDice(dice);
     }

@@ -159,14 +159,14 @@ public class Match extends Observable{
         System.out.println(publicObjectives.size());
         inizializeToolCard();
         bag.setDices();
-        int i=bag.getSize();
+        /*int i=bag.getSize();
         System.out.println(i);
 
         System.out.println("Colore"+bag.draw(4));
         System.out.println(bag.getSize());
 
         Dice dice= new Dice();
-        System.out.println(dice.throwDice());
+        System.out.println(dice.throwDice());*/
         notifyPublicObjectivesChoosen(publicObjectives);
 
     }

@@ -1,32 +1,33 @@
 package it.polimi.ing.sw;
 
 import it.polimi.ing.sw.view.Menu;
+import it.polimi.ing.sw.model.*;
+import it.polimi.ing.sw.ui.cli.*;
 
-
-public class App {
-    public static Menu menu;
-
-    public static void main(String[] args) {
-
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            //java.util.logging.Logger.getLogger(AddScheme.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            //java.util.logging.Logger.getLogger(AddScheme.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            //java.util.logging.Logger.getLogger(AddScheme.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            //java.util.logging.Logger.getLogger(AddScheme.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-
-        menu = new Menu();
-        menu.setVisible(true);
+public class App
+{
+    public static void main( String[] args )
+    {
+        Bag bag = new Bag();
+        bag.setDices();
+        ShowDraftPool show = new ShowDraftPool(bag.draw(4));
+        RoundTrack roundTrack = new RoundTrack();
+        Dice dice1 = new Dice();
+        dice1.setDiceColor(Color.RED);
+        dice1.setNumFacciaUp(4);
+        roundTrack.addDice(dice1);
+        Dice dice2 = new Dice();
+        dice2.setDiceColor(Color.GREEN);
+        dice2.setNumFacciaUp(3);
+        roundTrack.addDice(dice2);
+        Dice dice3 = new Dice();
+        dice3.setDiceColor(Color.BLUE);
+        dice3.setNumFacciaUp(1);
+        roundTrack.addDice(dice3);
+        ShowRoundTrack roundtr = new ShowRoundTrack(roundTrack);
+        /*CLI prova = new CLI();
+        prova.printSquare(5, 2, true, Color.GREEN);*/
     }
 }
+
 

@@ -10,14 +10,13 @@ public class Dice {
 
     public Dice(){}
 
-    //tira il dado
-    public int throwDice(){
-        int possibleValues[]={1,2,3,4,5,6}; //valori possibili del dado
+    //tira il dado -> inutile, sta già in bag
+    /*public int throwDice(){
         Random random=new Random();
-        int indice=random.nextInt(6);//genero indice casuale
-        setNumFacciaUp(possibleValues[indice]);
-        return possibleValues[indice]; //ritorno valore dell'indice casuale
-    }
+        int indice=random.nextInt(5)+1;//genero indice casuale
+        setNumFacciaUp(indice);
+        return indice; //ritorno valore dell'indice casuale
+    }*/
 
     public void setDiceColor(Color color){
         this.diceColor=color;

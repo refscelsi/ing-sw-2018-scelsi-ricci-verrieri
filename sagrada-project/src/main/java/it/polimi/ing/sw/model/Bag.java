@@ -1,6 +1,7 @@
 
 package it.polimi.ing.sw.model;
 import java.util.*;
+import java.util.Random;
 
 public class Bag {
     private ArrayList<Dice> dices;
@@ -46,12 +47,13 @@ public class Bag {
         Collections.shuffle(dices);
         Dice dice=dices.get(0);
         dices.remove(dices.get(0));
+        dice.throwDice();
         return dice;
     }
+
     //estrae tot dadi casuali in base al numero dei giocatori e li inserisce nella riserva
     public DraftPool draw (int numPlayers){ //da sistemare --> subList+removeRange, non sono riuscita a usarle
         int bound=(numPlayers*2)+1;
-        Collections.shuffle(dices);
         for(int i=0;i<bound;i++){
             draftPool.addDice(this.drawDice());
         }
