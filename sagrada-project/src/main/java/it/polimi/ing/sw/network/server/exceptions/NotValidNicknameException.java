@@ -1,4 +1,4 @@
-package it.polimi.ing.sw.server.exceptions;
+package it.polimi.ing.sw.network.server.exceptions;
 
 
 public class NotValidNicknameException extends Exception {

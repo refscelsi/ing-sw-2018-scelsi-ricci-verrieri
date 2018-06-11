@@ -6,7 +6,7 @@ import it.polimi.ing.sw.model.exceptions.ToolCardException;
 import it.polimi.ing.sw.model.objectiveCard.ObjectiveCard;
 import it.polimi.ing.sw.model.objectiveCard.PrivateObjectiveCard;
 import it.polimi.ing.sw.model.toolCard.*;
-import it.polimi.ing.sw.server.Observable;
+import it.polimi.ing.sw.network.protocol.Observable;
 
 import java.util.Random;
 import java.util.*;

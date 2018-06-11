@@ -186,7 +186,7 @@ public class NewMatchForm extends javax.swing.JFrame {
 
     public void tornaMenu(){
         this.setVisible(false);
-        App.menu.setVisible(true);
+        //App.menu.setVisible(true);
     }
 
     private void nameMatchTFMouseEntered(java.awt.event.MouseEvent evt) {

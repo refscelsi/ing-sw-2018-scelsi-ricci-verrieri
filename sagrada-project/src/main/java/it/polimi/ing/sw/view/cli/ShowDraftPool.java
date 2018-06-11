@@ -1,4 +1,4 @@
-package it.polimi.ing.sw.ui.cli;
+package it.polimi.ing.sw.view.cli;
 
 import it.polimi.ing.sw.model.*;
 import it.polimi.ing.sw.util.ConsoleColors;

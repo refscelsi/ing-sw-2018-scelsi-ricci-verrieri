@@ -68,7 +68,7 @@ public class TableFrame extends javax.swing.JFrame {
 
     public void tornaMenu(){
         this.setVisible(false);
-        App.menu.setVisible(true);
+        //App.menu.setVisible(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

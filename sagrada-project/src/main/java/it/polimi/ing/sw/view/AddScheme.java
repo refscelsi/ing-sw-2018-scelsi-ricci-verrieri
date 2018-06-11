@@ -443,7 +443,7 @@ public class AddScheme extends javax.swing.JFrame {
     //<editor-fold defaultstate="collapsed" desc=" tornaMenu Method ">
     public void tornaMenu(){
         this.setVisible(false);
-        App.menu.setVisible(true);
+        //App.menu.setVisible(true);
     }
     //</editor-fold>
 

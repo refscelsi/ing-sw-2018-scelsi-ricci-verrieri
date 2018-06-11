@@ -11,12 +11,12 @@ public class Dice {
     public Dice(){}
 
     //tira il dado -> inutile, sta già in bag
-    /*public int throwDice(){
-        Random random=new Random();
-        int indice=random.nextInt(5)+1;//genero indice casuale
+    public int throwDice() {
+        Random random = new Random();
+        int indice = random.nextInt(5) + 1;//genero indice casuale
         setNumFacciaUp(indice);
         return indice; //ritorno valore dell'indice casuale
-    }*/
+    }
 
     public void setDiceColor(Color color){
         this.diceColor=color;

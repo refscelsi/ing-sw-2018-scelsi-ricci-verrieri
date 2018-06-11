@@ -1,4 +1,4 @@
-package it.polimi.ing.sw.server;
+package it.polimi.ing.sw.network.protocol;
 
 import it.polimi.ing.sw.model.DraftPool;
 import it.polimi.ing.sw.model.Player;

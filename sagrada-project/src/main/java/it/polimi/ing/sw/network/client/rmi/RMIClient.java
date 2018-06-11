@@ -1,7 +1,7 @@
-package it.polimi.ing.sw.view.client;
+package it.polimi.ing.sw.network.client.rmi;
 
-import it.polimi.ing.sw.server.ServerInterface;
-import it.polimi.ing.sw.server.exceptions.NotValidNicknameException;
+import it.polimi.ing.sw.network.server.ServerInterface;
+import it.polimi.ing.sw.network.server.exceptions.NotValidNicknameException;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -28,7 +28,7 @@ public class RMIClient {
     }
 
     public void login(String nickname) throws NotValidNicknameException {
-        server.login(this.nickname);
+        //server.login(this.nickname);
     }
 
 }

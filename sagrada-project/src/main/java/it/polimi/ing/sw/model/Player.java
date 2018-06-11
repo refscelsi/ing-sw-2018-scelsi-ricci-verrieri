@@ -5,7 +5,7 @@ import it.polimi.ing.sw.model.exceptions.NotValidException;
 
 
 public class Player {
-    private final String nickname;
+    private String nickname;
     private int orderInRound;    // ordine che viene assegnato al giocatore nel primo round. Questo numero identifica il giocatore ed è molto più comodo gestire tutta la parte di passaggio da un giocatore all'altro utilizzando questo
     private int numOfToken;
     private int score;
@@ -88,6 +88,9 @@ public class Player {
         return false;
     }
 
+    public void setNickname(String nickname){
+        this.nickname=nickname;
+    }
 
     @Override
     public String toString() {
