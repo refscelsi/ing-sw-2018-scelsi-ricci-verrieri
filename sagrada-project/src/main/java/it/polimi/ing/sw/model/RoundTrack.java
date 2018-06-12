@@ -1,30 +1,48 @@
 package it.polimi.ing.sw.model;
 
-import java.util.ArrayList;
 
 public class RoundTrack {
-    private ArrayList<DraftPool> roundTrack;
+
+    private DraftPool[] roundTrack;
+    private int round = 0;
 
     public RoundTrack(){
-        this.roundTrack= new ArrayList<DraftPool>();
+        roundTrack = new DraftPool[10];
     }
 
-    public void addDice(int round, Dice dice){
-        roundTrack.get(round).addDice(dice);
+    public void addDicesRound(DraftPool draftPool){
+        roundTrack[round] = new DraftPool();
+        roundTrack[round].addDraftPool(draftPool);
+        round++;
     }
 
-    public ArrayList<DraftPool> getRoundTrack() {
+    public DraftPool[] getRoundTrack() {
         return roundTrack;
     }
 
     public DraftPool getDicesRound(int round){
-        return roundTrack.get(round);
+        return roundTrack[round-1];
     }
 
-    public int getNumberOfDice(int round){
-        return roundTrack.get(round).getSize();
+    public int getNumberOfDices(int round) {
+        return roundTrack[round-1].getSize();
     }
 
+    public int getRoundTrackSize() {
+        return round;
+    }
+
+    public int getMaxNumberOfDices() {
+        int num, max = 0;
+        for (int i=1; i<=round; i++) {
+            num = getNumberOfDices(i);
+            if (num > max)
+                max = num;
+        }
+
+        return max;
+
+    }
 
 }
 

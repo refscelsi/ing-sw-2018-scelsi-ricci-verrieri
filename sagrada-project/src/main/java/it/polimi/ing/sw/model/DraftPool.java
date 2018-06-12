@@ -1,7 +1,7 @@
 package it.polimi.ing.sw.model;
 
-
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class DraftPool {
     private ArrayList<Dice> draftPool;
@@ -12,6 +12,12 @@ public class DraftPool {
 
     public void addDice(Dice dice){
         draftPool.add(dice);
+    }
+
+    public void addDraftPool(DraftPool draft){
+        for(Dice dice : draft.getDraftPool()){
+            addDice(dice);
+        }
     }
 
     public void removeDice(Dice dice){
@@ -33,6 +39,10 @@ public class DraftPool {
             }
         }
         return false;
+    }
+
+    public Dice getDice(int index) {
+        return draftPool.get(index);
     }
 
 }

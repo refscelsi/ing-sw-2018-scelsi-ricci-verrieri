@@ -1,10 +1,13 @@
 package it.polimi.ing.sw.model.objectiveCard;
+
 import it.polimi.ing.sw.model.*;
 
 
 public class PrivateObjectiveCard {
 
-    Color color;
+    private Color color;
+    private String name;
+    private String description;
 
     public PrivateObjectiveCard (Color color) {
         this.color = color;
@@ -23,5 +26,21 @@ public class PrivateObjectiveCard {
                 if (boxes[i][j].getColor()==color)
                     score = score + boxes[i][j].getShade();
         return score;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setName (String name) {
+        this.name = name;
+    }
+
+    public void setDescription (String description) {
+        this.description = description;
     }
 }

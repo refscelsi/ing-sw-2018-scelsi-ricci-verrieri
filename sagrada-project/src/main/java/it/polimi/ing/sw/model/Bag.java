@@ -1,15 +1,14 @@
-
 package it.polimi.ing.sw.model;
+
 import java.util.*;
 import java.util.Random;
 
 public class Bag {
     private ArrayList<Dice> dices;
-    private DraftPool draftPool;
 
     public Bag() {
         dices = new ArrayList<Dice>();
-        draftPool = new DraftPool();
+        setDices();
     }
 
     //inizializza il sacchetto coi dati
@@ -54,8 +53,11 @@ public class Bag {
     //estrae tot dadi casuali in base al numero dei giocatori e li inserisce nella riserva
     public DraftPool draw (int numPlayers){ //da sistemare --> subList+removeRange, non sono riuscita a usarle
         int bound=(numPlayers*2)+1;
+        DraftPool draftPool = new DraftPool();
+        Dice dice = new Dice();
         for(int i=0;i<bound;i++){
-            draftPool.addDice(this.drawDice());
+            dice = drawDice();
+            draftPool.addDice(dice);
         }
         return draftPool;
     }

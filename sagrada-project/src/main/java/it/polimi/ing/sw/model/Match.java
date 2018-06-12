@@ -6,17 +6,18 @@ import it.polimi.ing.sw.model.exceptions.ToolCardException;
 import it.polimi.ing.sw.model.objectiveCard.ObjectiveCard;
 import it.polimi.ing.sw.model.objectiveCard.PrivateObjectiveCard;
 import it.polimi.ing.sw.model.toolCard.*;
+//import it.polimi.ing.sw.server.Observable;
 
 import java.util.Random;
 import java.util.*;
 
-public class Match extends Observable{
+public class Match {
 
     private static int last_id=0; // a cosa serve?
     private int id;
     private int numPlayers=0, numRound=0;
     private ArrayList<Player> players;
-    private int[] playersRound; 
+    private int[] playersRound;
     private int firstPlayer;   // primo giocatore del round. Se sono 4 giocatori può essere 0, 1, 2 o 3
     private int playerPlaying; // indice dell'array playersRound -> giocatore che sta giocando il turno
     private Bag bag;
@@ -60,12 +61,14 @@ public class Match extends Observable{
             firstPlayer = 0;
         playerPlaying=firstPlayer;
         //changeRound(firstPlayer);
+        //notifyNewRound(players.get(firstPlayer), draftPool);
     }
 
     public void endRound(){
-        for(Dice dice : draftPool.getDraftPool()){
+        roundTrack.addDicesRound(draftPool);
+        /*for(Dice dice : draftPool.getDraftPool()){
             roundTrack.addDice(numRound,dice);
-        }
+        }*/
         changeRound(firstPlayer);
     }
 
@@ -120,6 +123,7 @@ public class Match extends Observable{
                 possibleNumbers[order] = 0;
             } while (oldOrder>numPlayers||oldOrder==0);
 
+            //notifyChoiseScheme(schemes,players.get(i));
 
         }
 
@@ -155,15 +159,15 @@ public class Match extends Observable{
         publicObjectives = objectiveCardDeck.drawObjectiveCard();
         System.out.println(publicObjectives.size());
         inizializeToolCard();
-        bag.setDices();
-        /*int i=bag.getSize();
+        int i=bag.getSize();
         System.out.println(i);
 
         System.out.println("Colore"+bag.draw(4));
         System.out.println(bag.getSize());
 
         Dice dice= new Dice();
-        System.out.println(dice.throwDice());*/
+        System.out.println(dice.throwDice());
+        //notifyPublicObjectivesChoosen(publicObjectives);
 
     }
 
@@ -185,50 +189,74 @@ public class Match extends Observable{
         switch (id){
             case 1:
                 PinzaSgrossatrice pinzaSgrossatrice=new PinzaSgrossatrice();
+                pinzaSgrossatrice.setName("Pinza Sgrossatrice");
+                pinzaSgrossatrice.setDescription("Dopo aver scelto un dado, aumenta o dominuisci il valore del dado scelto di 1 (non puoi cambiare un 6 in 1 o un 1 in 6).");
                 toolCards.add(pinzaSgrossatrice);
                 break;
             case 2:
                 PennelloPerEglomise pennelloPerEglomise= new PennelloPerEglomise();
+                pennelloPerEglomise.setName("Pennello per Eglomise");
+                pennelloPerEglomise.setDescription("Muovi un qualsiasi dado nella tua vetrata ignorando le restrizioni di colore. Devi rispettare tutte le altre restrizioni di piazzamento.");
                 toolCards.add(pennelloPerEglomise);
                 break;
             case 3:
                 AlesatorePerLaminaDiRame alesatorePerLaminaDiRame= new AlesatorePerLaminaDiRame();
+                alesatorePerLaminaDiRame.setName("Alesatore per lamina di rame");
+                alesatorePerLaminaDiRame.setDescription("Muovi un qualsiasi dado nella tua vetrata ignorando le restrizioni di valore. Devi rispettare tutte le altre restrizioni di piazzamento.");
                 toolCards.add(alesatorePerLaminaDiRame);
                 break;
             case 4:
                 Lathekin lathekin= new Lathekin();
+                lathekin.setName("Lathekin");
+                lathekin.setDescription("Muovi esattamente due dadi, rispettando tutte le restrizioni di piazzamento.");
                 toolCards.add(lathekin);
                 break;
             case 5:
                 TaglierinaCircolare taglierinaCircolare=new TaglierinaCircolare();
+                taglierinaCircolare.setName("Taglierina circolare");
+                taglierinaCircolare.setDescription("Dopo aver scelto un dado, scambia quel dado con un dado sul Tracciato dei Round.");
                 toolCards.add(taglierinaCircolare);
                 break;
             case 6:
                 PennelloPerPastaSalda pennelloPerPastaSalda= new PennelloPerPastaSalda();
+                pennelloPerPastaSalda.setName("Pennello per Pasta Salda");
+                pennelloPerPastaSalda.setDescription("Dopo aver scelto un dado, tira nuovamente quel dado. Se non puoi piazzarlo, riponilo nella Riserva.");
                 toolCards.add(pennelloPerPastaSalda);
                 break;
             case 7:
                 Martelletto martelletto= new Martelletto();
+                martelletto.setName("Martelletto");
+                martelletto.setDescription("Tira nuovamente tutti i dadi della Riserva. Questa carta può essera usata solo durante il tuo secondo turno, prima di scegliere il secondo dado.");
                 toolCards.add(martelletto);
                 break;
             case 8:
                 TenagliaARotelle tenagliaARotelle= new TenagliaARotelle();
+                tenagliaARotelle.setName("Tenaglia a Rotelle");
+                tenagliaARotelle.setDescription("Dopo il tuo primo turno scegli immediatamente un altro dado. Salta il tuo secondo turno in questo round.");
                 toolCards.add(tenagliaARotelle);
                 break;
             case 9:
                 RigaInSughero rigaInSughero= new RigaInSughero();
+                rigaInSughero.setName("Riga in Sughero");
+                rigaInSughero.setDescription("Dopo aver scelto un dado, piazzalo in una casella che non sia adiacente a un altro dado. Devi rispettare tutte le restrizioni di piazzamento.");
                 toolCards.add(rigaInSughero);
                 break;
             case 10:
                 TamponeDiamantato tamponeDiamantato= new TamponeDiamantato();
+                tamponeDiamantato.setName("Tampone Diamantato");
+                tamponeDiamantato.setDescription("Dopo aver scelto un dado, giralo sulla faccia opposta (6 diventa 1, 5 diventa 2, 4 diventa 3 ecc.).");
                 toolCards.add(tamponeDiamantato);
                 break;
             case 11:
                 DiluentePerPastaSalda diluentePerPastaSalda= new DiluentePerPastaSalda();
+                diluentePerPastaSalda.setName("Diluente per Pasta Salda");
+                diluentePerPastaSalda.setDescription("Dopo aver scelto un dado, riponilo nel Sacchetto, poi pescane uno dal Sacchetto. Scegli il valore del nuovo dado e piazzalo, rispettando tutte le restrizioni di piazzamento.");
                 toolCards.add(diluentePerPastaSalda);
                 break;
             case 12:
                 TaglierinaManuale taglierinaManuale= new TaglierinaManuale();
+                taglierinaManuale.setName("Taglierina Manuale");
+                taglierinaManuale.setDescription("Muovi fino a due dadi dello stesso colore di un solo dado sul Tracciato dei Round. Devi rispettare tutte le restrizioni di piazzamento.");
                 toolCards.add(taglierinaManuale);
                 break;
         }
@@ -236,9 +264,9 @@ public class Match extends Observable{
     }
 
 
-    public int changePlayer () {
+    public void changePlayer () {
         playerPlaying++;
-        return playerPlaying;
+        //notifyNextPlayer(players.get(playersRound[playerPlaying]));
     }
 
     public void changeRound (int firstPlayer) {
@@ -257,6 +285,7 @@ public class Match extends Observable{
     public void useDice (Box box, Dice dice, Player player) throws NotValidException {
         boolean ok = player.useDice(box, dice);
         draftPool.removeDice(dice);
+        //notifyUsedDice(ok);
     }
 
     public ArrayList<Player> getRanking() {   // ritorna un array di giocatori ordinato dal punteggio massimo al minimo
@@ -310,6 +339,7 @@ public class Match extends Observable{
 
     public void endMatch() {
         ArrayList<Player> ranking = getRanking();
+        //notifyRanking(ranking);
     }
 }
 
