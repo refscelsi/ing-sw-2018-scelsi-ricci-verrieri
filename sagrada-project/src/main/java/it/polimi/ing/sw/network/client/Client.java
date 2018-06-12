@@ -15,6 +15,9 @@ import java.util.ArrayList;
  */
 
 public class Client implements IClient{
+    private int indice;
+    private IClient cli;
+    private AbstractClient client;
 
     public void startClient() {
 
@@ -29,14 +32,19 @@ public class Client implements IClient{
 
     @Override
     public void onGameUpdate(UpdateStates update) {
-
+        this.indice=update.getIndicePlayer();
     }
 
+    public void onAnotherUpdate(UpdateStates update){
+        cli.onAnotherUpdate(update);
+    }
 
     /////////////////////////////////////////////////////////////////////////////////////////
     // "Senders" (per l'invio di informazioni verso il Server, in Remoto).
     /////////////////////////////////////////////////////////////////////////////////////////
 
-
+    public void moveDice(UpdateStates update){
+        client.sendActionRequest();
+    }
 
 }

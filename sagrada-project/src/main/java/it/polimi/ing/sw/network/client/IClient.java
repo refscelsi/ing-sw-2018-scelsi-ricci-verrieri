@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 public interface IClient {
 
-    public void onGameUpdate(UpdateStates update);
+    void onGameUpdate(UpdateStates update);
 
+    void onAnotherUpdate(UpdateStates update);
 }

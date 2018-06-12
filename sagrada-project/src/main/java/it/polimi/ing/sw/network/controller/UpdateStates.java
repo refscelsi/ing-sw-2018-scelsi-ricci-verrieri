@@ -9,4 +9,8 @@ public class UpdateStates {
     public UpdateStates(int i){
         this.indicePlayer=i;
     }
+
+    public int getIndicePlayer(){
+        return this.indicePlayer;
+    }
 }
