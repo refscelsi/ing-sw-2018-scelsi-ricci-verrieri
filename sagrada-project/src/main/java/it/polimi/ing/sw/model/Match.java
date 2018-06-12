@@ -6,7 +6,6 @@ import it.polimi.ing.sw.model.exceptions.ToolCardException;
 import it.polimi.ing.sw.model.objectiveCard.ObjectiveCard;
 import it.polimi.ing.sw.model.objectiveCard.PrivateObjectiveCard;
 import it.polimi.ing.sw.model.toolCard.*;
-import it.polimi.ing.sw.network.protocol.Observable;
 
 import java.util.Random;
 import java.util.*;
@@ -61,7 +60,6 @@ public class Match extends Observable{
             firstPlayer = 0;
         playerPlaying=firstPlayer;
         //changeRound(firstPlayer);
-        notifyNewRound(players.get(firstPlayer), draftPool);
     }
 
     public void endRound(){
@@ -122,7 +120,6 @@ public class Match extends Observable{
                 possibleNumbers[order] = 0;
             } while (oldOrder>numPlayers||oldOrder==0);
 
-            notifyChoiseScheme(schemes,players.get(i));
 
         }
 
@@ -167,7 +164,6 @@ public class Match extends Observable{
 
         Dice dice= new Dice();
         System.out.println(dice.throwDice());*/
-        notifyPublicObjectivesChoosen(publicObjectives);
 
     }
 
@@ -240,9 +236,9 @@ public class Match extends Observable{
     }
 
 
-    public void changePlayer () {
+    public int changePlayer () {
         playerPlaying++;
-        notifyNextPlayer(players.get(playersRound[playerPlaying]));
+        return playerPlaying;
     }
 
     public void changeRound (int firstPlayer) {
@@ -261,7 +257,6 @@ public class Match extends Observable{
     public void useDice (Box box, Dice dice, Player player) throws NotValidException {
         boolean ok = player.useDice(box, dice);
         draftPool.removeDice(dice);
-        notifyUsedDice(ok);
     }
 
     public ArrayList<Player> getRanking() {   // ritorna un array di giocatori ordinato dal punteggio massimo al minimo
@@ -315,7 +310,6 @@ public class Match extends Observable{
 
     public void endMatch() {
         ArrayList<Player> ranking = getRanking();
-        notifyRanking(ranking);
     }
 }
 

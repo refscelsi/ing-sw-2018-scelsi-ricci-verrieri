@@ -1,34 +1,42 @@
 package it.polimi.ing.sw.network.client.rmi;
 
-import it.polimi.ing.sw.network.server.ServerInterface;
-import it.polimi.ing.sw.network.server.exceptions.NotValidNicknameException;
+import it.polimi.ing.sw.Client;
+import it.polimi.ing.sw.network.client.IClient;
+import it.polimi.ing.sw.network.controller.UpdateStates;
+import it.polimi.ing.sw.network.protocol.rmi.RMIClientInterface;
+import it.polimi.ing.sw.network.server.IServer;
 
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
+/**
+ * Classe che gestisce la connessione di rete con RMI. Estende
+ * {@link AbstractClient}, implementa {@link RMIClientInterface}.
+ */
 
-public class RMIClient {
+public class RMIClient extends Client implements RMIClientInterface{
     String nickname;
-    ServerInterface server;
+    IServer server;
+    IClient controller;
 
-    public RMIClient(String nickname) {
-        this.nickname = nickname;
+    public RMIClient(IClient controller, String address, int port) {
+       this.controller=controller;
     }
 
-
-    public void connectClient() throws RemoteException, NotBoundException, NotValidNicknameException {
-        try {
-            Registry registry = LocateRegistry.getRegistry();
-            System.out.print("RMI registry bindings: ");
-            server = (ServerInterface) registry.lookup("serverInterface");
-        } catch (RemoteException | NotBoundException e) {
-        }
-        ;
+    public IClient getController(){
+        return this.controller;
     }
 
-    public void login(String nickname) throws NotValidNicknameException {
-        //server.login(this.nickname);
-    }
+    /////////////////////////////////////////////////////////////////////////////////////////
+    // Metodi invocati dal Client (GUI) (vedi AbstractClient)
+    /////////////////////////////////////////////////////////////////////////////////////////
+    //metodi del gioco (scegli dado etc)
 
+
+
+////////////////////////////////////////////////////////////////////////////////////
+    // Metodi invocati dal Server (vedi RMIClientInterface)
+    /////////////////////////////////////////////////////////////////////////////////////////
+    //le NOTIFY
+    @Override
+    public void notifyGameUpdate(UpdateStates update) {
+        controller.onGameUpdate(update);
+    }
 }

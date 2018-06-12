@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 
-public class MatchTest {
+public class GameTest {
 
     private Match match;
     private Player player;

@@ -1,5 +1,6 @@
 package it.polimi.ing.sw.network.server;
 
+import it.polimi.ing.sw.network.controller.RemotePlayer;
 import it.polimi.ing.sw.network.server.exceptions.*;
 import java.rmi.*;
 import java.rmi.registry.*;
@@ -8,7 +9,9 @@ import java.util.HashMap;
 
 import it.polimi.ing.sw.network.server.rmi.RMIServer;
 
-public class Server implements ServerInterface {
+//SagradaServer: gestisce le connessioni
+
+public class Server implements IServer{
 
     private static final int RMI_PORT = 1099;
 
@@ -27,49 +30,21 @@ public class Server implements ServerInterface {
 
 
     public void startServer() {
-        {
-            try {
-                registry = LocateRegistry.createRegistry(RMI_PORT);
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-            try {
-                registry.bind("userController", (Remote) this);
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            } catch (AlreadyBoundException e) {
-                e.printStackTrace();
-            }
-            try {
-                UnicastRemoteObject.exportObject(this, RMI_PORT);
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-
-        }
+        //implementare
     }
 
+    public void startRMIServer(){
+        //implementare
+    };
 
     @Override
-    public void login(String nickname, RemotePlayer player) throws NotValidNicknameException {
-        synchronized (PLAYERS_MUTEX) {
-            System.out.println("New login request: " + nickname);
-            String player_id = "[" + nickname.toUpperCase() + "]";
+    public void loginPlayer(String nickname, RemotePlayer remotePlayer) {
 
-            if (!players.containsKey(nickname) && nickname.length() > 0) {
-
-                //setto il nickname
-                players.put(nickname, player);
-                System.out.println(player_id + " Succesfully logged in!");
-            } else {
-                System.out.println(player_id + " Already logged in!");
-                throw new NotValidNicknameException("il nickname è già in uso");
-            }
-        }
     }
 
     @Override
     public void joinMatch() {
+
     }
 
     @Override
