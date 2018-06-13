@@ -160,7 +160,7 @@ public class NewMatchForm extends javax.swing.JFrame {
         );
 
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/it/polimi/ing/sw/view/img/sagrada.png")));
-        this.setTitle("Sagrada Boardgame - New Game");
+        this.setTitle("Sagrada Boardgame - New Controller");
 
         pack();
     }// </editor-fold>

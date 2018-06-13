@@ -19,9 +19,9 @@ public class Launcher {
         } else if (input.equals("C")) {
             //StartOneUI.main(args);
         }
-        // Default: Client
+        // Default: LaunchClient
         else {
-            System.out.println("Starting as Client..");
+            System.out.println("Starting as LaunchClient..");
             //StartOneUI.main(args);
         }
 

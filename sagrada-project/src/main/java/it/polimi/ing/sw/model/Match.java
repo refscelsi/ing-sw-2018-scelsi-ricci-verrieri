@@ -6,6 +6,7 @@ import it.polimi.ing.sw.model.exceptions.ToolCardException;
 import it.polimi.ing.sw.model.objectiveCard.ObjectiveCard;
 import it.polimi.ing.sw.model.objectiveCard.PrivateObjectiveCard;
 import it.polimi.ing.sw.model.toolCard.*;
+import it.polimi.ing.sw.controller.ClientUpdate;
 //import it.polimi.ing.sw.server.Observable;
 
 import java.util.Random;
@@ -26,6 +27,9 @@ public class Match {
     private String np1;
     private DraftPool draftPool;
     private RoundTrack roundTrack;
+
+    //array di clientObserver che mi serve per notificare la view dei cambiamenti avvenuti
+    private ArrayList<ClientUpdate> playerUpdates;
 
     public Match() {
         id = last_id;
@@ -339,7 +343,7 @@ public class Match {
 
     public void endMatch() {
         ArrayList<Player> ranking = getRanking();
-        //notifyRanking(ranking);
     }
+
 }
 
