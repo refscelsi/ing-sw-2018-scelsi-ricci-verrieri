@@ -1,9 +1,6 @@
 package it.polimi.ing.sw.ui.cli;
 
-import it.polimi.ing.sw.model.Color;
-import it.polimi.ing.sw.model.objectiveCard.ObjectiveCard;
 import it.polimi.ing.sw.model.toolCard.ToolCard;
-import it.polimi.ing.sw.util.ConsoleColors;
 
 import java.util.ArrayList;
 

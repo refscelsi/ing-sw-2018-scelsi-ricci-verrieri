@@ -4,8 +4,6 @@ import it.polimi.ing.sw.model.*;
 import it.polimi.ing.sw.model.objectiveCard.PrivateObjectiveCard;
 import it.polimi.ing.sw.util.ConsoleColors;
 
-import java.util.ArrayList;
-
 public class ShowPrivateObjectiveCard {
 
     private PrivateObjectiveCard privateObjective;

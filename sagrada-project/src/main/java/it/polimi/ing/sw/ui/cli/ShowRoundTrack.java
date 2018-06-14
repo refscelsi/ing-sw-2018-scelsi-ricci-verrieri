@@ -1,6 +1,5 @@
 package it.polimi.ing.sw.ui.cli;
 
-import java.util.ArrayList;
 import it.polimi.ing.sw.model.*;
 import it.polimi.ing.sw.util.ConsoleColors;
 

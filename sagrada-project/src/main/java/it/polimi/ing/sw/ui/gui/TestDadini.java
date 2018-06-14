@@ -1,7 +1,6 @@
-package it.polimi.ing.sw.view;
+package it.polimi.ing.sw.ui.gui;
 
 import java.awt.Image;
-import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 

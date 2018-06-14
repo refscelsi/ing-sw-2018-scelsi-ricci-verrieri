@@ -1,6 +1,6 @@
 package it.polimi.ing.sw;
 
-import it.polimi.ing.sw.view.Menu;
+import it.polimi.ing.sw.ui.gui.Menu;
 
 public class App {
     public static Menu menu;

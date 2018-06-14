@@ -1,4 +1,4 @@
-package it.polimi.ing.sw.view;
+package it.polimi.ing.sw.ui.gui;
 
 import it.polimi.ing.sw.model.Box;
 import it.polimi.ing.sw.model.Dice;
@@ -13,7 +13,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class SchemeListFileConverter {
 

@@ -1,4 +1,4 @@
-package it.polimi.ing.sw.view;
+package it.polimi.ing.sw.ui.gui;
 
 import javax.swing.*;
 
@@ -10,7 +10,7 @@ public class ObjectiveCardView extends JLabel {
         this.id=id;
         String s=new String();
         s=id.concat(".png");
-        s= "/it/polimi/ing/sw/view/img/po/po".concat(s);
+        s= "/it/polimi/ing/sw/ui/gui/img/po/po".concat(s);
         System.out.println(s);
         setIcon(new javax.swing.ImageIcon(getClass().getResource(s)));
         

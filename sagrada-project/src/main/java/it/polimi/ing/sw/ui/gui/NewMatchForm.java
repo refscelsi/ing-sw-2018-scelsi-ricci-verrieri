@@ -1,6 +1,5 @@
-package it.polimi.ing.sw.view;
+package it.polimi.ing.sw.ui.gui;
 
-import it.polimi.ing.sw.App;
 import it.polimi.ing.sw.model.Match;
 
 import java.awt.*;
@@ -159,7 +158,7 @@ public class NewMatchForm extends javax.swing.JFrame {
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/it/polimi/ing/sw/view/img/sagrada.png")));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/it/polimi/ing/sw/ui/img/sagrada.png")));
         this.setTitle("Sagrada Boardgame - New Controller");
 
         pack();

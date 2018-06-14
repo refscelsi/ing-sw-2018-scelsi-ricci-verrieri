@@ -2,6 +2,7 @@ package it.polimi.ing.sw.model;
 import it.polimi.ing.sw.model.objectiveCard.*;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 
+import java.util.ArrayList;
 
 
 public class Player {
@@ -12,6 +13,8 @@ public class Player {
     private boolean inGame; //true quando sta giocando (posso ricevere i comandi) false altrimenti
     private Scheme scheme;
     private PrivateObjectiveCard privateObjective;
+    private Color color;
+    private ArrayList<Scheme> schemesToChoose;
 
 
     public Player (String nickname) {
@@ -38,6 +41,14 @@ public class Player {
 
     public int getScore() {
         return score;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public ArrayList<Scheme> getSchemesToChoose() {
+        return schemesToChoose;
     }
 
     public void setOrderInRound(int i){
@@ -70,6 +81,14 @@ public class Player {
 
     public void setScheme(Scheme scheme) {
         this.scheme = scheme;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public void setSchemesToChoose(ArrayList<Scheme> schemesToChoose) {
+        this.schemesToChoose = schemesToChoose;
     }
 
     public boolean useDice(Box box, Dice dice) throws NotValidException {

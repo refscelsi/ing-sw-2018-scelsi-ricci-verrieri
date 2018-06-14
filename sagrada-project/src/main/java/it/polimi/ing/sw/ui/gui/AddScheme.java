@@ -1,7 +1,7 @@
-package it.polimi.ing.sw.view;
+package it.polimi.ing.sw.ui.gui;
 
-import it.polimi.ing.sw.App;
 import it.polimi.ing.sw.model.Scheme;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
