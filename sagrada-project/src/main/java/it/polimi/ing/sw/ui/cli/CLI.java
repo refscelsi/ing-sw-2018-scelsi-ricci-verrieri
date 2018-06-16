@@ -1,17 +1,12 @@
 package it.polimi.ing.sw.ui.cli;
 
-import it.polimi.ing.sw.NetworkException;
-import it.polimi.ing.sw.model.Color;
 import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.model.Scheme;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.server.NotValidNicknameException;
-import it.polimi.ing.sw.util.Constants;
-import it.polimi.ing.sw.controller.ClientUpdate;
+import it.polimi.ing.sw.client.ClientUpdate;
 import it.polimi.ing.sw.client.ClientController;
-import it.polimi.ing.sw.client.ClientException;
 
-import java.rmi.RemoteException;
 import java.util.*;
 
 
@@ -20,22 +15,30 @@ public class CLI implements ClientUpdate {
     public Scanner scanner = new Scanner(System.in);
     public String inText;
 
+
     private ClientController controller;
     private ClientUpdate ui;
 
+    public CLI(ClientController controller){
+        this.controller=controller;
+    }
 
-    public ClientController getController() {
+    /*public ClientController getController() {
         if (controller == null)
             controller = new ClientController(getUI());
         return controller;
+    }*/
+
+    public ClientController getController() {
+        return controller;
     }
 
-    public ClientUpdate getUI() {
+    /*public ClientUpdate getUI() {
         if (ui == null) {
             ui = new CLI();
         }
         return ui;
-    }
+    }*/
 
     /**
      * Inizio come Client o Server.

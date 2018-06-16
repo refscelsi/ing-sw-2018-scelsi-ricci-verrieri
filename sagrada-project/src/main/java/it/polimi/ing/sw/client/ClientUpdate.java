@@ -1,4 +1,4 @@
-package it.polimi.ing.sw.controller;
+package it.polimi.ing.sw.client;
 
 import it.polimi.ing.sw.model.*;
 
@@ -6,7 +6,7 @@ import java.rmi.Remote;
 import java.util.ArrayList;
 
 //interfaccia remota, implementata da ClientController, che riceve gli aggiornamenti dal Model
-public interface ClientUpdate extends Remote {
+public interface ClientUpdate {
 
     public void onActionNotValid (String errorCode);
 

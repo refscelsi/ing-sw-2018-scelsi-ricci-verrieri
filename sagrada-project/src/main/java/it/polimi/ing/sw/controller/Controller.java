@@ -1,10 +1,8 @@
 package it.polimi.ing.sw.controller;
 
 import it.polimi.ing.sw.NetworkException;
-import it.polimi.ing.sw.model.Box;
-import it.polimi.ing.sw.model.Dice;
-import it.polimi.ing.sw.model.Match;
-import it.polimi.ing.sw.model.Player;
+import it.polimi.ing.sw.client.ClientController;
+import it.polimi.ing.sw.model.*;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.server.NotValidNicknameException;
 
@@ -23,7 +21,10 @@ public class Controller implements ControllerInterface{
 
 
     @Override
-    public int sendLoginRequest(String nickname) throws NotValidNicknameException, NetworkException {
+    public int sendLoginRequest(String nickname, ClientObserver client) throws NotValidNicknameException, NetworkException {
+        //creo un giocatore con quel nickname
+        //aggiungo il giocatore ai players e ti ritorno l'indice nell'array players
+        //ti aggiugno alla lista degli observer
         return 0;
     }
 

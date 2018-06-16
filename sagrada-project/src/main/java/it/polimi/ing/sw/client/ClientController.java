@@ -1,28 +1,18 @@
 package it.polimi.ing.sw.client;
 
-import it.polimi.ing.sw.controller.ClientUpdate;
 import it.polimi.ing.sw.controller.ControllerInterface;
-import it.polimi.ing.sw.model.Color;
-import it.polimi.ing.sw.model.DraftPool;
-import it.polimi.ing.sw.model.RoundTrack;
-import it.polimi.ing.sw.model.Scheme;
+import it.polimi.ing.sw.model.ClientObserver;
 import it.polimi.ing.sw.model.Match;
-import it.polimi.ing.sw.model.Player;
-import it.polimi.ing.sw.model.objectiveCard.ObjectiveCard;
-import it.polimi.ing.sw.model.objectiveCard.PrivateObjectiveCard;
-import it.polimi.ing.sw.model.toolCard.ToolCard;
 import it.polimi.ing.sw.server.NotValidNicknameException;
-import it.polimi.ing.sw.ui.cli.CLI;
 import it.polimi.ing.sw.util.Constants;
 import it.polimi.ing.sw.NetworkException;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 
-import java.rmi.RemoteException;
-import java.util.ArrayList;
+import java.util.Scanner;
 
 //classe che gestisce gli input dei client e chiama i metodi di ControllerInterface (sulla rete)
 
-public class ClientController implements ClientUpdate {
+public class ClientController implements ClientUpdate,ClientObserver {
 
     /**
      *  ogni giocatore è identificato dal valore dell'attributo index nel model: il giocatore con index=0 avrà come
@@ -40,27 +30,32 @@ public class ClientController implements ClientUpdate {
     private boolean isGameStarted;     // flag per vedere se la partita è iniziata: non so se sarà utile o meno
     private ControllerInterface controller; //il client può chiamare solo i metodi di ControllerInterface
     private ClientUpdate ui;
+    private String input;
+    private static Scanner scanner = new Scanner(System.in);
 
 
-    public ClientController(ClientUpdate ui/*ControllerInterface controllerInterface*/) {
-        //this.controller=controllerInterface;
+    public ClientController(ControllerInterface controllerInterface) {
+        this.controller=controllerInterface;
         this.ui = ui;
         isLogged = false;
         isGameStarted = false;
     }
 
-    /*public void mainLoop(){
-        System.out.println("inserisci il nickname");
-        String nickname="ari";
-        controller.loginPlayer(nickname);
-    }*/
 
-
+    public void start(){
+        System.out.println("Benvenuto in Sagrada, vuoi giocare con la Cli [c] o con la Gui [g]?");
+        input=scanner.nextLine();
+        if(input.equals('c')){
+            //new CLI(this).run();
+        }
+        else if(input.equals('g')){
+            //new GUI(this).run();
+        }
+    }
     /**
      * Metodo statico per eseguire il client.
      *
-     * @param args
-     *            parametri per la connessione.
+     * @param
      */
     /*public static void main(String[] args) {
         String serverAddress = SERVER_ADDRESS;
@@ -211,7 +206,7 @@ public class ClientController implements ClientUpdate {
     public void loginPlayer(String nickname) throws NotValidNicknameException{
         boolean success = false;
         try {
-            index = controller.sendLoginRequest(nickname); //TODO: il controller mi notifica l'indice del giocatore
+            index = controller.sendLoginRequest(nickname, this); //TODO: il controller mi notifica l'indice del giocatore
             success = true;
         } catch (NetworkException e) {
             System.err.println(e.getMessage());
@@ -258,4 +253,8 @@ public class ClientController implements ClientUpdate {
         }
     }
 
+    @Override
+    public void onGameUpdate() {
+        //onGameUpdate();
+    }
 }

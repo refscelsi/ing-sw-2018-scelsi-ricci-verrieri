@@ -1,12 +1,13 @@
 
 package it.polimi.ing.sw.model;
 
+import it.polimi.ing.sw.client.ClientController;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.model.exceptions.ToolCardException;
 import it.polimi.ing.sw.model.objectiveCard.ObjectiveCard;
 import it.polimi.ing.sw.model.objectiveCard.PrivateObjectiveCard;
 import it.polimi.ing.sw.model.toolCard.*;
-import it.polimi.ing.sw.controller.ClientUpdate;
+import it.polimi.ing.sw.client.ClientUpdate;
 //import it.polimi.ing.sw.server.Observable;
 
 import java.util.Random;
@@ -31,7 +32,7 @@ public class Match {
 
 
     //array di clientObserver che mi serve per notificare la ui dei cambiamenti avvenuti
-    private ArrayList<ClientUpdate> playerUpdates;
+    private ArrayList<ClientObserver> clientUpdates;
 
     public Match() {
         id = last_id;
@@ -71,6 +72,9 @@ public class Match {
             players.get(i).setColor(colorOfPawns[i]);
     }
 
+    public void addClientUpdate(ClientObserver client){
+        clientUpdates.add(client);
+    }
 
     public Player getPlayerPlaying(){
         return players.get(playerPlaying);
@@ -232,8 +236,8 @@ public class Match {
         boolean ok = player.useDice(box, dice);
         draftPool.removeDice(dice);
         //ho capito bene??
-        for(ClientUpdate client: playerUpdates){
-                client.onGameUpdate(this, playerPlaying);
+        for(ClientObserver client:clientUpdates){
+            client.onGameUpdate();
         }
     }
 
@@ -286,10 +290,9 @@ public class Match {
 
     public void endMatch() {
         calculateRanking();
-        for(ClientUpdate clientUpdate: playerUpdates){
-            clientUpdate.onGameEnd(this);
-        }
     }
 
 }
+
+
 
