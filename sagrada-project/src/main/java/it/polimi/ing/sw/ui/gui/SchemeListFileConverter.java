@@ -1,4 +1,4 @@
-package it.polimi.ing.sw.view;
+package it.polimi.ing.sw.ui.gui;
 
 import it.polimi.ing.sw.model.Box;
 import it.polimi.ing.sw.model.Color;

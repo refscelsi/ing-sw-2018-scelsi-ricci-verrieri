@@ -9,8 +9,7 @@ public class Bag {
 
     private static ArrayList<Dice> dices = new ArrayList<Dice>();;
 
-
-    private Bag() {
+    public Bag() {
 
         Dice dice;
         int i;
@@ -79,4 +78,6 @@ public class Bag {
         return dices.size();
     }
 
+    public void setDices() {
+    }
 }

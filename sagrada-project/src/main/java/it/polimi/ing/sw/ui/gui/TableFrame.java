@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.polimi.ing.sw.view;
+package it.polimi.ing.sw.ui.gui;
 
 import it.polimi.ing.sw.App;
 import it.polimi.ing.sw.model.Match;

@@ -13,13 +13,13 @@ public class BagTest {
         bag=new Bag();
         dice=new Dice();
     }
-
+/*
     @org.junit.Test
     public void setDices() {
         bag.setDices();
         assertTrue(90==bag.getSize());
     }
-
+*/
     @Test
     public void drawDice(){
         int green=0;
@@ -56,15 +56,15 @@ public class BagTest {
         assertEquals(true, yellow==18);
 
     }
-
+/*
     @org.junit.Test
     public void draw() {
         bag.setDices();
         bag.draw(3);
         assertEquals(true,bag.getSize()==83);
-    }
+    }*/
 
-    @org.junit.Test
+    @Test
     public void getSize() {
 
     }
