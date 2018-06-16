@@ -8,29 +8,24 @@ import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.model.exceptions.ToolCardException;
 
 public class Martelletto extends ToolCard {
-    private Box destination;
-    private Dice dice;
-    final int id=7;
 
+    final int id=7;
 
 
     public Martelletto() throws ToolCardException, NotValidException {
         super();
     }
 
+
+    // il controller prima di eseguirla si assicurerà che il giocatore stia nel secondo turno
+
+    /* ancora meglio se lo faccio nel controller direttamente
+
     public void execute(DraftPool draftPool, Player player) throws NotValidException {
-        //controllo che sia il secondo turno
         for(Dice dice: draftPool.getDraftPool()){
             dice.throwDice();
         }
-        player.useDice(destination,dice/*,draftPool*/);
-    }
+    }*/
 
-    public void setDice(Dice dice){
-        this.dice=dice;
-    }
 
-    public void setDestination(Box box){
-        this.destination=box;
-    }
 }

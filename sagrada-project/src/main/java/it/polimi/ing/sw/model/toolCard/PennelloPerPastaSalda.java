@@ -9,23 +9,19 @@ import it.polimi.ing.sw.model.exceptions.ToolCardException;
 
 
 public class PennelloPerPastaSalda extends ToolCard {
-    private Box destination;
+
     final int id=6;
+
 
     public PennelloPerPastaSalda() throws ToolCardException, NotValidException {
         super();
     }
 
-    public void execute(Dice dice, Player player, DraftPool draftPool) throws ToolCardException, NotValidException {
-        try {
-            player.useDice(destination,dice);
-        } catch (NotValidException e) {
-            e.printStackTrace();
-        }
-    }
 
-    public void SetDestination(Box box){
-        this.destination=box;
-    }
+    /* ancora meglio se lo faccio nel controller direttamente
+
+    public void execute(Dice dice) throws ToolCardException, NotValidException {
+        dice.throwDice();
+    }*/
 
 }

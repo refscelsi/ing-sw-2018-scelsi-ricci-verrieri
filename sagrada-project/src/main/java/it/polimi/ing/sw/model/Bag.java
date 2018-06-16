@@ -3,44 +3,54 @@ package it.polimi.ing.sw.model;
 import java.util.*;
 import java.util.Random;
 
+// classe Sigleton: può esistere solo un sacchetto in una partita
+
 public class Bag {
-    private ArrayList<Dice> dices;
 
-    public Bag() {
-        dices = new ArrayList<Dice>();
-        setDices();
-    }
+    private static ArrayList<Dice> dices = new ArrayList<Dice>();;
 
-    //inizializza il sacchetto coi dati
-    public void setDices(){
+
+    private Bag() {
+
         Dice dice;
+        int i;
 
-        for(int i=0; i<18; i++){
+        for(i=0; i<18; i++){
             dice=new Dice();
             dice.setDiceColor(Color.RED);
             dices.add(dice);
         }
-        for(int i=0; i<18;i++){
+        for(i=0; i<18; i++){
             dice=new Dice();
             dice.setDiceColor(Color.BLUE);
             dices.add(dice);
         }
-        for(int i=0; i<18;i++){
+        for(i=0; i<18; i++){
             dice=new Dice();
             dice.setDiceColor(Color.YELLOW);
             dices.add(dice);
         }
-        for(int i=0; i<18;i++){
+        for(i=0; i<18; i++){
             dice=new Dice();
             dice.setDiceColor(Color.GREEN);
             dices.add(dice);
         }
-        for(int i=0; i<18;i++){
+        for(i=0; i<18; i++){
             dice=new Dice();
             dice.setDiceColor(Color.PURPLE);
             dices.add(dice);
         }
     }
+
+
+    // ritorna l'unica istanza di Bag
+
+    public ArrayList<Dice> getBag() {
+        return dices;
+    }
+
+
+    // estrae un dado e lo lancia -> ritorna un dado di un determinato colore e di un determinato numero
 
     public Dice drawDice(){
         Collections.shuffle(dices);
@@ -50,8 +60,10 @@ public class Bag {
         return dice;
     }
 
-    //estrae tot dadi casuali in base al numero dei giocatori e li inserisce nella riserva
-    public DraftPool draw (int numPlayers){ //da sistemare --> subList+removeRange, non sono riuscita a usarle
+
+    //estrae tot dadi casuali in base al numero dei giocatori e che costituiscono la draftpool
+
+    public DraftPool draw (int numPlayers){
         int bound=(numPlayers*2)+1;
         DraftPool draftPool = new DraftPool();
         Dice dice = new Dice();
@@ -62,7 +74,9 @@ public class Bag {
         return draftPool;
     }
 
+
     public int getSize(){
         return dices.size();
     }
+
 }

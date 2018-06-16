@@ -2,6 +2,10 @@ package it.polimi.ing.sw.util;
 
 public class Constants {
 
+    // Generali
+    public static final int NUM_ROWS = 4;
+    public static final int NUM_COLS = 5;
+
     // Connessione
     public static final String SERVER_ADDRESS = "127.0.0.1";
     public static final int SOCKET_PORT = 1098;

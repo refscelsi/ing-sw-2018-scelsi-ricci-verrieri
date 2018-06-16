@@ -8,28 +8,34 @@ import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.model.exceptions.ToolCardException;
 
 public class PennelloPerEglomise extends ToolCard{
+
     final int id=2;
 
-    public PennelloPerEglomise()throws ToolCardException, NotValidException {
+
+    public PennelloPerEglomise() throws ToolCardException, NotValidException {
         super();
     }
 
-    public void execute(Dice dice, Player player, Box source, Box destination) throws ToolCardException{
-        Scheme scheme=player.getScheme();
-        if(scheme.isEmpty()){
-            throw new ToolCardException("Non hai dadi da spostare babbazzo");
+
+    public void execute(Scheme scheme, int sourceRow, int sourceCol, int destRow, int destCol) throws ToolCardException {
+        Box sourceBox = scheme.getBox(sourceRow, sourceCol);
+        Box destBox = scheme.getBox(destRow, destCol);
+        if(!sourceBox.isFull())
+            throw new ToolCardException("Hai scelto come origine una casella vuota!");
+        else {
+            if (destBox.isFull())
+                throw new ToolCardException("Non puoi posizionare un dado in una casella già piena!");
+            else {
+                Dice dice = sourceBox.getDice();
+                if (scheme.checkBoxShade(destBox, dice) && scheme.checkDiceAdjacent(destBox, dice, true)) {
+                    destBox.placeDice(dice);
+                    sourceBox.removeDice();
+                } else
+                    throw new ToolCardException("Non stai rispettando le condizioni di piazzamento!");
+            }
         }
-        source.removeDice();
-        if(!destination.isFull() && scheme.checkDiceAdjacent(destination,dice) &&
-                ((scheme.checkShade(destination.getShade(),dice.getNumFacciaUp()))
-                || (scheme.checkShade(dice.getNumFacciaUp(),0)))){
-            destination.placeDice(dice);
-            player.setNumOfToken(player.getNumOfToken()-getNumOfTokens());
-            setNumOfTokens(2);
-        }
-        else
-            source.placeDice(dice);
     }
+
 
 }
 

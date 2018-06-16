@@ -1,4 +1,3 @@
-
 package it.polimi.ing.sw.model;
 
 public class Box {
@@ -9,8 +8,9 @@ public class Box {
     private int shade;
 
     public Box(){
-        this.color=Color.WHITE;
-        this.shade=0;
+        color=Color.WHITE;
+        shade=0;
+        dice=null;
     }
 
     public Box(int x, int y, Color color, int shade){
@@ -18,6 +18,7 @@ public class Box {
         this.y=y;
         this.color=color;
         this.shade=shade;
+        dice=null;
     }
 
     public boolean isFull(){

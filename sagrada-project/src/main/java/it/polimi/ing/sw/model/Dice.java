@@ -5,12 +5,12 @@ import java.util.Random;
 
 public class Dice {
     private int  numFacciaUp;
-    private boolean riserva, usatoSuSchema;
     private Color diceColor;
 
     public Dice(){}
 
-    //tira il dado -> inutile, sta già in bag
+    // lancia il dado
+
     public int throwDice() {
         Random random = new Random();
         int indice = random.nextInt(5) + 1;//genero indice casuale

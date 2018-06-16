@@ -8,19 +8,18 @@ import it.polimi.ing.sw.model.exceptions.ToolCardException;
 
 
 public class TaglierinaCircolare extends ToolCard {
-    private Dice dice;
-    private DraftPool draftPool;
-    private RoundTrack roundTrack;
+
     final int id=5;
 
-    public TaglierinaCircolare()throws ToolCardException, NotValidException {
+
+    public TaglierinaCircolare () throws ToolCardException, NotValidException {
         super();
     }
 
-    public void execute (Dice dice, DraftPool draftPool, RoundTrack roundTrack) throws ToolCardException{
-        draftPool.removeDice(dice);
 
-        //sistemare roundtrack per permettere lo switch
+    public void execute () {
+
+        // questa carta la gestisce il controller, che semplicemente verrà notificato di questa azione e scambierà i due dadi
 
     }
 
