@@ -231,7 +231,10 @@ public class Match {
     public void useDice (Box box, Dice dice, Player player) throws NotValidException {
         boolean ok = player.useDice(box, dice);
         draftPool.removeDice(dice);
-        //notifyUsedDice(ok);
+        //ho capito bene??
+        for(ClientUpdate client: playerUpdates){
+                client.onGameUpdate(this, playerPlaying);
+        }
     }
 
     public void calculateRanking() {   // ritorna un array di giocatori ordinato dal punteggio massimo al minimo
@@ -283,6 +286,9 @@ public class Match {
 
     public void endMatch() {
         calculateRanking();
+        for(ClientUpdate clientUpdate: playerUpdates){
+            clientUpdate.onGameEnd(this);
+        }
     }
 
 }

@@ -16,7 +16,9 @@ public class LaunchClient {
         String name = sc.nextLine();
         try {
             Registry reg = LocateRegistry.getRegistry();
-            ControllerInterface controller= (ControllerInterface) reg.lookup("Server");
+            ControllerInterface controller= (ControllerInterface) reg.lookup("Controller");
+
+            //più che il client controller dovrei lanciare la gui
             ClientController client = new ClientController(controller);
             client.mainLoop();
         } catch (RemoteException e) {

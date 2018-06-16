@@ -17,7 +17,7 @@ public class Server {
             Registry reg = LocateRegistry.createRegistry(1099);
             Match match= new Match();
             Controller controller = new Controller(match);
-            reg.rebind("Server", (Remote) controller);
+            reg.rebind("Controller", (Remote) controller);
         } catch (RemoteException e) {
             e.printStackTrace();
         }

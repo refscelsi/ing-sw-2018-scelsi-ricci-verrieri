@@ -2,38 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="68684bbd-2d53-4438-a796-28f2f22ed51b" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/client/ClientController.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/client/LaunchClient.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/controller/ClientUpdate.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/controller/Controller.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/controller/ControllerInterface.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/server/Server.java" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/Client.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/Server.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/client/LaunchClient.java" afterPath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/client/LaunchClient.java" />
+      <change beforePath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/controller/Controller.java" afterPath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/controller/Controller.java" />
       <change beforePath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/model/Match.java" afterPath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/model/Match.java" />
-      <change beforePath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/StartClient.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/StartServer.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/client/AbstractClient.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/client/Client.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/client/ClientException.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/client/IClient.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/client/rmi/RMIClient.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/controller/Game.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/controller/RemotePlayer.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/controller/UpdateStates.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/protocol/rmi/RMIClientInterface.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/protocol/rmi/RMIServerInterface.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/server/IServer.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/server/Server.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/server/ServerException.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/server/exceptions/NotValidNicknameException.java" afterPath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/server/NotValidNicknameException.java" />
-      <change beforePath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/server/rmi/RMIPlayer.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/server/rmi/RMIServer.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/util/Launcher.java" afterPath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/util/Launcher.java" />
-      <change beforePath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/view/NewMatchForm.java" afterPath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/view/NewMatchForm.java" />
-      <change beforePath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/view/PlayerView.java" afterPath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/view/PlayerView.java" />
-      <change beforePath="$PROJECT_DIR$/sagrada-project/src/test/java/it/polimi/ing/sw/model/GameTest.java" afterPath="$PROJECT_DIR$/sagrada-project/src/test/java/it/polimi/ing/sw/model/ControllerTest.java" />
+      <change beforePath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/server/Server.java" afterPath="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/server/Server.java" />
     </list>
     <ignored path="$PROJECT_DIR$/sagrada-project/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -53,8 +26,8 @@
       <file leaf-file-name="LaunchClient.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/client/LaunchClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="89" lean-forward="false" selection-start-line="10" selection-start-column="89" selection-end-line="10" selection-end-column="89" />
+            <state relative-caret-position="516">
+              <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -65,32 +38,13 @@
       <file leaf-file-name="Controller.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/controller/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+            <state relative-caret-position="17">
+              <caret line="17" column="47" lean-forward="false" selection-start-line="17" selection-start-column="47" selection-end-line="17" selection-end-column="47" />
               <folding>
-                <element signature="e#193#194#0" expanded="true" />
-                <element signature="e#225#226#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#572#573#0" expanded="true" />
+                <element signature="e#604#605#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NotValidNicknameException.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/server/NotValidNicknameException.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="13" lean-forward="false" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ControllerInterface.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/controller/ControllerInterface.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="17" lean-forward="false" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -98,32 +52,8 @@
       <file leaf-file-name="ClientController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/client/ClientController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="22" column="64" lean-forward="false" selection-start-line="22" selection-start-column="64" selection-end-line="22" selection-end-column="64" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#475#476#0" expanded="true" />
-                <element signature="e#526#527#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="App.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/App.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Server.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/server/Server.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="99" lean-forward="false" selection-start-line="11" selection-start-column="99" selection-end-line="11" selection-end-column="99" />
+            <state relative-caret-position="17">
+              <caret line="22" column="13" lean-forward="false" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -131,12 +61,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ClientUpdate.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ClientUpdate.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/controller/ClientUpdate.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="17" lean-forward="false" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-              <folding />
+            <state relative-caret-position="136">
+              <caret line="8" column="17" lean-forward="false" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -144,22 +76,60 @@
       <file leaf-file-name="Match.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/model/Match.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="179">
-              <caret line="30" column="90" lean-forward="false" selection-start-line="30" selection-start-column="90" selection-end-line="30" selection-end-column="90" />
+            <state relative-caret-position="213">
+              <caret line="192" column="20" lean-forward="false" selection-start-line="192" selection-start-column="20" selection-end-line="192" selection-end-column="20" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#14128#14129#0" expanded="true" />
-                <element signature="e#14184#14185#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Object.java" pinned="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk1.8.0_111/src.zip!/java/lang/Object.java">
+      <file leaf-file-name="ToolCards.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/model/ToolCards.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2">
-              <caret line="258" column="43" lean-forward="true" selection-start-line="258" selection-start-column="43" selection-end-line="258" selection-end-column="43" />
+            <state relative-caret-position="13">
+              <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AlesatorePerLaminaDiRame.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/model/toolCard/AlesatorePerLaminaDiRame.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DiluentePerPastaSalda.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/model/toolCard/DiluentePerPastaSalda.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Lathekin.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/model/toolCard/Lathekin.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Bag.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/model/Bag.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -219,8 +189,11 @@
         <option value="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/client/ClientController.java" />
         <option value="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/controller/PlayerUpdate.java" />
         <option value="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/model/Observable.java" />
-        <option value="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/model/Match.java" />
         <option value="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/controller/ControllerInterface.java" />
+        <option value="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/controller/Controller.java" />
+        <option value="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/server/Server.java" />
+        <option value="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/client/LaunchClient.java" />
+        <option value="$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/model/Match.java" />
       </list>
     </option>
   </component>
@@ -230,7 +203,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="2" />
     <option name="y" value="23" />
     <option name="width" value="1275" />
@@ -253,7 +226,6 @@
     <panes>
       <pane id="Scope" />
       <pane id="Scratches" />
-      <pane id="AndroidView" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -322,6 +294,58 @@
               <item name="ing-sw-2018-scelsi-ricci-verrieri" type="462c0819:PsiDirectoryNode" />
               <item name="sagrada-project" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="sw" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ing-sw-2018-scelsi-ricci-verrieri" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ing-sw-2018-scelsi-ricci-verrieri" type="462c0819:PsiDirectoryNode" />
+              <item name="sagrada-project" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="sw" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+              <item name="toolCard" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ing-sw-2018-scelsi-ricci-verrieri" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ing-sw-2018-scelsi-ricci-verrieri" type="462c0819:PsiDirectoryNode" />
+              <item name="sagrada-project" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="sw" type="462c0819:PsiDirectoryNode" />
+              <item name="server" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ing-sw-2018-scelsi-ricci-verrieri" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ing-sw-2018-scelsi-ricci-verrieri" type="462c0819:PsiDirectoryNode" />
+              <item name="sagrada-project" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="sw" type="462c0819:PsiDirectoryNode" />
+              <item name="ui" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ing-sw-2018-scelsi-ricci-verrieri" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ing-sw-2018-scelsi-ricci-verrieri" type="462c0819:PsiDirectoryNode" />
+              <item name="sagrada-project" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="sw" type="462c0819:PsiDirectoryNode" />
+              <item name="ui" type="462c0819:PsiDirectoryNode" />
+              <item name="cli" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ing-sw-2018-scelsi-ricci-verrieri" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ing-sw-2018-scelsi-ricci-verrieri" type="462c0819:PsiDirectoryNode" />
+              <item name="sagrada-project" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="test" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -355,6 +379,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -573,6 +598,9 @@
       <workItem from="1528790190416" duration="14483000" />
       <workItem from="1528822921743" duration="2084000" />
       <workItem from="1528895344818" duration="2394000" />
+      <workItem from="1529018797361" duration="737000" />
+      <workItem from="1529100101533" duration="1615000" />
+      <workItem from="1529132246798" duration="2001000" />
     </task>
     <servers />
   </component>
@@ -585,10 +613,10 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="24638000" />
+    <option name="totallyTimeSpent" value="28991000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -604,7 +632,6 @@
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24963397" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32913387" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -618,6 +645,7 @@
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32913387" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329429" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32913387" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -661,45 +689,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/controller/Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/protocol/Observable.java" />
-    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/protocol/Observer.java" />
-    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/model/Match.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="13" column="13" lean-forward="false" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/view/AddScheme.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="11" column="13" lean-forward="false" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sagrada-project/src/test/java/it/polimi/ing/sw/model/DraftPoolTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="12" column="36" lean-forward="false" selection-start-line="12" selection-start-column="36" selection-end-line="12" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sagrada-project/src/test/java/it/polimi/ing/sw/model/ColorTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sagrada-project/src/test/java/it/polimi/ing/sw/model/DiceTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-203">
@@ -739,48 +728,19 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/view/client/RMIClient.java" />
     <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/protocol/Observer.java" />
     <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/protocol/Observable.java" />
-    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/view/AddScheme.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="11" column="13" lean-forward="false" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/view/AddScheme.java" />
     <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/server/AbstractServer.java" />
-    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/view/PlayerView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/ui/cli/ShowDraftPool.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/view/PlayerView.java" />
     <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/ui/cli/ShowToolCards.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/ui/cli/ShowRoundTrack.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -801,142 +761,33 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/Client.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/Server.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/StartClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/StartServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/client/ClientException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/server/ServerException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/server/rmi/RMIServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/server/rmi/RMIPlayer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/server/IServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/Client.java" />
+    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/Server.java" />
+    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/StartClient.java" />
+    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/StartServer.java" />
+    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/client/ClientException.java" />
+    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/server/ServerException.java" />
+    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/server/rmi/RMIServer.java" />
+    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/server/rmi/RMIPlayer.java" />
+    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/server/IServer.java" />
     <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/server/Server.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/protocol/rmi/RMIServerInterface.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/protocol/rmi/RMIClientInterface.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/controller/RemotePlayer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/controller/UpdateStates.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/client/rmi/RMIClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/client/AbstractClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/client/IClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/protocol/rmi/RMIServerInterface.java" />
+    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/protocol/rmi/RMIClientInterface.java" />
+    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/controller/RemotePlayer.java" />
+    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/controller/UpdateStates.java" />
+    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/client/rmi/RMIClient.java" />
+    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/client/AbstractClient.java" />
+    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/network/client/IClient.java" />
+    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/model/Observable.java" />
     <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/server/NotValidNicknameException.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -945,89 +796,154 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/client/LaunchClient.java">
+    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/controller/ControllerInterface.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="89" lean-forward="false" selection-start-line="10" selection-start-column="89" selection-end-line="10" selection-end-column="89" />
+        <state relative-caret-position="68">
+          <caret line="9" column="17" lean-forward="false" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/server/Server.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="99" lean-forward="false" selection-start-line="11" selection-start-column="99" selection-end-line="11" selection-end-column="99" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/model/Observable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_111/src.zip!/java/lang/Object.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2">
-          <caret line="258" column="43" lean-forward="true" selection-start-line="258" selection-start-column="43" selection-end-line="258" selection-end-column="43" />
+        <state relative-caret-position="3927">
+          <caret line="258" column="43" lean-forward="false" selection-start-line="258" selection-start-column="43" selection-end-line="258" selection-end-column="43" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/model/Match.java">
+    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/ui/cli/ShowDraftPool.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="30" column="90" lean-forward="false" selection-start-line="30" selection-start-column="90" selection-end-line="30" selection-end-column="90" />
+        <state relative-caret-position="68">
+          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/ui/cli/ShowRoundTrack.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/client/ClientException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/ui/cli/CLI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="17" column="13" lean-forward="false" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/server/Server.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="26" column="0" lean-forward="false" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#14128#14129#0" expanded="true" />
-            <element signature="e#14184#14185#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/client/LaunchClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="516">
+          <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/client/ClientController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="64" lean-forward="false" selection-start-line="22" selection-start-column="64" selection-end-line="22" selection-end-column="64" />
+        <state relative-caret-position="17">
+          <caret line="22" column="13" lean-forward="false" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#475#476#0" expanded="true" />
-            <element signature="e#526#527#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/controller/ControllerInterface.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="17" lean-forward="false" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/controller/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        <state relative-caret-position="17">
+          <caret line="17" column="47" lean-forward="false" selection-start-line="17" selection-start-column="47" selection-end-line="17" selection-end-column="47" />
           <folding>
-            <element signature="e#193#194#0" expanded="true" />
-            <element signature="e#225#226#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#572#573#0" expanded="true" />
+            <element signature="e#604#605#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/controller/ClientUpdate.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="17" lean-forward="false" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/model/Bag.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/model/Match.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="213">
+          <caret line="192" column="20" lean-forward="false" selection-start-line="192" selection-start-column="20" selection-end-line="192" selection-end-column="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/model/ToolCards.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="13">
+          <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/model/toolCard/AlesatorePerLaminaDiRame.java">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
-          <caret line="5" column="17" lean-forward="false" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/model/toolCard/DiluentePerPastaSalda.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sagrada-project/src/main/java/it/polimi/ing/sw/model/toolCard/Lathekin.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
           <folding />
         </state>
       </provider>
