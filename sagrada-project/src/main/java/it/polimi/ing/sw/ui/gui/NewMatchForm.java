@@ -1,5 +1,6 @@
 package it.polimi.ing.sw.ui.gui;
 
+import it.polimi.ing.sw.App;
 import it.polimi.ing.sw.model.Match;
 
 import java.awt.*;
@@ -11,13 +12,13 @@ import java.awt.event.WindowListener;
 public class NewMatchForm extends javax.swing.JFrame {
 
     private TableFrame tf;
-    private boolean controllo=true;
+    private boolean controllo = true;
 
     public NewMatchForm() {
         initComponents();
         setLocationRelativeTo(null);
     }
-    
+
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
 
@@ -52,9 +53,11 @@ public class NewMatchForm extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 nameMatchTFMouseClicked(evt);
             }
+
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 nameMatchTFMouseEntered(evt);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 nameMatchTFMouseExited(evt);
             }
@@ -66,15 +69,17 @@ public class NewMatchForm extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 playerNameTFMouseClicked(evt);
             }
+
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 playerNameTFMouseEntered(evt);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 playerNameTFMouseExited(evt);
             }
         });
 
-        nuumPlayerCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4" }));
+        nuumPlayerCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"1", "2", "3", "4"}));
 
         nameMatch.setForeground(new java.awt.Color(51, 51, 51));
         nameMatch.setText("Nome partita");
@@ -158,8 +163,8 @@ public class NewMatchForm extends javax.swing.JFrame {
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/it/polimi/ing/sw/ui/img/sagrada.png")));
-        this.setTitle("Sagrada Boardgame - New Controller");
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/it/polimi/ing/sw/view/img/sagrada.png")));
+        this.setTitle("Sagrada Boardgame - New Match");
 
         pack();
     }// </editor-fold>
@@ -167,15 +172,15 @@ public class NewMatchForm extends javax.swing.JFrame {
     private void avviaMatchActionPerformed(ActionEvent evt) {
 
         //this.setVisible(false);
-        Match match=new Match(nameMatchTF.getText(),nuumPlayerCB.getSelectedIndex()+1,nomePlayer1.getText());
+        Match match = new Match(nameMatchTF.getText(), nuumPlayerCB.getSelectedIndex() + 1, nomePlayer1.getText());
         System.out.println(nuumPlayerCB.getSelectedIndex());
-        
-        tf=new TableFrame(match);
-        
+
+        tf = new TableFrame(match);
+
         tf.setVisible(true);
         this.setVisible(false);
         //match.startMatch();
-        
+
         //nel caso ci siano ulteriori informazioni da passare  verranno inserite qui
     }
 
@@ -183,9 +188,9 @@ public class NewMatchForm extends javax.swing.JFrame {
         tornaMenu();
     }
 
-    public void tornaMenu(){
+    public void tornaMenu() {
         this.setVisible(false);
-        //App.menu.setVisible(true);
+        App.menu.setVisible(true);
     }
 
     private void nameMatchTFMouseEntered(java.awt.event.MouseEvent evt) {
@@ -194,7 +199,7 @@ public class NewMatchForm extends javax.swing.JFrame {
     }
 
     private void nameMatchTFMouseClicked(java.awt.event.MouseEvent evt) {
-        controllo=false;
+        controllo = false;
         nameMatchTF.setForeground(new java.awt.Color(0, 0, 0));
     }
 
@@ -209,7 +214,7 @@ public class NewMatchForm extends javax.swing.JFrame {
     }
 
     private void playerNameTFMouseClicked(java.awt.event.MouseEvent evt) {
-        controllo=false;
+        controllo = false;
         playerNameTF.setForeground(new java.awt.Color(0, 0, 0));
     }
 

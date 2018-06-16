@@ -1,11 +1,11 @@
 package it.polimi.ing.sw.ui.gui;
 
-import java.awt.Image;
-import javax.swing.ImageIcon;
+import javax.swing.*;
+import java.awt.*;
 
 public class CardField extends javax.swing.JPanel {
-    
-    private static final String IMAGE_PATH="/img/";
+
+    private static final String IMAGE_PATH = "/img/";
     private static String FINAL_IMAGE_PATH;
 
     public CardField() {
@@ -20,6 +20,7 @@ public class CardField extends javax.swing.JPanel {
         FINAL_IMAGE_PATH = IMAGE_PATH.concat(cardType);
         setIcons(cardName);
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -35,19 +36,20 @@ public class CardField extends javax.swing.JPanel {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(cardFieldLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(cardFieldLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(cardFieldLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(cardFieldLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
     }// </editor-fold>//GEN-END:initComponents
-    public void setIcons(String nameIcon){
-        ImageIcon icon =new javax.swing.ImageIcon(getClass().getResource(FINAL_IMAGE_PATH+nameIcon)) ;
-        Image scaledImage = icon.getImage().getScaledInstance(173,242, Image.SCALE_DEFAULT);
+
+    public void setIcons(String nameIcon) {
+        ImageIcon icon = new javax.swing.ImageIcon(getClass().getResource(FINAL_IMAGE_PATH + nameIcon));
+        Image scaledImage = icon.getImage().getScaledInstance(173, 242, Image.SCALE_DEFAULT);
         icon.setImage(scaledImage);
-        cardFieldLabel.setIcon(icon );
+        cardFieldLabel.setIcon(icon);
         cardFieldLabel.repaint();
     }
 

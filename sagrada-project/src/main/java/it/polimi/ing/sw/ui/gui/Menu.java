@@ -11,13 +11,14 @@ public class Menu extends javax.swing.JFrame {
 
     private NewMatchForm nmf;
     private AddScheme as;
-    private static final String IMAGE_PATH="img/";
+    private static final String IMAGE_PATH = "img/";
 
     public Menu() {
         initComponents();
         setIcons();
         setLocationRelativeTo(null);
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -30,7 +31,7 @@ public class Menu extends javax.swing.JFrame {
         newMatchLabel = new javax.swing.JLabel();
         backgroundLabel = new javax.swing.JLabel();
 
-        WindowListener exitListener = new WindowAdapter( ) {
+        WindowListener exitListener = new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent windowEvent) {
                 int confirm = JOptionPane.showOptionDialog(
@@ -42,9 +43,9 @@ public class Menu extends javax.swing.JFrame {
                         null /*new javax.swing.ImageIcon(getClass().getResource("/img/sagrada.png"))*/,
                         null,
                         null);
-                if (confirm == 0){
+                if (confirm == 0) {
                     System.exit(0);
-                }else{
+                } else {
                     setVisible(true);
                 }
             }
@@ -102,62 +103,62 @@ public class Menu extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(menuLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(menuLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(menuLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(menuLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void setIcons(){
-        ImageIcon icon =new javax.swing.ImageIcon(getClass().getResource(IMAGE_PATH+"home.png")) ;
-        Image scaledImage = icon.getImage().getScaledInstance(100,100, Image.SCALE_DEFAULT);
+    public void setIcons() {
+        ImageIcon icon = new javax.swing.ImageIcon(getClass().getResource(IMAGE_PATH + "home.png"));
+        Image scaledImage = icon.getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT);
         icon.setImage(scaledImage);
 
         newMatchLabel.setIcon(icon);
         newMatchLabel.repaint();
 
-        icon = new javax.swing.ImageIcon(getClass().getResource(IMAGE_PATH+"settings.png"));
-        scaledImage = icon.getImage().getScaledInstance(53,53, Image.SCALE_DEFAULT);
+        icon = new javax.swing.ImageIcon(getClass().getResource(IMAGE_PATH + "settings.png"));
+        scaledImage = icon.getImage().getScaledInstance(53, 53, Image.SCALE_DEFAULT);
         icon.setImage(scaledImage);
         settingsLabel.setIcon(icon);
         settingsLabel.repaint();
 
-        icon = new javax.swing.ImageIcon(getClass().getResource(IMAGE_PATH+"globe.png"));
-        scaledImage = icon.getImage().getScaledInstance(53,53, Image.SCALE_DEFAULT);
+        icon = new javax.swing.ImageIcon(getClass().getResource(IMAGE_PATH + "globe.png"));
+        scaledImage = icon.getImage().getScaledInstance(53, 53, Image.SCALE_DEFAULT);
         icon.setImage(scaledImage);
         singleplayerLabel.setIcon(icon);
         singleplayerLabel.repaint();
 
-        icon = new javax.swing.ImageIcon(getClass().getResource(IMAGE_PATH+"find.png"));
-        scaledImage = icon.getImage().getScaledInstance(53,53, Image.SCALE_DEFAULT);
+        icon = new javax.swing.ImageIcon(getClass().getResource(IMAGE_PATH + "find.png"));
+        scaledImage = icon.getImage().getScaledInstance(53, 53, Image.SCALE_DEFAULT);
         icon.setImage(scaledImage);
         loadMatchLabel.setIcon(icon);
         loadMatchLabel.repaint();
 
-        icon = new javax.swing.ImageIcon(getClass().getResource(IMAGE_PATH+"add.png"));
-        scaledImage = icon.getImage().getScaledInstance(53,53, Image.SCALE_DEFAULT);
+        icon = new javax.swing.ImageIcon(getClass().getResource(IMAGE_PATH + "add.png"));
+        scaledImage = icon.getImage().getScaledInstance(53, 53, Image.SCALE_DEFAULT);
         icon.setImage(scaledImage);
         addSchemeLabel.setIcon(icon);
         addSchemeLabel.repaint();
 
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource(IMAGE_PATH+"sagrada.png")));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource(IMAGE_PATH + "sagrada.png")));
         this.setTitle("Sagrada Boardgame");
     }
 
     private void newMatchLabelMouseClicked(java.awt.event.MouseEvent evt) {
         scompareMenu();
-        nmf= new NewMatchForm();
+        nmf = new NewMatchForm();
         nmf.setVisible(true);
     }
 
     private void addSchemeLabelMouseClicked(java.awt.event.MouseEvent evt) {
         scompareMenu();
-        as=new AddScheme();
+        as = new AddScheme();
         as.setVisible(true);
     }
 
@@ -173,7 +174,7 @@ public class Menu extends javax.swing.JFrame {
         scompareMenu();
     }
 
-    public void scompareMenu(){
+    public void scompareMenu() {
         this.setVisible(false);
     }
 

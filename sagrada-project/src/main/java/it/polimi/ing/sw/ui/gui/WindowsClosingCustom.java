@@ -14,7 +14,7 @@ public class WindowsClosingCustom implements WindowListener {
     public void windowClosing(WindowEvent windowEvent) {
         int confirm = JOptionPane.showInternalOptionDialog(null, "Are you shure you want to leave the game?", "Exit Confirmation",
                 JOptionPane.YES_NO_CANCEL_OPTION,
-                JOptionPane.QUESTION_MESSAGE,null,null,null);
+                JOptionPane.QUESTION_MESSAGE, null, null, null);
         if (confirm == 0)
             System.exit(0);
     }
