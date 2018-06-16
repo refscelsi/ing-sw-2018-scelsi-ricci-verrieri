@@ -1,4 +1,4 @@
-package it.polimi.ing.sw.ui.gui;
+package it.polimi.ing.sw.view;
 
 import it.polimi.ing.sw.ui.gui.App;
 import it.polimi.ing.sw.ui.gui;
