@@ -1,18 +1,17 @@
-package it.polimi.ing.sw.ui.gui;
+package it.polimi.ing.sw.view;
 
-import java.awt.Image;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
+import javax.swing.*;
+import java.awt.*;
 
 public class TestDadini extends JFrame {
-    
+
     private static final String IMAGE_PATH = "/img/dices/";
-    
+
     public TestDadini() {
         initComponents();
         setIcons();
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -71,65 +70,65 @@ public class TestDadini extends JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 584, javax.swing.GroupLayout.PREFERRED_SIZE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 584, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void setIcons(){
-        ImageIcon icon ;
-        Image scaledImage ;
+    public void setIcons() {
+        ImageIcon icon;
+        Image scaledImage;
 
-        icon = new javax.swing.ImageIcon(getClass().getResource(IMAGE_PATH+"1.png"));
-        scaledImage = icon.getImage().getScaledInstance(110,110, Image.SCALE_DEFAULT);
+        icon = new javax.swing.ImageIcon(getClass().getResource(IMAGE_PATH + "1.png"));
+        scaledImage = icon.getImage().getScaledInstance(110, 110, Image.SCALE_DEFAULT);
         icon.setImage(scaledImage);
         d1.setIcon(icon);
         d1.repaint();
 
-        icon = new javax.swing.ImageIcon(getClass().getResource(IMAGE_PATH+"2.png"));
-        scaledImage = icon.getImage().getScaledInstance(110,110, Image.SCALE_DEFAULT);
+        icon = new javax.swing.ImageIcon(getClass().getResource(IMAGE_PATH + "2.png"));
+        scaledImage = icon.getImage().getScaledInstance(110, 110, Image.SCALE_DEFAULT);
         icon.setImage(scaledImage);
         d2.setIcon(icon);
         d2.repaint();
 
-        icon = new javax.swing.ImageIcon(getClass().getResource(IMAGE_PATH+"3.png"));
-        scaledImage = icon.getImage().getScaledInstance(110,110, Image.SCALE_DEFAULT);
+        icon = new javax.swing.ImageIcon(getClass().getResource(IMAGE_PATH + "3.png"));
+        scaledImage = icon.getImage().getScaledInstance(110, 110, Image.SCALE_DEFAULT);
         icon.setImage(scaledImage);
         d3.setIcon(icon);
         d3.repaint();
 
-        icon = new javax.swing.ImageIcon(getClass().getResource(IMAGE_PATH+"4.png"));
-        scaledImage = icon.getImage().getScaledInstance(110,110, Image.SCALE_DEFAULT);
+        icon = new javax.swing.ImageIcon(getClass().getResource(IMAGE_PATH + "4.png"));
+        scaledImage = icon.getImage().getScaledInstance(110, 110, Image.SCALE_DEFAULT);
         icon.setImage(scaledImage);
         d4.setIcon(icon);
         d4.repaint();
-        
-        icon = new javax.swing.ImageIcon(getClass().getResource(IMAGE_PATH+"5.png"));
-        scaledImage = icon.getImage().getScaledInstance(110,110, Image.SCALE_DEFAULT);
+
+        icon = new javax.swing.ImageIcon(getClass().getResource(IMAGE_PATH + "5.png"));
+        scaledImage = icon.getImage().getScaledInstance(110, 110, Image.SCALE_DEFAULT);
         icon.setImage(scaledImage);
         d5.setIcon(icon);
         d5.repaint();
-        
-        icon = new javax.swing.ImageIcon(getClass().getResource(IMAGE_PATH+"6.png"));
-        scaledImage = icon.getImage().getScaledInstance(110,110, Image.SCALE_DEFAULT);
+
+        icon = new javax.swing.ImageIcon(getClass().getResource(IMAGE_PATH + "6.png"));
+        scaledImage = icon.getImage().getScaledInstance(110, 110, Image.SCALE_DEFAULT);
         icon.setImage(scaledImage);
         d6.setIcon(icon);
         d6.repaint();
 
         this.setTitle("Sagrada Boardgame");
     }
-    
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -156,7 +155,7 @@ public class TestDadini extends JFrame {
             }
         });
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel d1;
     private javax.swing.JLabel d2;

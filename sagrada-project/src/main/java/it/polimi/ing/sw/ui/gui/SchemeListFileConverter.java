@@ -1,9 +1,9 @@
-package it.polimi.ing.sw.ui.gui;
+package it.polimi.ing.sw.view;
 
 import it.polimi.ing.sw.model.Box;
+import it.polimi.ing.sw.model.Color;
 import it.polimi.ing.sw.model.Dice;
 import it.polimi.ing.sw.model.Scheme;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -14,148 +14,161 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static it.polimi.ing.sw.model.Color.*;
+import static java.lang.System.out;
+
 public class SchemeListFileConverter {
 
     private static final String FILE_PATH_LOCATION = "SchemeList.json";
 
-    public ArrayList<Scheme> readFromFile (){
-
-        JSONParser parser = new JSONParser();
-
-        ArrayList<Scheme> schemeArrayList = new ArrayList<>();
+    public ArrayList<Scheme> readFromFile() {
+        ArrayList<Scheme> schemeArrayList = new ArrayList<>( );
 
         Scheme schema;
-        Box boxes[][]=new Box[4][5];
-        Box box= new Box();
-        Dice dice = new Dice();
+        Box boxes[][];
+        Box box = new Box( );
+        Dice dice = new Dice( );
+
+        JSONObject jScheme;
+        JSONObject jBox;
+        JSONObject jBoxes;
+        JSONObject jSchemeList;
+
+        JSONParser parser;
 
         try {
+            parser = new JSONParser( );
 
             Object obj = parser.parse(new FileReader(FILE_PATH_LOCATION));
 
-            JSONObject jsonObject = (JSONObject) obj;
+            JSONObject jFile = (JSONObject) obj;
 
-            String counter = (String) jsonObject.get("counter");
+            int counter = Integer.valueOf((String) jFile.get("counter"));
 
-            for (int k = 0; k <= Integer.valueOf(counter);k++){
-                for (int i = 0; i<4;i++){
-                    for (int j =0; j<5;j++){
+            for (int k = 0; k < counter; k++) {
+
+                jScheme = (JSONObject) jFile.get(String.valueOf(k));
+
+                jBoxes = (JSONObject) jScheme.get("Boxes");
+
+                boxes = new Box[4][5];
+
+                for (int i = 0; i < 4; i++) {
+                    for (int j = 0; j < 5; j++) {
+                        box = new Box( );
                         //create name
-                        String name= String.valueOf(i).concat(String.valueOf(j));
-                        //JSONArray msg = (JSONArray) jsonObject.get(name);
+                        String name = String.valueOf(i).concat(String.valueOf(j));
 
+                        jBox = (JSONObject) jBoxes.get(name);
 
-                        /*
-                        Iterator<String> iterator = msg.iterator();
-                        while (iterator.hasNext()) {
-                        //System.out.println(iterator.next());
+                        box.setX(Integer.valueOf((String) jBox.get("X")));
 
-                        //box=boxes[i][j];
-                        //list.add(box.getX());
-                        box.setY();
-                        list.add(box.getY());
-                        list.add(box.getColor());
-                        list.add(box.getShade());
+                        box.setY(Integer.valueOf((String) jBox.get("Y")));
 
-                        //not required
-                        dice=box.getDice();
-                        list.add(dice.getNumFacciaUp());
-                        list.add(dice.getDiceColor());
+                        Color color = setColor((String) jBox.get("Color"));
+                        box.setColor(color);
 
-                        //create name
-                        String name= String.valueOf(i).concat(String.valueOf(j));
-                        obj.put(name, list);*/
+                        box.setShade(Integer.valueOf((String) jBox.get("Shade")));
+
+                        boxes[i][j] = box;
                     }
                 }
+
+                int id = Integer.valueOf((String) (jScheme.get("ID")));
+                int diff = Integer.valueOf((String) (jScheme.get("Difficulty")));
+                schema = new Scheme(id, diff, boxes);
+
+                schemeArrayList.add(schema);
             }
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            e.printStackTrace( );
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace( );
         } catch (ParseException e) {
-            e.printStackTrace();
+            e.printStackTrace( );
         }
 
         return schemeArrayList;
     }
 
-    public void writeToFile (ArrayList<Scheme> schemeArrayList){
+    private Color setColor(String color) {
+        if (color.equals("WHITE"))
+            return WHITE;
+        if (color.equals("RED"))
+            return RED;
+        if (color.equals("BLUE"))
+            return BLUE;
+        if (color.equals("YELLOW"))
+            return YELLOW;
+        if (color.equals("PURPLE"))
+            return PURPLE;
+        if (color.equals("GREEN"))
+            return GREEN;
+        return WHITE;
 
-        JSONObject obj = new JSONObject();
-        JSONObject jScheme = new JSONObject();
-        JSONObject jDice = new JSONObject();
-        JSONObject jBox = new JSONObject();
-        JSONObject jBoxes = new JSONObject();
-        JSONObject jSchemeList = new JSONObject();
+    }
 
-        JSONArray boxesJList = new JSONArray();
-        JSONArray schemeJList = new JSONArray();
+    public void writeToFile(ArrayList<Scheme> schemeArrayList) {
 
-        Box boxes[][]=new Box[4][5];
-        Box box= new Box();
-        Dice dice = new Dice();
+        JSONObject jScheme;
+        JSONObject jBox;
+        JSONObject jBoxes = new JSONObject( );
+        JSONObject jSchemeList = new JSONObject( );
 
-        int counter=0;
 
-        int lenght= schemeArrayList.size();
-        for (int k=0; k<lenght;k++) {
-            boxes=schemeArrayList.get(k).getBoxes();
-            for (int i = 0; i<4;i++){
-                for (int j =0; j<5;j++){
+        Box boxes[][];
+        Box box;
 
-                    jBox = new JSONObject();
-                    box=boxes[i][j];
+        int counter = 0;
 
-                    //innerList.add(box.getX());
-                    jBox.put("X",box.getX());
+        for (Scheme schemeObject : schemeArrayList) {
 
-                    //innerList.add(box.getY());
-                    jBox.put("Y",box.getY());
 
-                    //innerList.add(box.getColor());
-                    jBox.put("Color",box.getColor());
+            boxes = schemeObject.getBoxes( );
+            for (int i = 0; i < 4; i++) {
+                for (int j = 0; j < 5; j++) {
 
-                    //innerList.add(box.getShade());
-                    jBox.put("Shade",box.getShade());
+                    jBox = new JSONObject( );
+                    box = boxes[i][j];
 
-                    //not required
-                    dice=box.getDice();
-                    jDice = new JSONObject();
+                    jBox.put("X", String.valueOf(box.getX( )));
 
-                    //innerList.add(dice.getNumFacciaUp());
-                    jDice.put("NumFacciaUp",dice.getNumFacciaUp());
+                    jBox.put("Y", String.valueOf(box.getY( )));
 
-                    //innerList.add(dice.getDiceColor());
-                    jDice.put("DiceColor",dice.getDiceColor());
+                    jBox.put("Color", box.getColor( ).toString( ));
 
-                    jBox.put("Dice",jDice);
+                    jBox.put("Shade", String.valueOf(box.getShade( )));
 
                     //create name
-                    String name= String.valueOf(i).concat(String.valueOf(j));
+                    String name = String.valueOf(i).concat(String.valueOf(j));
 
-                    jBoxes.put(name,jBox);
+                    jBoxes.put(name, jBox);
                 }
             }
-            jScheme = new JSONObject();
+            jScheme = new JSONObject( );
 
-            jScheme.put("ID", schemeArrayList.get(k).getId());
-            jScheme.put("Difficulty", schemeArrayList.get(k).getDifficulty());
-            jScheme.put("Boxes",jBoxes);
+            jScheme.put("ID", String.valueOf(schemeObject.getId( )));
+            jScheme.put("Difficulty", String.valueOf(schemeObject.getDifficulty( )));
+            jScheme.put("Boxes", jBoxes);
 
-            jSchemeList.put(counter,jScheme);
+            //jScheme.put( "scheme", jScheme );
+
+            jSchemeList.put(counter, jScheme);
 
             counter++;
         }
+
+        jSchemeList.put("counter", java.lang.String.valueOf(counter));
+
         try (FileWriter file = new FileWriter(FILE_PATH_LOCATION)) {
-
-            file.write(obj.toJSONString());
-            file.flush();
-
+            out.println("arriva qui");
+            file.write(jSchemeList.toJSONString( ));
+            file.flush( );
         } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("NOOOOON VAAA nel file");
+            e.printStackTrace( );
+            out.println("NOOOOON VAAA nel file");
         }
 
-        System.out.print(obj);
+        out.print(jSchemeList);
     }
 }
