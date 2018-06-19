@@ -1,22 +1,24 @@
 
 package it.polimi.ing.sw.model;
 
+import it.polimi.ing.sw.client.ClientController;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.model.exceptions.ToolCardException;
 import it.polimi.ing.sw.model.objectiveCard.ObjectiveCard;
 import it.polimi.ing.sw.model.objectiveCard.PrivateObjectiveCard;
-import it.polimi.ing.sw.model.toolCard.ToolCard;
-
-import java.util.ArrayList;
-import java.util.Random;
-
+import it.polimi.ing.sw.model.toolCard.*;
+import it.polimi.ing.sw.client.ClientUpdate;
+import it.polimi.ing.sw.util.Constants;
 //import it.polimi.ing.sw.server.Observable;
+
+import java.util.Random;
+import java.util.*;
+import java.util.Collections;
+
 
 public class Match {
 
-    private static int last_id = 0; // a cosa serve?
-    private int id;
-    private int numPlayers = 0, numRound = 0;
+    private int numPlayers=0, numRound=0;
     private int[] playersRound;
     private int firstPlayer;   // primo giocatore del round. Se sono 4 giocatori può essere 0, 1, 2 o 3
     private int playerPlaying; // indice dell'array playersRound -> giocatore che sta giocando il turno
@@ -29,17 +31,16 @@ public class Match {
     private ArrayList<Player> players;
     private ArrayList<Player> ranking;
 
-
     //array di clientObserver che mi serve per notificare la ui dei cambiamenti avvenuti
     private ArrayList<ClientObserver> clientUpdates;
 
+
     public Match() {
-        id = last_id;
-        last_id++;
     }
 
-    public Match(String text1, int i, String text2) {
-    }
+
+
+    // metodi GETTERS
 
     public Player getPlayer(int index) {
         return players.get(index);
@@ -61,21 +62,7 @@ public class Match {
         return ranking;
     }
 
-    public void setColorOfPawns() {
-        Color[] colorOfPawns = new Color[4];
-        colorOfPawns[0] = Color.PURPLE;
-        colorOfPawns[1] = Color.RED;
-        colorOfPawns[2] = Color.GREEN;
-        colorOfPawns[3] = Color.BLUE;
-        for (int i = 0; i < numPlayers; i++)
-            players.get(i).setColor(colorOfPawns[i]);
-    }
-
-    public void addClientUpdate(ClientObserver client) {
-        clientUpdates.add(client);
-    }
-
-    public Player getPlayerPlaying() {
+    public Player getPlayerPlaying(){
         return players.get(playerPlaying);
     }
 
@@ -87,194 +74,133 @@ public class Match {
         return toolCards;
     }
 
-    public void startMatch() throws ToolCardException, NotValidException {
-        inizializePlayer();
-        setColorOfPawns();
-        initializeTable();
+
+
+    // metodi SETTERS
+
+
+    public void setColorOfPawns() {
+        Color[] colorOfPawns = new Color[4];
+        colorOfPawns[0] = Color.PURPLE;
+        colorOfPawns[1] = Color.RED;
+        colorOfPawns[2] = Color.GREEN;
+        colorOfPawns[3] = Color.BLUE;
+        for (int i=0; i<numPlayers; i++)
+            players.get(i).setColor(colorOfPawns[i]);
     }
 
-    public void startRound() {
-        draftPool = bag.draw(numPlayers);
-        firstPlayer++;
-        numRound++;
-        if (firstPlayer >= numPlayers)
-            firstPlayer = 0;
-        playerPlaying = firstPlayer;
-        //changeRound(firstPlayer);
-        //notifyNewRound(players.get(firstPlayer), draftPool);
+
+    public void addClientUpdate(ClientObserver client){
+        clientUpdates.add(client);
     }
 
-    public void endRound() {
-        roundTrack.addDicesRound(draftPool);
-        /*for(Dice dice : draftPool.getDraftPool()){
-            roundTrack.addDice(numRound,dice);
-        }*/
-        changeRound(firstPlayer);
-    }
 
-    public void createNewPlayer(String nickname) {
+    public void createNewPlayer (String nickname) {
         numPlayers++;
         players.add(new Player(nickname));
     }
 
-    public void inizializePlayer() {
-        //Bisogna distinguere se si tratta di una partita locale o su un server
 
-        //##iniz var
-        SchemeCardDeck schemeCardDeck = new SchemeCardDeck();
-        ArrayList<SchemeCard> schemes = new ArrayList<SchemeCard>();
-        players = new ArrayList<Player>();
-        playersRound = new int[numPlayers * 2];
-        int possibleNumbers[] = {1, 2, 3, 4};
-        int i = 0;
-        int order, oldOrder;
-        String nickname;
-        String splayer = "Player";
-        int k = 0;
-        PrivateObjectiveCardDeck privateObjectiveCardDeck = new PrivateObjectiveCardDeck();
-        ArrayList<PrivateObjectiveCard> privateObjectives = new ArrayList<PrivateObjectiveCard>();
-        privateObjectives = privateObjectiveCardDeck.drawObjectiveCard(numPlayers);
-        firstPlayer = -1;
-        playerPlaying = -1;
 
-        //#### Locale
+    // metodi VARI per gestire la PARTITA (non il singolo turno)
 
-        while (i < numPlayers) {
 
-            players.get(i).setPrivateObjective(privateObjectives.get(i));
-            schemes = schemeCardDeck.drawSchemeCard();
-
-            do {
-                Random random = new Random();
-                order = random.nextInt(numPlayers); // order sarà uguale a 0, 1, 2 o 3 (se ho 4 giocatori)
-                if (possibleNumbers[order] <= numPlayers && possibleNumbers[order] != 0) {
-
-                    // Ricky questa cosa dei 4 nomi non l'ho capita perché l'hai fatta così
-
-                    if (k == 0) {
-                        nickname = np1;
-                    } else
-                        nickname = splayer.concat(String.valueOf(k));
-                    k++;
-                    players.get(i).setOrderInRound(possibleNumbers[order]);
-                    i++;
-                }
-                oldOrder = possibleNumbers[order];
-                possibleNumbers[order] = 0;
-            } while (oldOrder > numPlayers || oldOrder == 0);
-
-            //notifyChoiseScheme(schemes,players.get(i));
-
-        }
-
-        //# svuoto la ram
-        splayer = null;
-        nickname = null;
-        possibleNumbers = null;
-
-        //#### fine locale
-
-        //#### server
-
-        //da implementare
-
-        //#### fine server
-
-        //############################################################################### cose che boh
-
+    public void startMatch() throws ToolCardException, NotValidException {
+        initializeTable();
+        inizializePlayers();
+        setColorOfPawns();
     }
 
+
+    // inizializzo tutte le cose che riguardano il tavolo di gioco
 
     public void initializeTable() throws ToolCardException, NotValidException {
-        //ripescare dal db le carte
-        //caricarle in adeguate strutture dati
-        //costruire le coppie di schemi e le carte scheme --> chiamo metodo createSchemeCard()
-
-        // creo il sacchetto dei dadi ed estraggo le 3 carte obiettivo pubblico
-
         bag = new Bag();
         ObjectiveCardDeck objectiveCardDeck = new ObjectiveCardDeck();
-        publicObjectives = new ArrayList<ObjectiveCard>();
         publicObjectives = objectiveCardDeck.drawObjectiveCard();
-        System.out.println(publicObjectives.size());
         ToolCards tool = new ToolCards();
         toolCards = tool.getToolCards();
-        int i = bag.getSize();
-        System.out.println(i);
-
-        System.out.println("Colore" + bag.draw(4));
-        System.out.println(bag.getSize());
-
-        Dice dice = new Dice();
-        System.out.println(dice.throwDice());
+        roundTrack = new RoundTrack();
         //notifyPublicObjectivesChoosen(publicObjectives);
+    }
+
+
+    // all'inizio della partita, inizializzo tutto ciò che riguarda i giocatori
+
+    public void inizializePlayers(){
+
+        Collections.shuffle(players);
+        playersRound = new int[numPlayers*2];
+        SchemeCardDeck schemeCardDeck = new SchemeCardDeck();
+        PrivateObjectiveCardDeck privateObjectiveCardDeck = new PrivateObjectiveCardDeck();
+        ArrayList<PrivateObjectiveCard> privateObjectives = privateObjectiveCardDeck.drawObjectiveCard(numPlayers);
+        firstPlayer=-1;
+        playerPlaying=-1;
+
+        for (int i=0; i<numPlayers; i++) {
+            players.get(i).setPrivateObjective(privateObjectives.get(i));
+            players.get(i).setSchemesToChoose(schemeCardDeck.drawSchemeCard());
+            //notifyChoiseScheme(schemes,players.get(i));
+        }
 
     }
 
 
-    public void changePlayer() {
+    // inizia un nuovo round: si estraggono i dadi, si stabilisce il primo giocatore e si
+    // chiama il metodo che costruisce l'array playersRound. Se si sono già giocati 10 round, calcola il punteggio.
+
+    public void startRound() {
+        if (numRound>=Constants.NUM_ROUNDS)
+            calculateRanking();
+        else {
+            draftPool = bag.draw(numPlayers);
+            firstPlayer++;
+            numRound++;
+            if (firstPlayer >= numPlayers)
+                firstPlayer = 0;
+            playerPlaying = firstPlayer;
+            changePlayersRound(firstPlayer);
+            //notifyNewRound(players.get(firstPlayer), draftPool);
+        }
+    }
+
+
+    // all'inizio di ogni round, si costruisce l'array con l'ordine in cui giocheranno i giocatori nel round,
+    // cioè playersRound
+
+    public void changePlayersRound (int firstPlayer) {
+        int i=0, j;
+        while (i<numPlayers) {
+            playersRound[i] = i + firstPlayer;
+            if (playersRound[i] >= numPlayers)
+                for (j = 0; i < numPlayers; i++)
+                    playersRound[i]=j;
+            i++;
+        }
+        for (i=0; i<numPlayers; i++)
+            playersRound[i+numPlayers] = playersRound[numPlayers-i];
+    }
+
+
+    public void changePlayer () {
         playerPlaying++;
         //notifyNextPlayer(players.get(playersRound[playerPlaying]));
     }
 
-    public void changeRound(int firstPlayer) {
-        int i = 0, j;
-        while (i < numPlayers) {
-            playersRound[i] = i + firstPlayer;
-            if (playersRound[i] >= numPlayers)
-                for (j = 0; i < numPlayers; i++)
-                    playersRound[i] = j;
-            i++;
-        }
-        for (i = 0; i < numPlayers; i++)
-            playersRound[i + numPlayers] = playersRound[numPlayers - i];
+
+    // termina il turno e si chiama il metodo che inizia un nuovo turno
+
+    public void endRound(){
+        roundTrack.addDicesRound(draftPool);
+        startRound();
     }
 
-    public void useDice(Box box, Dice dice, Player player) throws NotValidException {
-        boolean ok = player.useDice(box, dice);
-        draftPool.removeDice(dice);
-        //ho capito bene??
-        for (ClientObserver client : clientUpdates) {
-            client.onGameUpdate();
-        }
-    }
 
-    public void calculateRanking() {   // ritorna un array di giocatori ordinato dal punteggio massimo al minimo
-        int scores[] = new int[numPlayers];
-        ranking = new ArrayList<Player>();
-        int i, j, max, k = 1;
-        boolean found = false;
-        for (i = 0; i < numPlayers; i++) {
-            scores[i] = calculateScore(players.get(i));
-        }
-        for (i = 0; i < numPlayers; i++) {
-            max = 0;
-            for (j = 1; j < numPlayers; j++) {
-                if (scores[j] > scores[max])
-                    max = j;
-                else if (scores[j] == scores[max])
-                    if (players.get(j).getPrivateObjective().calculateScore(players.get(j).getScheme()) > players.get(max).getPrivateObjective().calculateScore(players.get(max).getScheme()))
-                        max = j;
-                    else if (players.get(j).getPrivateObjective().calculateScore(players.get(j).getScheme()) == players.get(max).getPrivateObjective().calculateScore(players.get(max).getScheme()))
-                        if (players.get(j).getNumOfToken() > players.get(max).getNumOfToken())
-                            max = j;
-                        else if (players.get(j).getNumOfToken() == players.get(max).getNumOfToken())
-                            while (k <= numPlayers && !found)
-                                if (players.get(firstPlayer - k) == players.get(j)) {
-                                    max = j;
-                                    found = true;
-                                } else if (players.get(firstPlayer - k) == players.get(max))
-                                    found = true;
-                k++;
-            }
-
-            ranking.add(players.get(max));
-        }
-    }
+    // calcola il punteggio di un giocatore
 
     public int calculateScore(Player player) {
         int score = 0;
-        for (int i = 0; i < 3; i++)
+        for (int i=0; i<3; i++)
             score = score + publicObjectives.get(i).calculateScore();
         score = score + player.getPrivateObjective().calculateScore(player.getScheme());
         score = score + player.getNumOfToken();
@@ -284,9 +210,57 @@ public class Match {
     }
 
 
-    public void endMatch() {
-        calculateRanking();
+    // calcola la classifica finale
+
+    public void calculateRanking() {   // ritorna un array di giocatori ordinato dal punteggio massimo al minimo
+        int scores[] = new int[numPlayers];
+        ranking = new ArrayList<Player>();
+        int i, j, max, k=1;
+        boolean found = false;
+        for (i=0; i<numPlayers; i++) {
+            scores[i] = calculateScore(players.get(i));
+        }
+        for(i=0; i<numPlayers; i++) {
+            max = 0;
+            for(j=1; j<numPlayers; j++) {
+                if (scores[j] > scores[max])
+                    max = j;
+                else if (scores[j]==scores[max])
+                    if (players.get(j).getPrivateObjective().calculateScore(players.get(j).getScheme())>players.get(max).getPrivateObjective().calculateScore(players.get(max).getScheme()))
+                        max = j;
+                    else if (players.get(j).getPrivateObjective().calculateScore(players.get(j).getScheme())==players.get(max).getPrivateObjective().calculateScore(players.get(max).getScheme()))
+                        if (players.get(j).getNumOfToken()>players.get(max).getNumOfToken())
+                            max = j;
+                        else if (players.get(j).getNumOfToken()==players.get(max).getNumOfToken())
+                            while (k<=numPlayers&&!found)
+                                if (players.get(firstPlayer-k)==players.get(j)) {
+                                    max = j;
+                                    found = true;
+                                }
+                                else if (players.get(firstPlayer-k)==players.get(max))
+                                    found = true;
+                k++;
+            }
+
+            ranking.add(players.get(max));
+        }
     }
+
+
+
+    // metodi VARI per gestire il TURNO di un giocatore
+
+
+    public void useDice (Box box, Dice dice, Scheme scheme) throws NotValidException {
+        scheme.placeDice(box, dice);
+        draftPool.removeDice(dice);
+        //ho capito bene??
+        for(ClientObserver client:clientUpdates){
+            client.onGameUpdate();
+        }
+    }
+
+
 
 }
 
