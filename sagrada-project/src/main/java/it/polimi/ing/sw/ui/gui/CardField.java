@@ -10,15 +10,16 @@ public class CardField extends javax.swing.JPanel {
 
     public CardField() {
         initComponents();
-        FINAL_IMAGE_PATH = IMAGE_PATH.concat("po/");
-        setIcons("po01.png");//default icon
+        FINAL_IMAGE_PATH = IMAGE_PATH.concat("po/").concat("po01.png");
+        setIcons(FINAL_IMAGE_PATH);//default icon
     }
 
     //cardType should be defined as "po/" or "tc/"
     public CardField(String cardName, String cardType) {
         initComponents();
-        FINAL_IMAGE_PATH = IMAGE_PATH.concat(cardType);
-        setIcons(cardName);
+        FINAL_IMAGE_PATH = IMAGE_PATH.concat(cardType).concat(cardName);
+        setIcons(FINAL_IMAGE_PATH);
+
     }
 
     @SuppressWarnings("unchecked")
@@ -29,7 +30,7 @@ public class CardField extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(51, 75, 63));
 
-        cardFieldLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/po/po01.png"))); // NOI18N
+        cardFieldLabel.setIcon(new javax.swing.ImageIcon("img/po/po01.png")); // NOI18N
         cardFieldLabel.setMinimumSize(new java.awt.Dimension(173, 245));
         cardFieldLabel.setPreferredSize(new java.awt.Dimension(173, 245));
 
@@ -45,8 +46,10 @@ public class CardField extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    public void setIcons(String nameIcon) {
-        ImageIcon icon = new javax.swing.ImageIcon(getClass().getResource(FINAL_IMAGE_PATH + nameIcon));
+    public void setIcons(String name) {
+        System.out.println(FINAL_IMAGE_PATH);
+
+        ImageIcon icon = new ImageIcon(getClass().getResource(name));
         Image scaledImage = icon.getImage().getScaledInstance(173, 242, Image.SCALE_DEFAULT);
         icon.setImage(scaledImage);
         cardFieldLabel.setIcon(icon);
