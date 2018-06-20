@@ -30,7 +30,7 @@ public class CardField extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(51, 75, 63));
 
-        cardFieldLabel.setIcon(new javax.swing.ImageIcon("img/po/po01.png")); // NOI18N
+        cardFieldLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/po/po01.png"))); // NOI18N
         cardFieldLabel.setMinimumSize(new java.awt.Dimension(173, 245));
         cardFieldLabel.setPreferredSize(new java.awt.Dimension(173, 245));
 

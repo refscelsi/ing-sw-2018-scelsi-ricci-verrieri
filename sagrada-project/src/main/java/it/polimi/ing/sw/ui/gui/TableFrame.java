@@ -4,12 +4,11 @@ import it.polimi.ing.sw.App;
 import it.polimi.ing.sw.model.Match;
 
 import javax.swing.border.LineBorder;
-import javax.swing.text.html.ImageView;
 import java.awt.*;
 
 public class TableFrame extends javax.swing.JFrame {
 
-    private Match match;
+    private static Match match;
 
     public TableFrame(Match match) {
         this.match = match;
@@ -17,10 +16,12 @@ public class TableFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setIcons();
 
+/*
         //TEST carta singola
         CardField cf = new CardField();
         tableFramePanel.add(cf);
         cf.setBounds(0, 0, 173, 245);
+*/
 
         //TEST campi carte
         String ids1[] = {"tc01.png", "tc02.png", "tc03.png"};
@@ -53,12 +54,12 @@ public class TableFrame extends javax.swing.JFrame {
         javax.swing.GroupLayout objCardPanelLayout = new javax.swing.GroupLayout(objCardPanel);
         objCardPanel.setLayout(objCardPanelLayout);
         objCardPanelLayout.setHorizontalGroup(
-            objCardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 519, Short.MAX_VALUE)
+                objCardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 519, Short.MAX_VALUE)
         );
         objCardPanelLayout.setVerticalGroup(
-            objCardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 245, Short.MAX_VALUE)
+                objCardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 245, Short.MAX_VALUE)
         );
 
         tableFramePanel.add(objCardPanel);
@@ -67,12 +68,12 @@ public class TableFrame extends javax.swing.JFrame {
         javax.swing.GroupLayout toolCardPanelLayout = new javax.swing.GroupLayout(toolCardPanel);
         toolCardPanel.setLayout(toolCardPanelLayout);
         toolCardPanelLayout.setHorizontalGroup(
-            toolCardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 519, Short.MAX_VALUE)
+                toolCardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 519, Short.MAX_VALUE)
         );
         toolCardPanelLayout.setVerticalGroup(
-            toolCardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 245, Short.MAX_VALUE)
+                toolCardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 245, Short.MAX_VALUE)
         );
 
         tableFramePanel.add(toolCardPanel);
@@ -87,12 +88,12 @@ public class TableFrame extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tableFramePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1024, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(tableFramePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1024, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tableFramePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(tableFramePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
         );
 
         pack();
@@ -109,7 +110,7 @@ public class TableFrame extends javax.swing.JFrame {
         for (int i = 0; i < 3; i++) {
             CardField schemeCard = new CardField(id[i], "tc/");
             toolCardPanel.add(schemeCard);
-            schemeCard.setBounds(i*173,0,173,245);
+            schemeCard.setBounds(i * 173, 0, 173, 245);
             schemeCard.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         }
     }
@@ -120,7 +121,7 @@ public class TableFrame extends javax.swing.JFrame {
         for (int i = 0; i < 3; i++) {
             CardField schemeCard = new CardField(id[i], "po/");
             objCardPanel.add(schemeCard);
-            schemeCard.setBounds(i*173,0,173,245);
+            schemeCard.setBounds(i * 173, 0, 173, 245);
             schemeCard.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         }
     }
