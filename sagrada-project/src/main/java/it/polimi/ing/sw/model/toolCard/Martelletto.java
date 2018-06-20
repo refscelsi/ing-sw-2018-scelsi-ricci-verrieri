@@ -22,7 +22,7 @@ public class Martelletto extends ToolCard {
     /* ancora meglio se lo faccio nel controller direttamente
 
     public void execute(DraftPool draftPool, Player player) throws NotValidException {
-        for(Dice dice: draftPool.getDraftPool()){
+        for(DiceGUI dice: draftPool.getDraftPool()){
             dice.throwDice();
         }
     }*/

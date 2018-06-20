@@ -106,7 +106,7 @@ public class Match {
 
     public void endRound() {
         roundTrack.addDicesRound(draftPool);
-        /*for(Dice dice : draftPool.getDraftPool()){
+        /*for(DiceGUI dice : draftPool.getDraftPool()){
             roundTrack.addDice(numRound,dice);
         }*/
         changeRound(firstPlayer);

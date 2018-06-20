@@ -32,7 +32,7 @@ public class App {
         System.out.println("Colore"+bag.draw(4));
         System.out.println(bag.getSize());
 
-        Dice dice= new Dice();
+        DiceGUI dice= new DiceGUI();
         System.out.println(dice.throwDice());
 
         ObjectiveCardDeck deck = new ObjectiveCardDeck();

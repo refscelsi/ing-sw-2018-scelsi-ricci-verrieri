@@ -3,6 +3,7 @@ package it.polimi.ing.sw.ui.gui;
 import it.polimi.ing.sw.App;
 import it.polimi.ing.sw.model.Match;
 
+import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 
@@ -16,6 +17,8 @@ public class TableFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setIcons();
 
+        addRoundTrack();
+
 /*
         //TEST carta singola
         CardField cf = new CardField();
@@ -28,6 +31,12 @@ public class TableFrame extends javax.swing.JFrame {
         setToolCards(ids1);
         String ids2[] = {"po01.png", "po02.png", "po03.png"};
         setOBJCards(ids2);
+    }
+
+    private void addRoundTrack() {
+        roundTrack = new RoundTrack();
+        tableFramePanel.add(roundTrack);
+        roundTrack.setBounds(182, 20, 660, 70);
     }
 
     public void setIcons() {
@@ -156,9 +165,10 @@ public class TableFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel backgroundTableFRameLabel;
-    private javax.swing.JPanel objCardPanel;
-    private javax.swing.JPanel tableFramePanel;
-    private javax.swing.JPanel toolCardPanel;
+    private JLabel backgroundTableFRameLabel;
+    private JPanel objCardPanel;
+    private JPanel tableFramePanel;
+    private JPanel toolCardPanel;
+    private RoundTrack roundTrack;
     // End of variables declaration//GEN-END:variables
 }

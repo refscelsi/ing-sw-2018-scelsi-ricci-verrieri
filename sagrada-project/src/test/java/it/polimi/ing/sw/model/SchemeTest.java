@@ -55,13 +55,13 @@ public class SchemeTest {
 /*
     @Test
     public void checkDiceAdjacent() {
-        dice1=new Dice();
+        dice1=new DiceGUI();
         dice1.setDiceColor(Color.RED);
         dice1.setNumFacciaUp(3);
-        dice2=new Dice();
+        dice2=new DiceGUI();
         dice2.setDiceColor(Color.GREEN);
         dice2.setNumFacciaUp(4);
-        dice3=new Dice();
+        dice3=new DiceGUI();
         dice3.setNumFacciaUp(4);
         dice3.setDiceColor(Color.BLUE);
         boxes[0][3].placeDice(dice2);

@@ -20,7 +20,7 @@ public class PennelloPerPastaSalda extends ToolCard {
 
     /* ancora meglio se lo faccio nel controller direttamente
 
-    public void execute(Dice dice) throws ToolCardException, NotValidException {
+    public void execute(DiceGUI dice) throws ToolCardException, NotValidException {
         dice.throwDice();
     }*/
 
