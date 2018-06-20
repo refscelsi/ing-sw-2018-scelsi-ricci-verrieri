@@ -1,6 +1,7 @@
 package it.polimi.ing.sw.ui.gui;
 
 import it.polimi.ing.sw.App;
+import it.polimi.ing.sw.model.Dice;
 import it.polimi.ing.sw.model.Match;
 
 import javax.swing.*;
@@ -31,6 +32,12 @@ public class TableFrame extends javax.swing.JFrame {
         setToolCards(ids1);
         String ids2[] = {"po01.png", "po02.png", "po03.png"};
         setOBJCards(ids2);
+
+        //TEST set dice
+        Dice testDice = new Dice();
+        testDice.setNumFacciaUp(5);
+        testDice.setDiceColor(it.polimi.ing.sw.model.Color.RED);
+        roundTrack.getDiceGUIList().get(4).setDice(testDice);
     }
 
     private void addRoundTrack() {

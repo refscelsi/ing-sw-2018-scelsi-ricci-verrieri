@@ -1,5 +1,7 @@
 package it.polimi.ing.sw.ui.gui;
 
+import it.polimi.ing.sw.model.Dice;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +44,10 @@ public class RoundTrack extends javax.swing.JPanel {
 
     public void setDiceGUIList(List<DiceGUI> diceGUIList) {
         this.diceGUIList = diceGUIList;
+    }
+
+    public void setDiceGUI(int selected,Dice dice) {
+        diceGUIList.get(selected);
     }
 
     public List<DiceGUI> getDiceGUIList() {
