@@ -1,6 +1,8 @@
 package it.polimi.ing.sw.model;
 
 
+import it.polimi.ing.sw.util.Constants;
+
 public class RoundTrack {
 
     private DraftPool[] roundTrack;
@@ -8,7 +10,7 @@ public class RoundTrack {
 
 
     public RoundTrack(){
-        roundTrack = new DraftPool[10];
+        roundTrack = new DraftPool[Constants.NUM_ROUNDS];
     }
 
 

@@ -28,7 +28,7 @@ public class Scheme {
         int row=box.getX();
         int column=box.getY();
 
-        if(row==0 || row==3 || column==0 || column==4){
+        if(row==0 || row==Constants.NUM_ROWS || column==0 || column==Constants.NUM_COLS){
             return (checkBox(box,dice));
         }
         else
@@ -67,16 +67,17 @@ public class Scheme {
     }
 
 
-    // controlla che il dado venga piazzato in una casella [adiacente a una casella piena -> solo se adj=false
-    // (adj=false serve per controlli di piazzamento, mentre adj=true serve per controlli di movimento)]
-    // e senza toccare ortogonalmente un dado con colore o sfumatura uguali
+    // fa i controlli sulle caselle adiacenti alla casella dove si vuole piazzare il dado
+    // op = 0: controllo di piazzamento di un dado
+    // op = 1: controllo di movimento di un dado
+    // op = 2: controllo per la toolcard 9
 
-    public boolean checkDiceAdjacent(Box box, Dice dice, boolean adj) {
+    public boolean checkIfHasDiceAdjacent(Box box, Dice dice, int op) {
         int row=box.getX();
         int column=box.getY();
         Boolean right, left, up, down, upRight, upLeft, downRight, downLeft;
 
-        if (row==3)
+        if (row==Constants.NUM_ROWS)
             down=false;
         else
             down=boxes[row+1][column].isFull();
@@ -91,17 +92,17 @@ public class Scheme {
         else
             left=boxes[row][column-1].isFull();
 
-        if (column==4)
+        if (column==Constants.NUM_COLS)
             right=false;
         else
             right=boxes[row][column+1].isFull();
 
-        if (column==4 || row==0)
+        if (column==Constants.NUM_COLS || row==0)
             upRight=false;
         else
             upRight=boxes[row-1][column+1].isFull();
 
-        if (column==4 || row==3)
+        if (column==Constants.NUM_COLS || row==Constants.NUM_ROWS)
             downRight=false;
         else
             downRight=boxes[row+1][column+1].isFull();
@@ -111,34 +112,72 @@ public class Scheme {
         else
             upLeft=boxes[row-1][column-1].isFull();
 
-        if (column==0 || row==3)
+        if (column==0 || row==Constants.NUM_ROWS)
             downLeft=false;
         else
             downLeft=boxes[row+1][column-1].isFull();
 
-        if (right || left || up || down || upRight || upLeft || downRight || downLeft || adj) {
+        switch (op) {
 
-            if (right) {
-                right = checkOrthogonal(row, column + 1, dice);
-                if (!right)
-                    return false;
+            case 0: {
+
+                if (right || left || up || down || upRight || upLeft || downRight || downLeft) {
+
+                    if (right) {
+                        right = checkOrthogonal(row, column + 1, dice);
+                        if (!right)
+                            return false;
+                    }
+                    if (left) {
+                        left = checkOrthogonal(row, column - 1, dice);
+                        if (!left)
+                            return false;
+                    }
+                    if (up) {
+                        up = checkOrthogonal(row - 1, column, dice);
+                        if (!up)
+                            return false;
+                    }
+                    if (down) {
+                        down = checkOrthogonal(row+1, column, dice);
+                        if (!down)
+                            return false;
+                    }
+                    return true;
+                }
             }
-            if (left) {
-                left = checkOrthogonal(row, column - 1, dice);
-                if (!left)
-                    return false;
+
+            case 1: {
+                if (right) {
+                    right = checkOrthogonal(row, column + 1, dice);
+                    if (!right)
+                        return false;
+                }
+                if (left) {
+                    left = checkOrthogonal(row, column - 1, dice);
+                    if (!left)
+                        return false;
+                }
+                if (up) {
+                    up = checkOrthogonal(row - 1, column, dice);
+                    if (!up)
+                        return false;
+                }
+                if (down) {
+                    down = checkOrthogonal(row+1, column, dice);
+                    if (!down)
+                        return false;
+                }
+                return true;
             }
-            if (up) {
-                up = checkOrthogonal(row - 1, column, dice);
-                if (!up)
+
+            case 2:
+
+                if (right || left || up || down || upRight || upLeft || downRight || downLeft)
                     return false;
-            }
-            if (down) {
-                down = checkOrthogonal(row+1, column, dice);
-                if (!down)
-                    return false;
-            }
-            return true;
+                else
+                    return true;
+
         }
 
         return false;
@@ -156,18 +195,21 @@ public class Scheme {
     }
 
 
-    // controlla tutte le restrizioni di piazzamento
+    // controlla tutte le restrizioni di piazzamento e se sono rispettate piazza il dado
 
-    public Boolean checkPlacementRestrictions(Box box, Dice dice) throws NotValidException {
+    public void placeDice(Box box, Dice dice) throws NotValidException {
         if (isEmpty()) {
             if (!checkFirst(box, dice))
                 throw new NotValidException("Devi inserire il primo dado in una casella del bordo dello schema!");
-            else {
-                if (!checkBox(box, dice)&&checkDiceAdjacent(box, dice, false))
-                    throw new NotValidException("Non stai rispettando le restrizioni di piazzamento!");
-            }
+            else
+                setNotEmpty();
         }
-        return true;
+        else {
+            if (box.isFull()||!checkBox(box, dice)&&!checkIfHasDiceAdjacent(box, dice, 0))
+                throw new NotValidException("Non stai rispettando le restrizioni di piazzamento!");
+        }
+
+        box.placeDice(dice);
     }
 
 
@@ -178,8 +220,8 @@ public class Scheme {
 
     public boolean isEmpty(){
         this.isEmpty=true;
-        for(int i=0;i<boxes.length;i++){
-            for(int j=0;j<boxes[i].length;j++){
+        for(int i=0;i<Constants.NUM_ROWS;i++){
+            for(int j=0;j<Constants.NUM_COLS;j++){
                 if(boxes[i][j].isFull()){
                     setNotEmpty();
                 }
@@ -216,8 +258,8 @@ public class Scheme {
 
     public int countFreeBoxes() {
         int free = 0;
-        for (int i=0; i<boxes.length; i++)
-            for (int j=0; j<boxes[i].length; j++)
+        for (int i=0; i<Constants.NUM_ROWS; i++)
+            for (int j=0; j<Constants.NUM_COLS; j++)
                 if (!boxes[i][j].isFull())
                     free++;
         return free;

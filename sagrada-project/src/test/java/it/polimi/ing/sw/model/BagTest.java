@@ -13,13 +13,12 @@ public class BagTest {
         bag=new Bag();
         dice=new Dice();
     }
-/*
+
     @org.junit.Test
     public void setDices() {
-        bag.setDices();
         assertTrue(90==bag.getSize());
     }
-*/
+
     @Test
     public void drawDice(){
         int green=0;
@@ -28,8 +27,6 @@ public class BagTest {
         int blu=0;
         int purple=0;
 
-
-        bag.setDices();
         for(int i=0; i<90; i++){
             dice=bag.drawDice();
             if(dice.getDiceColor().equals(Color.RED)){
@@ -56,15 +53,15 @@ public class BagTest {
         assertEquals(true, yellow==18);
 
     }
-/*
+
     @org.junit.Test
     public void draw() {
-        bag.setDices();
+        //bag.setDices();
         bag.draw(3);
         assertEquals(true,bag.getSize()==83);
-    }*/
+    }
 
-    @Test
+    @org.junit.Test
     public void getSize() {
 
     }

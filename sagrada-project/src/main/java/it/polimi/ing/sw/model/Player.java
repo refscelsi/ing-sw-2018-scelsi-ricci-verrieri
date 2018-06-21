@@ -1,7 +1,6 @@
 package it.polimi.ing.sw.model;
-
+import it.polimi.ing.sw.model.objectiveCard.*;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
-import it.polimi.ing.sw.model.objectiveCard.PrivateObjectiveCard;
 
 import java.util.ArrayList;
 
@@ -18,8 +17,8 @@ public class Player {
     private ArrayList<Scheme> schemesToChoose;
 
 
-    public Player(String nickname) {
-        this.nickname = nickname;
+    public Player (String nickname) {
+        this.nickname=nickname;
     }
 
     //public void login(){}       credo non sia necessario
@@ -52,8 +51,8 @@ public class Player {
         return schemesToChoose;
     }
 
-    public void setOrderInRound(int i) {
-        orderInRound = i;
+    public void setOrderInRound(int i){
+        orderInRound=i;
     }
 
     public PrivateObjectiveCard getPrivateObjective() {
@@ -92,27 +91,14 @@ public class Player {
         this.schemesToChoose = schemesToChoose;
     }
 
-    public boolean useDice(Box box, Dice dice) throws NotValidException {
-        if (scheme.isEmpty()) {
-            if (scheme.checkFirst(box, dice)) {
-                box.placeDice(dice);
-                scheme.setNotEmpty();
-                return true;
-            }
-        } else if (!box.isFull() && scheme.checkBox(box, dice) && scheme.checkDiceAdjacent(box, dice, true)) {
-            box.placeDice(dice);
-            return true;
-        } else throw new NotValidException("L'inserimento non è corretto");
-        return false;
-    }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setNickname(String nickname){
+        this.nickname=nickname;
     }
 
     @Override
     public String toString() {
-        return "ID:" + this.getNickname() + "\nORDINE" + this.getOrderInRound() + "\nTOKEN" + this.getNumOfToken() + "\nSCORE:" + this.getScore();
+        return "ID:"+this.getNickname()+"\nORDINE"+this.getOrderInRound()+"\nTOKEN"+this.getNumOfToken()+"\nSCORE:"+this.getScore();
     }
 
 }

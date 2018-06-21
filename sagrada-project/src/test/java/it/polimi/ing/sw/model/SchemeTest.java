@@ -52,8 +52,8 @@ public class SchemeTest {
         assertTrue(scheme.checkBox(boxes[1][3], dice1));
         assertTrue(scheme.checkBox(boxes[1][3], dice2));
     }
-/*
-    @Test
+
+    @org.junit.Test
     public void checkDiceAdjacent() {
         dice1=new DiceGUI();
         dice1.setDiceColor(Color.RED);
@@ -68,13 +68,13 @@ public class SchemeTest {
         boxes[3][2].placeDice(dice3);
         boxes[1][1].placeDice(dice1);
         assertEquals(false,scheme.isEmpty());
-        assertTrue(!scheme.checkDiceAdjacent(boxes[0][1],dice1) &&scheme.checkDiceAdjacent(boxes[0][2],dice1)&&!scheme.checkDiceAdjacent(boxes[0][2],dice2));
-        assertTrue(scheme.checkDiceAdjacent(boxes[1][2],dice2));
-        assertTrue(!scheme.checkDiceAdjacent(boxes[1][3],dice3));
-        assertTrue(!scheme.checkDiceAdjacent(boxes[0][4],dice2));
-        assertTrue(!scheme.checkDiceAdjacent(boxes[3][3],dice2) && scheme.checkDiceAdjacent(boxes[2][1],dice3));
-        assertTrue(scheme.checkDiceAdjacent(boxes[2][0],dice1) && !scheme.checkDiceAdjacent(boxes[1][0],dice1));
-    }*/
+        assertTrue(!scheme.checkDiceAdjacent(boxes[0][1],dice1, false) &&scheme.checkDiceAdjacent(boxes[0][2],dice1, false)&&!scheme.checkDiceAdjacent(boxes[0][2],dice2, false));
+        assertTrue(scheme.checkDiceAdjacent(boxes[1][2],dice2, false));
+        assertTrue(!scheme.checkDiceAdjacent(boxes[1][3],dice3, false));
+        assertTrue(!scheme.checkDiceAdjacent(boxes[0][4],dice2, false));
+        assertTrue(!scheme.checkDiceAdjacent(boxes[3][3],dice2, false) && scheme.checkDiceAdjacent(boxes[2][1],dice3, false));
+        assertTrue(scheme.checkDiceAdjacent(boxes[2][0],dice1, false) && !scheme.checkDiceAdjacent(boxes[1][0],dice1, false));
+    }
 
     @Test
     public void isEmpty(){

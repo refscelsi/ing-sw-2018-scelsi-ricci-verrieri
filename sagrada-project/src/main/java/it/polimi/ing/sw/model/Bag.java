@@ -3,11 +3,11 @@ package it.polimi.ing.sw.model;
 import java.util.*;
 import java.util.Random;
 
-// classe Sigleton: può esistere solo un sacchetto in una partita
 
 public class Bag {
 
-    private static ArrayList<Dice> dices = new ArrayList<Dice>();;
+    private ArrayList<Dice> dices = new ArrayList<Dice>();;
+
 
     public Bag() {
 
@@ -42,13 +42,6 @@ public class Bag {
     }
 
 
-    // ritorna l'unica istanza di Bag
-
-    public ArrayList<Dice> getBag() {
-        return dices;
-    }
-
-
     // estrae un dado e lo lancia -> ritorna un dado di un determinato colore e di un determinato numero
 
     public Dice drawDice(){
@@ -78,6 +71,4 @@ public class Bag {
         return dices.size();
     }
 
-    public void setDices() {
-    }
 }

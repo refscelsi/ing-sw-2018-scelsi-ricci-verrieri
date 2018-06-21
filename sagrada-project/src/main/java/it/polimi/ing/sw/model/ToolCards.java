@@ -6,13 +6,16 @@ import it.polimi.ing.sw.model.exceptions.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
+
+
 public class ToolCards {
 
     private ArrayList<ToolCard> toolCards;
 
+
     public ToolCards() throws ToolCardException, NotValidException{
         toolCards= new ArrayList<ToolCard>();
-        ArrayList<Integer> values= new ArrayList<Integer>(); //meglio usare random ma posso estrarne 3 diversi??
+        ArrayList<Integer> values= new ArrayList<Integer>();
         for(int i=1; i<13;i++){
             values.add(i);
         }
@@ -23,11 +26,21 @@ public class ToolCards {
         }
     }
 
+
     public ArrayList<ToolCard> getToolCards() {
         return toolCards;
     }
 
+
+    // metodo che serve solo per il test
+
+    public int getSize() {
+        return toolCards.size();
+    }
+
+
     public void addCard(int id) throws ToolCardException, NotValidException {
+        ToolCard toolCard;
         switch (id){
             case 1:
                 PinzaSgrossatrice pinzaSgrossatrice=new PinzaSgrossatrice();
@@ -104,5 +117,6 @@ public class ToolCards {
         }
 
     }
+
 
 }
