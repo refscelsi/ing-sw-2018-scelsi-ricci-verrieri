@@ -4,19 +4,42 @@ import it.polimi.ing.sw.App;
 import it.polimi.ing.sw.model.Dice;
 import it.polimi.ing.sw.model.Match;
 
-import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TableFrame extends javax.swing.JFrame {
 
     private static Match match;
+    private static List<CardField> toolCardList, objCardList;
+    private RoundTrack roundTrack;
+    private VetrataPanel player1, player2, player3, player4;
 
     public TableFrame(/*Match match*/) {
         //this.match = match;
         initComponents();
         setLocationRelativeTo(null);
         setIcons();
+
+        roundTrack = new RoundTrack();
+        toolCardList = new ArrayList<>();
+        objCardList = new ArrayList<>();
+
+        player1 = new VetrataPanel();
+        tableFramePanel.add(player1);
+        player1.setBounds(780, 430, 230, 290);
+
+        player2 = new VetrataPanel();
+        tableFramePanel.add(player2);
+        player2.setBounds(780, 100, 230, 290);
+
+        player3 = new VetrataPanel();
+        tableFramePanel.add(player3);
+        player3.setBounds(10, 100, 230, 290);
+
+        player4 = new VetrataPanel();
+        tableFramePanel.add(player4);
+        player4.setBounds(10, 430, 230, 290);
 
         addRoundTrack();
 
@@ -28,7 +51,7 @@ public class TableFrame extends javax.swing.JFrame {
 */
 
         //TEST campi carte
-        String ids1[] = {"tc01.png", "tc02.png", "tc03.png"};
+        String ids1[] = {"disabled.png", "tc02.png", "tc03.png"};
         setToolCards(ids1);
         String ids2[] = {"po01.png", "po02.png", "po03.png"};
         setOBJCards(ids2);
@@ -38,12 +61,15 @@ public class TableFrame extends javax.swing.JFrame {
         testDice.setNumFacciaUp(5);
         testDice.setDiceColor(it.polimi.ing.sw.model.Color.RED);
         roundTrack.getDiceGUIList().get(4).setDice(testDice);
+
+        //TEST disablecard
+        //toolCardList.get(1).disableToolCard();
     }
 
     private void addRoundTrack() {
         roundTrack = new RoundTrack();
         tableFramePanel.add(roundTrack);
-        roundTrack.setBounds(182, 20, 660, 70);
+        roundTrack.setBounds(207, 20, 610, 70);
     }
 
     public void setIcons() {
@@ -64,7 +90,7 @@ public class TableFrame extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(1024, 768));
         setResizable(false);
 
-        tableFramePanel.setBackground(new java.awt.Color(116, 65, 65));
+        tableFramePanel.setBackground(new java.awt.Color(102, 102, 102));
         tableFramePanel.setLayout(null);
 
         javax.swing.GroupLayout objCardPanelLayout = new javax.swing.GroupLayout(objCardPanel);
@@ -95,6 +121,7 @@ public class TableFrame extends javax.swing.JFrame {
         tableFramePanel.add(toolCardPanel);
         toolCardPanel.setBounds(250, 230, 519, 245);
 
+        backgroundTableFRameLabel.setBackground(new java.awt.Color(153, 153, 153));
         backgroundTableFRameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         backgroundTableFRameLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/sagrada.png"))); // NOI18N
         backgroundTableFRameLabel.setAlignmentY(0.0F);
@@ -122,23 +149,25 @@ public class TableFrame extends javax.swing.JFrame {
 
     public void setToolCards(String[] id) {
         toolCardPanel.setLayout(null);
-        toolCardPanel.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        //toolCardPanel.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         for (int i = 0; i < 3; i++) {
             CardField schemeCard = new CardField(id[i], "tc/");
             toolCardPanel.add(schemeCard);
-            schemeCard.setBounds(i * 173, 0, 173, 245);
-            schemeCard.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+            toolCardList.add(schemeCard);
+            schemeCard.setBounds(i * (173), 0, 173, 245);
+            //schemeCard.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         }
     }
 
     public void setOBJCards(String[] id) {
         objCardPanel.setLayout(null);
-        objCardPanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        //objCardPanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         for (int i = 0; i < 3; i++) {
             CardField schemeCard = new CardField(id[i], "po/");
             objCardPanel.add(schemeCard);
-            schemeCard.setBounds(i * 173, 0, 173, 245);
-            schemeCard.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+            objCardList.add(schemeCard);
+            schemeCard.setBounds(i * (173), 0, 173, 245);
+            //schemeCard.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         }
     }
 
@@ -172,10 +201,9 @@ public class TableFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private JLabel backgroundTableFRameLabel;
-    private JPanel objCardPanel;
-    private JPanel tableFramePanel;
-    private JPanel toolCardPanel;
-    private RoundTrack roundTrack;
+    private javax.swing.JLabel backgroundTableFRameLabel;
+    private javax.swing.JPanel objCardPanel;
+    private javax.swing.JPanel tableFramePanel;
+    private javax.swing.JPanel toolCardPanel;
     // End of variables declaration//GEN-END:variables
 }

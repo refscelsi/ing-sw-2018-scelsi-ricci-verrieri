@@ -1,25 +1,28 @@
 package it.polimi.ing.sw.ui.gui;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class CardField extends javax.swing.JPanel {
 
+    private static Boolean used;
     private static final String IMAGE_PATH = "/img/";
     private static String FINAL_IMAGE_PATH;
 
     public CardField() {
         initComponents();
-        FINAL_IMAGE_PATH = IMAGE_PATH.concat("po/").concat("po01.png");
-        setIcons(FINAL_IMAGE_PATH);//default icon
+        FINAL_IMAGE_PATH = IMAGE_PATH.concat("po/");
+        setIcons(FINAL_IMAGE_PATH.concat("po01.png"));//default icon
+        used=true;
     }
 
     //cardType should be defined as "po/" or "tc/"
     public CardField(String cardName, String cardType) {
         initComponents();
-        FINAL_IMAGE_PATH = IMAGE_PATH.concat(cardType).concat(cardName);
-        setIcons(FINAL_IMAGE_PATH);
-
+        FINAL_IMAGE_PATH = IMAGE_PATH.concat(cardType);
+        setIcons(FINAL_IMAGE_PATH.concat( cardName ));
+        used=true;
     }
 
     @SuppressWarnings("unchecked")
@@ -33,18 +36,34 @@ public class CardField extends javax.swing.JPanel {
         cardFieldLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/po/po01.png"))); // NOI18N
         cardFieldLabel.setMinimumSize(new java.awt.Dimension(173, 245));
         cardFieldLabel.setPreferredSize(new java.awt.Dimension(173, 245));
+        cardFieldLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                cardFieldLabelMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                cardFieldLabelMouseExited(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(cardFieldLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(cardFieldLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(cardFieldLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(cardFieldLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cardFieldLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cardFieldLabelMouseEntered
+        cardFieldLabel.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+    }//GEN-LAST:event_cardFieldLabelMouseEntered
+
+    private void cardFieldLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cardFieldLabelMouseExited
+        cardFieldLabel.setBorder(null);
+    }//GEN-LAST:event_cardFieldLabelMouseExited
 
     public void setIcons(String name) {
         System.out.println(FINAL_IMAGE_PATH);
@@ -54,6 +73,15 @@ public class CardField extends javax.swing.JPanel {
         icon.setImage(scaledImage);
         cardFieldLabel.setIcon(icon);
         cardFieldLabel.repaint();
+    }
+
+    public void disableToolCard(){
+        used=false;
+        setIcons(IMAGE_PATH.concat("tc/").concat( "disabled.png" )  );
+    }
+    public void disableObjCard(){
+        used=false;
+        setIcons(IMAGE_PATH.concat("po/").concat( "disabled.png" )  );
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

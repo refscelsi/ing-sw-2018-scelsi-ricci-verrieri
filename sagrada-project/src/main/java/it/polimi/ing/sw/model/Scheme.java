@@ -183,7 +183,6 @@ public class Scheme {
 
 	}
 
-
 	// controlla che uno specifico dado che tocca ortogonalmente il dado che si vuole piazzare non abbia colore
 	// o sfumatura uguali
 
@@ -192,7 +191,6 @@ public class Scheme {
 			return false;
 		return true;
 	}
-
 
 	// controlla tutte le restrizioni di piazzamento e se sono rispettate piazza il dado
 
@@ -210,11 +208,9 @@ public class Scheme {
 		box.placeDice( dice );
 	}
 
-
 	public void setBoxes( Box[][] boxes ) {
 		this.boxes = boxes;
 	}
-
 
 	public boolean isEmpty() {
 		this.isEmpty = true;
@@ -228,31 +224,25 @@ public class Scheme {
 		return this.isEmpty;
 	}
 
-
 	public void setNotEmpty() {
 		this.isEmpty = false;
 	}
-
 
 	public int getDifficulty() {
 		return difficulty;
 	}
 
-
 	public int getId() {
 		return id;
 	}
-
 
 	public void setDifficulty( short difficulty ) {
 		this.difficulty = difficulty;
 	}
 
-
 	public void setId( short id ) {
 		this.id = id;
 	}
-
 
 	public int countFreeBoxes() {
 		int free = 0;
@@ -262,7 +252,6 @@ public class Scheme {
 					free++;
 		return free;
 	}
-
 
 	public Box getBox( int row, int col ) {
 		return boxes[row][col];
