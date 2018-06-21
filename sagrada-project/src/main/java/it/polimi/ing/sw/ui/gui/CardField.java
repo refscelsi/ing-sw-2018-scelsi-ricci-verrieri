@@ -75,9 +75,13 @@ public class CardField extends javax.swing.JPanel {
         cardFieldLabel.repaint();
     }
 
-    public void disableCard(){
+    public void disableToolCard(){
         used=false;
-        setIcons(FINAL_IMAGE_PATH.concat( "disabled.png" )  );
+        setIcons(IMAGE_PATH.concat("tc/").concat( "disabled.png" )  );
+    }
+    public void disableObjCard(){
+        used=false;
+        setIcons(IMAGE_PATH.concat("po/").concat( "disabled.png" )  );
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

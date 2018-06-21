@@ -49,6 +49,15 @@ public class DiceGUI extends javax.swing.JPanel {
         }
     }
 
+    public Dice getDice() {
+        return dice;
+    }
+
+    public static String getImagePath() {
+
+        return IMAGE_PATH;
+    }
+
     private void updateIcon(String name) {
         ImageIcon icon;
         Image scaledImage;
@@ -58,11 +67,18 @@ public class DiceGUI extends javax.swing.JPanel {
         icon.setImage(scaledImage);
         diceLabel.setIcon(icon);
         diceLabel.repaint();
+
     }
 
     public DiceGUI() {
         initComponents();
         updateIcon("1g");
+    }
+
+    public DiceGUI(Boolean isVoid) {
+        initComponents();
+        if(!isVoid)
+            updateIcon("1g");
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
