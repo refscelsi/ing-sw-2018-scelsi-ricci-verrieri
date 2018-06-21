@@ -93,7 +93,7 @@ public class TableFrame extends javax.swing.JFrame {
         );
 
         tableFramePanel.add(toolCardPanel);
-        toolCardPanel.setBounds(250, 230, 519, 245);
+        toolCardPanel.setBounds(244, 228, 531, 249);
 
         backgroundTableFRameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         backgroundTableFRameLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/sagrada.png"))); // NOI18N
@@ -126,7 +126,7 @@ public class TableFrame extends javax.swing.JFrame {
         for (int i = 0; i < 3; i++) {
             CardField schemeCard = new CardField(id[i], "tc/");
             toolCardPanel.add(schemeCard);
-            schemeCard.setBounds(i * 173, 0, 173, 245);
+            schemeCard.setBounds(i * (173+4), 2, 173, 245);
             schemeCard.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         }
     }

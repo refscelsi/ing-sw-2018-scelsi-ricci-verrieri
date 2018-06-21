@@ -3,6 +3,7 @@ package it.polimi.ing.sw.ui.gui;
 import it.polimi.ing.sw.model.Dice;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 
 import static it.polimi.ing.sw.model.Color.*;
@@ -64,7 +65,6 @@ public class DiceGUI extends javax.swing.JPanel {
         updateIcon("1g");
     }
 
-    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -72,8 +72,16 @@ public class DiceGUI extends javax.swing.JPanel {
 
         setPreferredSize(new java.awt.Dimension(50, 50));
 
-        diceLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        diceLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.CROSSHAIR_CURSOR));
         diceLabel.setOpaque(true);
+        diceLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                diceLabelMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                diceLabelMouseExited(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -86,6 +94,16 @@ public class DiceGUI extends javax.swing.JPanel {
             .addComponent(diceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void diceLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_diceLabelMouseEntered
+        diceLabel.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        setCursor(new Cursor( Cursor.HAND_CURSOR ));
+    }//GEN-LAST:event_diceLabelMouseEntered
+
+    private void diceLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_diceLabelMouseExited
+        diceLabel.setBorder(null);
+        setCursor(new Cursor( Cursor.DEFAULT_CURSOR ));
+    }//GEN-LAST:event_diceLabelMouseExited
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
