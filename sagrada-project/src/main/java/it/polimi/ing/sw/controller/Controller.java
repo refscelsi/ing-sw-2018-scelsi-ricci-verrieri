@@ -35,7 +35,7 @@ public class Controller implements ControllerInterface{
     //è lecita questa implementazione o gli oggetti devo tirarli fuori nel match??
     @Override
     public void sendUseDiceRequest(int index, int indexOfDiceInDraftPool, int row, int col) throws NetworkException, NotValidException {
-        match.useDice(match.getPlayer(index).getScheme().getBoxes()[row][col], match.getDraftPool().getDice(indexOfDiceInDraftPool),match.getPlayer(index));
+        match.useDice(match.getPlayer(index).getScheme().getBoxes()[row][col], match.getDraftPool().getDice(indexOfDiceInDraftPool),match.getPlayer(index).getScheme());
     }
 
     @Override
