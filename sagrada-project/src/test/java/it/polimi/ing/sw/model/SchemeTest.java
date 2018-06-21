@@ -1,9 +1,5 @@
 package it.polimi.ing.sw.model;
 
-import it.polimi.ing.sw.model.Box;
-import it.polimi.ing.sw.model.Color;
-import it.polimi.ing.sw.model.Dice;
-import it.polimi.ing.sw.model.Scheme;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -55,25 +51,25 @@ public class SchemeTest {
 
     @org.junit.Test
     public void checkDiceAdjacent() {
-        dice1=new DiceGUI();
+        dice1=new Dice();
         dice1.setDiceColor(Color.RED);
         dice1.setNumFacciaUp(3);
-        dice2=new DiceGUI();
+        dice2=new Dice();
         dice2.setDiceColor(Color.GREEN);
         dice2.setNumFacciaUp(4);
-        dice3=new DiceGUI();
+        dice3=new Dice();
         dice3.setNumFacciaUp(4);
         dice3.setDiceColor(Color.BLUE);
         boxes[0][3].placeDice(dice2);
         boxes[3][2].placeDice(dice3);
         boxes[1][1].placeDice(dice1);
-        assertEquals(false,scheme.isEmpty());
-        assertTrue(!scheme.checkDiceAdjacent(boxes[0][1],dice1, false) &&scheme.checkDiceAdjacent(boxes[0][2],dice1, false)&&!scheme.checkDiceAdjacent(boxes[0][2],dice2, false));
+        assertFalse( scheme.isEmpty() );
+        assertFalse(!scheme.checkDiceAdjacent( boxes[0][1], dice1, false ) &&scheme.checkDiceAdjacent(boxes[0][2],dice1, false)&&!scheme.checkDiceAdjacent(boxes[0][2],dice2, false));
         assertTrue(scheme.checkDiceAdjacent(boxes[1][2],dice2, false));
-        assertTrue(!scheme.checkDiceAdjacent(boxes[1][3],dice3, false));
-        assertTrue(!scheme.checkDiceAdjacent(boxes[0][4],dice2, false));
-        assertTrue(!scheme.checkDiceAdjacent(boxes[3][3],dice2, false) && scheme.checkDiceAdjacent(boxes[2][1],dice3, false));
-        assertTrue(scheme.checkDiceAdjacent(boxes[2][0],dice1, false) && !scheme.checkDiceAdjacent(boxes[1][0],dice1, false));
+        assertFalse(!scheme.checkDiceAdjacent(boxes[1][3],dice3, false));
+        assertFalse(!scheme.checkDiceAdjacent(boxes[0][4],dice2, false));
+        assertFalse(!scheme.checkDiceAdjacent(boxes[3][3],dice2, false) && scheme.checkDiceAdjacent(boxes[2][1],dice3, false));
+        assertFalse(scheme.checkDiceAdjacent(boxes[2][0],dice1, false) && !scheme.checkDiceAdjacent(boxes[1][0],dice1, false));
     }
 
     @Test
@@ -81,9 +77,9 @@ public class SchemeTest {
         dice2=new Dice();
         dice2.setDiceColor(Color.GREEN);
         dice2.setNumFacciaUp(4);
-        assertEquals(true,scheme.isEmpty());
+        assertTrue( scheme.isEmpty() );
         boxes[0][3].placeDice(dice2);
-        assertEquals(false,scheme.isEmpty());
+        assertFalse( scheme.isEmpty() );
         assertEquals(19,scheme.countFreeBoxes());
         boxes[0][3].removeDice();
         assertEquals(true,scheme.isEmpty());
@@ -92,24 +88,24 @@ public class SchemeTest {
 
     @Test
     public void checkFirst(){
-        assertEquals(true, scheme.checkFirst(boxes[0][2],dice1));
-        assertEquals(true,scheme.checkFirst(boxes[3][3],dice2));
-        assertEquals(false,scheme.checkFirst(boxes[2][3],dice1));
+        assertTrue( scheme.checkFirst( boxes[0][2], dice1 ) );
+        assertFalse( scheme.checkFirst( boxes[3][3], dice2 ) );
+        assertFalse( scheme.checkFirst( boxes[2][3], dice1 ) );
     }
 
     @Test
     public void getBoxes(){
-        assertTrue(boxes.equals(scheme.getBoxes()));
+        assertEquals( boxes, scheme.getBoxes() );
     }
 
     @Test
     public void getId(){
-        assertTrue(1==scheme.getId());
+        assertEquals( 1, scheme.getId() );
     }
 
     @Test
     public void getDifficulty(){
-        assertTrue(7==scheme.getDifficulty());
+        assertEquals( 7, scheme.getDifficulty() );
     }
 
     @Test
