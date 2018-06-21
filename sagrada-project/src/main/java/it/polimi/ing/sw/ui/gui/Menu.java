@@ -11,7 +11,7 @@ public class Menu extends javax.swing.JFrame {
 
     private NewMatchForm nmf;
     private AddScheme as;
-    private static final String IMAGE_PATH = "img/";
+    private static final String IMAGE_PATH = "/img/";
 
     public Menu() {
         initComponents();
