@@ -5,7 +5,6 @@ import it.polimi.ing.sw.model.Dice;
 import it.polimi.ing.sw.model.Match;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class TableFrame extends javax.swing.JFrame {
@@ -38,6 +37,9 @@ public class TableFrame extends javax.swing.JFrame {
         testDice.setNumFacciaUp(5);
         testDice.setDiceColor(it.polimi.ing.sw.model.Color.RED);
         roundTrack.getDiceGUIList().get(4).setDice(testDice);
+
+        //TEST card
+
     }
 
     private void addRoundTrack() {
@@ -93,7 +95,7 @@ public class TableFrame extends javax.swing.JFrame {
         );
 
         tableFramePanel.add(toolCardPanel);
-        toolCardPanel.setBounds(244, 228, 531, 249);
+        toolCardPanel.setBounds(250, 230, 519, 245);
 
         backgroundTableFRameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         backgroundTableFRameLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/sagrada.png"))); // NOI18N
@@ -122,23 +124,23 @@ public class TableFrame extends javax.swing.JFrame {
 
     public void setToolCards(String[] id) {
         toolCardPanel.setLayout(null);
-        toolCardPanel.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        //toolCardPanel.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         for (int i = 0; i < 3; i++) {
             CardField schemeCard = new CardField(id[i], "tc/");
             toolCardPanel.add(schemeCard);
-            schemeCard.setBounds(i * (173+4), 2, 173, 245);
-            schemeCard.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+            schemeCard.setBounds(i * (173), 0, 173, 245);
+            //schemeCard.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         }
     }
 
     public void setOBJCards(String[] id) {
         objCardPanel.setLayout(null);
-        objCardPanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        //objCardPanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         for (int i = 0; i < 3; i++) {
             CardField schemeCard = new CardField(id[i], "po/");
             objCardPanel.add(schemeCard);
-            schemeCard.setBounds(i * 173, 0, 173, 245);
-            schemeCard.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+            schemeCard.setBounds(i * (173), 0, 173, 245);
+            //schemeCard.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         }
     }
 
