@@ -43,6 +43,10 @@
           <Dimension value="[173, 245]"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="cardFieldLabelMouseEntered"/>
+        <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="cardFieldLabelMouseExited"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
