@@ -12,8 +12,8 @@ public class TableFrame extends javax.swing.JFrame {
 
     private static Match match;
 
-    public TableFrame(Match match) {
-        this.match = match;
+    public TableFrame(/*Match match*/) {
+        //this.match = match;
         initComponents();
         setLocationRelativeTo(null);
         setIcons();
@@ -163,10 +163,10 @@ public class TableFrame extends javax.swing.JFrame {
         }
         /* Create and display the form */
 
-        final Match match = new Match();
+        //final Match match = new Match();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TableFrame(match).setVisible(true);
+                new TableFrame(/*match*/).setVisible(true);
             }
         });
     }

@@ -172,10 +172,10 @@ public class NewMatchForm extends javax.swing.JFrame {
     private void avviaMatchActionPerformed(ActionEvent evt) {
 
         //this.setVisible(false);
-        Match match = new Match(nameMatchTF.getText(), nuumPlayerCB.getSelectedIndex() + 1, nomePlayer1.getText());
+        //Match match = new Match(nameMatchTF.getText(), nuumPlayerCB.getSelectedIndex() + 1, nomePlayer1.getText());
         System.out.println(nuumPlayerCB.getSelectedIndex());
 
-        tf = new TableFrame(match);
+        tf = new TableFrame(/*match*/);
 
         tf.setVisible(true);
         this.setVisible(false);
