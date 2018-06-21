@@ -11,6 +11,7 @@ import java.awt.*;
 public class TableFrame extends javax.swing.JFrame {
 
     private static Match match;
+    private static List<CardField> toolCardList;
 
     public TableFrame(/*Match match*/) {
         //this.match = match;
@@ -28,7 +29,7 @@ public class TableFrame extends javax.swing.JFrame {
 */
 
         //TEST campi carte
-        String ids1[] = {"tc01.png", "tc02.png", "tc03.png"};
+        String ids1[] = {"disabled.png", "tc02.png", "tc03.png"};
         setToolCards(ids1);
         String ids2[] = {"po01.png", "po02.png", "po03.png"};
         setOBJCards(ids2);
@@ -38,6 +39,9 @@ public class TableFrame extends javax.swing.JFrame {
         testDice.setNumFacciaUp(5);
         testDice.setDiceColor(it.polimi.ing.sw.model.Color.RED);
         roundTrack.getDiceGUIList().get(4).setDice(testDice);
+
+        //TEST disablecard
+        toolCardPanel
     }
 
     private void addRoundTrack() {
@@ -126,6 +130,7 @@ public class TableFrame extends javax.swing.JFrame {
         for (int i = 0; i < 3; i++) {
             CardField schemeCard = new CardField(id[i], "tc/");
             toolCardPanel.add(schemeCard);
+            toolCardList.add(schemeCard);
             schemeCard.setBounds(i * (173+4), 2, 173, 245);
             schemeCard.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         }

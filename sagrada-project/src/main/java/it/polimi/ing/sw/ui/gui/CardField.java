@@ -5,21 +5,23 @@ import java.awt.*;
 
 public class CardField extends javax.swing.JPanel {
 
+    private static Boolean used;
     private static final String IMAGE_PATH = "/img/";
     private static String FINAL_IMAGE_PATH;
 
     public CardField() {
         initComponents();
-        FINAL_IMAGE_PATH = IMAGE_PATH.concat("po/").concat("po01.png");
-        setIcons(FINAL_IMAGE_PATH);//default icon
+        FINAL_IMAGE_PATH = IMAGE_PATH.concat("po/");
+        setIcons(FINAL_IMAGE_PATH.concat("po01.png"));//default icon
+        used=true;
     }
 
     //cardType should be defined as "po/" or "tc/"
     public CardField(String cardName, String cardType) {
         initComponents();
-        FINAL_IMAGE_PATH = IMAGE_PATH.concat(cardType).concat(cardName);
-        setIcons(FINAL_IMAGE_PATH);
-
+        FINAL_IMAGE_PATH = IMAGE_PATH.concat(cardType);
+        setIcons(FINAL_IMAGE_PATH.concat( cardName ));
+        used=true;
     }
 
     @SuppressWarnings("unchecked")
@@ -54,6 +56,11 @@ public class CardField extends javax.swing.JPanel {
         icon.setImage(scaledImage);
         cardFieldLabel.setIcon(icon);
         cardFieldLabel.repaint();
+    }
+
+    public void disableCard(){
+        used=false;
+        setIcons(FINAL_IMAGE_PATH.concat( "disabled.png" )  );
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
