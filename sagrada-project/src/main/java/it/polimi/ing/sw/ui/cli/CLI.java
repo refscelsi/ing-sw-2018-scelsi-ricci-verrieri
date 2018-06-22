@@ -6,6 +6,7 @@ import it.polimi.ing.sw.model.Scheme;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.server.NotValidNicknameException;
 import it.polimi.ing.sw.client.UiUpdate;
+import it.polimi.ing.sw.client.View;
 
 import java.util.*;
 
@@ -16,10 +17,10 @@ public class CLI implements UiUpdate {
     public String inText;
 
 
-    private PlayerController controller;
-    private UiUpdate ui;
+    private View controller;
 
-    public CLI(PlayerController controller){
+
+    public CLI(View controller){
         this.controller=controller;
     }
 
@@ -29,7 +30,7 @@ public class CLI implements UiUpdate {
         return controller;
     }*/
 
-    public PlayerController getController() {
+    public View getController() {
         return controller;
     }
 
@@ -177,24 +178,10 @@ public class CLI implements UiUpdate {
     /**
      * Login del Client sul Server.
      */
-    public void login() {
-        PlayerController controller = getController();
-        boolean success = true;
-        while (!controller.isLogged()) {
-            System.out.print("Scegli il tuo nickname: ");
-            do {
-                try {
-                    inText = scanner.nextLine();
-                    controller.loginPlayer(inText);
-                    success = true;
-                } catch (NotValidNicknameException e) {
-                    System.err.println(e.getMessage());
-                    System.out.println("Inserisci un nuovo nickname");
-                    success = false;
-                }
-            } while (!success);
-        }
-
+    public void login(String message) {
+        System.out.print(message);
+        inText = scanner.nextLine();
+        controller.loginPlayer(inText);
     }
 
 
@@ -379,6 +366,12 @@ public class CLI implements UiUpdate {
     /////////////////////////////////////////////////////////////////////////////////////////
     // Metodi che invoca PlayerController su UiUpdate
     /////////////////////////////////////////////////////////////////////////////////////////
+
+
+    @Override
+    public void onLogin (String message) {
+        login(message);
+    }
 
     @Override
     public void onActionNotValid (String errorCode) {

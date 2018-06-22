@@ -1,12 +1,14 @@
 package it.polimi.ing.sw.client;
 
 import it.polimi.ing.sw.NetworkException;
+import it.polimi.ing.sw.controller.GameInterface;
 import it.polimi.ing.sw.controller.PlayerInterface;
 import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.model.RemotePlayer;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.server.NotValidNicknameException;
 import it.polimi.ing.sw.util.Constants;
+import it.polimi.ing.sw.ui.cli.CLI;
 
 import java.rmi.RemoteException;
 import java.util.Scanner;
@@ -27,94 +29,41 @@ public class View implements UiUpdate, RemotePlayer {
     private Match match;
     private boolean isGameStarted;     // flag per vedere se la partita è iniziata: non so se sarà utile o meno
     private PlayerInterface controller; //il client può chiamare solo i metodi di PlayerInterface
+    private GameInterface gameController;
     private UiUpdate ui;
     private String input;
     private static Scanner scanner = new Scanner(System.in);
 
 
-    public View(PlayerInterface controller){
-        this.controller=controller;
-        this.ui = ui;
+    public View(GameInterface controller){
+        this.gameController=controller;
         isLogged = false;
         isGameStarted = false;
     }
 
 
-    public void start(){
+    public void start() throws RemoteException{
         System.out.println("Benvenuto in Sagrada, vuoi giocare con la Cli [c] o con la Gui [g]?");
         input=scanner.nextLine();
         if(input.equals('c')){
-            //new CLI(this).run();
+            ui = new CLI(this);
         }
         else if(input.equals('g')){
-            //new GUI(this).run();
-        }
-    }
-    /**
-     * Metodo statico per eseguire il client.
-     *
-     * @param
-     */
-    /*public static void main(String[] args) {
-        String serverAddress = SERVER_ADDRESS;
-        int socketPort = SERVER_SOCKET_PORT, rmiPort = SERVER_RMI_PORT;
-
-        // Check if arguments were passed in
-        if (args.length != 0) {
-            try {
-                serverAddress = args[0];
-                socketPort = Integer.parseInt(args[1]);
-                rmiPort = Integer.parseInt(args[0]);
-            } catch (Exception e) {
-                System.exit(0);
-            }
+            //ui = new GUI(this);
         }
 
-        // Debugging purpose
-        try {
-            CLI.mainClient(serverAddress, socketPort, rmiPort);
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
+        System.out.println("Vuoi giocare con la RMI [r] o Socket [s]?");
+        input=scanner.nextLine();
+        if(input.equals('r')){
+            controller = gameController.connect(this);
         }
-    }
-
-
-    public boolean isLogged() {
-        return this.isLogged;
-    }
-
-    public int getIndex() {
-        return index;
-    }
-
-
-    public void startClient(String connectionType, String serverAddress, int socketPort, int rmiPort)
-            throws ClientException {
-        if (connectionType.equals("RMI")) {
-            startRMIClient(serverAddress, rmiPort);
-        } else if (connectionType.equals("Socket")) {
-            //startSocketClient(serverAddress, socketPort); //TODO: decommentare questo e eliminare quello sotto quando si implementerà la Socket
-            startRMIClient(serverAddress, rmiPort);
-        } else {
-            throw new ClientException("Errore nel lanciare il client");
+        else if(input.equals('g')){
+            //ui = new GUI(this);
         }
+
+        ui.onLogin("Scegli il tuo nickname: ");
     }
 
-
-    private void startRMIClient(String serverAddress, int rmiPort) throws ClientException {
-        System.out.println("Iniziando connessione RMI...");
-        //controller = new RMIClient(this, serverAddress, rmiPort);   //TODO: sistemare qui
-        //controller.connect();
-    }
-
-
-    /*private void startSocketClient(String serverAddress, int socketPort) throws ClientException {
-        System.out.println("Iniziando connessione Socket...");
-        client = new SocketClient(this, serverAddress, socketPort);
-        client.connect();
-
-        System.out.println();
-    }*/                             //TODO: decommentare questo metodo quando si implementerà la Socket
 
 
     /////////////////////////////////////////////////////////////////////////////////////////
@@ -139,17 +88,9 @@ public class View implements UiUpdate, RemotePlayer {
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////
-    // Metodi invocati sul Client GameController (vedi RMIClient, SocketClient)
+    // Metodi invocati sul Client Game (vedi RMIClient, SocketClient)
     ////////////////////////////////////////////////////////////////////////////////////////
 
-    /*@Override
-    public void onGameUpdate(UpdateStates update) {
-        this.index=update.getIndicePlayer();
-    }
-
-    public void onAnotherUpdate(UpdateStates update){
-        cli.onAnotherUpdate(update);
-    }
 
     /**
      * Metodo invocato dal Server ogni qualvolta si presenta un errore (es.
@@ -190,6 +131,7 @@ public class View implements UiUpdate, RemotePlayer {
     }
 
 
+
     /////////////////////////////////////////////////////////////////////////////////////////
     // "Senders" (per l'invio di informazioni verso il Server, in Remoto).
     /////////////////////////////////////////////////////////////////////////////////////////
@@ -201,59 +143,64 @@ public class View implements UiUpdate, RemotePlayer {
      * @param nickname
      *            nickname da usare per il login presso il Server.
      */
-    public void loginPlayer(String nickname) throws NotValidNicknameException{
+    public void loginPlayer(String nickname) {
         boolean success = false;
-        try {
-            index = controller.sendLoginRequest(nickname, this); //TODO: il controller mi notifica l'indice del giocatore
-            success = true;
-        } catch (NetworkException e) {
-            System.err.println(e.getMessage());
-        }
+        do {
+            try {
+                controller.sendLoginRequest(nickname, this); //TODO: il controller mi notifica l'indice del giocatore
+                success = true;
+                ui.onSuccess("Complimenti, ti sei loggato come " + nickname);
+            } catch (NetworkException e) {
+                System.err.println(e.getMessage());
+            } catch (NotValidNicknameException e) {
+                ui.onLogin(e.getMessage() + ". Inserisci un nickname differente");
+            }
 
-        if (success) {
-            this.isLogged = true;
-            System.out.println("Hai effettuato il login come " + nickname);
-            // devo notificare anche il colore del giocatore
-        }
-    }
+        } while (!success);
 
-
-    public void setChosenScheme (int id) {
-        try {
-            controller.setChosenScheme(index, id);
-        } catch (NetworkException e) {
-            System.err.println(e.getMessage());
-        }
-    }
-
-
-    public void useDice (int indexOfDiceInDraftPool, int row, int col) throws NotValidException{
-        try {
-            controller.sendUseDiceRequest (index, indexOfDiceInDraftPool, row, col);
-        } catch (NetworkException e) {
-            System.err.println(e.getMessage());
-        }
-    }
-
-    public void removeDice (int row, int col) throws NotValidException{
-        try {
-            controller.removeDice (index, row, col);
-        } catch (NetworkException e) {
-            System.err.println(e.getMessage());
-        }
-    }
-
-    public void endTurn () {
-        try {
-            controller.endTurn(index);
-        } catch (NetworkException e) {
-            System.err.println(e.getMessage());
-        }
-    }
-
-
-    @Override
-    public void onGameUpdate(Match match) throws RemoteException {
+        this.isLogged = true;
+        ui.onSuccess("Complimenti, ti sei loggato come " + nickname);
+        // devo notificare anche il colore del giocatore
 
     }
-}
+
+
+        public void setChosenScheme (int id) {
+            try {
+                controller.setChosenScheme(index, id);
+            } catch (NetworkException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+
+
+        public void useDice (int indexOfDiceInDraftPool, int row, int col) throws NotValidException{
+            try {
+                controller.sendUseDiceRequest (index, indexOfDiceInDraftPool, row, col);
+            } catch (NetworkException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+
+        public void removeDice (int row, int col) throws NotValidException{
+            try {
+                controller.removeDice (index, row, col);
+            } catch (NetworkException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+
+        public void endTurn () {
+            try {
+                controller.endTurn(index);
+            } catch (NetworkException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+
+
+        @Override
+        public void onGameUpdate(Match match) throws RemoteException {
+
+        }
+    }
