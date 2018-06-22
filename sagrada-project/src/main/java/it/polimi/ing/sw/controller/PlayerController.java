@@ -1,27 +1,26 @@
 package it.polimi.ing.sw.controller;
 
-import it.polimi.ing.sw.client.RemoteView;
+import it.polimi.ing.sw.model.RemotePlayer;
 import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.model.Player;
 import it.polimi.ing.sw.server.NotValidNicknameException;
 import it.polimi.ing.sw.NetworkException;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 
-import java.rmi.Remote;
-
 //classe che gestisce gli input dei client e chiama i metodi di PlayerInterface (sulla rete)
 
 public class PlayerController implements PlayerInterface{
     private Match match;
     private Player player;
+    private RemotePlayer remotePlayer;
 
-    public PlayerController(Match match, Player player) {
+    public PlayerController(Match match, RemotePlayer remotePlayer) {
         this.match=match;
-        this.player=player;
+        this.remotePlayer=remotePlayer;
     }
 
     @Override
-    public int sendLoginRequest(String nickname, RemoteView client) throws NotValidNicknameException, NetworkException {
+    public int sendLoginRequest(String nickname, RemotePlayer client) throws NotValidNicknameException, NetworkException {
         //creo un giocatore con quel nickname
         //aggiungo il giocatore ai players e ti ritorno l'indice nell'array players
         //ti aggiugno alla lista degli observer

@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 
-public class GameControllerTest {
+public class GameControllerControllerTest {
 
     private Match match;
     private Player player;

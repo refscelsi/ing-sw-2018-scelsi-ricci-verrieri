@@ -1,7 +1,7 @@
 package it.polimi.ing.sw.controller;
 
 import it.polimi.ing.sw.NetworkException;
-import it.polimi.ing.sw.client.RemoteView;
+import it.polimi.ing.sw.model.RemotePlayer;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.server.NotValidNicknameException;
 
@@ -9,7 +9,7 @@ import java.rmi.Remote;
 
 public interface PlayerInterface extends Remote {
 
-    public int sendLoginRequest(String nickname, RemoteView client) throws NotValidNicknameException, NetworkException;
+    public int sendLoginRequest(String nickname, RemotePlayer client) throws NotValidNicknameException, NetworkException;
 
     public void setChosenScheme (int index, int id) throws NetworkException;
 

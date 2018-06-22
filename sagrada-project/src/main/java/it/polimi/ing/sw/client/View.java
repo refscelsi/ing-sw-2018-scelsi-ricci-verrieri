@@ -3,6 +3,7 @@ package it.polimi.ing.sw.client;
 import it.polimi.ing.sw.NetworkException;
 import it.polimi.ing.sw.controller.PlayerInterface;
 import it.polimi.ing.sw.model.Match;
+import it.polimi.ing.sw.model.RemotePlayer;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.server.NotValidNicknameException;
 import it.polimi.ing.sw.util.Constants;
@@ -10,7 +11,7 @@ import it.polimi.ing.sw.util.Constants;
 import java.rmi.RemoteException;
 import java.util.Scanner;
 
-public class View implements UiUpdate, RemoteView {
+public class View implements UiUpdate, RemotePlayer {
     /**
      *  ogni giocatore è identificato dal valore dell'attributo index nel model: il giocatore con index=0 avrà come
      *  nickname nicknames.get(0), come schema schemesOfAllPlayers.get(0), come colore di pedina playersColor[0],
@@ -138,7 +139,7 @@ public class View implements UiUpdate, RemoteView {
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////
-    // Metodi invocati sul Client Game (vedi RMIClient, SocketClient)
+    // Metodi invocati sul Client GameController (vedi RMIClient, SocketClient)
     ////////////////////////////////////////////////////////////////////////////////////////
 
     /*@Override

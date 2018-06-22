@@ -85,7 +85,7 @@ public class NewMatchForm extends javax.swing.JFrame {
         nameMatch.setText("Nome partita");
 
         nomePlayer1.setForeground(new java.awt.Color(51, 51, 51));
-        nomePlayer1.setText("Nome Player 1");
+        nomePlayer1.setText("Nome View 1");
 
         numplayers.setForeground(new java.awt.Color(51, 51, 51));
         numplayers.setText("Numero giocatori");
@@ -220,7 +220,7 @@ public class NewMatchForm extends javax.swing.JFrame {
 
     private void playerNameTFMouseExited(java.awt.event.MouseEvent evt) {
         if (controllo)
-            playerNameTF.setText("Name Player 1");
+            playerNameTF.setText("Name View 1");
     }
 
     // Variables declaration - do not modify

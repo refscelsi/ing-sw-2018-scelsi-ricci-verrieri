@@ -1,6 +1,5 @@
 package it.polimi.ing.sw.client;
 
-import it.polimi.ing.sw.controller.PlayerController;
 import it.polimi.ing.sw.controller.PlayerInterface;
 
 import java.rmi.NotBoundException;
@@ -15,7 +14,7 @@ public class LaunchClient {
 
         try {
             Registry reg = LocateRegistry.getRegistry();
-            PlayerInterface controller= (PlayerInterface) reg.lookup("Game");
+            PlayerInterface controller= (PlayerInterface) reg.lookup("GameController");
             new View(controller).start();
 
         } catch (RemoteException e) {
