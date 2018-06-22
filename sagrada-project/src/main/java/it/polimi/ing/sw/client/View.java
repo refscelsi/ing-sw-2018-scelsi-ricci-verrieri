@@ -13,7 +13,7 @@ import it.polimi.ing.sw.ui.cli.CLI;
 import java.rmi.RemoteException;
 import java.util.Scanner;
 
-public class View implements UiUpdate, RemotePlayer {
+public class View implements RemotePlayer {
     /**
      *  ogni giocatore è identificato dal valore dell'attributo index nel model: il giocatore con index=0 avrà come
      *  nickname nicknames.get(0), come schema schemesOfAllPlayers.get(0), come colore di pedina playersColor[0],
@@ -21,11 +21,11 @@ public class View implements UiUpdate, RemotePlayer {
      *  nella classifica finale.
      */
 
-    private int index;
     private static final String SERVER_ADDRESS = Constants.SERVER_ADDRESS;
     private static final int SERVER_SOCKET_PORT = Constants.SOCKET_PORT;
     private static final int SERVER_RMI_PORT = Constants.RMI_PORT;
     private boolean isLogged;
+    private boolean isPlaying;     // flag per vedere se è il turno del giocatore a cui appartiene questa view
     private Match match;
     private boolean isGameStarted;     // flag per vedere se la partita è iniziata: non so se sarà utile o meno
     private PlayerInterface controller; //il client può chiamare solo i metodi di PlayerInterface
@@ -33,35 +33,36 @@ public class View implements UiUpdate, RemotePlayer {
     private UiUpdate ui;
     private String input;
     private static Scanner scanner = new Scanner(System.in);
+    private String nickname;
+    private int dice;
 
 
     public View(GameInterface controller){
         this.gameController=controller;
         isLogged = false;
         isGameStarted = false;
+        isPlaying = false;
     }
 
 
     public void start() throws RemoteException{
         System.out.println("Benvenuto in Sagrada, vuoi giocare con la Cli [c] o con la Gui [g]?");
-        input=scanner.nextLine();
-        if(input.equals('c')){
-            ui = new CLI(this);
-        }
-        else if(input.equals('g')){
-            //ui = new GUI(this);
-        }
+        input=scanner.nextLine().toLowerCase();
+        do{
+            if(input.equals('c')){
+                ui = new CLI(this);
+            }
+            else if(input.equals('g')){
+                //ui = new GUI(this);
+            }
+            else {
+                System.out.println("Inserisci una lettera valida");
+                input = scanner.nextLine().toLowerCase();
+            }
+        } while (!input.equals('c')&&!input.equals('g'));
 
-        System.out.println("Vuoi giocare con la RMI [r] o Socket [s]?");
-        input=scanner.nextLine();
-        if(input.equals('r')){
-            controller = gameController.connect(this);
-        }
-        else if(input.equals('g')){
-            //ui = new GUI(this);
-        }
+        ui.onChooseNetwork("Vuoi giocare con la RMI [r] o Socket [s]?");
 
-        ui.onLogin("Scegli il tuo nickname: ");
     }
 
 
@@ -71,14 +72,6 @@ public class View implements UiUpdate, RemotePlayer {
     /////////////////////////////////////////////////////////////////////////////////////////
 
 
-    public Match getMatch() {
-        return match;
-    }
-
-    public int getIndex() {
-        return index;
-    }
-
     public boolean isGameStarted() {
         return isGameStarted;
     }
@@ -87,54 +80,69 @@ public class View implements UiUpdate, RemotePlayer {
         return isLogged;
     }
 
-    /////////////////////////////////////////////////////////////////////////////////////////
-    // Metodi invocati sul Client Game (vedi RMIClient, SocketClient)
-    ////////////////////////////////////////////////////////////////////////////////////////
-
-
-    /**
-     * Metodo invocato dal Server ogni qualvolta si presenta un errore (es.
-     * azione illegale) a seguito di una richiesta del giocatore
-     *
-     */
-
-    @Override
-    public void onActionNotValid(String errorCode) {
-        ui.onActionNotValid(errorCode);
+    public boolean isPlaying() {
+        return isPlaying;
     }
 
-    /**
-     * Metodo invocato dal Server ogni qualvolta l'azione richiesta dal
-     * giocatore è stata accettata oppure si è verificato
-     * un'avanzamento nello stato della logica della partita
-     *
-     */
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Metodi con cui il model notifica la view in seguito ad un aggiornamento (vedi interfaccia RemotePlayer)
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
     @Override
-    public void onSchemeToChoose(Match match, int index) {
-        ui.onSchemeToChoose(match, index);
+    public void onSchemeToChoose(Match match) {
+        this.match=match;
+        ui.onSchemeToChoose(match, nickname, "Scegli il numero del tuo schema");
     }
 
     @Override
-    public void onGameUpdate(Match match, int index) {
-        ui.onGameUpdate(match, index);
+    public void onGameUpdate(Match match) {
+        this.match=match;
+        ui.onGameUpdate(match, nickname);
     }
 
     @Override
-    public void onTurnStarted (Match match, int index) {
-        ui.onTurnStarted(match, index);
+    public void onTurnStart(Match match, String nickname) {
+        isPlaying=true;
+        ui.onTurnStart(match, nickname);
+    }
+
+    @Override
+    public void onTurnEnd() {
+        isPlaying=false;
+        ui.onTurnEnd();
     }
 
     @Override
     public void onGameEnd(Match match) {
+        this.match=match;
         ui.onGameEnd(match);
     }
-
 
 
     /////////////////////////////////////////////////////////////////////////////////////////
     // "Senders" (per l'invio di informazioni verso il Server, in Remoto).
     /////////////////////////////////////////////////////////////////////////////////////////
+
+
+    public void chooseNetwork (String choice) {
+        if(choice.equals('r')){
+            try {
+                controller = gameController.connect(this);
+            } catch (RemoteException e) {
+                System.err.println(e.getMessage());
+            }
+            ui.onSuccess("Giocherai con RMI");
+            ui.onLogin("Scegli il tuo nickname: ");
+        }
+        else if(input.equals('g')){
+            //ui = new GUI(this);
+            ui.onSuccess("Giocherai con Socket");
+        }
+        else
+            ui.onChooseNetwork("Inserisci una lettera valida");
+    }
+
 
     /**
      *
@@ -143,64 +151,54 @@ public class View implements UiUpdate, RemotePlayer {
      * @param nickname
      *            nickname da usare per il login presso il Server.
      */
+
     public void loginPlayer(String nickname) {
-        boolean success = false;
-        do {
-            try {
-                controller.sendLoginRequest(nickname, this); //TODO: il controller mi notifica l'indice del giocatore
-                success = true;
-                ui.onSuccess("Complimenti, ti sei loggato come " + nickname);
-            } catch (NetworkException e) {
-                System.err.println(e.getMessage());
-            } catch (NotValidNicknameException e) {
-                ui.onLogin(e.getMessage() + ". Inserisci un nickname differente");
-            }
+        try {
+            controller.sendLoginRequest(nickname, this); //TODO: il controller mi notifica l'indice del giocatore
+            this.isLogged = true;
+            ui.onSuccess("Complimenti, ti sei loggato come " + nickname);
+            this.nickname = nickname;
+        } catch (NetworkException e) {
+            System.err.println(e.getMessage());
+        } catch (NotValidNicknameException e) {
+            ui.onLogin(e.getMessage() + ". Inserisci un nickname differente");
+        }
 
-        } while (!success);
-
-        this.isLogged = true;
-        ui.onSuccess("Complimenti, ti sei loggato come " + nickname);
         // devo notificare anche il colore del giocatore
 
     }
 
 
-        public void setChosenScheme (int id) {
-            try {
-                controller.setChosenScheme(index, id);
-            } catch (NetworkException e) {
-                System.err.println(e.getMessage());
-            }
-        }
-
-
-        public void useDice (int indexOfDiceInDraftPool, int row, int col) throws NotValidException{
-            try {
-                controller.sendUseDiceRequest (index, indexOfDiceInDraftPool, row, col);
-            } catch (NetworkException e) {
-                System.err.println(e.getMessage());
-            }
-        }
-
-        public void removeDice (int row, int col) throws NotValidException{
-            try {
-                controller.removeDice (index, row, col);
-            } catch (NetworkException e) {
-                System.err.println(e.getMessage());
-            }
-        }
-
-        public void endTurn () {
-            try {
-                controller.endTurn(index);
-            } catch (NetworkException e) {
-                System.err.println(e.getMessage());
-            }
-        }
-
-
-        @Override
-        public void onGameUpdate(Match match) throws RemoteException {
-
+    public void setChosenScheme (int id) {
+        try {
+            controller.setChosenScheme(id);
+        } catch (NetworkException e) {
+            System.err.println(e.getMessage());
         }
     }
+
+
+    public void useDice (int indexOfDiceInDraftPool, int row, int col) {
+        if (indexOfDiceInDraftPool == -1)
+            indexOfDiceInDraftPool = dice;
+        else
+            dice = indexOfDiceInDraftPool;
+        try {
+            controller.sendUseDiceRequest (indexOfDiceInDraftPool, row, col);
+        } catch (NetworkException e) {
+            System.err.println(e.getMessage());
+        } catch (NotValidException e) {
+            ui.onPlaceDiceNotValid();
+        }
+    }
+
+
+    public void endTurn () {
+        try {
+            controller.endTurn();
+        } catch (NetworkException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+}

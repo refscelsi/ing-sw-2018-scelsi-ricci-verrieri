@@ -11,13 +11,11 @@ public interface PlayerInterface extends Remote {
 
     public int sendLoginRequest(String nickname, RemotePlayer client) throws NotValidNicknameException, NetworkException;
 
-    public void setChosenScheme (int index, int id) throws NetworkException;
+    public void setChosenScheme (int id) throws NetworkException;
 
-    public void sendUseDiceRequest (int index, int indexOfDiceInDraftPool, int row, int col) throws NetworkException, NotValidException;
+    public void sendUseDiceRequest (int indexOfDiceInDraftPool, int row, int col) throws NetworkException, NotValidException;
 
-    public void removeDice (int index, int row, int col) throws NetworkException;
-
-    public void endTurn (int index) throws NetworkException;
+    public void endTurn () throws NetworkException;
 
 
 }

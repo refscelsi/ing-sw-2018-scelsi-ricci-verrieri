@@ -2,12 +2,15 @@ package it.polimi.ing.sw.ui.cli;
 
 import it.polimi.ing.sw.controller.PlayerController;
 import it.polimi.ing.sw.model.Match;
+import it.polimi.ing.sw.model.Player;
 import it.polimi.ing.sw.model.Scheme;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.server.NotValidNicknameException;
 import it.polimi.ing.sw.client.UiUpdate;
 import it.polimi.ing.sw.client.View;
+import it.polimi.ing.sw.util.Constants;
 
+import java.rmi.RemoteException;
 import java.util.*;
 
 
@@ -185,19 +188,25 @@ public class CLI implements UiUpdate {
     }
 
 
+    public void chooseNetwork(String message) {
+        System.out.print(message);
+        inText = scanner.nextLine();
+        controller.chooseNetwork(inText);
+    }
+
+
     /**
      * Scelta dello schema tra i 4 schemi disponibili da parte di un giocatore
      */
-    public void chooseScheme(Match match, int index) {
+    public void chooseScheme(Match match, String nickname, String message) {
         int num;
-        ArrayList<Scheme> schemes = match.getPlayer(index).getSchemesToChoose();
+        ArrayList<Scheme> schemes = match.getPlayer(nickname).getSchemesToChoose();
         showSchemesToChoose(schemes);
         do {
-            System.out.println("Digita il numero dello schema che vuoi scegliere (1, 2, 3 o 4)");
+            System.out.println(message);
             num = scanner.nextInt();
         } while (num < 1 || num > 4);
         controller.setChosenScheme(schemes.get(num-1).getId());   //se per esempio qui c'è un errore, se lo gestisce il PlayerController
-        System.out.println("Ottima scelta! Ora devi attendere che inizi il gioco");
     }
 
     public void showSchemesToChoose (ArrayList<Scheme> schemes) {
@@ -212,62 +221,66 @@ public class CLI implements UiUpdate {
     /**
      * Scelta dell'azione da parte del giocatore
      */
-    public void chooseAction(Match match, int index) {
-        boolean quit = false;
-        boolean diceAlreadyUsed = false;
-        boolean toolCardAlreadyUsed = false;
+    public void chooseAction(Match match, String nickname) {
 
-        while (!quit) {
+        System.out.print("Digita: \n- D se vuoi posizionare un dado sul tuo schema; \n- T se vuoi utilizzare una carta utensile; \n- I se vuoi visualizzare le informazioni degli altri giocatori; \n- E se vuoi terminare il tuo turno; \n- Q se vuoi uscire dalla partita.\n");
+        inText = scanner.nextLine();
 
-            System.out.print("Digita: \n- D se vuoi posizionare un dado sul tuo schema; \n- T se vuoi utilizzare una carta utensile; \n- I se vuoi visualizzare le informazioni degli altri giocatori; \n- E se vuoi terminare il tuo turno; \n- Q se vuoi uscire dalla partita.\n");
-            inText = scanner.nextLine();
+        switch (inText.toLowerCase()) {
 
-            switch (inText.toLowerCase()) {
+            case "q": {
+                System.out.println("Sei sicuro che vuoi uscire dalla partita? Digita S per sì o N per no.");
+                if (scanner.nextLine().toLowerCase().equalsIgnoreCase("s")) {
+                    // TODO: gestire terminazione corretta del programma!
+                    System.out.println("Uscendo dalla partita...");
+                    System.exit(0);
+                }
+                break;
+            }
 
-                case "q":
-                    System.out.println("Sei sicuro che vuoi uscire dalla partita? Digita S per sì o N per no.");
-                    if (scanner.nextLine().toLowerCase().equalsIgnoreCase("s")) {
-                        quit = true;
-                        // TODO: gestire terminazione corretta del programma!
-                        System.out.println("Uscendo dalla partita...");
-                        System.exit(0);
-                    }
-                    break;
+            case "d": {
+                handleUseDice(match, nickname);
+                break;
+            }
 
-                case "d":
-                    if (!diceAlreadyUsed) {
-                        diceAlreadyUsed = handleUseDice(match, index);
-                    }
-                    else {
-                        System.out.println("Hai già utilizzato un dado, non puoi utilizzarne un altro!");
-                    }
-                    break;
+            case "t": {
+                //handleUseToolCard(match);   //TODO: metodi per le carte utensili
+                break;
+            }
 
-                case "t":
-                    if (!toolCardAlreadyUsed) {
-                        //toolCardAlreadyUsed = true;
-                        //handleUseToolCard(match);   //TODO: metodi per le carte utensili
-                    }
-                    else {
-                        System.out.println("Hai già utilizzato una carta utensile, non puoi utilizzarne un'altra!");
-                    }
-                    break;
+            case "i": {
+                printOtherPlayersInfo(match, nickname);
+                break;
+            }
 
-                case "i":
-                    printOtherPlayersInfo(match, index);
-                    break;
+            case "e": {
+                endTurn();
+                break;
+            }
 
-                case "e":
-                    quit = true;
-                    endTurn();
-                    break;
-
-                default:
-                    System.out.println("Scelta non valida");
-                    break;
+            default: {
+                System.out.println("Scelta non valida");
+                break;
             }
         }
     }
+
+
+    public void notMyTurn () {
+        System.out.println("Digita Q se vuoi uscire dalla partita");
+        do {
+            inText = scanner.nextLine();
+            if (inText.equals("q")) {
+                System.out.println("Sei sicuro che vuoi uscire dalla partita? Digita S per sì o N per no.");
+                if (scanner.nextLine().toLowerCase().equalsIgnoreCase("s")) {
+                    // TODO: gestire terminazione corretta del programma!
+                    System.out.println("Uscendo dalla partita...");
+                    System.exit(0);
+                }
+            }
+        } while (!inText.equals("q"));
+    }
+
 
     /////////////////////////////////////////////////////////////////////////////////////////
     // Connessione e disconnessione del Client --> da fare probabilmente
@@ -287,64 +300,54 @@ public class CLI implements UiUpdate {
     // Scelta D: posizionare un dado sullo schema
     /////////////////////////////////////////////////////////////////////////////////////////
 
-    public boolean handleUseDice (Match match, int index) {
+    public void handleUseDice (Match match, String nickname) {
         int dice, row, col;
         do {
             System.out.println("Digita il numero del dado che vuoi posizionare, tra 1 e " + match.getDraftPool().getSize());
             dice = scanner.nextInt();
         } while (dice < 1 || dice > match.getDraftPool().getSize());
         do {
-            System.out.println("Digita il numero della riga dello schema in cui vuoi posizionarlo, tra 1 e 4");
+            System.out.println("Digita il numero della riga dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_ROWS);
             row = scanner.nextInt();
-        } while (row < 1 || row > 4);
+        } while (row < 1 || row > Constants.NUM_ROWS);
         do {
-            System.out.println("Digita il numero della colonna dello schema in cui vuoi posizionarlo, tra 1 e 5");
+            System.out.println("Digita il numero della colonna dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_COLS);
             col = scanner.nextInt();
-        } while (col < 1 || col > 5);
-        try {
-            controller.useDice(dice - 1, row, col);     // qui comunque i dadi verranno piazzati
-            return true;
-        } catch (NotValidException e) {             //TODO: gestire eccezione
-            System.err.println(e.getMessage());
-            removeDices(match, index);
-        }
-        return false;
+        } while (col < 1 || col > Constants.NUM_COLS);
+
+        controller.useDice(dice - 1, row, col);
+
     }
 
 
-    public void removeDices (Match match, int index) {
+    public void retryPlaceDice() {
         int row, col;
-        boolean success = true;
-        System.out.println("Togli dadi fino a tornare a soddisfare le restrizioni di piazzamento");
         do {
-            do {
-                System.out.println("Digita il numero della riga dello schema dove si trova il dado che vuoi togliere, tra 1 e 4");
-                row = scanner.nextInt();
-            } while (row < 1 || row > 4);
-            do {
-                System.out.println("Digita il numero della colonna dello schema dove si trova il dado che vuoi togliere, tra 1 e 5");
-                col = scanner.nextInt();
-            } while (col < 1 || col > 5);
-            try {
-                controller.removeDice(row, col);
-            } catch (NotValidException e) {
-                success = false;
-            }
-        } while (!success);
+            System.out.println("Digita il numero della riga dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_ROWS);
+            row = scanner.nextInt();
+        } while (row < 1 || row > Constants.NUM_ROWS);
+        do {
+            System.out.println("Digita il numero della colonna dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_COLS);
+            col = scanner.nextInt();
+        } while (col < 1 || col > Constants.NUM_COLS);
+
+        controller.useDice(-1, row, col);
     }
+
+
 
 
     /////////////////////////////////////////////////////////////////////////////////////////
     // Scelta I: visualizzare le informazioni degli altri giocatori (nome, schema, segnalini favore)
     /////////////////////////////////////////////////////////////////////////////////////////
 
-    public void printOtherPlayersInfo (Match match, int index) {
-        for (int i=0; i<match.getNumPlayers(); i++) {
-            if (i!=index) {
-                System.out.println(match.getPlayer(i).getNickname());
-                System.out.println(match.getPlayer(i).getNumOfToken());
-                ShowScheme scheme = new ShowScheme(match.getPlayer(i).getScheme());
-                System.out.println("");
+    public void printOtherPlayersInfo (Match match, String nickname) {
+        ArrayList<Player> otherPlayers = match.getOtherPlayers(nickname);
+        for (Player player: otherPlayers) {
+            System.out.println(player.getNickname());
+            System.out.println(player.getNumOfToken());
+            ShowScheme scheme = new ShowScheme(player.getScheme());
+            System.out.println("");
             }
         }
 
@@ -359,8 +362,6 @@ public class CLI implements UiUpdate {
     public void endTurn() {
         controller.endTurn();
     }
-
-
 
 
     /////////////////////////////////////////////////////////////////////////////////////////
@@ -379,17 +380,32 @@ public class CLI implements UiUpdate {
     }
 
     @Override
-    public void onTurnStarted (Match match, int index) {
-        chooseAction(match, index);
+    public void onChooseNetwork (String message) {
+        chooseNetwork(message);
     }
 
     @Override
-    public void onGameUpdate (Match match, int index) {
+    public void onTurnStart (Match match, String nickname) {
+        chooseAction(match, nickname);
+    }
+
+    @Override
+    public void onPlaceDiceNotValid() {
+        retryPlaceDice();
+    }
+
+    @Override
+    public void onTurnEnd() {
+        notMyTurn();
+    }
+
+    @Override
+    public void onGameUpdate (Match match, String nickname) {
         ShowRoundTrack roundTrack = new ShowRoundTrack(match.getRoundTrack());
         ShowPublicObjectives pub = new ShowPublicObjectives(match.getPublicObjectives());
         ShowToolCards tool = new ShowToolCards(match.getToolCards());
         ShowDraftPool draft = new ShowDraftPool(match.getDraftPool());
-        ShowScheme scheme = new ShowScheme(match.getPlayer(index).getScheme());
+        ShowScheme scheme = new ShowScheme(match.getPlayer(nickname).getScheme());
     }
 
     @Override
@@ -402,8 +418,13 @@ public class CLI implements UiUpdate {
     }
 
     @Override
-    public void onSchemeToChoose (Match match, int index) {
-        chooseScheme(match, index);
+    public void onSchemeToChoose (Match match, String nickname, String message) {
+        chooseScheme(match, nickname, message);
+    }
+
+    @Override
+    public void onSuccess (String message) {
+        System.out.println(message);
     }
 
 }
