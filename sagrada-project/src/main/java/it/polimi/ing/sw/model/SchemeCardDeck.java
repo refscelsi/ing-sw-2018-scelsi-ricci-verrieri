@@ -1,8 +1,9 @@
 package it.polimi.ing.sw.model;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class SchemeCardDeck {
+public class SchemeCardDeck implements Serializable{
 
     private ArrayList<SchemeCard> deck;
     private ArrayList<SchemeCard> drawnCards;

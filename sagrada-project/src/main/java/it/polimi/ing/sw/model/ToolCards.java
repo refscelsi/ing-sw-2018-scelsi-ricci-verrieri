@@ -3,12 +3,13 @@ package it.polimi.ing.sw.model;
 import it.polimi.ing.sw.model.toolCard.*;
 import it.polimi.ing.sw.model.exceptions.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
 
 
-public class ToolCards {
+public class ToolCards implements Serializable{
 
     private ArrayList<ToolCard> toolCards;
 

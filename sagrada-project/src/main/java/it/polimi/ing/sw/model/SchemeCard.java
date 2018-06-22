@@ -1,6 +1,8 @@
 package it.polimi.ing.sw.model;
 
-public class SchemeCard {
+import java.io.Serializable;
+
+public class SchemeCard implements Serializable {
    private short id1,id2;
    private Scheme front, back;
 

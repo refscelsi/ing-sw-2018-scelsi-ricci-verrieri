@@ -3,7 +3,9 @@ package it.polimi.ing.sw.model;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.util.Constants;
 
-public class Scheme {
+import java.io.Serializable;
+
+public class Scheme implements Serializable {
 
 	private int id, difficulty;
 	private Box boxes[][];

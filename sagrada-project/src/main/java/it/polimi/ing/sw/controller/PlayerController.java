@@ -10,35 +10,36 @@ import it.polimi.ing.sw.model.exceptions.NotValidException;
 //classe che gestisce gli input dei client e chiama i metodi di PlayerInterface (sulla rete)
 
 public class PlayerController implements PlayerInterface{
+    //riferimento alla partita
     private Match match;
+    //riferimento al player
     private Player player;
+    //riferimento alla view
     private RemotePlayer remotePlayer;
+    //stato del giocatore
+    private PlayerState state;
 
     public PlayerController(Match match, RemotePlayer remotePlayer) {
         this.match=match;
         this.remotePlayer=remotePlayer;
+        this.state=PlayerState.INIZIALIZED;
     }
 
-    @Override
-    public int sendLoginRequest(String nickname, RemotePlayer client) throws NotValidNicknameException, NetworkException {
-        //creo un giocatore con quel nickname
-        //aggiungo il giocatore ai players e ti ritorno l'indice nell'array players
-        //ti aggiugno alla lista degli observer
-        return 0;
+    public void setPlayer(Player player){
+        this.player=player;
     }
 
     @Override
     public void setChosenScheme(int index, int id) throws NetworkException {
+        if(state.equals(PlayerState.INIZIALIZED)){
+        }
     }
-    //è lecita questa implementazione o gli oggetti devo tirarli fuori nel match??
     @Override
     public void sendUseDiceRequest(int index, int indexOfDiceInDraftPool, int row, int col) throws NetworkException, NotValidException {
-        match.useDice(match.getPlayer(index).getScheme().getBoxes()[row][col], match.getDraftPool().getDice(indexOfDiceInDraftPool),match.getPlayer(index).getScheme());
     }
 
     @Override
     public void removeDice(int index, int row, int col) throws NetworkException {
-        match.getPlayer(index).getScheme().getBoxes()[row][col].removeDice();
     }
 
     @Override

@@ -1,9 +1,10 @@
 package it.polimi.ing.sw.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class DraftPool {
+public class DraftPool implements Serializable{
 
     private ArrayList<Dice> draftPool;
 

@@ -3,7 +3,9 @@ package it.polimi.ing.sw.model;
 
 import it.polimi.ing.sw.util.Constants;
 
-public class RoundTrack {
+import java.io.Serializable;
+
+public class RoundTrack implements Serializable{
 
     private DraftPool[] roundTrack;
     private int round = 0;

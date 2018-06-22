@@ -9,38 +9,62 @@ import it.polimi.ing.sw.model.toolCard.*;
 import it.polimi.ing.sw.util.Constants;
 //import it.polimi.ing.sw.server.Observable;
 
+import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.*;
 import java.util.Collections;
 
 
-public class Match {
+public class Match implements Serializable {
 
     private int numPlayers=0, numRound=0;
-    private int[] playersRound;
-    private int firstPlayer;   // primo giocatore del round. Se sono 4 giocatori può essere 0, 1, 2 o 3
-    private int playerPlaying; // indice dell'array playersRound -> giocatore che sta giocando il turno
+    //array ordine players nel round
+    private Player[] playersRound;
+    // primo giocatore del round
+    private Player firstPlayer;
+    // indice dell'array playersRound -> giocatore che sta giocando il turno
+    private Player playerPlaying;
+    //bag della partita
     private Bag bag;
+    //mazzo carte obiettivo
     private ArrayList<ObjectiveCard> publicObjectives;
+    //mazzo toolCards
     private ArrayList<ToolCard> toolCards;
-    private String np1;
+    //riserva della partita
     private DraftPool draftPool;
+    //roundTrack
     private RoundTrack roundTrack;
+    //array coi players della partita
     private ArrayList<Player> players;
+    //array che contiente la classifica dei players
     private ArrayList<Player> ranking;
-
     //array di clientObserver che mi serve per notificare la ui dei cambiamenti avvenuti
-    private ArrayList<ClientObserver> clientUpdates;
+    private ArrayList<RemotePlayer> remotePlayers;
+
+    //hashmap con la corrispondenza player-remoteplayer
+    private HashMap<Player,RemotePlayer> playerMap;
 
 
     public Match() {
+        this.playerMap=new HashMap<Player,RemotePlayer>();
+        this.players=new ArrayList<Player>();
+        this.remotePlayers= new ArrayList<RemotePlayer>();
     }
 
 
 
     // metodi GETTERS
 
-    public Player getPlayer(int index) {
-        return players.get(index);
+    //ritorna un giocatore con un certo nickname
+    public Player getPlayer(String nickname){
+        if(players.size()!=0){
+            for(Player player: players){
+                if(player.getNickname().equals(nickname)){
+                    return player;
+                }
+            }
+        }
+        return null;
     }
 
     public DraftPool getDraftPool() {
@@ -60,7 +84,7 @@ public class Match {
     }
 
     public Player getPlayerPlaying(){
-        return players.get(playerPlaying);
+        return playerPlaying;
     }
 
     public int getNumPlayers() {
@@ -87,14 +111,18 @@ public class Match {
     }
 
 
-    public void addClientUpdate(ClientObserver client){
-        clientUpdates.add(client);
+    public void addRemotePlayer(RemotePlayer client){
+        remotePlayers.add(client);
     }
 
 
-    public void createNewPlayer (String nickname) {
+    public Player login (String nickname,RemotePlayer remotePlayer) {
         numPlayers++;
-        players.add(new Player(nickname));
+        Player player= new Player(nickname);
+        playerMap.put(player,remotePlayer);
+        players.add(player);
+        remotePlayers.add(remotePlayer);
+        return player;
     }
 
 
@@ -102,10 +130,11 @@ public class Match {
     // metodi VARI per gestire la PARTITA (non il singolo turno)
 
 
-    public void startMatch() throws ToolCardException, NotValidException {
+    public void startMatch() throws ToolCardException, NotValidException, RemoteException {
         initializeTable();
         inizializePlayers();
         setColorOfPawns();
+        onGameUpdate();
     }
 
 
@@ -118,28 +147,24 @@ public class Match {
         ToolCards tool = new ToolCards();
         toolCards = tool.getToolCards();
         roundTrack = new RoundTrack();
-        //notifyPublicObjectivesChoosen(publicObjectives);
     }
 
 
-    // all'inizio della partita, inizializzo tutto ciò che riguarda i giocatori
+    // all'inizio della partita, inizializzo tutto ciò che riguarda i players
 
-    public void inizializePlayers(){
+    public void inizializePlayers() {
 
         Collections.shuffle(players);
-        playersRound = new int[numPlayers*2];
+        playersRound = new Player[numPlayers*2];
         SchemeCardDeck schemeCardDeck = new SchemeCardDeck();
         PrivateObjectiveCardDeck privateObjectiveCardDeck = new PrivateObjectiveCardDeck();
         ArrayList<PrivateObjectiveCard> privateObjectives = privateObjectiveCardDeck.drawObjectiveCard(numPlayers);
-        firstPlayer=-1;
-        playerPlaying=-1;
+        playerPlaying= null;
 
         for (int i=0; i<numPlayers; i++) {
             players.get(i).setPrivateObjective(privateObjectives.get(i));
             players.get(i).setSchemesToChoose(schemeCardDeck.drawSchemeCard());
-            //notifyChoiseScheme(schemes,players.get(i));
         }
-
     }
 
 
@@ -151,8 +176,9 @@ public class Match {
             calculateRanking();
         else {
             draftPool = bag.draw(numPlayers);
-            firstPlayer++;
             numRound++;
+            firstPlayer=players.get(0);
+            playerMap.get(firstPlayer).onSetActive();
             if (firstPlayer >= numPlayers)
                 firstPlayer = 0;
             playerPlaying = firstPlayer;
@@ -162,10 +188,10 @@ public class Match {
     }
 
 
-    // all'inizio di ogni round, si costruisce l'array con l'ordine in cui giocheranno i giocatori nel round,
+    // all'inizio di ogni round, si costruisce l'array con l'ordine in cui giocheranno i players nel round,
     // cioè playersRound
 
-    public void changePlayersRound (int firstPlayer) {
+    public void changePlayersRound (Player firstPlayer) {
         int i=0, j;
         while (i<numPlayers) {
             playersRound[i] = i + firstPlayer;
@@ -180,7 +206,7 @@ public class Match {
 
 
     public void changePlayer () {
-        playerPlaying++;
+        playerPlaying=players.
         //notifyNextPlayer(players.get(playersRound[playerPlaying]));
     }
 
@@ -209,7 +235,7 @@ public class Match {
 
     // calcola la classifica finale
 
-    public void calculateRanking() {   // ritorna un array di giocatori ordinato dal punteggio massimo al minimo
+    public void calculateRanking() {   // ritorna un array di players ordinato dal punteggio massimo al minimo
         int scores[] = new int[numPlayers];
         ranking = new ArrayList<Player>();
         int i, j, max, k=1;
@@ -223,18 +249,18 @@ public class Match {
                 if (scores[j] > scores[max])
                     max = j;
                 else if (scores[j]==scores[max])
-                    if (players.get(j).getPrivateObjective().calculateScore(players.get(j).getScheme())>players.get(max).getPrivateObjective().calculateScore(players.get(max).getScheme()))
+                    if (players.get(j).getPrivateObjective().calculateScore(players.get(j).getScheme())> players.get(max).getPrivateObjective().calculateScore(players.get(max).getScheme()))
                         max = j;
-                    else if (players.get(j).getPrivateObjective().calculateScore(players.get(j).getScheme())==players.get(max).getPrivateObjective().calculateScore(players.get(max).getScheme()))
-                        if (players.get(j).getNumOfToken()>players.get(max).getNumOfToken())
+                    else if (players.get(j).getPrivateObjective().calculateScore(players.get(j).getScheme())== players.get(max).getPrivateObjective().calculateScore(players.get(max).getScheme()))
+                        if (players.get(j).getNumOfToken()> players.get(max).getNumOfToken())
                             max = j;
-                        else if (players.get(j).getNumOfToken()==players.get(max).getNumOfToken())
+                        else if (players.get(j).getNumOfToken()== players.get(max).getNumOfToken())
                             while (k<=numPlayers&&!found)
-                                if (players.get(firstPlayer-k)==players.get(j)) {
+                                if (players.get(firstPlayer-k)== players.get(j)) {
                                     max = j;
                                     found = true;
                                 }
-                                else if (players.get(firstPlayer-k)==players.get(max))
+                                else if (players.get(firstPlayer-k)== players.get(max))
                                     found = true;
                 k++;
             }
@@ -248,15 +274,28 @@ public class Match {
     // metodi VARI per gestire il TURNO di un giocatore
 
 
-    public void useDice (Box box, Dice dice, Scheme scheme) throws NotValidException {
+    public void useDice (Box box, Dice dice, Scheme scheme) throws NotValidException, RemoteException {
         scheme.placeDice(box, dice);
         draftPool.removeDice(dice);
-        //ho capito bene??
-        for(ClientObserver client:clientUpdates){
-            client.onGameUpdate();
+        for(RemotePlayer remotePlayer: remotePlayers){
+            remotePlayer.onGameUpdate(this);
         }
     }
 
+
+    // aggiornamenti alle view
+
+    public void onGameUpdate() throws RemoteException {
+        for(RemotePlayer remotePlayer: remotePlayers){
+            remotePlayer.onGameUpdate(this);
+        }
+    }
+
+    public ArrayList<Player> getOtherPlayers(String nickname){
+        ArrayList<Player> otherPlayers=players;
+        otherPlayers.remove(getPlayer(nickname));
+        return otherPlayers;
+    }
 
 
 }
