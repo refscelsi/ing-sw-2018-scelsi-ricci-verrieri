@@ -1,39 +1,39 @@
 package it.polimi.ing.sw.ui.cli;
 
+import it.polimi.ing.sw.controller.PlayerController;
 import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.model.Scheme;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.server.NotValidNicknameException;
-import it.polimi.ing.sw.client.ClientUpdate;
-import it.polimi.ing.sw.client.ClientController;
+import it.polimi.ing.sw.client.UiUpdate;
 
 import java.util.*;
 
 
-public class CLI implements ClientUpdate {
+public class CLI implements UiUpdate {
 
     public Scanner scanner = new Scanner(System.in);
     public String inText;
 
 
-    private ClientController controller;
-    private ClientUpdate ui;
+    private PlayerController controller;
+    private UiUpdate ui;
 
-    public CLI(ClientController controller){
+    public CLI(PlayerController controller){
         this.controller=controller;
     }
 
-    /*public ClientController getController() {
+    /*public PlayerController getController() {
         if (controller == null)
-            controller = new ClientController(getUI());
+            controller = new PlayerController(getUI());
         return controller;
     }*/
 
-    public ClientController getController() {
+    public PlayerController getController() {
         return controller;
     }
 
-    /*public ClientUpdate getUI() {
+    /*public UiUpdate getUI() {
         if (ui == null) {
             ui = new CLI();
         }
@@ -92,7 +92,7 @@ public class CLI implements ClientUpdate {
      * @param clientUI
      */
 
-    /*public ClientController mainClient(String serverAddress, int socketPort, int rmiPort, ClientUpdate clientUI) {
+    /*public PlayerController mainClient(String serverAddress, int socketPort, int rmiPort, UiUpdate clientUI) {
         ui = clientUI;
 
         System.out.print("Digita R per connetterti tramite RMI o S per connetterti tramite Socket (Default: RMI)");
@@ -115,7 +115,7 @@ public class CLI implements ClientUpdate {
         while (!success && attempts > 0) {
             try {
                 attempts--;
-                ClientController controller = getController();
+                PlayerController controller = getController();
                 controller.startClient(inText, serverAddress, socketPort, rmiPort);
                 success = true;
             } catch (ClientException e) {
@@ -178,7 +178,7 @@ public class CLI implements ClientUpdate {
      * Login del Client sul Server.
      */
     public void login() {
-        ClientController controller = getController();
+        PlayerController controller = getController();
         boolean success = true;
         while (!controller.isLogged()) {
             System.out.print("Scegli il tuo nickname: ");
@@ -209,7 +209,7 @@ public class CLI implements ClientUpdate {
             System.out.println("Digita il numero dello schema che vuoi scegliere (1, 2, 3 o 4)");
             num = scanner.nextInt();
         } while (num < 1 || num > 4);
-        controller.setChosenScheme(schemes.get(num-1).getId());   //se per esempio qui c'è un errore, se lo gestisce il ClientController
+        controller.setChosenScheme(schemes.get(num-1).getId());   //se per esempio qui c'è un errore, se lo gestisce il PlayerController
         System.out.println("Ottima scelta! Ora devi attendere che inizi il gioco");
     }
 
@@ -287,12 +287,12 @@ public class CLI implements ClientUpdate {
     /////////////////////////////////////////////////////////////////////////////////////////
 
     /*public void clientConnection() {
-        ClientController controller = getController();
+        PlayerController controller = getController();
         controller.clientConnection();
     }
 
     public void clientDisconnection() {
-        ClientController controller = getController();
+        PlayerController controller = getController();
         controller.clientDisconnection();
     }*/
 
@@ -377,7 +377,7 @@ public class CLI implements ClientUpdate {
 
 
     /////////////////////////////////////////////////////////////////////////////////////////
-    // Metodi che invoca ClientController su ClientUpdate
+    // Metodi che invoca PlayerController su UiUpdate
     /////////////////////////////////////////////////////////////////////////////////////////
 
     @Override

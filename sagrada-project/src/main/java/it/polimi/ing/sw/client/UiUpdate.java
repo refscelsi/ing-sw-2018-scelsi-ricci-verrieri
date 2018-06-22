@@ -5,8 +5,8 @@ import it.polimi.ing.sw.model.*;
 import java.rmi.Remote;
 import java.util.ArrayList;
 
-//interfaccia remota, implementata da ClientController, che riceve gli aggiornamenti dal Model
-public interface ClientUpdate {
+//interfaccia remota, implementata da PlayerController, che riceve gli aggiornamenti dal Model
+public interface UiUpdate {
 
     public void onActionNotValid (String errorCode);
 

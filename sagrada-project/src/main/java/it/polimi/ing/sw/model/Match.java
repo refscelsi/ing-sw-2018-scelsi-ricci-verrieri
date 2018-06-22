@@ -1,17 +1,14 @@
 
 package it.polimi.ing.sw.model;
 
-import it.polimi.ing.sw.client.ClientController;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.model.exceptions.ToolCardException;
 import it.polimi.ing.sw.model.objectiveCard.ObjectiveCard;
 import it.polimi.ing.sw.model.objectiveCard.PrivateObjectiveCard;
 import it.polimi.ing.sw.model.toolCard.*;
-import it.polimi.ing.sw.client.ClientUpdate;
 import it.polimi.ing.sw.util.Constants;
 //import it.polimi.ing.sw.server.Observable;
 
-import java.util.Random;
 import java.util.*;
 import java.util.Collections;
 

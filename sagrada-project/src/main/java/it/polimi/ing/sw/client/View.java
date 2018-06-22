@@ -1,19 +1,16 @@
 package it.polimi.ing.sw.client;
 
-import it.polimi.ing.sw.controller.ControllerInterface;
-import it.polimi.ing.sw.model.ClientObserver;
+import it.polimi.ing.sw.NetworkException;
+import it.polimi.ing.sw.controller.PlayerInterface;
 import it.polimi.ing.sw.model.Match;
+import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.server.NotValidNicknameException;
 import it.polimi.ing.sw.util.Constants;
-import it.polimi.ing.sw.NetworkException;
-import it.polimi.ing.sw.model.exceptions.NotValidException;
 
+import java.rmi.RemoteException;
 import java.util.Scanner;
 
-//classe che gestisce gli input dei client e chiama i metodi di ControllerInterface (sulla rete)
-
-public class ClientController implements ClientUpdate,ClientObserver {
-
+public class View implements UiUpdate, RemoteView {
     /**
      *  ogni giocatore è identificato dal valore dell'attributo index nel model: il giocatore con index=0 avrà come
      *  nickname nicknames.get(0), come schema schemesOfAllPlayers.get(0), come colore di pedina playersColor[0],
@@ -28,14 +25,14 @@ public class ClientController implements ClientUpdate,ClientObserver {
     private boolean isLogged;
     private Match match;
     private boolean isGameStarted;     // flag per vedere se la partita è iniziata: non so se sarà utile o meno
-    private ControllerInterface controller; //il client può chiamare solo i metodi di ControllerInterface
-    private ClientUpdate ui;
+    private PlayerInterface controller; //il client può chiamare solo i metodi di PlayerInterface
+    private UiUpdate ui;
     private String input;
     private static Scanner scanner = new Scanner(System.in);
 
 
-    public ClientController(ControllerInterface controllerInterface) {
-        this.controller=controllerInterface;
+    public View(PlayerInterface controller){
+        this.controller=controller;
         this.ui = ui;
         isLogged = false;
         isGameStarted = false;
@@ -141,7 +138,7 @@ public class ClientController implements ClientUpdate,ClientObserver {
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////
-    // Metodi invocati sul Client Controller (vedi RMIClient, SocketClient)
+    // Metodi invocati sul Client Game (vedi RMIClient, SocketClient)
     ////////////////////////////////////////////////////////////////////////////////////////
 
     /*@Override
@@ -253,8 +250,9 @@ public class ClientController implements ClientUpdate,ClientObserver {
         }
     }
 
+
     @Override
-    public void onGameUpdate() {
-        //onGameUpdate();
+    public void onGameUpdate(Match match) throws RemoteException {
+
     }
 }
