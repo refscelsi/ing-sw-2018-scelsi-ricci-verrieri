@@ -11,21 +11,23 @@ public class Player implements Serializable{
     private int orderInRound;    // ordine che viene assegnato al giocatore nel primo round. Questo numero identifica il giocatore ed è molto più comodo gestire tutta la parte di passaggio da un giocatore all'altro utilizzando questo
     private int numOfToken;
     private int score;
-    private boolean inGame; //true quando sta giocando (posso ricevere i comandi) false altrimenti
+    private boolean isReady;
+    private boolean isLogged;
+    private boolean isOnline; //true quando sta giocando (posso ricevere i comandi) false altrimenti
     private Scheme scheme;
     private PrivateObjectiveCard privateObjective;
     private Color color;
     private ArrayList<Scheme> schemesToChoose;
 
 
-    public Player (String nickname) {
+    public Player (String nickname){
         this.nickname=nickname;
-    }
+        this.isOnline=true;
+        this.isReady=false;
+    };
 
-    //public void login(){}       credo non sia necessario
-
-    public boolean isInGame() {
-        return inGame;
+    public boolean isOnline() {
+        return isOnline;
     }
 
     public int getNumOfToken() {
@@ -64,13 +66,17 @@ public class Player implements Serializable{
         return scheme;
     }
 
+    public boolean getIsReady(){
+        return this.isReady;
+    }
+
     public void setScore(int score) {
         this.score = score;
     }
 
-    /*public void setInGame(boolean inGame) {
-        this.inGame = inGame;
-    }*/
+   public boolean isLogged(){
+        return this.isLogged;
+   }
 
     public void setNumOfToken(int numOfToken) {
         this.numOfToken = numOfToken;
@@ -82,6 +88,7 @@ public class Player implements Serializable{
 
     public void setScheme(Scheme scheme) {
         this.scheme = scheme;
+        this.isReady=true;
     }
 
     public void setColor(Color color) {
@@ -92,14 +99,20 @@ public class Player implements Serializable{
         this.schemesToChoose = schemesToChoose;
     }
 
+    public void setLogged(boolean isLogged){
+        this.isLogged=isLogged;
+    }
 
     public void setNickname(String nickname){
         this.nickname=nickname;
     }
 
-    @Override
-    public String toString() {
-        return "ID:"+this.getNickname()+"\nORDINE"+this.getOrderInRound()+"\nTOKEN"+this.getNumOfToken()+"\nSCORE:"+this.getScore();
+    public void setOnline(){
+        this.isOnline=true;
+    }
+
+    public void setOffline(){
+        this.isOnline=false;
     }
 
 }

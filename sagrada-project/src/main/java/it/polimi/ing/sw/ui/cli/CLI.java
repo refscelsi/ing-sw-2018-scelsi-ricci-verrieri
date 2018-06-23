@@ -1,16 +1,12 @@
 package it.polimi.ing.sw.ui.cli;
 
-import it.polimi.ing.sw.controller.PlayerController;
 import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.model.Player;
 import it.polimi.ing.sw.model.Scheme;
-import it.polimi.ing.sw.model.exceptions.NotValidException;
-import it.polimi.ing.sw.server.NotValidNicknameException;
 import it.polimi.ing.sw.client.UiUpdate;
 import it.polimi.ing.sw.client.View;
 import it.polimi.ing.sw.util.Constants;
 
-import java.rmi.RemoteException;
 import java.util.*;
 
 

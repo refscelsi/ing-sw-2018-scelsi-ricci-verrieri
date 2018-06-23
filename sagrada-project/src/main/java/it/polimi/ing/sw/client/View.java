@@ -1,12 +1,12 @@
 package it.polimi.ing.sw.client;
 
 import it.polimi.ing.sw.NetworkException;
-import it.polimi.ing.sw.controller.GameInterface;
+import it.polimi.ing.sw.controller.LoginInterface;
 import it.polimi.ing.sw.controller.PlayerInterface;
 import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.model.RemotePlayer;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
-import it.polimi.ing.sw.server.NotValidNicknameException;
+import it.polimi.ing.sw.model.exceptions.NotValidNicknameException;
 import it.polimi.ing.sw.util.Constants;
 import it.polimi.ing.sw.ui.cli.CLI;
 
@@ -29,7 +29,7 @@ public class View implements RemotePlayer {
     private Match match;
     private boolean isGameStarted;     // flag per vedere se la partita è iniziata: non so se sarà utile o meno
     private PlayerInterface controller; //il client può chiamare solo i metodi di PlayerInterface
-    private GameInterface gameController;
+    private LoginInterface gameController;
     private UiUpdate ui;
     private String input;
     private static Scanner scanner = new Scanner(System.in);
@@ -37,7 +37,7 @@ public class View implements RemotePlayer {
     private int dice;
 
 
-    public View(GameInterface controller){
+    public View(LoginInterface controller){
         this.gameController=controller;
         isLogged = false;
         isGameStarted = false;

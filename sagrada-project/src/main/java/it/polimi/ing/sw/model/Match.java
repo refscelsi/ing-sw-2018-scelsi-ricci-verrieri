@@ -2,6 +2,7 @@
 package it.polimi.ing.sw.model;
 
 import it.polimi.ing.sw.model.exceptions.NotValidException;
+import it.polimi.ing.sw.model.exceptions.NotValidNicknameException;
 import it.polimi.ing.sw.model.exceptions.ToolCardException;
 import it.polimi.ing.sw.model.objectiveCard.ObjectiveCard;
 import it.polimi.ing.sw.model.objectiveCard.PrivateObjectiveCard;
@@ -20,6 +21,8 @@ public class Match implements Serializable {
     private int numPlayers=0, numRound=0;
     //array ordine players nel round
     private Player[] playersRound;
+    //indice playerPlaying in playersRound
+    private int playersRoundIndex;
     // primo giocatore del round
     private Player firstPlayer;
     // indice dell'array playersRound -> giocatore che sta giocando il turno
@@ -40,7 +43,6 @@ public class Match implements Serializable {
     private ArrayList<Player> ranking;
     //array di clientObserver che mi serve per notificare la ui dei cambiamenti avvenuti
     private ArrayList<RemotePlayer> remotePlayers;
-
     //hashmap con la corrispondenza player-remoteplayer
     private HashMap<Player,RemotePlayer> playerMap;
 
@@ -111,32 +113,77 @@ public class Match implements Serializable {
     }
 
 
-    public void addRemotePlayer(RemotePlayer client){
-        remotePlayers.add(client);
+    //metodi per gestire il LOGIN
+
+    //quando si loggano in almeno 2 setta un boolean a true
+    public void login (String nickname,RemotePlayer remotePlayer) throws NotValidNicknameException, RemoteException, ToolCardException, NotValidException {
+        if(playerMap.size()==0){
+            Player player=new Player(nickname);
+            player.setLogged(true);
+            playerMap.put(player,remotePlayer);
+            players.add(player);
+            remotePlayers.add(remotePlayer);
+            numPlayers++;
+            notifyLogin(player);
+        }
+        else if(playerMap.size()<Constants.MAX_PLAYERS) {
+            if(checkNickname(nickname)) {
+                Player player = new Player(nickname);
+                player.setLogged(true);
+                playerMap.put(player, remotePlayer);
+                players.add(player);
+                remotePlayers.add(remotePlayer);
+                numPlayers++;
+                notifyLogin(player);
+            }
+            else
+                throw new NotValidNicknameException("il nickname scelto è già in uso, scegline un altro!");
+        }
     }
 
+    //controllo sui nickname
+    public boolean checkNickname(String nickname){
+        boolean check=true;
 
-    public Player login (String nickname,RemotePlayer remotePlayer) {
-        numPlayers++;
-        Player player= new Player(nickname);
-        playerMap.put(player,remotePlayer);
-        players.add(player);
-        remotePlayers.add(remotePlayer);
-        return player;
+        for(Player player: players){
+            if(player.getNickname().equals(nickname)){
+                check=false;
+            }
+        }
+        return check;
     }
-
 
 
     // metodi VARI per gestire la PARTITA (non il singolo turno)
 
+    public void checkIsReady() throws ToolCardException, RemoteException, NotValidException {
+        //dovrò aggiungere il timer se sono in due
+        if(playerMap.size()==4){
+            startMatch();
+        }
+        else
+            return;
+    }
+
+    public void checkAllReady(){
+        boolean check=true;
+
+        for(Player player: players){
+            if(!player.getIsReady()==true){
+                check=false;
+            }
+        }
+        if(check){
+            startRound();
+        }
+    }
 
     public void startMatch() throws ToolCardException, NotValidException, RemoteException {
         initializeTable();
         inizializePlayers();
         setColorOfPawns();
-        onGameUpdate();
+        notifyStartedMatch();
     }
-
 
     // inizializzo tutte le cose che riguardano il tavolo di gioco
 
@@ -160,6 +207,7 @@ public class Match implements Serializable {
         PrivateObjectiveCardDeck privateObjectiveCardDeck = new PrivateObjectiveCardDeck();
         ArrayList<PrivateObjectiveCard> privateObjectives = privateObjectiveCardDeck.drawObjectiveCard(numPlayers);
         playerPlaying= null;
+        firstPlayer=null;
 
         for (int i=0; i<numPlayers; i++) {
             players.get(i).setPrivateObjective(privateObjectives.get(i));
@@ -172,19 +220,11 @@ public class Match implements Serializable {
     // chiama il metodo che costruisce l'array playersRound. Se si sono già giocati 10 round, calcola il punteggio.
 
     public void startRound() {
-        if (numRound>=Constants.NUM_ROUNDS)
-            calculateRanking();
-        else {
-            draftPool = bag.draw(numPlayers);
-            numRound++;
-            firstPlayer=players.get(0);
-            playerMap.get(firstPlayer).onSetActive();
-            if (firstPlayer >= numPlayers)
-                firstPlayer = 0;
-            playerPlaying = firstPlayer;
-            changePlayersRound(firstPlayer);
-            //notifyNewRound(players.get(firstPlayer), draftPool);
+        if(numRound>Constants.NUM_ROUNDS){
+
         }
+
+
     }
 
 
@@ -192,17 +232,8 @@ public class Match implements Serializable {
     // cioè playersRound
 
     public void changePlayersRound (Player firstPlayer) {
-        int i=0, j;
-        while (i<numPlayers) {
-            playersRound[i] = i + firstPlayer;
-            if (playersRound[i] >= numPlayers)
-                for (j = 0; i < numPlayers; i++)
-                    playersRound[i]=j;
-            i++;
-        }
-        for (i=0; i<numPlayers; i++)
-            playersRound[i+numPlayers] = playersRound[numPlayers-i];
     }
+
 
 
     public void changePlayer () {
@@ -285,7 +316,7 @@ public class Match implements Serializable {
 
     // aggiornamenti alle view
 
-    public void onGameUpdate() throws RemoteException {
+    public void notifyChangement() throws RemoteException {
         for(RemotePlayer remotePlayer: remotePlayers){
             remotePlayer.onGameUpdate(this);
         }
@@ -297,6 +328,15 @@ public class Match implements Serializable {
         return otherPlayers;
     }
 
+    public void notifyLogin(Player player) throws RemoteException {
+        playerMap.get(player).onPlayerLogged();
+    }
+
+    private void notifyStartedMatch() throws RemoteException {
+        for(RemotePlayer remotePlayer: remotePlayers){
+            remotePlayer.onSchemeToChoose(this);
+        }
+    }
 
 }
 

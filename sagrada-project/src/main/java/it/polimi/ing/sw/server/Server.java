@@ -1,6 +1,6 @@
 package it.polimi.ing.sw.server;
 
-import it.polimi.ing.sw.controller.GameController;
+import it.polimi.ing.sw.controller.LoginController;
 import it.polimi.ing.sw.model.Match;
 
 import java.rmi.Remote;
@@ -16,8 +16,8 @@ public class Server {
         try {
             Registry reg = LocateRegistry.createRegistry(1099);
             Match match= new Match();
-            GameController gameControllerController = new GameController(match);
-            reg.rebind("GameController", (Remote) gameControllerController);
+            LoginController loginControllerController = new LoginController(match);
+            reg.rebind("LoginController", (Remote) loginControllerController);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
