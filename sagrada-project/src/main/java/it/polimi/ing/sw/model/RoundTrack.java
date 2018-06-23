@@ -4,6 +4,7 @@ package it.polimi.ing.sw.model;
 import it.polimi.ing.sw.util.Constants;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class RoundTrack implements Serializable{
 
@@ -63,6 +64,17 @@ public class RoundTrack implements Serializable{
 
         return max;
 
+    }
+
+
+    // ritorna tutti i colori dei dadi presenti sul roundtrack
+
+    public ArrayList<Color> getColorsInRoundTrack() {
+        ArrayList<Color> colors = new ArrayList<Color>();
+        for (int i=0; i<round; i++)
+            for (Color color: roundTrack[i].getColorsInDraftPool())
+                colors.add(color);
+        return colors;
     }
 
 }

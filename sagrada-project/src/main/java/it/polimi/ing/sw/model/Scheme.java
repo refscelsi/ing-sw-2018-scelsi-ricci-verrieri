@@ -7,13 +7,14 @@ import java.io.Serializable;
 
 public class Scheme implements Serializable {
 
-	private int id, difficulty;
+	private int id, idRetro, difficulty;
 	private Box boxes[][];
 	private boolean isEmpty;
 
 
-	public Scheme( int id, int difficulty, Box boxes[][] ) {
+	public Scheme( int id, int idRetro, int difficulty, Box boxes[][] ) {
 		this.id = id;
+		this.idRetro = idRetro;
 		this.difficulty = difficulty;
 		this.boxes = boxes;
 		this.isEmpty = true;
@@ -238,6 +239,10 @@ public class Scheme implements Serializable {
 		return id;
 	}
 
+	public int getIdRetro() {
+	    return idRetro;
+    }
+
 	public void setDifficulty( short difficulty ) {
 		this.difficulty = difficulty;
 	}
@@ -259,7 +264,4 @@ public class Scheme implements Serializable {
 		return boxes[row][col];
 	}
 
-	public boolean checkDiceAdjacent( Box box, Dice dice, Boolean condition ) {
-		return true;
-	}
 }

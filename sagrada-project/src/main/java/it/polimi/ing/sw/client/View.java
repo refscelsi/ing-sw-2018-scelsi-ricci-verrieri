@@ -28,6 +28,7 @@ public class View implements RemotePlayer {
     private boolean isPlaying;     // flag per vedere se è il turno del giocatore a cui appartiene questa view
     private Match match;
     private boolean isGameStarted;     // flag per vedere se la partita è iniziata: non so se sarà utile o meno
+    private boolean isOnline;
     private PlayerInterface controller; //il client può chiamare solo i metodi di PlayerInterface
     private LoginInterface gameController;
     private UiUpdate ui;
@@ -82,6 +83,14 @@ public class View implements RemotePlayer {
 
     public boolean isPlaying() {
         return isPlaying;
+    }
+
+    public boolean isOnline() {
+        return isOnline;
+    }
+
+    public String getNickname() {
+        return nickname;
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////

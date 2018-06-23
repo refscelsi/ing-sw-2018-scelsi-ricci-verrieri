@@ -1,36 +1,42 @@
 package it.polimi.ing.sw.model.toolCard;
 
 import it.polimi.ing.sw.model.Dice;
+import it.polimi.ing.sw.model.DraftPool;
+import it.polimi.ing.sw.model.RoundTrack;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.model.exceptions.ToolCardException;
 
 
 public class PinzaSgrossatrice extends ToolCard {
 
-    final int id=1;
+    private final int id=1;
 
 
-    public PinzaSgrossatrice() throws ToolCardException, NotValidException {
+    public PinzaSgrossatrice() {
         super();
     }
 
 
-    public void execute(Dice dice, char operation) throws ToolCardException {
-        int value = dice.getNumFacciaUp();
+    public void execute(DraftPool draftPool, int indexInDraftPool, char operation) throws NotValidException {
+        int value = draftPool.getDice(indexInDraftPool).getNumFacciaUp();
 
         switch(operation){
             case '+':
-                if(value<6 && value>0)
-                    dice.setNumFacciaUp(value++);
+                if(value<6 && value>0) {
+                    draftPool.getDice(indexInDraftPool).setNumFacciaUp(value++);
+                    incrementNumOfTokens();
+                }
                 else
-                    throw new ToolCardException("Non puoi cambiare un 6 in 1");
+                    throw new NotValidException("Non puoi cambiare un 6 in 1");
                 break;
 
             case '-':
-                if(value>1 && value<7)
-                    dice.setNumFacciaUp(value--);
+                if(value>1 && value<7) {
+                    draftPool.getDice(indexInDraftPool).setNumFacciaUp(value--);
+                    incrementNumOfTokens();
+                }
                 else
-                    throw new ToolCardException("Non puoi cambiare un 1 in 6");
+                    throw new NotValidException("Non puoi cambiare un 1 in 6");
                 break;
         }
     }

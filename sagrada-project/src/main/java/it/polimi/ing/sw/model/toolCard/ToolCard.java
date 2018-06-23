@@ -11,7 +11,7 @@ public abstract class ToolCard {
     private String name;
     private String description;
 
-    public ToolCard () throws ToolCardException, NotValidException {
+    public ToolCard () {
         numOfTokens = 1;
     }
 
@@ -24,8 +24,8 @@ public abstract class ToolCard {
         return numOfTokens;
     }
 
-    public void setNumOfTokens (int num) {
-        numOfTokens = num;
+    public void incrementNumOfTokens () {
+        numOfTokens = 2;
     }
 
     public int getId(){

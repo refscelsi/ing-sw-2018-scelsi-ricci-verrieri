@@ -67,5 +67,22 @@ public class DraftPool implements Serializable{
         return draftPool.get(index);
     }
 
+
+    // inserisce un dado in una determinata posizione
+
+    public void setDice(Dice dice, int position) {
+        draftPool.get(position).setDice(dice.getNumFacciaUp(), dice.getDiceColor());
+    }
+
+
+    // ritorna tutti i colori dei dadi presenti nella draftpool
+
+    public ArrayList<Color> getColorsInDraftPool() {
+        ArrayList<Color> colors = new ArrayList<Color>();
+        for (Dice dice: draftPool)
+            colors.add(dice.getDiceColor());
+        return colors;
+    }
+
 }
 

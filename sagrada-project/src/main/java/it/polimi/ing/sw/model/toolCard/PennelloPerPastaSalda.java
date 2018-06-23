@@ -10,18 +10,17 @@ import it.polimi.ing.sw.model.exceptions.ToolCardException;
 
 public class PennelloPerPastaSalda extends ToolCard {
 
-    final int id=6;
+    private final int id=6;
 
 
-    public PennelloPerPastaSalda() throws ToolCardException, NotValidException {
+    public PennelloPerPastaSalda() {
         super();
     }
 
 
-    /* ancora meglio se lo faccio nel controller direttamente
-
-    public void execute(DiceGUI dice) throws ToolCardException, NotValidException {
-        dice.throwDice();
-    }*/
+    public void execute(DraftPool draftPool, int indexInDraftPool) {
+        draftPool.getDice(indexInDraftPool).throwDice();
+        incrementNumOfTokens();
+    }
 
 }

@@ -1,19 +1,36 @@
 package it.polimi.ing.sw.model.toolCard;
 
+import it.polimi.ing.sw.model.Player;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.model.exceptions.ToolCardException;
+
+import java.util.ArrayList;
 
 
 public class TenagliaARotelle extends ToolCard {
 
-    final int id=8;
+    private final int id=8;
 
 
-    public TenagliaARotelle() throws ToolCardException, NotValidException {
+    public TenagliaARotelle() {
         super();
     }
 
-
-    // questa carta è gestita dal controller: cambierà lo stato del giocatore allo stato in cui ancora non ha piazzato un dado e modificherà l'array dei giocatori del round
+    public void execute (Player[] playersRound, int playersRoundIndex){
+        Player temp, succ;
+        succ=playersRound[playersRoundIndex+1];
+        playersRound[playersRoundIndex+1] = playersRound[playersRoundIndex];
+        for (int j = playersRoundIndex+2; j < playersRound.length; j++) {
+            if (playersRound[j] != playersRound[playersRoundIndex]) {
+                temp = playersRound[j];
+                playersRound[j] = succ;
+                succ = temp;
+            } else {
+                playersRound[j] = succ;
+                j = playersRound.length;
+            }
+            incrementNumOfTokens();
+        }
+    }
 
 }

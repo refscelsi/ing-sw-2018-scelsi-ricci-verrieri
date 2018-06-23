@@ -7,10 +7,10 @@ import it.polimi.ing.sw.model.exceptions.ToolCardException;
 
 public class AlesatorePerLaminaDiRame extends ToolCard{
 
-    final int id=3;
+    private final int id=3;
 
 
-    public AlesatorePerLaminaDiRame () throws ToolCardException, NotValidException {
+    public AlesatorePerLaminaDiRame () {
         super();
     }
 
@@ -25,9 +25,10 @@ public class AlesatorePerLaminaDiRame extends ToolCard{
                 throw new ToolCardException("Non puoi posizionare un dado in una casella già piena!");
             else {
                 Dice dice = sourceBox.getDice();
-                if (scheme.checkBoxColor(destBox, dice) && scheme.checkDiceAdjacent(destBox, dice, true)) {
+                if (scheme.checkBoxColor(destBox, dice) && scheme.checkIfHasDiceAdjacent(destBox, dice, 1)) {
                     destBox.placeDice(dice);
                     sourceBox.removeDice();
+                    incrementNumOfTokens();
                 } else
                     throw new ToolCardException("Non stai rispettando le condizioni di piazzamento!");
             }

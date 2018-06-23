@@ -35,6 +35,11 @@ public class Dice implements Serializable{
         this.numFacciaUp = numFacciaUp;
     }
 
+    public void setDice(int numFacciaUp, Color color) {
+        this.numFacciaUp = numFacciaUp;
+        diceColor = color;
+    }
+
 
     @Override
     public String toString() {

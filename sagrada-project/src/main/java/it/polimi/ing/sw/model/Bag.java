@@ -58,12 +58,16 @@ public class Bag {
     public DraftPool draw (int numPlayers){
         int bound=(numPlayers*2)+1;
         DraftPool draftPool = new DraftPool();
-        Dice dice = new Dice();
+        Dice dice;
         for(int i=0;i<bound;i++){
             dice = drawDice();
             draftPool.addDice(dice);
         }
         return draftPool;
+    }
+
+    public void addDice (Dice dice) {
+        dices.add(dice);
     }
 
 

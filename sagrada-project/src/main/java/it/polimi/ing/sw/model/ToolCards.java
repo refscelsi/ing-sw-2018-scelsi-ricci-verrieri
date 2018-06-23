@@ -14,7 +14,7 @@ public class ToolCards implements Serializable{
     private ArrayList<ToolCard> toolCards;
 
 
-    public ToolCards() throws ToolCardException, NotValidException{
+    public ToolCards() {
         toolCards= new ArrayList<ToolCard>();
         ArrayList<Integer> values= new ArrayList<Integer>();
         for(int i=1; i<13;i++){
@@ -40,7 +40,7 @@ public class ToolCards implements Serializable{
     }
 
 
-    public void addCard(int id) throws ToolCardException, NotValidException {
+    public void addCard(int id) {
         ToolCard toolCard;
         switch (id){
             case 1:
