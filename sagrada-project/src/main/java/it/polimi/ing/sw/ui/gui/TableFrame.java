@@ -1,7 +1,6 @@
 package it.polimi.ing.sw.ui.gui;
 
 import it.polimi.ing.sw.App;
-import it.polimi.ing.sw.model.Dice;
 import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.model.Scheme;
 
@@ -16,6 +15,9 @@ public class TableFrame extends javax.swing.JFrame {
     private RoundTrack roundTrack;
     private VetrataPanel player1, player2, player3, player4;
     private DiceFieldPanel diceFieldPanel;
+    private SumPlayerPanel sumPlayer1, sumPlayer2, sumPlayer3, sumPlayer4;
+    private int dimXcard;
+    private int dimYcard;
 
     public TableFrame(/*Match match*/) {
         //this.match = match;
@@ -23,11 +25,15 @@ public class TableFrame extends javax.swing.JFrame {
         toolCardList = new ArrayList<>();
         objCardList = new ArrayList<>();
 
+        dimXcard = 173;
+        dimYcard = 245;
+
         initComponents();
         setLocationRelativeTo(null);
         setIcons();
 
         addVetratePlayers();
+        addSumsPlayer();
         addRoundTrack();
         addDiceFieldPAnel();
 
@@ -93,6 +99,28 @@ public class TableFrame extends javax.swing.JFrame {
         toolCardList.get(2).addToken(2);
     }
 
+    public static Match getMatch(){
+        return match;
+    }
+
+    private void addSumsPlayer() {
+        sumPlayer1 = new SumPlayerPanel();
+        backgroundTableFRameLabel.add(sumPlayer1);
+        sumPlayer1.setBounds(10, 10, 85, 80);
+
+        sumPlayer2 = new SumPlayerPanel();
+        backgroundTableFRameLabel.add(sumPlayer2);
+        sumPlayer2.setBounds(105, 10, 85, 80);
+
+        sumPlayer3 = new SumPlayerPanel();
+        backgroundTableFRameLabel.add(sumPlayer3);
+        sumPlayer3.setBounds(830, 10, 85, 80);
+
+        sumPlayer4 = new SumPlayerPanel();
+        backgroundTableFRameLabel.add(sumPlayer4);
+        sumPlayer4.setBounds(925, 10, 85, 80);
+    }
+
     private void addVetratePlayers() {
         player1 = new VetrataPanel();
         backgroundTableFRameLabel.add(player1);
@@ -123,7 +151,7 @@ public class TableFrame extends javax.swing.JFrame {
         roundTrack.setBounds(207, 20, 610, 70);
     }
 
-    public void setIcons() {
+    private void setIcons() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/sagrada.png")));
         this.setTitle("Sagrada Boardgame");
     }
@@ -198,11 +226,11 @@ public class TableFrame extends javax.swing.JFrame {
         App.menu.setVisible(true);
     }
 
-    public void setToolCards(String[] id) {
+    private void setToolCards(String[] id) {
         toolCardPanel.setLayout(null);
         //toolCardPanel.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         for (int i = 0; i < 3; i++) {
-            CardField schemeCard = new CardField(id[i], "tc/");
+            CardField schemeCard = new CardField(id[i], "tc/", dimXcard, dimYcard);
             toolCardPanel.add(schemeCard);
             toolCardList.add(schemeCard);
             schemeCard.setBounds(i * (173), 0, 173, 245);
@@ -210,11 +238,11 @@ public class TableFrame extends javax.swing.JFrame {
         }
     }
 
-    public void setOBJCards(String[] id) {
+    private void setOBJCards(String[] id) {
         objCardPanel.setLayout(null);
         //objCardPanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         for (int i = 0; i < 3; i++) {
-            CardField schemeCard = new CardField(id[i], "po/");
+            CardField schemeCard = new CardField(id[i], "po/", dimXcard, dimYcard);
             objCardPanel.add(schemeCard);
             objCardList.add(schemeCard);
             schemeCard.setBounds(i * (173), 0, 173, 245);

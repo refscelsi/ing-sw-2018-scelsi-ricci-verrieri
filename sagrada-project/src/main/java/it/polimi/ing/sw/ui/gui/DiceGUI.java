@@ -16,7 +16,6 @@ public class DiceGUI extends javax.swing.JPanel {
     private Box box;
 
     private int dimXdice;
-
     private int dimYdice;
 
     public DiceGUI(int dimXdice, int dimYdice) {

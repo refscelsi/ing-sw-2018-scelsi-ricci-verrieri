@@ -10,8 +10,12 @@ public class CardField extends javax.swing.JPanel {
     private static final String IMAGE_PATH = "/img/";
     private static String FINAL_IMAGE_PATH;
     private int token;
+    private int dimXcard;
+    private int dimYcard;
 
-    public CardField() {
+    public CardField(int dimXcard, int dimYcard) {
+        this.dimXcard=dimXcard;
+        this.dimYcard=dimYcard;
         initComponents();
         FINAL_IMAGE_PATH = IMAGE_PATH.concat("po/");
         setIcons(FINAL_IMAGE_PATH.concat("po01.png"));//default icon
@@ -20,7 +24,9 @@ public class CardField extends javax.swing.JPanel {
     }
 
     //cardType should be defined as "po/" or "tc/"
-    public CardField(String cardName, String cardType) {
+    public CardField(String cardName, String cardType,int dimXcard, int dimYcard) {
+        this.dimXcard=dimXcard;
+        this.dimYcard=dimYcard;
         initComponents();
         FINAL_IMAGE_PATH = IMAGE_PATH.concat(cardType);
         setIcons(FINAL_IMAGE_PATH.concat(cardName));
@@ -39,13 +45,13 @@ public class CardField extends javax.swing.JPanel {
 
         tokenLabel.setFont(new java.awt.Font("Elephant", 3, 14)); // NOI18N
         tokenLabel.setForeground(new java.awt.Color(51, 51, 0));
-        add(tokenLabel);
+        cardFieldLabel.add(tokenLabel);
         tokenLabel.setBounds(150, 220, 20, 20);
 
         cardFieldLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/po/po01.png"))); // NOI18N
         cardFieldLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cardFieldLabel.setMinimumSize(new java.awt.Dimension(173, 245));
-        cardFieldLabel.setPreferredSize(new java.awt.Dimension(173, 245));
+        cardFieldLabel.setMinimumSize(new java.awt.Dimension(dimXcard, dimYcard));
+        cardFieldLabel.setPreferredSize(new java.awt.Dimension(dimXcard, dimYcard));
         cardFieldLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 cardFieldLabelMouseEntered(evt);
@@ -55,7 +61,7 @@ public class CardField extends javax.swing.JPanel {
             }
         });
         add(cardFieldLabel);
-        cardFieldLabel.setBounds(0, 0, 173, 245);
+        cardFieldLabel.setBounds(0, 0, dimXcard, dimYcard);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cardFieldLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cardFieldLabelMouseEntered
@@ -66,11 +72,11 @@ public class CardField extends javax.swing.JPanel {
         cardFieldLabel.setBorder(null);
     }//GEN-LAST:event_cardFieldLabelMouseExited
 
-    public void setIcons(String name) {
+    private void setIcons(String name) {
         System.out.println(FINAL_IMAGE_PATH);
 
         ImageIcon icon = new ImageIcon(getClass().getResource(name));
-        Image scaledImage = icon.getImage().getScaledInstance(173, 242, Image.SCALE_DEFAULT);
+        Image scaledImage = icon.getImage().getScaledInstance(dimXcard, dimYcard /*242*/, Image.SCALE_DEFAULT);
         icon.setImage(scaledImage);
         cardFieldLabel.setIcon(icon);
         cardFieldLabel.repaint();
