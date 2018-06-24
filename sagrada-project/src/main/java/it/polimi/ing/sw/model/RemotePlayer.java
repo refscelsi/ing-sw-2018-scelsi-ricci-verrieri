@@ -18,4 +18,6 @@ public interface RemotePlayer extends Remote {
     public void onGameEnd(Match match) throws RemoteException;
 
     public void onPlayerLogged() throws RemoteException;
+
+    public void onSetPlaying() throws RemoteException;
 }

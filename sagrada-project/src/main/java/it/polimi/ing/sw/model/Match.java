@@ -165,7 +165,7 @@ public class Match implements Serializable {
             return;
     }
 
-    public void checkAllReady(){
+    public void checkAllReady() throws RemoteException {
         boolean check=true;
 
         for(Player player: players){
@@ -197,12 +197,10 @@ public class Match implements Serializable {
     }
 
 
-    // all'inizio della partita, inizializzo tutto ciò che riguarda i players
+    // all'inizio della partita, inizializzo per ogni player di players le carte schema da scegliere e le carte obiettivo privato
 
     public void inizializePlayers() {
 
-        Collections.shuffle(players);
-        playersRound = new Player[numPlayers*2];
         SchemeCardDeck schemeCardDeck = new SchemeCardDeck();
         PrivateObjectiveCardDeck privateObjectiveCardDeck = new PrivateObjectiveCardDeck();
         ArrayList<PrivateObjectiveCard> privateObjectives = privateObjectiveCardDeck.drawObjectiveCard(numPlayers);
@@ -217,14 +215,28 @@ public class Match implements Serializable {
 
 
     // inizia un nuovo round: si estraggono i dadi, si stabilisce il primo giocatore e si
-    // chiama il metodo che costruisce l'array playersRound. Se si sono già giocati 10 round, calcola il punteggio.
-
-    public void startRound() {
-        if(numRound>Constants.NUM_ROUNDS){
-
+    // chiama il metodo che costruisce l'array playersRound.
+    //se è il primo round decido a caso i turni dei giocatori
+    public void startRound() throws RemoteException {
+        if(numRound==0){
+            draftPool=bag.draw(numPlayers*2);
+            Collections.shuffle(players);
+            playersRound= new Player[numPlayers*2];
+            firstPlayer=players.get(0);
+            createRoundPlayers(0);
+            playerPlaying=firstPlayer;
+            playersRoundIndex=0;
+            notifyStartTurn(firstPlayer);
+            //notifico anche gli altri??
         }
-
-
+        else{
+            draftPool=bag.draw(numPlayers*2);
+            changePlayersRound(firstPlayer);
+            firstPlayer=playersRound[0];
+            playerPlaying=firstPlayer;
+            notifyStartTurn(firstPlayer);
+            //notifico anche gli altri??
+        }
     }
 
 
@@ -232,21 +244,48 @@ public class Match implements Serializable {
     // cioè playersRound
 
     public void changePlayersRound (Player firstPlayer) {
+        int first=players.indexOf(firstPlayer);
+        if(first<numPlayers-1){
+            firstPlayer=players.get(first+1);
+            createRoundPlayers(first+1);
+        }
+        if(first==numPlayers-1){
+            firstPlayer=players.get(0);
+            createRoundPlayers(0);
+        }
     }
 
+    public void createRoundPlayers(int firstPlayerIndex){
+        int first=firstPlayerIndex;
 
+        for(int i=0; first<numPlayers;i++){
+            playersRound[i]=players.get(first);
+            playersRound[((numPlayers*2)-1)-i]=players.get(first);
+            first++;
+        }
 
-    public void changePlayer () {
-        playerPlaying=players.
-        //notifyNextPlayer(players.get(playersRound[playerPlaying]));
+    }
+
+    public void changePlayer () throws RemoteException {
+        if(playersRoundIndex<numPlayers-1) {
+            playersRoundIndex++;
+            playerPlaying = playersRound[playersRoundIndex];
+            notifyStartTurn(playerPlaying);
+        }
+        else if(playersRoundIndex==numPlayers-1){
+            endRound();
+        }
     }
 
 
     // termina il turno e si chiama il metodo che inizia un nuovo turno
 
-    public void endRound(){
+    public void endRound() throws RemoteException {
         roundTrack.addDicesRound(draftPool);
-        startRound();
+        numRound++;
+        if(numRound==Constants.NUM_ROUNDS+1) {
+            calculateRanking();
+        }
     }
 
 
@@ -287,11 +326,11 @@ public class Match implements Serializable {
                             max = j;
                         else if (players.get(j).getNumOfToken()== players.get(max).getNumOfToken())
                             while (k<=numPlayers&&!found)
-                                if (players.get(firstPlayer-k)== players.get(j)) {
+                                if (players.get(players.indexOf(firstPlayer)-k)== players.get(j)) {
                                     max = j;
                                     found = true;
                                 }
-                                else if (players.get(firstPlayer-k)== players.get(max))
+                                else if (players.get(players.indexOf(firstPlayer)-k)== players.get(max))
                                     found = true;
                 k++;
             }
@@ -336,6 +375,10 @@ public class Match implements Serializable {
         for(RemotePlayer remotePlayer: remotePlayers){
             remotePlayer.onSchemeToChoose(this);
         }
+    }
+
+    private void notifyStartTurn(Player player) throws RemoteException {
+        playerMap.get(player).onSetPlaying();
     }
 
 }
