@@ -1,266 +1,246 @@
 package it.polimi.ing.sw.ui.gui;
 
-import java.awt.Toolkit;
+import it.polimi.ing.sw.model.SchemeCard;
+
+import java.awt.*;
 
 public class ChooseSchemeForm extends javax.swing.JFrame {
 
-    public ChooseSchemeForm() {
+    private SchemeCard cardA, cardB;
+    private VetrataPanel vetrataPanelA, vetrataPanelB, vetrataPanelC, vetrataPanelD;
+
+    public ChooseSchemeForm(SchemeCard cardA, SchemeCard cardB) {
+        this.cardA = cardA;
+        this.cardB = cardB;
+
         initComponents();
         setLocationRelativeTo(null);
         setIcons();
+        setTexts();
+
+        setVetrataPanel();
+    }
+
+    private void setVetrataPanel() {
+        vetrataPanelA= new VetrataPanel();
+        vetrataPanelA.fillScheme(cardA.getA());
+        schemeCardPanel1.add(vetrataPanelA);
+        vetrataPanelA.setBounds(13,49,203,287);
+
+        vetrataPanelB= new VetrataPanel();
+        vetrataPanelB.fillScheme(cardA.getBack());
+        schemeCardPanel1.add(vetrataPanelB);
+        vetrataPanelB.setBounds(228,49,203,287);
+
+        vetrataPanelC= new VetrataPanel();
+        vetrataPanelC.fillScheme(cardB.getA());
+        schemeCardPanel2.add(vetrataPanelC);
+        vetrataPanelC.setBounds(13,49,203,287);
+
+        vetrataPanelD= new VetrataPanel();
+        vetrataPanelD.fillScheme(cardB.getBack());
+        schemeCardPanel2.add(vetrataPanelD);
+        vetrataPanelD.setBounds(228,49,203,287);
+    }
+
+    private void setTexts() {
+        buttonA.setText("Select Scheme: " + cardA.getId1());
+        buttonB.setText("Select Scheme: " + cardA.getId2());
+        buttonC.setText("Select Scheme: " + cardB.getId1());
+        buttonD.setText("Select Scheme: " + cardB.getId2());
+
+        nameSchemeLabel1.setText(String.valueOf("ID: " + cardA.getA().getId()));
+        nameSchemeLabel2.setText(String.valueOf("ID: " + cardA.getBack().getId()));
+        nameSchemeLabel3.setText(String.valueOf("ID: " + cardB.getA().getId()));
+        nameSchemeLabel4.setText(String.valueOf("ID: " + cardB.getBack().getId()));
+
+        diffSchemeLabel1.setText(String.valueOf("Diff: " + cardA.getA().getDifficulty()));
+        diffSchemeLabel2.setText(String.valueOf("Diff: " + cardA.getBack().getDifficulty()));
+        diffSchemeLabel3.setText(String.valueOf("Diff: " + cardB.getA().getDifficulty()));
+        diffSchemeLabel4.setText(String.valueOf("Diff: " + cardB.getBack().getDifficulty()));
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel6 = new javax.swing.JPanel();
-        jPanel7 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jPanel8 = new javax.swing.JPanel();
-        jPanel9 = new javax.swing.JPanel();
-        jPanel10 = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
+        schemeCardPanel1 = new javax.swing.JPanel();
+        nameSchemeLabel1 = new javax.swing.JLabel();
+        diffSchemeLabel1 = new javax.swing.JLabel();
+        nameSchemeLabel2 = new javax.swing.JLabel();
+        diffSchemeLabel2 = new javax.swing.JLabel();
+        nameSchemeCardLabel1 = new javax.swing.JLabel();
+        buttonA = new javax.swing.JButton();
+        buttonB = new javax.swing.JButton();
+        schemeCardPanel2 = new javax.swing.JPanel();
+        nameSchemeLabel3 = new javax.swing.JLabel();
+        diffSchemeLabel3 = new javax.swing.JLabel();
+        nameSchemeLabel4 = new javax.swing.JLabel();
+        diffSchemeLabel4 = new javax.swing.JLabel();
+        nameSchemeCardLabel2 = new javax.swing.JLabel();
+        buttonC = new javax.swing.JButton();
+        buttonD = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
+        schemeCardPanel1.setBackground(new java.awt.Color(204, 204, 204));
+        schemeCardPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        schemeCardPanel1.setLayout(null);
 
-        jPanel2.setBackground(new java.awt.Color(255, 51, 51));
+        nameSchemeLabel1.setFont(new java.awt.Font("Eras Demi ITC", 1, 12)); // NOI18N
+        nameSchemeLabel1.setForeground(new java.awt.Color(51, 51, 51));
+        nameSchemeLabel1.setText("nameSchemeA");
+        schemeCardPanel1.add(nameSchemeLabel1);
+        nameSchemeLabel1.setBounds(13, 29, 96, 14);
 
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 203, Short.MAX_VALUE)
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 287, Short.MAX_VALUE)
-        );
+        diffSchemeLabel1.setFont(new java.awt.Font("Eras Demi ITC", 1, 12)); // NOI18N
+        diffSchemeLabel1.setForeground(new java.awt.Color(51, 51, 51));
+        diffSchemeLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        diffSchemeLabel1.setText("diff");
+        schemeCardPanel1.add(diffSchemeLabel1);
+        diffSchemeLabel1.setBounds(146, 29, 70, 14);
 
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 203, Short.MAX_VALUE)
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 287, Short.MAX_VALUE)
-        );
+        nameSchemeLabel2.setFont(new java.awt.Font("Eras Demi ITC", 1, 12)); // NOI18N
+        nameSchemeLabel2.setForeground(new java.awt.Color(51, 51, 51));
+        nameSchemeLabel2.setText("nameScemeB");
+        schemeCardPanel1.add(nameSchemeLabel2);
+        nameSchemeLabel2.setBounds(230, 30, 96, 14);
 
-        jLabel5.setText("jLabel1");
-        jLabel5.setOpaque(true);
+        diffSchemeLabel2.setFont(new java.awt.Font("Eras Demi ITC", 1, 12)); // NOI18N
+        diffSchemeLabel2.setForeground(new java.awt.Color(51, 51, 51));
+        diffSchemeLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        diffSchemeLabel2.setText("diff");
+        schemeCardPanel1.add(diffSchemeLabel2);
+        diffSchemeLabel2.setBounds(361, 29, 70, 14);
 
-        jLabel6.setText("jLabel1");
-        jLabel6.setOpaque(true);
+        nameSchemeCardLabel1.setFont(new java.awt.Font("Eras Demi ITC", 1, 12)); // NOI18N
+        nameSchemeCardLabel1.setForeground(new java.awt.Color(51, 51, 51));
+        nameSchemeCardLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        nameSchemeCardLabel1.setText("Scheme Card A");
+        schemeCardPanel1.add(nameSchemeCardLabel1);
+        nameSchemeCardLabel1.setBounds(147, 13, 149, 14);
 
-        jLabel7.setText("jLabel1");
-        jLabel7.setOpaque(true);
+        buttonA.setFont(new java.awt.Font("Eras Demi ITC", 2, 12)); // NOI18N
+        buttonA.setText("button A");
+        buttonA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonAActionPerformed(evt);
+            }
+        });
+        schemeCardPanel1.add(buttonA);
+        buttonA.setBounds(13, 342, 203, 24);
 
-        jLabel8.setText("jLabel1");
-        jLabel8.setOpaque(true);
+        buttonB.setFont(new java.awt.Font("Eras Demi ITC", 2, 12)); // NOI18N
+        buttonB.setText("button B");
+        buttonB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonBActionPerformed(evt);
+            }
+        });
+        schemeCardPanel1.add(buttonB);
+        buttonB.setBounds(228, 342, 203, 24);
 
-        jLabel9.setText("jLabel9");
-        jLabel9.setOpaque(true);
+        schemeCardPanel2.setBackground(new java.awt.Color(204, 204, 204));
+        schemeCardPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        schemeCardPanel2.setLayout(null);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(74, 74, 74)
-                        .addComponent(jLabel8)))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(142, 142, 142))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
+        nameSchemeLabel3.setFont(new java.awt.Font("Eras Demi ITC", 1, 12)); // NOI18N
+        nameSchemeLabel3.setForeground(new java.awt.Color(51, 51, 51));
+        nameSchemeLabel3.setText("nameSchemeC");
+        schemeCardPanel2.add(nameSchemeLabel3);
+        nameSchemeLabel3.setBounds(13, 29, 96, 14);
 
-        jButton1.setText("jButton1");
+        diffSchemeLabel3.setFont(new java.awt.Font("Eras Demi ITC", 1, 12)); // NOI18N
+        diffSchemeLabel3.setForeground(new java.awt.Color(51, 51, 51));
+        diffSchemeLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        diffSchemeLabel3.setText("diff");
+        schemeCardPanel2.add(diffSchemeLabel3);
+        diffSchemeLabel3.setBounds(143, 30, 70, 14);
 
-        jButton2.setText("jButton1");
+        nameSchemeLabel4.setFont(new java.awt.Font("Eras Demi ITC", 1, 12)); // NOI18N
+        nameSchemeLabel4.setForeground(new java.awt.Color(51, 51, 51));
+        nameSchemeLabel4.setText("nameSchemeD");
+        schemeCardPanel2.add(nameSchemeLabel4);
+        nameSchemeLabel4.setBounds(228, 29, 96, 14);
 
-        jPanel8.setBackground(new java.awt.Color(255, 51, 51));
+        diffSchemeLabel4.setFont(new java.awt.Font("Eras Demi ITC", 1, 12)); // NOI18N
+        diffSchemeLabel4.setForeground(new java.awt.Color(51, 51, 51));
+        diffSchemeLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        diffSchemeLabel4.setText("diff");
+        schemeCardPanel2.add(diffSchemeLabel4);
+        diffSchemeLabel4.setBounds(361, 29, 70, 14);
 
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 203, Short.MAX_VALUE)
-        );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 287, Short.MAX_VALUE)
-        );
+        nameSchemeCardLabel2.setFont(new java.awt.Font("Eras Demi ITC", 1, 12)); // NOI18N
+        nameSchemeCardLabel2.setForeground(new java.awt.Color(51, 51, 51));
+        nameSchemeCardLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        nameSchemeCardLabel2.setText("Scheme Card B");
+        schemeCardPanel2.add(nameSchemeCardLabel2);
+        nameSchemeCardLabel2.setBounds(140, 10, 149, 14);
 
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 203, Short.MAX_VALUE)
-        );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 287, Short.MAX_VALUE)
-        );
+        buttonC.setFont(new java.awt.Font("Eras Demi ITC", 2, 12)); // NOI18N
+        buttonC.setText("button C");
+        buttonC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonCActionPerformed(evt);
+            }
+        });
+        schemeCardPanel2.add(buttonC);
+        buttonC.setBounds(13, 342, 203, 24);
 
-        jLabel11.setText("jLabel1");
-        jLabel11.setOpaque(true);
-
-        jLabel12.setText("jLabel1");
-        jLabel12.setOpaque(true);
-
-        jLabel13.setText("jLabel1");
-        jLabel13.setOpaque(true);
-
-        jLabel14.setText("jLabel1");
-        jLabel14.setOpaque(true);
-
-        jLabel15.setText("jLabel9");
-        jLabel15.setOpaque(true);
-
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(74, 74, 74)
-                        .addComponent(jLabel14)))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(142, 142, 142))
-        );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel15)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(jLabel12)
-                    .addComponent(jLabel13)
-                    .addComponent(jLabel14))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
+        buttonD.setFont(new java.awt.Font("Eras Demi ITC", 2, 12)); // NOI18N
+        buttonD.setText("button D");
+        buttonD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonDActionPerformed(evt);
+            }
+        });
+        schemeCardPanel2.add(buttonD);
+        buttonD.setBounds(228, 342, 203, 24);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(schemeCardPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(schemeCardPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 447, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(schemeCardPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
+            .addComponent(schemeCardPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void buttonBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBActionPerformed
+        //TODO Mandare messaggio al controller con lo stato del match
+    }//GEN-LAST:event_buttonBActionPerformed
+
+    private void buttonDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDActionPerformed
+        //TODO Mandare messaggio al controller con lo stato del match
+    }//GEN-LAST:event_buttonDActionPerformed
+
+    private void buttonCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCActionPerformed
+        //TODO Mandare messaggio al controller con lo stato del match
+    }//GEN-LAST:event_buttonCActionPerformed
+
+    private void buttonAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAActionPerformed
+        //TODO Mandare messaggio al controller con lo stato del match
+    }//GEN-LAST:event_buttonAActionPerformed
+
     private void setIcons() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/sagrada.png")));
         this.setTitle("Sagrada Boardgame");
     }
-    
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -283,30 +263,37 @@ public class ChooseSchemeForm extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ChooseSchemeForm().setVisible(true);
+                SchemeCard a, b;
+                SchemeListFileConverter schemeListFileConverter = new SchemeListFileConverter();
+
+                a = new SchemeCard((short) 1, (short) 1);
+                b = new SchemeCard((short) 1, (short) 1);
+
+                a.setA(schemeListFileConverter.readFromFile().get(0));
+                a.setBack(schemeListFileConverter.readFromFile().get(0));
+                b.setA(schemeListFileConverter.readFromFile().get(0));
+                b.setBack(schemeListFileConverter.readFromFile().get(0));
+                new ChooseSchemeForm(a, b).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
+    private javax.swing.JButton buttonA;
+    private javax.swing.JButton buttonB;
+    private javax.swing.JButton buttonC;
+    private javax.swing.JButton buttonD;
+    private javax.swing.JLabel diffSchemeLabel1;
+    private javax.swing.JLabel diffSchemeLabel2;
+    private javax.swing.JLabel diffSchemeLabel3;
+    private javax.swing.JLabel diffSchemeLabel4;
+    private javax.swing.JLabel nameSchemeCardLabel1;
+    private javax.swing.JLabel nameSchemeCardLabel2;
+    private javax.swing.JLabel nameSchemeLabel1;
+    private javax.swing.JLabel nameSchemeLabel2;
+    private javax.swing.JLabel nameSchemeLabel3;
+    private javax.swing.JLabel nameSchemeLabel4;
+    private javax.swing.JPanel schemeCardPanel1;
+    private javax.swing.JPanel schemeCardPanel2;
     // End of variables declaration//GEN-END:variables
 }

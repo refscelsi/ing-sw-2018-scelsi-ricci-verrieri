@@ -31,7 +31,7 @@ public class VetrataPanel extends javax.swing.JPanel {
                 dices[i][j] = new DiceGUI(true, dimXdice, dimYdice);
 
                 imageLabel.add(dices[i][j]);
-                dices[i][j].setBounds(17 + i * (45 + 5), 30 + j * (45 + 5), 45, 45);
+                dices[i][j].setBounds(17 + i * (dimXdice + 5), 30 + j * (dimYdice + 5), dimXdice, dimYdice);
             }
         }
     }
