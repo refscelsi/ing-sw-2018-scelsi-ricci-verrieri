@@ -84,7 +84,13 @@ public class TableFrame extends javax.swing.JFrame {
         player1.fillScheme(scheme);
 
         //TODO WORKS
+        //TEST set nome player
         //player1.setPlayerNameLabel("pisello");
+
+        //TODO WORKS
+        //TEST set tokens by code
+        toolCardList.get(2).addToken(1);
+        toolCardList.get(2).addToken(2);
     }
 
     private void addVetratePlayers() {

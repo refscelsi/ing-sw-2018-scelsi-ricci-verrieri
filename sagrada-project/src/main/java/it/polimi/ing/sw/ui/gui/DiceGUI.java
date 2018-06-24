@@ -67,7 +67,7 @@ public class DiceGUI extends javax.swing.JPanel {
             diceLabel.setBackground(new java.awt.Color(0, 102, 255));
         }
         if (GREEN == color) {
-            diceLabel.setBackground(new java.awt.Color(51, 255, 0));
+            diceLabel.setBackground(new java.awt.Color(4, 175, 98));
         }
         if (YELLOW == color) {
             diceLabel.setBackground(new java.awt.Color(255, 255, 51));
@@ -95,7 +95,7 @@ public class DiceGUI extends javax.swing.JPanel {
                 PATH = IMAGE_PATH + name + ".png";
             } else {
                 int intName = Integer.valueOf(name);
-                if (intName > 0 && intName < 6) {
+                if (intName > 0 && intName < 7) {
                     PATH = IMAGE_PATH + name + "g.png";
                 }
 
