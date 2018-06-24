@@ -1,6 +1,7 @@
 package it.polimi.ing.sw.client;
 
 import it.polimi.ing.sw.model.*;
+import it.polimi.ing.sw.model.exceptions.NotValidException;
 
 import java.rmi.Remote;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public interface UiUpdate {
 
     public void onTurnStart (Match match, String nickname);
 
-    public void onPlaceDiceNotValid ();
+    public void onPlaceDiceNotValid (NotValidException e);
 
     public void onTurnEnd ();
 
@@ -28,4 +29,5 @@ public interface UiUpdate {
 
     public void onSchemeToChoose (Match match, String nickname, String message);
 
+    public void onUseToolCard1NotValid (NotValidException e);
 }

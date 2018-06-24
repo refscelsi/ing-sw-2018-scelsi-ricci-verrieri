@@ -1,5 +1,7 @@
 package it.polimi.ing.sw.model;
 
+import it.polimi.ing.sw.ui.gui.SchemeListFileConverter;
+
 import java.io.Serializable;
 import java.util.*;
 
@@ -15,7 +17,8 @@ public class SchemeCardDeck implements Serializable{
 
 
     public void setDeck () {
-        // qui si caricheranno tutte le carte schema
+        SchemeListFileConverter schemes = new SchemeListFileConverter();
+        deck = schemes.readFromFile();
     }
 
 

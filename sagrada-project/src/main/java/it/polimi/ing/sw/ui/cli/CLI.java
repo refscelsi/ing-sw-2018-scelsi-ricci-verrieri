@@ -5,6 +5,7 @@ import it.polimi.ing.sw.model.Player;
 import it.polimi.ing.sw.model.Scheme;
 import it.polimi.ing.sw.client.UiUpdate;
 import it.polimi.ing.sw.client.View;
+import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.util.Constants;
 
 import java.util.*;
@@ -332,6 +333,14 @@ public class CLI implements UiUpdate {
 
 
 
+    /////////////////////////////////////////////////////////////////////////////////////////
+    // Scelta D: posizionare un dado sullo schema
+    /////////////////////////////////////////////////////////////////////////////////////////
+
+
+    public void useToolCard1() {
+    }
+
 
     /////////////////////////////////////////////////////////////////////////////////////////
     // Scelta I: visualizzare le informazioni degli altri giocatori (nome, schema, segnalini favore)
@@ -386,7 +395,8 @@ public class CLI implements UiUpdate {
     }
 
     @Override
-    public void onPlaceDiceNotValid() {
+    public void onPlaceDiceNotValid(NotValidException e) {
+        System.out.println(e);
         retryPlaceDice();
     }
 
@@ -416,6 +426,12 @@ public class CLI implements UiUpdate {
     @Override
     public void onSchemeToChoose (Match match, String nickname, String message) {
         chooseScheme(match, nickname, message);
+    }
+
+    @Override
+    public void onUseToolCard1NotValid(NotValidException e) {
+        System.err.println(e);
+        useToolCard1();
     }
 
     @Override

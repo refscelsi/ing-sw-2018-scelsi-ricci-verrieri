@@ -6,20 +6,18 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class SchemeCardDeckTest {
+    private SchemeCardDeck deck;
 
-    @Test
-    public void setDeck() {
+    @org.junit.Before
+    public void setUp() throws Exception {
+        deck=new SchemeCardDeck();
+        assertEquals(24,deck.getSize());
     }
 
-    @Test
+    @org.junit.Test
     public void drawSchemeCard() {
+        deck.drawSchemeCard();
+        assertEquals(20,deck.getSize());
     }
 
-    @Test
-    public void getSize() {
-    }
-
-    @Test
-    public void getDrawnCardsSize() {
-    }
 }

@@ -12,12 +12,17 @@ public class Scheme implements Serializable {
 	private boolean isEmpty;
 
 
-	public Scheme( int id, int idRetro, int difficulty, Box boxes[][] ) {
+	public Scheme( int id, int difficulty, Box boxes[][] ) {
 		this.id = id;
-		this.idRetro = idRetro;
 		this.difficulty = difficulty;
 		this.boxes = boxes;
 		this.isEmpty = true;
+		if (id < 25) {
+            if (id % 2 == 0)
+                idRetro = id - 1;
+            else
+                idRetro = id + 1;
+        }
 	}
 
 

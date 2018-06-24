@@ -41,7 +41,6 @@ public class ToolCards implements Serializable{
 
 
     public void addCard(int id) {
-        ToolCard toolCard;
         switch (id){
             case 1:
                 PinzaSgrossatrice pinzaSgrossatrice=new PinzaSgrossatrice();

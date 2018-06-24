@@ -197,7 +197,7 @@ public class View implements RemotePlayer {
         } catch (NetworkException e) {
             System.err.println(e.getMessage());
         } catch (NotValidException e) {
-            ui.onPlaceDiceNotValid();
+            ui.onPlaceDiceNotValid(e);
         }
     }
 
@@ -209,5 +209,22 @@ public class View implements RemotePlayer {
             System.err.println(e.getMessage());
         }
     }
+
+
+    // SENDERS ToolCards
+
+
+    public void useToolCard1 (int indexInDraftPool, char operation) {
+        try {
+            controller.sendUseToolCard1Request(indexInDraftPool, operation);
+        } catch (NetworkException e) {
+            System.err.println(e.getMessage());
+        } catch (NotValidException e) {
+            ui.onUseToolCard1NotValid(e);
+        }
+    }
+
+
+
 
 }

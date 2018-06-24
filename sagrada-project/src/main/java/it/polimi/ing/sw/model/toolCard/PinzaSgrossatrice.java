@@ -21,7 +21,7 @@ public class PinzaSgrossatrice extends ToolCard {
         int value = draftPool.getDice(indexInDraftPool).getNumFacciaUp();
 
         switch(operation){
-            case '+':
+            case 'a':
                 if(value<6 && value>0) {
                     draftPool.getDice(indexInDraftPool).setNumFacciaUp(value++);
                     incrementNumOfTokens();
@@ -30,7 +30,7 @@ public class PinzaSgrossatrice extends ToolCard {
                     throw new NotValidException("Non puoi cambiare un 6 in 1");
                 break;
 
-            case '-':
+            case 'd':
                 if(value>1 && value<7) {
                     draftPool.getDice(indexInDraftPool).setNumFacciaUp(value--);
                     incrementNumOfTokens();
