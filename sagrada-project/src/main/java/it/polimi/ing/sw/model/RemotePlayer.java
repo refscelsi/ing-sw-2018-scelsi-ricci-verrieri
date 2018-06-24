@@ -9,6 +9,8 @@ public interface RemotePlayer extends Remote {
 
     public void onSchemeToChoose(Match match) throws RemoteException;
 
+    public void onChosenScheme() throws RemoteException;
+
     public void onGameUpdate(Match match) throws RemoteException;
 
     public void onTurnStart(Match match, String nickname) throws RemoteException;
@@ -20,4 +22,6 @@ public interface RemotePlayer extends Remote {
     public void onPlayerLogged() throws RemoteException;
 
     public void onSetPlaying() throws RemoteException;
+
+    public void onOtherInfoToolCard4(Match match) throws RemoteException;
 }
