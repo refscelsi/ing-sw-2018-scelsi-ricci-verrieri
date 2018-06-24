@@ -1,8 +1,14 @@
 package it.polimi.ing.sw.ui.gui;
 
+import it.polimi.ing.sw.model.Scheme;
+
 public class VetrataPanel extends javax.swing.JPanel {
 
     private DiceGUI dices[][] = new DiceGUI[4][5];
+    private Scheme scheme;
+
+    private static final int dimXdice = 45;
+    private static final int dimYdice = 45;
 
     public VetrataPanel() {
         initComponents();
@@ -22,7 +28,7 @@ public class VetrataPanel extends javax.swing.JPanel {
     private void setUpSchemeField() {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 5; j++) {
-                dices[i][j] = new DiceGUI(true);
+                dices[i][j] = new DiceGUI(true, dimXdice, dimYdice);
 
                 imageLabel.add(dices[i][j]);
                 dices[i][j].setBounds(17 + i * (45 + 5), 30 + j * (45 + 5), 45, 45);
@@ -57,6 +63,24 @@ public class VetrataPanel extends javax.swing.JPanel {
         add(imageLabel);
         imageLabel.setBounds(0, 0, 230, 300);
     }// </editor-fold>//GEN-END:initComponents
+
+    public void fillScheme(Scheme scheme){
+        this.scheme=scheme;
+
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 5; j++) {
+                dices[i][j].setBox(scheme.getBox(i,j));
+            }
+        }
+    }
+
+    public Scheme getScheme(){
+        return scheme;
+    }
+
+    public void setPlayerNameLabel(String name){
+        playerNameLabel.setText(name);
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

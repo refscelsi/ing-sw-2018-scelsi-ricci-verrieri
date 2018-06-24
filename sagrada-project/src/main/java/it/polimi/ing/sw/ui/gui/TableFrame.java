@@ -3,6 +3,7 @@ package it.polimi.ing.sw.ui.gui;
 import it.polimi.ing.sw.App;
 import it.polimi.ing.sw.model.Dice;
 import it.polimi.ing.sw.model.Match;
+import it.polimi.ing.sw.model.Scheme;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -14,61 +15,105 @@ public class TableFrame extends javax.swing.JFrame {
     private static List<CardField> toolCardList, objCardList;
     private RoundTrack roundTrack;
     private VetrataPanel player1, player2, player3, player4;
+    private DiceFieldPanel diceFieldPanel;
 
     public TableFrame(/*Match match*/) {
         //this.match = match;
+
+        toolCardList = new ArrayList<>();
+        objCardList = new ArrayList<>();
+
         initComponents();
         setLocationRelativeTo(null);
         setIcons();
 
-        roundTrack = new RoundTrack();
-        toolCardList = new ArrayList<>();
-        objCardList = new ArrayList<>();
-
-        player1 = new VetrataPanel();
-        tableFramePanel.add(player1);
-        player1.setBounds(780, 430, 230, 290);
-
-        player2 = new VetrataPanel();
-        tableFramePanel.add(player2);
-        player2.setBounds(780, 100, 230, 290);
-
-        player3 = new VetrataPanel();
-        tableFramePanel.add(player3);
-        player3.setBounds(10, 100, 230, 290);
-
-        player4 = new VetrataPanel();
-        tableFramePanel.add(player4);
-        player4.setBounds(10, 430, 230, 290);
-
+        addVetratePlayers();
         addRoundTrack();
+        addDiceFieldPAnel();
 
-/*
+        /*
+        //TODO WORKS
+        //TEST addDICES al dice panel
+        List<Dice> dices = new ArrayList<>();
+        Dice testDice = new Dice();
+        testDice.setNumFacciaUp(5);
+        testDice.setDiceColor(it.polimi.ing.sw.model.Color.RED);
+        dices.add(testDice);
+        dices.add(testDice);
+        dices.add(testDice);
+        dices.add(testDice);
+        dices.add(testDice);
+        dices.add(testDice);
+        dices.add(testDice);
+        dices.add(testDice);
+        dices.add(testDice);
+        dices.add(testDice);
+        dices.add(testDice);
+        diceFieldPanel.setDices(dices);*/
+
+        /*
+        //TODO WORKS
         //TEST carta singola
         CardField cf = new CardField();
         tableFramePanel.add(cf);
         cf.setBounds(0, 0, 173, 245);
-*/
+        */
 
+        //TODO WORKS
         //TEST campi carte
         String ids1[] = {"disabled.png", "tc02.png", "tc03.png"};
         setToolCards(ids1);
         String ids2[] = {"po01.png", "po02.png", "po03.png"};
         setOBJCards(ids2);
 
+        /*//TODO WORKS
         //TEST set dice
         Dice testDice = new Dice();
         testDice.setNumFacciaUp(5);
         testDice.setDiceColor(it.polimi.ing.sw.model.Color.RED);
-        roundTrack.getDiceGUIList().get(4).setDice(testDice);
+        roundTrack.getDiceGUIList().get(4).setDice(testDice);*/
 
+        /*//TODO WORKS
         //TEST disablecard
-        //toolCardList.get(1).disableToolCard();
+        toolCardList.get(1).disableToolCard();*/
+
+        //TODO WORKS
+        //TEST fillScheme
+        SchemeListFileConverter schemeListFileConverter = new SchemeListFileConverter();
+        Scheme scheme = schemeListFileConverter.readFromFile().get(0);
+        player1.fillScheme(scheme);
+
+        //TODO WORKS
+        //player1.setPlayerNameLabel("pisello");
+    }
+
+    private void addVetratePlayers() {
+        player1 = new VetrataPanel();
+        backgroundTableFRameLabel.add(player1);
+        player1.setBounds(780, 430, 230, 290);
+
+        player2 = new VetrataPanel();
+        backgroundTableFRameLabel.add(player2);
+        player2.setBounds(780, 100, 230, 290);
+
+        player3 = new VetrataPanel();
+        backgroundTableFRameLabel.add(player3);
+        player3.setBounds(10, 100, 230, 290);
+
+        player4 = new VetrataPanel();
+        backgroundTableFRameLabel.add(player4);
+        player4.setBounds(10, 430, 230, 290);
+    }
+
+    private void addDiceFieldPAnel() {
+        diceFieldPanel = new DiceFieldPanel();
+        backgroundTableFRameLabel.add(diceFieldPanel);
+        diceFieldPanel.setBounds(250, 100, 520, 140);
     }
 
     private void addRoundTrack() {
         roundTrack = new RoundTrack();
-        tableFramePanel.add(roundTrack);
+        backgroundTableFRameLabel.add(roundTrack);
         roundTrack.setBounds(207, 20, 610, 70);
     }
 
@@ -119,7 +164,7 @@ public class TableFrame extends javax.swing.JFrame {
         );
 
         tableFramePanel.add(toolCardPanel);
-        toolCardPanel.setBounds(250, 230, 519, 245);
+        toolCardPanel.setBounds(250, 250, 519, 245);
 
         backgroundTableFRameLabel.setBackground(new java.awt.Color(153, 153, 153));
         backgroundTableFRameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

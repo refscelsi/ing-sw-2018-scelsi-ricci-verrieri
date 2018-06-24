@@ -34,6 +34,7 @@ public class CardField extends javax.swing.JPanel {
         setBackground(new java.awt.Color(51, 75, 63));
 
         cardFieldLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/po/po01.png"))); // NOI18N
+        cardFieldLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cardFieldLabel.setMinimumSize(new java.awt.Dimension(173, 245));
         cardFieldLabel.setPreferredSize(new java.awt.Dimension(173, 245));
         cardFieldLabel.addMouseListener(new java.awt.event.MouseAdapter() {

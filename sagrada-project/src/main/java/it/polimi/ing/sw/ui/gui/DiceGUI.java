@@ -1,5 +1,6 @@
 package it.polimi.ing.sw.ui.gui;
 
+import it.polimi.ing.sw.model.Box;
 import it.polimi.ing.sw.model.Dice;
 
 import javax.swing.*;
@@ -7,79 +8,110 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 
 import static it.polimi.ing.sw.model.Color.*;
-import static it.polimi.ing.sw.model.Color.PURPLE;
-import static it.polimi.ing.sw.model.Color.WHITE;
 
 public class DiceGUI extends javax.swing.JPanel {
 
     private static final String IMAGE_PATH = "/img/dices/";
 
-    private Dice dice;
+    private Box box;
+
+    private int dimXdice;
+
+    private int dimYdice;
+
+    public DiceGUI(int dimXdice, int dimYdice) {
+        this.dimXdice = dimXdice;
+        this.dimYdice = dimYdice;
+        initComponents();
+        //updateIcon("1g");
+
+        box = new Box();
+    }
+
+    public DiceGUI(Boolean isVoid, int dimXdice, int dimYdice) {
+        this.dimXdice = dimXdice;
+        this.dimYdice = dimYdice;
+        initComponents();
+        box = new Box();
+        if (!isVoid)
+            updateIcon("1g", false);
+    }
 
     public void setDice(Dice dice) {
-        this.dice = dice;
+        box.placeDice(dice);
         updateDice();
-        dice.getDiceColor();
+    }
+
+    public void setBox(Box box) {
+        this.box = box;
+        updateBox();
+    }
+
+    private void updateBox() {
+        updateIcon(String.valueOf(box.getShade()), false);
+        updateColor(box.getColor());
+        diceLabel.repaint();
     }
 
     private void updateDice() {
-        updateIcon(String.valueOf(dice.getNumFacciaUp()));
-        updateColor( dice.getDiceColor());
+        updateIcon(String.valueOf(box.getDice().getNumFacciaUp()), true);
+        updateColor(box.getDice().getDiceColor());
         diceLabel.repaint();
     }
 
     private void updateColor(it.polimi.ing.sw.model.Color color) {
-        if (RED ==color){
+        if (RED == color) {
             diceLabel.setBackground(new java.awt.Color(255, 0, 51));
         }
-        if (BLUE == color){
+        if (BLUE == color) {
             diceLabel.setBackground(new java.awt.Color(0, 102, 255));
         }
-        if (GREEN == color){
+        if (GREEN == color) {
             diceLabel.setBackground(new java.awt.Color(51, 255, 0));
         }
-        if (YELLOW == color){
+        if (YELLOW == color) {
             diceLabel.setBackground(new java.awt.Color(255, 255, 51));
         }
-        if (PURPLE == color){
+        if (PURPLE == color) {
             diceLabel.setBackground(new java.awt.Color(204, 0, 255));
         }
-        if (WHITE == color){
+        if (WHITE == color) {
             diceLabel.setBackground(new java.awt.Color(255, 255, 255));
         }
     }
 
-    public Dice getDice() {
-        return dice;
+    public Box getBox() {
+        return box;
     }
 
     public static String getImagePath() {
-
         return IMAGE_PATH;
     }
 
-    private void updateIcon(String name) {
-        ImageIcon icon;
-        Image scaledImage;
+    private void updateIcon(String name, Boolean isSetDice) {
+        String PATH = new String();
+        if (name != null) {
+            if (name.equals("1g") || name.equals("2g") || name.equals("3g") || name.equals("4g") || name.equals("5g") || name.equals("6g") || isSetDice) {
+                PATH = IMAGE_PATH + name + ".png";
+            } else {
+                int intName = Integer.valueOf(name);
+                if (intName > 0 && intName < 6) {
+                    PATH = IMAGE_PATH + name + "g.png";
+                }
 
-        icon = new javax.swing.ImageIcon(getClass().getResource(IMAGE_PATH + name + ".png"));
-        scaledImage = icon.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
-        icon.setImage(scaledImage);
-        diceLabel.setIcon(icon);
-        diceLabel.repaint();
-
+            }
+            if (!PATH.isEmpty()) {
+                ImageIcon icon;
+                Image scaledImage;
+                icon = new javax.swing.ImageIcon(getClass().getResource(PATH));
+                scaledImage = icon.getImage().getScaledInstance(dimXdice, dimYdice, Image.SCALE_DEFAULT);
+                icon.setImage(scaledImage);
+                diceLabel.setIcon(icon);
+                diceLabel.repaint();
+            }
+        }
     }
 
-    public DiceGUI() {
-        initComponents();
-        updateIcon("1g");
-    }
-
-    public DiceGUI(Boolean isVoid) {
-        initComponents();
-        if(!isVoid)
-            updateIcon("1g");
-    }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -94,6 +126,7 @@ public class DiceGUI extends javax.swing.JPanel {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 diceLabelMouseEntered(evt);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 diceLabelMouseExited(evt);
             }
@@ -102,23 +135,23 @@ public class DiceGUI extends javax.swing.JPanel {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(diceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(diceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(diceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(diceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void diceLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_diceLabelMouseEntered
         diceLabel.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 2, true));
-        setCursor(new Cursor( Cursor.HAND_CURSOR ));
+        setCursor(new Cursor(Cursor.HAND_CURSOR));
     }//GEN-LAST:event_diceLabelMouseEntered
 
     private void diceLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_diceLabelMouseExited
         diceLabel.setBorder(null);
-        setCursor(new Cursor( Cursor.DEFAULT_CURSOR ));
+        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }//GEN-LAST:event_diceLabelMouseExited
 
 

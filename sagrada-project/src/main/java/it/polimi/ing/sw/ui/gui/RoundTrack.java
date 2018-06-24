@@ -11,6 +11,9 @@ public class RoundTrack extends javax.swing.JPanel {
 
     public List<DiceGUI> diceGUIList;
 
+    private static final int dimXdice = 50;
+    private static final int dimYdice = 50;
+
     public RoundTrack() {
         initComponents();
         diceGUIList = new ArrayList<>();
@@ -51,9 +54,9 @@ public class RoundTrack extends javax.swing.JPanel {
 
     public void setDices() {
         for (int i = 0; i < 10; i++) {
-            DiceGUI diceGUI = new DiceGUI();
+            DiceGUI diceGUI = new DiceGUI(false, dimXdice, dimYdice);
             imageLabel.add(diceGUI);
-            diceGUI.setBounds(10 + i * (50 + 10), 10, 50, 50);
+            diceGUI.setBounds(10 + i * (50 + 10), 10, dimXdice, dimYdice);
             diceGUIList.add(diceGUI);
         }
     }
