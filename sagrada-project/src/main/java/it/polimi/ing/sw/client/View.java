@@ -105,11 +105,6 @@ public class View implements RemotePlayer {
     }
 
     @Override
-    public void onChosenScheme() throws RemoteException {
-
-    }
-
-    @Override
     public void onGameUpdate(Match match) {
         this.match=match;
         ui.onGameUpdate(match, nickname);
@@ -117,7 +112,6 @@ public class View implements RemotePlayer {
 
     @Override
     public void onTurnStart(Match match, String nickname) {
-        this.match=match;
         isPlaying=true;
         ui.onTurnStart(match, nickname);
     }
@@ -132,22 +126,6 @@ public class View implements RemotePlayer {
     public void onGameEnd(Match match) {
         this.match=match;
         ui.onGameEnd(match);
-    }
-
-    @Override
-    public void onPlayerLogged() throws RemoteException {
-
-    }
-
-    @Override
-    public void onSetPlaying() throws RemoteException {
-
-    }
-
-    @Override
-    public void onOtherInfoToolCard4(Match match) throws RemoteException {
-        ui.onGameUpdate(match, nickname);
-        ui.onOtherInfoToolCard4(match);
     }
 
 
@@ -236,24 +214,17 @@ public class View implements RemotePlayer {
     // SENDERS ToolCards
 
 
-    public void useToolCard1 (int indexInDraftPool, String operation) {
+    public void useToolCard1 (int indexInDraftPool, char operation) {
         try {
             controller.sendUseToolCard1Request(indexInDraftPool, operation);
         } catch (NetworkException e) {
             System.err.println(e.getMessage());
         } catch (NotValidException e) {
-            ui.onUseToolCard1NotValid(match, e);
+            ui.onUseToolCard1NotValid(e);
         }
     }
 
 
-    public void useToolCard234 (int id, int sourceRow, int sourceCol, int destRow, int destCol) {
-        try {
-            controller.sendUseToolCard234Request(id, sourceRow, sourceCol, destRow, destCol);
-        } catch (NetworkException e) {
-            System.err.println(e.getMessage());
-        } catch (NotValidException e) {
-            ui.onUseToolCard234NotValid(id, match, e);
-        }
-    }
+
+
 }

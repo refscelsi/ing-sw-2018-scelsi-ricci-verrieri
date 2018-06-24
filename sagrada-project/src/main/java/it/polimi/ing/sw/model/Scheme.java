@@ -17,6 +17,12 @@ public class Scheme implements Serializable {
 		this.difficulty = difficulty;
 		this.boxes = boxes;
 		this.isEmpty = true;
+		if (id < 25) {
+            if (id % 2 == 0)
+                idRetro = id - 1;
+            else
+                idRetro = id + 1;
+        }
 	}
 
 
@@ -250,11 +256,7 @@ public class Scheme implements Serializable {
 		this.id = id;
 	}
 
-    public void setIdRetro(int idRetro) {
-        this.idRetro = idRetro;
-    }
-
-    public int countFreeBoxes() {
+	public int countFreeBoxes() {
 		int free = 0;
 		for (int i = 0; i < Constants.NUM_ROWS; i++)
 			for (int j = 0; j < Constants.NUM_COLS; j++)

@@ -29,9 +29,5 @@ public interface UiUpdate {
 
     public void onSchemeToChoose (Match match, String nickname, String message);
 
-    public void onUseToolCard1NotValid (Match match, NotValidException e);
-
-    public void onUseToolCard234NotValid(int id, Match match, NotValidException e);
-
-    public void onOtherInfoToolCard4(Match match);
+    public void onUseToolCard1NotValid (NotValidException e);
 }

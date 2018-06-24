@@ -236,7 +236,7 @@ public class CLI implements UiUpdate {
             }
 
             case "d": {
-                handleUseDice(match);
+                handleUseDice(match, nickname);
                 break;
             }
 
@@ -297,10 +297,10 @@ public class CLI implements UiUpdate {
     // Scelta D: posizionare un dado sullo schema
     /////////////////////////////////////////////////////////////////////////////////////////
 
-    public void handleUseDice (Match match) {
+    public void handleUseDice (Match match, String nickname) {
         int dice, row, col;
         do {
-            System.out.println("Digita l'indice del dado che vuoi posizionare, tra 1 e " + match.getDraftPool().getSize());
+            System.out.println("Digita il numero del dado che vuoi posizionare, tra 1 e " + match.getDraftPool().getSize());
             dice = scanner.nextInt();
         } while (dice < 1 || dice > match.getDraftPool().getSize());
         do {
@@ -334,71 +334,11 @@ public class CLI implements UiUpdate {
 
 
     /////////////////////////////////////////////////////////////////////////////////////////
-    // Scelta T: utilizzare una toolcard
+    // Scelta D: posizionare un dado sullo schema
     /////////////////////////////////////////////////////////////////////////////////////////
 
 
-    public void handleUseToolCard (Match match) {
-        int num;
-        do {
-            System.out.println("Digita il numero della carta utensile che vuoi utilizzare, tra 1 e 3");
-            num = scanner.nextInt();
-        } while (num<1 || num>3);
-        int id = match.getToolCards().get(num-1).getId();
-        useToolCard(id, match);
-    }
-
-
-    public void useToolCard (int id, Match match) {
-        switch (id) {
-            case 1:
-                useToolCard1(match);
-                break;
-            case 2:
-            case 3:
-            case 4:
-                useToolCard234(id, match);
-                break;
-
-
-        }
-    }
-
-
-    public void useToolCard1(Match match) {
-        int dice;
-        do {
-            System.out.println("Digita l'indice del dado che vuoi cambiare, tra 1 e " + match.getDraftPool().getSize());
-            dice = scanner.nextInt();
-        } while (dice < 1 || dice > match.getDraftPool().getSize());
-        do {
-            System.out.println("Digita 'a' se vuoi aumentare il numero del dado di 1, 'd' se vuoi diminuirlo");
-            inText = scanner.nextLine();
-        } while (inText!="a"&&inText!="d");
-        controller.useToolCard1(dice - 1, inText);
-
-    }
-
-
-    public void useToolCard234(int id, Match match) {
-        int sourceRow, sourceCol, destRow, destCol;
-        do {
-            System.out.println("Digita il numero della riga dello schema del dado che vuoi spostare, tra 1 e " + Constants.NUM_ROWS);
-            sourceRow = scanner.nextInt();
-        } while (sourceRow < 1 || sourceRow > Constants.NUM_ROWS);
-        do {
-            System.out.println("Digita il numero della colonna dello schema del dado che vuoi spostare, tra 1 e " + Constants.NUM_COLS);
-            sourceCol = scanner.nextInt();
-        } while (sourceCol < 1 || sourceCol > Constants.NUM_COLS);
-        do {
-            System.out.println("Digita il numero della riga dello schema in cui vuoi spostare il dado, tra 1 e " + Constants.NUM_ROWS);
-            destRow = scanner.nextInt();
-        } while (destRow < 1 || destRow > Constants.NUM_ROWS);
-        do {
-            System.out.println("Digita il numero della colonna dello schema in cui vuoi spostare il dado, tra 1 e " + Constants.NUM_COLS);
-            destCol = scanner.nextInt();
-        } while (destCol < 1 || destCol > Constants.NUM_COLS);
-        controller.useToolCard234(id, sourceRow, sourceCol, destRow, destCol);
+    public void useToolCard1() {
     }
 
 
@@ -413,7 +353,7 @@ public class CLI implements UiUpdate {
             System.out.println(player.getNumOfToken());
             ShowScheme scheme = new ShowScheme(player.getScheme());
             System.out.println("");
-
+            }
         }
 
     }
@@ -489,21 +429,9 @@ public class CLI implements UiUpdate {
     }
 
     @Override
-    public void onUseToolCard1NotValid(Match match, NotValidException e) {
+    public void onUseToolCard1NotValid(NotValidException e) {
         System.err.println(e);
-        useToolCard1(match);
-    }
-
-    @Override
-    public void onUseToolCard234NotValid(int id, Match match, NotValidException e) {
-        System.err.println(e);
-        useToolCard234(id, match);
-    }
-
-    @Override
-    public void onOtherInfoToolCard4(Match match) {
-        System.out.println("Primo dado mosso correttamente, ora muovi il secondo");
-        useToolCard234(4, match);
+        useToolCard1();
     }
 
     @Override
