@@ -29,11 +29,13 @@ public interface UiUpdate {
 
     public void onGameEnd (Match match);
 
-    public void onSchemeToChoose (Match match, String nickname, String message) throws NotValidPlayException;
+    public void onSchemeToChoose (Match match, String nickname, String message);
 
-    public void onUseToolCard1NotValid (Match match, NotValidException e) throws RemoteException;
+    public void onUseToolCard1NotValid (Match match, NotValidException e);
 
-    public void onUseToolCard234NotValid(int id, Match match, NotValidException e) throws RemoteException;
+    public void onUseToolCard234NotValid(int id, Match match, NotValidException e);
 
-    public void onOtherInfoToolCard4(Match match) throws RemoteException;
+    public void onOtherInfoToolCard4(Match match);
+
+    public void onToolCard6 (Match match);
 }

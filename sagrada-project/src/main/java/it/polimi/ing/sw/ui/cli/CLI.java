@@ -197,7 +197,7 @@ public class CLI implements UiUpdate {
     /**
      * Scelta dello schema tra i 4 schemi disponibili da parte di un giocatore
      */
-    public void chooseScheme(Match match, String nickname, String message) throws NotValidPlayException {
+    public void chooseScheme(Match match, String nickname, String message) {
         int num;
         ArrayList<Scheme> schemes = match.getPlayer(nickname).getSchemesToChoose();
         showSchemesToChoose(schemes);
@@ -335,7 +335,7 @@ public class CLI implements UiUpdate {
             col = scanner.nextInt();
         } while (col < 1 || col > Constants.NUM_COLS);
 
-        controller.useDice(-1, row, col);
+        controller.useDice(-1, row-1, col-1);
     }
 
 
@@ -345,7 +345,7 @@ public class CLI implements UiUpdate {
     /////////////////////////////////////////////////////////////////////////////////////////
 
 
-    public void handleUseToolCard (Match match) throws RemoteException {
+    public void handleUseToolCard (Match match) {
         int num;
         do {
             System.out.println("Digita il numero della carta utensile che vuoi utilizzare, tra 1 e 3");
@@ -356,7 +356,7 @@ public class CLI implements UiUpdate {
     }
 
 
-    public void useToolCard (int id, Match match) throws RemoteException {
+    public void useToolCard (int id, Match match) {
         switch (id) {
             case 1:
                 useToolCard1(match);
@@ -367,15 +367,20 @@ public class CLI implements UiUpdate {
                 useToolCard234(id, match);
                 break;
             case 5:
-                //useToolCard5(match);
+                useToolCard5(match);
                 break;
+            case 6:
+                useToolCard6(match);
+            case 7:
+            case 8:
+                controller.useToolCard78(id);
 
 
         }
     }
 
 
-    public void useToolCard1(Match match) throws RemoteException {
+    public void useToolCard1(Match match) {
         int dice;
         do {
             System.out.println("Digita l'indice del dado che vuoi cambiare, tra 1 e " + match.getDraftPool().getSize());
@@ -390,7 +395,7 @@ public class CLI implements UiUpdate {
     }
 
 
-    public void useToolCard234(int id, Match match) throws RemoteException {
+    public void useToolCard234(int id, Match match) {
         int sourceRow, sourceCol, destRow, destCol;
         do {
             System.out.println("Digita il numero della riga dello schema del dado che vuoi spostare, tra 1 e " + Constants.NUM_ROWS);
@@ -408,26 +413,37 @@ public class CLI implements UiUpdate {
             System.out.println("Digita il numero della colonna dello schema in cui vuoi spostare il dado, tra 1 e " + Constants.NUM_COLS);
             destCol = scanner.nextInt();
         } while (destCol < 1 || destCol > Constants.NUM_COLS);
-        controller.useToolCard234(id, sourceRow, sourceCol, destRow, destCol);
+        controller.useToolCard234(id, sourceRow-1, sourceCol-1, destRow-1, destCol-1);
     }
 
 
-    /*public void useToolCard5 (Match match) {
-        int dice, row, col;
+    public void useToolCard5 (Match match) {
+        int dice, round, indexInRound;
         do {
             System.out.println("Digita l'indice del dado che vuoi posizionare, tra 1 e " + match.getDraftPool().getSize());
             dice = scanner.nextInt();
         } while (dice < 1 || dice > match.getDraftPool().getSize());
         do {
-            System.out.println("Digita il numero di round a cui appartiene il, tra 1 e " + Constants.NUM_ROWS);
-            row = scanner.nextInt();
-        } while (row < 1 || row > Constants.NUM_ROWS);
+            System.out.println("Digita il numero di round a cui appartiene il dado con cui vuoi scambiarlo, tra 1 e " + match.getRoundTrack().getRoundTrackSize());
+            round = scanner.nextInt();
+        } while (round < 1 || round > match.getRoundTrack().getRoundTrackSize());
         do {
-            System.out.println("Digita il numero della colonna dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_COLS);
-            col = scanner.nextInt();
-        } while (col < 1 || col > Constants.NUM_COLS);
-        controller.useToolCard5(dice - 1, inText);
-    }*/
+            System.out.println("Digita l'indice del dado nel round che hai scelto, tra 0 e " + (match.getRoundTrack().getNumberOfDices(round) - 1));
+            indexInRound = scanner.nextInt();
+        } while (indexInRound < 1 || indexInRound > Constants.NUM_COLS);
+        controller.useToolCard5(dice - 1, round, indexInRound);
+    }
+
+
+    public void useToolCard6 (Match match) {
+        int dice;
+        do {
+            System.out.println("Digita l'indice del dado che vuoi tirare, tra 1 e " + match.getDraftPool().getSize());
+            dice = scanner.nextInt();
+        } while (dice < 1 || dice > match.getDraftPool().getSize());
+        controller.useToolCard6(dice - 1);
+    }
+
 
 
     /////////////////////////////////////////////////////////////////////////////////////////
@@ -512,26 +528,32 @@ public class CLI implements UiUpdate {
     }
 
     @Override
-    public void onSchemeToChoose (Match match, String nickname, String message) throws NotValidPlayException {
+    public void onSchemeToChoose (Match match, String nickname, String message) {
         chooseScheme(match, nickname, message);
     }
 
     @Override
-    public void onUseToolCard1NotValid(Match match, NotValidException e) throws RemoteException {
+    public void onUseToolCard1NotValid(Match match, NotValidException e) {
         System.err.println(e);
         useToolCard1(match);
     }
 
     @Override
-    public void onUseToolCard234NotValid(int id, Match match, NotValidException e) throws RemoteException {
+    public void onUseToolCard234NotValid(int id, Match match, NotValidException e) {
         System.err.println(e);
         useToolCard234(id, match);
     }
 
     @Override
-    public void onOtherInfoToolCard4(Match match) throws RemoteException {
+    public void onOtherInfoToolCard4(Match match) {
         System.out.println("Primo dado mosso correttamente, ora muovi il secondo");
         useToolCard234(4, match);
+    }
+
+    @Override
+    public void onToolCard6(Match match) {
+        System.out.println("Ora digita la casella dove posizionare il dado");
+        retryPlaceDice();
     }
 
     @Override
@@ -540,5 +562,3 @@ public class CLI implements UiUpdate {
     }
 
 }
-
-
