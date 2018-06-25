@@ -13,10 +13,12 @@ import it.polimi.ing.sw.model.exceptions.ToolCardException;
 import it.polimi.ing.sw.util.Constants;
 import it.polimi.ing.sw.ui.cli.CLI;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
 
-public class View implements RemotePlayer {
+public class View extends UnicastRemoteObject implements RemotePlayer {
     /**
      *  ogni giocatore è identificato dal valore dell'attributo index nel model: il giocatore con index=0 avrà come
      *  nickname nicknames.get(0), come schema schemesOfAllPlayers.get(0), come colore di pedina playersColor[0],
@@ -41,7 +43,8 @@ public class View implements RemotePlayer {
     private int dice;
 
 
-    public View(LoginInterface controller){
+    public View(LoginInterface controller) throws RemoteException {
+        super();
         this.gameController=controller;
         isLogged = false;
         isGameStarted = false;
@@ -53,17 +56,17 @@ public class View implements RemotePlayer {
         System.out.println("Benvenuto in Sagrada, vuoi giocare con la Cli [c] o con la Gui [g]?");
         input=scanner.nextLine().toLowerCase();
         do{
-            if(input.equals('c')){
+            if(input.equals("c")){
                 ui = new CLI(this);
             }
-            else if(input.equals('g')){
+            else if(input.equals("g")){
                 //ui = new GUI(this);
             }
             else {
                 System.out.println("Inserisci una lettera valida");
                 input = scanner.nextLine().toLowerCase();
             }
-        } while (!input.equals('c')&&!input.equals('g'));
+        } while (!input.equals("c")&&!input.equals("g"));
 
         //ui.onChooseNetwork("Vuoi giocare con la RMI [r] o Socket [s]?");
 
