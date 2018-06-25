@@ -1,5 +1,6 @@
 package it.polimi.ing.sw.client;
 
+import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
 import it.polimi.ing.sw.model.*;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 
@@ -28,7 +29,7 @@ public interface UiUpdate {
 
     public void onGameEnd (Match match);
 
-    public void onSchemeToChoose (Match match, String nickname, String message);
+    public void onSchemeToChoose (Match match, String nickname, String message) throws NotValidPlayException;
 
     public void onUseToolCard1NotValid (Match match, NotValidException e) throws RemoteException;
 

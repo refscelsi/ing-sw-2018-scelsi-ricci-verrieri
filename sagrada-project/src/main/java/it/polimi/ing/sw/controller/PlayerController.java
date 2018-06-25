@@ -33,6 +33,7 @@ public class PlayerController extends UnicastRemoteObject implements PlayerInter
         this.player=player;
         this.nickname=player.getNickname();
         this.state=PlayerState.INIZIALIZED;
+        System.out.println("giocatore: "+ nickname+ "\n stato:"+ state.toString());
     }
 
     public void setState(PlayerState state){
@@ -52,32 +53,44 @@ public class PlayerController extends UnicastRemoteObject implements PlayerInter
     }
 
     @Override
-    public void joinMatch() throws RemoteException, ToolCardException, NotValidException {
+    public void joinMatch() throws RemoteException, ToolCardException, NotValidException, NotValidPlayException {
+        System.out.println("giocatore: "+ nickname+ "\n stato:"+ state.toString());
         if(state.equals(PlayerState.OFFLINE)){
             //gestisci lo stronzo che ritorna in partita
         }
         else if(state.equals(PlayerState.INIZIALIZED)) {
-            match.joinMatch();
             setState(PlayerState.SCHEMETOCHOOSE);
+            match.joinMatch();
+
         }
+        System.out.println("giocatore: "+ nickname+ "\n stato:"+ state.toString());
     }
 
     @Override
-    public void checkAllReady() throws RemoteException {
-        match.checkAllReady();
+    public void checkAllReady() throws RemoteException, NotValidPlayException {
+        System.out.println("giocatore: "+ nickname+ "\n stato:"+ state.toString());
+        if(state.equals(PlayerState.READYTOPLAY)){
+            match.checkAllReady();
+        }
+        else throw new NotValidPlayException("non va bene !");
+        System.out.println("giocatore: "+ nickname+ "\n stato:"+ state.toString());
     }
+
 
     @Override
     public void setChosenScheme(int id) throws NetworkException, RemoteException , NotValidPlayException{
+        System.out.println("giocatore: "+ nickname+ "\n stato:"+ state.toString());
         if (state.equals(PlayerState.SCHEMETOCHOOSE)) {
             match.chooseScheme(this.player,id);
             setState(PlayerState.READYTOPLAY);
+            System.out.println("giocatore: "+ nickname+ "\n stato:"+ state.toString());
         }
-        else throw new NotValidPlayException("non puoi fare questa mossa ora!");
+        else throw new NotValidPlayException("non puoi fare questa mossa ora!" + state.toString());
     }
 
     @Override
     public void sendUseDiceRequest(int indexOfDiceInDraftPool, int row, int col) throws NetworkException, NotValidException, NotValidPlayException, RemoteException {
+        System.out.println("giocatore: "+ nickname+ "\n stato:"+ state.toString());
         switch (state){
             case USEDDICE: throw new NotValidPlayException("hai già usato un dado in questo turno!");
             case FINISHTURN: throw new NotValidPlayException("non puoi più fare mosse, passa il turno");
@@ -89,12 +102,14 @@ public class PlayerController extends UnicastRemoteObject implements PlayerInter
             }
             default: throw new NotValidPlayException("non puoi questa mossa ora");
         }
+        System.out.println("giocatore: "+ nickname+ "\n stato:"+ state.toString());
     }
 
     //quando passo il turno poi sono pronto a giocare il prossimo turno--> tanto non sarò attivo quindi non potrò chiamare
     //i metodi. Oppure facciamo un altro stato per essere più sicuri e quando vieni notificato isPlaying passi allo stato READYTOPLAY???
     @Override
     public void endTurn() throws NetworkException, RemoteException, NotValidPlayException {
+        System.out.println("giocatore: "+ nickname+ "\n stato:"+ state.toString());
         if(state.equals(PlayerState.CHOOSENTOOLCARD)|| state.equals(PlayerState.INIZIALIZED)){
             throw new NotValidPlayException("finisci il turno caro!");
         }

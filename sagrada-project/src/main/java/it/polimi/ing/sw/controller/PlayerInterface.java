@@ -10,9 +10,9 @@ import java.rmi.RemoteException;
 
 public interface PlayerInterface extends Remote {
 
-    public void joinMatch() throws RemoteException, ToolCardException, NotValidException;
+    public void joinMatch() throws RemoteException, ToolCardException, NotValidException, NotValidPlayException;
 
-    public void checkAllReady() throws RemoteException;
+    public void checkAllReady() throws RemoteException, NotValidPlayException;
 
     public void setChosenScheme (int id) throws NetworkException, RemoteException, NotValidPlayException;
 

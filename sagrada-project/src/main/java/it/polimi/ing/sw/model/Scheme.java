@@ -29,7 +29,7 @@ public class Scheme implements Serializable {
         int row = box.getX();
         int column = box.getY();
 
-        if ( row == 0 || row == Constants.NUM_ROWS || column == 0 || column == Constants.NUM_COLS ) {
+        if ( row == 0 || row == Constants.NUM_ROWS-1 || column == 0 || column == Constants.NUM_COLS-1 ) {
             return (checkBox( box, dice ));
         } else
             return false;
@@ -77,7 +77,7 @@ public class Scheme implements Serializable {
         int column = box.getY();
         Boolean right, left, up, down, upRight, upLeft, downRight, downLeft;
 
-        if ( row == Constants.NUM_ROWS )
+        if ( row == Constants.NUM_ROWS-1 )
             down = false;
         else
             down = boxes[row + 1][column].isFull();
@@ -92,17 +92,17 @@ public class Scheme implements Serializable {
         else
             left = boxes[row][column - 1].isFull();
 
-        if ( column == Constants.NUM_COLS )
+        if ( column == Constants.NUM_COLS-1 )
             right = false;
         else
             right = boxes[row][column + 1].isFull();
 
-        if ( column == Constants.NUM_COLS || row == 0 )
+        if ( column == Constants.NUM_COLS-1 || row == 0 )
             upRight = false;
         else
             upRight = boxes[row - 1][column + 1].isFull();
 
-        if ( column == Constants.NUM_COLS || row == Constants.NUM_ROWS )
+        if ( column == Constants.NUM_COLS-1 || row == Constants.NUM_ROWS-1 )
             downRight = false;
         else
             downRight = boxes[row + 1][column + 1].isFull();
@@ -112,7 +112,7 @@ public class Scheme implements Serializable {
         else
             upLeft = boxes[row - 1][column - 1].isFull();
 
-        if ( column == 0 || row == Constants.NUM_ROWS )
+        if ( column == 0 || row == Constants.NUM_ROWS-1 )
             downLeft = false;
         else
             downLeft = boxes[row + 1][column - 1].isFull();
@@ -198,6 +198,7 @@ public class Scheme implements Serializable {
 
     public void placeDice( Box box, Dice dice ) throws NotValidException {
         if ( isEmpty() ) {
+            System.out.println("primo dado");
             if ( !checkFirst( box, dice ) )
                 throw new NotValidException( "Devi inserire il primo dado in una casella del bordo dello schema!" );
             else
@@ -215,6 +216,7 @@ public class Scheme implements Serializable {
     }
 
     public boolean isEmpty() {
+        
         this.isEmpty = true;
         for (int i = 0; i < Constants.NUM_ROWS; i++) {
             for (int j = 0; j < Constants.NUM_COLS; j++) {

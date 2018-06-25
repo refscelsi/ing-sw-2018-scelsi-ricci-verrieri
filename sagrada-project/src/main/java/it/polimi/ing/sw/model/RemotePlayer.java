@@ -1,5 +1,6 @@
 package it.polimi.ing.sw.model;
 
+import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
 import it.polimi.ing.sw.model.Match;
 
 import java.rmi.Remote;
@@ -8,7 +9,7 @@ import java.rmi.RemoteException;
 public interface RemotePlayer extends Remote {
 
     //notifica gli schemi da scegliere
-    public void onSchemeToChoose(Match match) throws RemoteException;
+    public void onSchemeToChoose(Match match) throws RemoteException, NotValidPlayException;
 
     //notifica il successo di qualcosa
     public void onSuccess(String message) throws RemoteException;

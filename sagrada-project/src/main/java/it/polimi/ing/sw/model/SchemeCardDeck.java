@@ -45,8 +45,13 @@ public class SchemeCardDeck implements Serializable{
 
     public void setDeck(){
         int index=0;
-        while(index<8) {
+        while(index<16) {
             Box[][] boxes = new Box[4][5];
+            for(int i=0;i<4;i++){
+                for(int j=0;j<5;j++){
+                    boxes[i][j]=new Box(i,j);
+                }
+            }
             Scheme scheme = new Scheme(index, 2, boxes);
             deck.add(scheme);
             index++;
@@ -57,11 +62,15 @@ public class SchemeCardDeck implements Serializable{
     public ArrayList<Scheme> drawSchemeCard (){
         ArrayList<Scheme> drawnCards = new ArrayList<Scheme>();
         Collections.shuffle(deck);
-        for (int i=0; i<2; i++) {
+        //da rimettere a 2
+        for (int i=0; i<4; i++) {
             drawnCards.add(deck.get(i));
-            drawnCards.add(getSchemeWithId(deck.get(i).getIdRetro()));
-            deck.remove(i);
-            deck.remove(getSchemeWithId(deck.get(i).getIdRetro()));
+            //drawnCards.add(getSchemeWithId(deck.get(i).getIdRetro()));
+            //deck.remove(i);
+            //deck.remove(getSchemeWithId(deck.get(i).getIdRetro()));
+        }
+        for(Scheme scheme: drawnCards){
+            System.out.println(scheme.getId());
         }
         return drawnCards;
     }
@@ -73,9 +82,10 @@ public class SchemeCardDeck implements Serializable{
 
 
     public Scheme getSchemeWithId ( int id ) {
-        for (Scheme scheme : deck) {
-            if (scheme.getId() == id)
+        for (Scheme scheme : deck ) {
+            if (scheme.getId()==id) {
                 return scheme;
+            }
         }
         return null;
     }

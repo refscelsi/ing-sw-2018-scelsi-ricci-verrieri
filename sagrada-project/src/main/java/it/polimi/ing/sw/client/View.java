@@ -105,14 +105,14 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
 
 
     @Override
-    public void onSchemeToChoose(Match match) {
+    public void onSchemeToChoose(Match match) throws NotValidPlayException {
         this.match=match;
         ui.onSchemeToChoose(match, nickname, "Scegli il numero del tuo schema");
     }
 
     @Override
     public void onSuccess(String message) throws RemoteException {
-
+        ui.onSuccess(message);
     }
 
 
@@ -143,6 +143,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
     public void onSetPlaying() throws RemoteException {
         this.match=match;
         isPlaying=true;
+        System.out.println("sono il primo giocatore"+ this.nickname);
         ui.onTurnStart(match, nickname);
     }
 
@@ -216,6 +217,8 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
             e.printStackTrace();
         } catch (NotValidException e) {
             e.printStackTrace();
+        } catch (NotValidPlayException e) {
+            e.printStackTrace();
         }
 
         // devo notificare anche il colore del giocatore
@@ -223,7 +226,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
     }
 
 
-    public void setChosenScheme (int id) {
+    public void setChosenScheme (int id) throws NotValidPlayException {
         try {
             controller.setChosenScheme(id);
         } catch (NetworkException e) {
@@ -233,6 +236,12 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         } catch (NotValidPlayException e) {
             e.printStackTrace();
         }
+        try {
+            controller.checkAllReady();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
     }
 
 

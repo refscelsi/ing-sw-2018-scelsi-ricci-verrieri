@@ -1,5 +1,6 @@
 package it.polimi.ing.sw.ui.cli;
 
+import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
 import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.model.Player;
 import it.polimi.ing.sw.model.Scheme;
@@ -196,7 +197,7 @@ public class CLI implements UiUpdate {
     /**
      * Scelta dello schema tra i 4 schemi disponibili da parte di un giocatore
      */
-    public void chooseScheme(Match match, String nickname, String message) {
+    public void chooseScheme(Match match, String nickname, String message) throws NotValidPlayException {
         int num;
         ArrayList<Scheme> schemes = match.getPlayer(nickname).getSchemesToChoose();
         showSchemesToChoose(schemes);
@@ -204,12 +205,12 @@ public class CLI implements UiUpdate {
             System.out.println(message);
             num = scanner.nextInt();
         } while (num < 1 || num > 4);
-        controller.setChosenScheme(schemes.get(num-1).getId());   //se per esempio qui c'è un errore, se lo gestisce il PlayerController
+        controller.setChosenScheme(schemes.get(num-1).getId());   //se per esempio qui c'è un errore, se lo gestisce il PlayerController*/
     }
 
     public void showSchemesToChoose (ArrayList<Scheme> schemes) {
         for (int i=0; i<4; i++) {
-            System.out.println("Schema " + i+1 + ":");
+            System.out.println("Schema " + (i+1) + ":");
             ShowScheme show = new ShowScheme(schemes.get(i));
             System.out.println("");
         }
@@ -220,47 +221,52 @@ public class CLI implements UiUpdate {
      * Scelta dell'azione da parte del giocatore
      */
     public void chooseAction(Match match, String nickname) {
-
+        boolean ok;
         System.out.print("Digita: \n- D se vuoi posizionare un dado sul tuo schema; \n- T se vuoi utilizzare una carta utensile; \n- I se vuoi visualizzare le informazioni degli altri giocatori; \n- E se vuoi terminare il tuo turno; \n- Q se vuoi uscire dalla partita.\n");
-        inText = scanner.nextLine();
 
-        switch (inText.toLowerCase()) {
+        do {
+            ok=true;
+            inText = scanner.nextLine();
 
-            case "q": {
-                System.out.println("Sei sicuro che vuoi uscire dalla partita? Digita S per sì o N per no.");
-                if (scanner.nextLine().toLowerCase().equalsIgnoreCase("s")) {
-                    // TODO: gestire terminazione corretta del programma!
-                    System.out.println("Uscendo dalla partita...");
-                    System.exit(0);
+            switch (inText.toLowerCase()) {
+
+                case "q": {
+                    System.out.println("Sei sicuro che vuoi uscire dalla partita? Digita S per sì o N per no.");
+                    if (scanner.nextLine().toLowerCase().equalsIgnoreCase("s")) {
+                        // TODO: gestire terminazione corretta del programma!
+                        System.out.println("Uscendo dalla partita...");
+                        System.exit(0);
+                    }
+                    break;
                 }
-                break;
-            }
 
-            case "d": {
-                handleUseDice(match);
-                break;
-            }
+                case "d": {
+                    handleUseDice(match);
+                    break;
+                }
 
-            case "t": {
-                //handleUseToolCard(match);   //TODO: metodi per le carte utensili
-                break;
-            }
+                case "t": {
+                    //handleUseToolCard(match);   //TODO: metodi per le carte utensili
+                    break;
+                }
 
-            case "i": {
-                printOtherPlayersInfo(match, nickname);
-                break;
-            }
+                case "i": {
+                    printOtherPlayersInfo(match, nickname);
+                    break;
+                }
 
-            case "e": {
-                endTurn();
-                break;
-            }
+                case "e": {
+                    endTurn();
+                    break;
+                }
 
-            default: {
-                System.out.println("Scelta non valida");
-                break;
+                default: {
+                    System.out.println("Scelta non valida");
+                    ok=false;
+                    break;
+                }
             }
-        }
+        }while(!ok);
     }
 
 
@@ -313,7 +319,7 @@ public class CLI implements UiUpdate {
             col = scanner.nextInt();
         } while (col < 1 || col > Constants.NUM_COLS);
 
-        controller.useDice(dice - 1, row, col);
+        controller.useDice(dice - 1, row-1, col-1);
 
     }
 
@@ -506,7 +512,7 @@ public class CLI implements UiUpdate {
     }
 
     @Override
-    public void onSchemeToChoose (Match match, String nickname, String message) {
+    public void onSchemeToChoose (Match match, String nickname, String message) throws NotValidPlayException {
         chooseScheme(match, nickname, message);
     }
 

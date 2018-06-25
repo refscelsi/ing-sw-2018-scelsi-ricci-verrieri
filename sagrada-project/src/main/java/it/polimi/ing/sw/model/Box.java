@@ -15,6 +15,14 @@ public class Box implements Serializable{
         dice=null;
     }
 
+    public Box(int i, int y){
+        this.x=x;
+        this.y=y;
+        shade=0;
+        dice=null;
+        color=Color.WHITE;
+    }
+
     public Box(int x, int y, Color color, int shade){
         this.x=x;
         this.y=y;

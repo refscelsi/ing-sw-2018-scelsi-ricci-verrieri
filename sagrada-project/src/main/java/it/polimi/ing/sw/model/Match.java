@@ -1,6 +1,7 @@
 
 package it.polimi.ing.sw.model;
 
+import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.model.exceptions.NotValidNicknameException;
 import it.polimi.ing.sw.model.exceptions.ToolCardException;
@@ -164,11 +165,13 @@ public class Match implements Serializable {
 
     // metodi VARI per gestire la PARTITA (non il singolo turno)
 
-    public void joinMatch() throws ToolCardException, RemoteException, NotValidException {
+    public void joinMatch() throws ToolCardException, RemoteException, NotValidException, NotValidPlayException {
         if(players.size()==2){
             //devo aggiungere timer e cazzi vari
             startMatch();
         }
+        else
+            return;
     }
 
     public void checkAllReady() throws RemoteException {
@@ -184,7 +187,7 @@ public class Match implements Serializable {
         }
     }
 
-    public void startMatch() throws ToolCardException, NotValidException, RemoteException {
+    public void startMatch() throws ToolCardException, NotValidException, RemoteException, NotValidPlayException {
         initializeTable();
         inizializePlayers();
         setColorOfPawns();
@@ -225,13 +228,14 @@ public class Match implements Serializable {
     //se è il primo round decido a caso i turni dei giocatori
     public void startRound() throws RemoteException {
         if(numRound==0){
-            draftPool=bag.draw(numPlayers*2);
+            draftPool=bag.draw(numPlayers);
             Collections.shuffle(players);
             playersRound= new Player[numPlayers*2];
             firstPlayer=players.get(0);
             createRoundPlayers(0);
             playerPlaying=firstPlayer;
             playersRoundIndex=0;
+            System.out.println("il primo giocatore è "+ firstPlayer.getNickname());
             notifyChangement();
             notifyStartTurn(firstPlayer);
         }
@@ -361,6 +365,7 @@ public class Match implements Serializable {
     }
 
     public void chooseScheme(Player player, int id) throws RemoteException {
+        System.out.println(id);
         player.setScheme(schemeCardDeck.getSchemeWithId(id));
         playerMap.get(player).onSuccess("ok hai scelto bene lo schema ");
     }
@@ -388,7 +393,7 @@ public class Match implements Serializable {
         playerMap.get(player).onPlayerLogged();
     }
 
-    private void notifyStartedMatch() throws RemoteException {
+    private void notifyStartedMatch() throws RemoteException, NotValidPlayException {
         for(RemotePlayer remotePlayer: remotePlayers){
             remotePlayer.onSchemeToChoose(this);
         }
@@ -400,6 +405,12 @@ public class Match implements Serializable {
 
     public void notifyEndTurn(Player player) throws RemoteException {
         playerMap.get(player).onTurnEnd();
+    }
+
+    public void notifySucces(String message) throws RemoteException{
+        for(RemotePlayer remotePlayer: remotePlayers){
+            remotePlayer.onSuccess(message);
+        }
     }
 
 }

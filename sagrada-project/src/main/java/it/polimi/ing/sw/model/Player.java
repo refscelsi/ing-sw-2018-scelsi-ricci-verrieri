@@ -89,6 +89,7 @@ public class Player implements Serializable{
     public void setScheme(Scheme scheme) {
         this.scheme = scheme;
         this.isReady=true;
+        System.out.println("il mio schema ha id   "+ scheme.getId());
     }
 
     public void setColor(Color color) {
@@ -97,6 +98,7 @@ public class Player implements Serializable{
 
     public void setSchemesToChoose(ArrayList<Scheme> schemesToChoose) {
         this.schemesToChoose = schemesToChoose;
+
     }
 
     public void setLogged(boolean isLogged){
