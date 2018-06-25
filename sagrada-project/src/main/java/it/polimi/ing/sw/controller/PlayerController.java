@@ -1,5 +1,6 @@
 package it.polimi.ing.sw.controller;
 
+import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
 import it.polimi.ing.sw.model.RemotePlayer;
 import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.model.Player;
@@ -39,10 +40,9 @@ public class PlayerController extends UnicastRemoteObject implements PlayerInter
         return this.remotePlayer;
     }
 
-
     @Override
-    public void checkIsready() throws ToolCardException, RemoteException, NotValidException {
-        match.checkIsReady();
+    public void joinMatch() throws RemoteException, ToolCardException, NotValidException {
+        match.joinMatch();
     }
 
     @Override
@@ -51,20 +51,59 @@ public class PlayerController extends UnicastRemoteObject implements PlayerInter
     }
 
     @Override
-    public void setChosenScheme(int id) throws NetworkException {
+    public void setChosenScheme(int id) throws NetworkException, RemoteException , NotValidPlayException{
         if (state.equals(PlayerState.INIZIALIZED)) {
-            player.setScheme(getSchemeWithId(id));
-            setState(PlayerState.CHOOSENSCHEME);
+            match.chooseScheme(this.player,id);
+            setState(PlayerState.READYTOPLAY);
+        }
+        else throw new NotValidPlayException("non puoi fare questa mossa ora!");
+    }
+
+    @Override
+    public void sendUseDiceRequest(int indexOfDiceInDraftPool, int row, int col) throws NetworkException, NotValidException, NotValidPlayException, RemoteException {
+        switch (state){
+            case USEDDICE: throw new NotValidPlayException("hai già usato un dado in questo turno!");
+            case FINISHTURN: throw new NotValidPlayException("non puoi più fare mosse, passa il turno");
+            case USEDTOOLCARD: //devo cfare un caso per ogni toolcard per vedere se lo puoi fare o no;
+            case READYTOPLAY:  {//faccio un controllo che sia veramente attivo?? --> mi serve un isPlaying dalla view
+                match.useDice(player, indexOfDiceInDraftPool, row, col);
+                setState(PlayerState.USEDDICE);
+                break;
+            }
+            default: throw new NotValidPlayException("non puoi questa mossa ora");
+        }
+    }
+
+    //quando passo il turno poi sono pronto a giocare il prossimo turno--> tanto non sarò attivo quindi non potrò chiamare
+    //i metodi. Oppure facciamo un altro stato per essere più sicuri e quando vieni notificato isPlaying passi allo stato READYTOPLAY???
+    @Override
+    public void endTurn() throws NetworkException, RemoteException, NotValidPlayException {
+        if(state.equals(PlayerState.CHOOSENTOOLCARD)|| state.equals(PlayerState.INIZIALIZED)){
+            throw new NotValidPlayException("finisci il turno caro!");
+        }
+        else {
+            match.changePlayer();
+            setState(PlayerState.READYTOPLAY);
         }
     }
 
     @Override
-    public void sendUseDiceRequest(int indexOfDiceInDraftPool, int row, int col) throws NetworkException, NotValidException {
-
+    public void sendUseToolCard1Request(int indexInDraftPool, String operation) throws NetworkException, NotValidException, NotValidPlayException {
+        if(state.equals(PlayerState.READYTOPLAY)){
+            match.useToolCard1(indexInDraftPool,operation);
+            setState(PlayerState.USEDTOOLCARD);
+        }
+        else if(state.equals(PlayerState.USEDDICE)){
+            match.useToolCard1(indexInDraftPool,operation);
+            setState(PlayerState.FINISHTURN);
+        }
+        else throw new NotValidPlayException("Non puoi usare questa carta");
     }
 
     @Override
-    public void endTurn() throws NetworkException {
+    public void sendUseToolCard234Request(int id, int sourceRow, int sourceCol, int destRow, int destCol) throws NetworkException, NotValidException {
 
     }
+
+
 }

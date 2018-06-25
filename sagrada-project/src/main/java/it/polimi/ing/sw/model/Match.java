@@ -156,13 +156,11 @@ public class Match implements Serializable {
 
     // metodi VARI per gestire la PARTITA (non il singolo turno)
 
-    public void checkIsReady() throws ToolCardException, RemoteException, NotValidException {
-        //dovrò aggiungere il timer se sono in due
-        if(playerMap.size()==4){
+    public void joinMatch() throws ToolCardException, RemoteException, NotValidException {
+        if(players.size()==4){
+            //devo aggiungere timer e cazzi vari
             startMatch();
         }
-        else
-            return;
     }
 
     public void checkAllReady() throws RemoteException {
@@ -269,6 +267,7 @@ public class Match implements Serializable {
     public void changePlayer () throws RemoteException {
         if(playersRoundIndex<numPlayers-1) {
             playersRoundIndex++;
+            notifyEndTurn(playerPlaying);
             playerPlaying = playersRound[playersRoundIndex];
             notifyStartTurn(playerPlaying);
         }
@@ -283,7 +282,10 @@ public class Match implements Serializable {
     public void endRound() throws RemoteException {
         roundTrack.addDicesRound(draftPool);
         numRound++;
-        if(numRound==Constants.NUM_ROUNDS+1) {
+        if(numRound<=Constants.NUM_ROUNDS){
+            startRound();
+        }
+        else if(numRound==Constants.NUM_ROUNDS+1) {
             calculateRanking();
         }
     }
@@ -344,14 +346,21 @@ public class Match implements Serializable {
     // metodi VARI per gestire il TURNO di un giocatore
 
 
-    public void useDice (Box box, Dice dice, Scheme scheme) throws NotValidException, RemoteException {
-        scheme.placeDice(box, dice);
-        draftPool.removeDice(dice);
-        for(RemotePlayer remotePlayer: remotePlayers){
-            remotePlayer.onGameUpdate(this);
-        }
+    public void useDice (Player player, int indexOfDiceInDraftpool, int row, int col) throws NotValidException, RemoteException {
+        player.getScheme().placeDice(player.getScheme().getBox(row,col),draftPool.getDice(indexOfDiceInDraftpool));
+        draftPool.removeDice(draftPool.getDice(indexOfDiceInDraftpool));
+        notifyChangement();
     }
 
+    public void chooseScheme(Player player, int id) throws RemoteException {
+        //player.setScheme(getSchemeWithId(id));
+        playerMap.get(player).onSuccess();
+    }
+
+    public void useToolCard1(int indexOfDiceInDraftPool, String operation){
+        //eseguo ToolCard 1
+        //mi serve un metodo per tirarla fuori da ToolCards
+    }
 
     // aggiornamenti alle view
 
@@ -379,6 +388,10 @@ public class Match implements Serializable {
 
     private void notifyStartTurn(Player player) throws RemoteException {
         playerMap.get(player).onSetPlaying();
+    }
+
+    public void notifyEndTurn(Player player) throws RemoteException {
+        playerMap.get(player).onTurnEnd();
     }
 
 }
