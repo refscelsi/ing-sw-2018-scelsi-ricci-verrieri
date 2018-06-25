@@ -1,37 +1,79 @@
 package it.polimi.ing.sw.model;
 
+import it.polimi.ing.sw.ui.gui.SchemeListFileConverter;
+
+import java.io.Serializable;
 import java.util.*;
+import java.util.Random;
 
-public class SchemeCardDeck {
+public class SchemeCardDeck implements Serializable{
 
-    private ArrayList<SchemeCard> deck;
-    private ArrayList<SchemeCard> drawnCards;
+    private ArrayList<Scheme> deck;
 
 
     public SchemeCardDeck() {
-        deck = new ArrayList<SchemeCard>();
-        drawnCards= new ArrayList<SchemeCard>();
+        deck = new ArrayList<Scheme>();
         setDeck();
     }
 
 
-    public void setDeck () {
-        // qui si caricheranno tutte le carte schema
+    /*public void setDeck () {
+        SchemeListFileConverter schemes = new SchemeListFileConverter();
+        deck = schemes.readFromFile();
+        System.out.println("ho letto da file");
+        int size = deck.size();
+        if (size%2==0) {
+            for (Scheme scheme: deck) {
+                if (scheme.getId() % 2 == 0)
+                    scheme.setIdRetro(scheme.getId() - 1);
+                else
+                    scheme.setIdRetro(scheme.getId() + 1);
+            }
+        }
+        else {
+            for (int i=0; i<size-1; i++) {
+                if (deck.get(i).getId() % 2 == 0)
+                    deck.get(i).setIdRetro(deck.get(i).getId() - 1);
+                else
+                    deck.get(i).setIdRetro(deck.get(i).getId() + 1);
+            }
+            Random rand = new Random();
+            int id = rand.nextInt(size) + 1;
+            deck.get(size-1).setIdRetro(deck.get(id).getId());
+        }
+    }*/
+
+    public void setDeck(){
+        int index=0;
+        while(index<16) {
+            Box[][] boxes = new Box[4][5];
+            for(int i=0;i<4;i++){
+                for(int j=0;j<5;j++){
+                    boxes[i][j]=new Box(i,j);
+                }
+            }
+
+            Scheme scheme = new Scheme(index, 2, boxes);
+            deck.add(scheme);
+            index++;
+        }
+
     }
 
-
     public ArrayList<Scheme> drawSchemeCard (){
+        ArrayList<Scheme> drawnCards = new ArrayList<Scheme>();
         Collections.shuffle(deck);
-        for (int i=0; i<2; i++) {
+        //da rimettere a 2
+        for (int i=0; i<4; i++) {
             drawnCards.add(deck.get(i));
-            deck.remove(i);
+            //drawnCards.add(getSchemeWithId(deck.get(i).getIdRetro()));
+            //deck.remove(i);
+            //deck.remove(getSchemeWithId(deck.get(i).getIdRetro()));
         }
-        ArrayList<Scheme> schemes = new ArrayList<Scheme>();
-        schemes.add(drawnCards.get(0).getA());
-        schemes.add(drawnCards.get(0).getBack());
-        schemes.add(drawnCards.get(1).getA());
-        schemes.add(drawnCards.get(1).getBack());
-        return schemes;
+        for(Scheme scheme: drawnCards){
+            System.out.println(scheme.getId());
+        }
+        return drawnCards;
     }
 
 
@@ -40,8 +82,13 @@ public class SchemeCardDeck {
     }
 
 
-    public int getDrawnCardsSize(){
-        return drawnCards.size();
+    public Scheme getSchemeWithId ( int id ) {
+        for (Scheme scheme : deck ) {
+            if (scheme.getId()==id) {
+                return scheme;
+            }
+        }
+        return null;
     }
 }
 

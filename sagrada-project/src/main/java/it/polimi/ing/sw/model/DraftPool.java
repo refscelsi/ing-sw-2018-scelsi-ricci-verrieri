@@ -1,9 +1,10 @@
 package it.polimi.ing.sw.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class DraftPool {
+public class DraftPool implements Serializable{
 
     private ArrayList<Dice> draftPool;
 
@@ -64,6 +65,23 @@ public class DraftPool {
 
     public Dice getDice(int index) {
         return draftPool.get(index);
+    }
+
+
+    // inserisce un dado in una determinata posizione
+
+    public void setDice(Dice dice, int position) {
+        draftPool.get(position).setDice(dice.getNumFacciaUp(), dice.getDiceColor());
+    }
+
+
+    // ritorna tutti i colori dei dadi presenti nella draftpool
+
+    public ArrayList<Color> getColorsInDraftPool() {
+        ArrayList<Color> colors = new ArrayList<Color>();
+        for (Dice dice: draftPool)
+            colors.add(dice.getDiceColor());
+        return colors;
     }
 
 }

@@ -3,17 +3,18 @@ package it.polimi.ing.sw.model;
 import it.polimi.ing.sw.model.toolCard.*;
 import it.polimi.ing.sw.model.exceptions.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
 
 
-public class ToolCards {
+public class ToolCards implements Serializable{
 
     private ArrayList<ToolCard> toolCards;
 
 
-    public ToolCards() throws ToolCardException, NotValidException{
+    public ToolCards() {
         toolCards= new ArrayList<ToolCard>();
         ArrayList<Integer> values= new ArrayList<Integer>();
         for(int i=1; i<13;i++){
@@ -39,8 +40,7 @@ public class ToolCards {
     }
 
 
-    public void addCard(int id) throws ToolCardException, NotValidException {
-        ToolCard toolCard;
+    public void addCard(int id) {
         switch (id){
             case 1:
                 PinzaSgrossatrice pinzaSgrossatrice=new PinzaSgrossatrice();

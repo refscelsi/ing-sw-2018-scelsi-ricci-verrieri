@@ -1,4 +1,4 @@
-package it.polimi.ing.sw;
+package it.polimi.ing.sw.model.exceptions;
 
 import java.io.IOException;
 

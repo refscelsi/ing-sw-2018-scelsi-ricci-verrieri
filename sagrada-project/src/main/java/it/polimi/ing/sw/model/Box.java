@@ -1,6 +1,8 @@
 package it.polimi.ing.sw.model;
 
-public class Box {
+import java.io.Serializable;
+
+public class Box implements Serializable{
     private int x;
     private int y;
     private Dice dice;
@@ -11,6 +13,14 @@ public class Box {
         color=Color.WHITE;
         shade=0;
         dice=null;
+    }
+
+    public Box(int i, int y){
+        this.x=x;
+        this.y=y;
+        shade=0;
+        dice=null;
+        color=Color.WHITE;
     }
 
     public Box(int x, int y, Color color, int shade){

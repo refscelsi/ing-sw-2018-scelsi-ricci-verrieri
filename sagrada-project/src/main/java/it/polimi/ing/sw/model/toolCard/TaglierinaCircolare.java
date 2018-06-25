@@ -9,18 +9,20 @@ import it.polimi.ing.sw.model.exceptions.ToolCardException;
 
 public class TaglierinaCircolare extends ToolCard {
 
-    final int id=5;
+    private final int id=5;
 
 
-    public TaglierinaCircolare () throws ToolCardException, NotValidException {
+    public TaglierinaCircolare () {
         super();
     }
 
-
-    public void execute () {
-
-        // questa carta la gestisce il controller, che semplicemente verrà notificato di questa azione e scambierà i due dadi
-
+    @Override
+    public void execute (DraftPool draftpool, int indexInDraftPool, RoundTrack roundTrack, int round, int indexInRound) {
+        Dice diceRoundtrack = roundTrack.getDicesRound(round).getDice(indexInRound);
+        Dice diceDraftPool = draftpool.getDice(indexInDraftPool);
+        roundTrack.getDicesRound(round).getDice(indexInRound).setDice(diceDraftPool.getNumFacciaUp(), diceDraftPool.getDiceColor());
+        draftpool.getDice(indexInDraftPool).setDice(diceRoundtrack.getNumFacciaUp(), diceRoundtrack.getDiceColor());
+        incrementNumOfTokens();
     }
 
 }

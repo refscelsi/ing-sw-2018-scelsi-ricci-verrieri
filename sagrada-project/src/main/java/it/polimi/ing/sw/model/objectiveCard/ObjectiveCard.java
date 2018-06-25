@@ -1,7 +1,9 @@
 package it.polimi.ing.sw.model.objectiveCard;
 
 
-public abstract class ObjectiveCard {
+import java.io.Serializable;
+
+public abstract class ObjectiveCard implements Serializable{
 
     private int score;
     private String name;

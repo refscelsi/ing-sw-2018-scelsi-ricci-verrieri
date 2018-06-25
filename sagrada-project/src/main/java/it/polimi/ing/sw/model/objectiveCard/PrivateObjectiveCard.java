@@ -2,8 +2,10 @@ package it.polimi.ing.sw.model.objectiveCard;
 
 import it.polimi.ing.sw.model.*;
 
+import java.io.Serializable;
 
-public class PrivateObjectiveCard {
+
+public class PrivateObjectiveCard implements Serializable{
 
     private Color color;
     private String name;

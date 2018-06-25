@@ -1,10 +1,11 @@
 package it.polimi.ing.sw.model;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.Random;
 
 
-public class Bag {
+public class Bag implements Serializable{
 
     private ArrayList<Dice> dices = new ArrayList<Dice>();;
 
@@ -58,12 +59,16 @@ public class Bag {
     public DraftPool draw (int numPlayers){
         int bound=(numPlayers*2)+1;
         DraftPool draftPool = new DraftPool();
-        Dice dice = new Dice();
+        Dice dice;
         for(int i=0;i<bound;i++){
             dice = drawDice();
             draftPool.addDice(dice);
         }
         return draftPool;
+    }
+
+    public void addDice (Dice dice) {
+        dices.add(dice);
     }
 
 

@@ -1,9 +1,10 @@
 package it.polimi.ing.sw.model;
 
+import java.io.Serializable;
 import java.util.Random;
 
 
-public class Dice {
+public class Dice implements Serializable{
     private int  numFacciaUp;
     private Color diceColor;
 
@@ -32,6 +33,11 @@ public class Dice {
 
     public void setNumFacciaUp(int numFacciaUp) {
         this.numFacciaUp = numFacciaUp;
+    }
+
+    public void setDice(int numFacciaUp, Color color) {
+        this.numFacciaUp = numFacciaUp;
+        diceColor = color;
     }
 
 

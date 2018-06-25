@@ -5,37 +5,38 @@ import it.polimi.ing.sw.model.Dice;
 import it.polimi.ing.sw.model.Player;
 import it.polimi.ing.sw.model.Scheme;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
-import it.polimi.ing.sw.model.exceptions.ToolCardException;
+import it.polimi.ing.sw.model.exceptions.NotValidException;
 
 public class PennelloPerEglomise extends ToolCard{
 
-    final int id=2;
+    private final int id=2;
 
-
-    public PennelloPerEglomise() throws ToolCardException, NotValidException {
+    /*
+    public PennelloPerEglomise() {
         super();
     }
 
-
-    public void execute(Scheme scheme, int sourceRow, int sourceCol, int destRow, int destCol) throws ToolCardException {
+    @Override
+    public void execute(Scheme scheme, int sourceRow, int sourceCol, int destRow, int destCol) throws NotValidException {
         Box sourceBox = scheme.getBox(sourceRow, sourceCol);
         Box destBox = scheme.getBox(destRow, destCol);
         if(!sourceBox.isFull())
-            throw new ToolCardException("Hai scelto come origine una casella vuota!");
+            throw new NotValidException("Hai scelto come origine una casella vuota!");
         else {
             if (destBox.isFull())
-                throw new ToolCardException("Non puoi posizionare un dado in una casella già piena!");
+                throw new NotValidException("Non puoi posizionare un dado in una casella già piena!");
             else {
                 Dice dice = sourceBox.getDice();
-                if (scheme.checkBoxShade(destBox, dice) && scheme.checkDiceAdjacent(destBox, dice, true)) {
+                if (scheme.checkBoxShade(destBox, dice) && scheme.checkIfHasDiceAdjacent(destBox, dice, 1)) {
                     destBox.placeDice(dice);
                     sourceBox.removeDice();
+                    incrementNumOfTokens();
                 } else
-                    throw new ToolCardException("Non stai rispettando le condizioni di piazzamento!");
+                    throw new NotValidException("Non stai rispettando le condizioni di piazzamento!");
             }
         }
     }
 
-
+*/
 }
 

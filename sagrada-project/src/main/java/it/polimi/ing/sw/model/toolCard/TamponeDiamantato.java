@@ -8,15 +8,15 @@ import it.polimi.ing.sw.model.exceptions.ToolCardException;
 
 public class TamponeDiamantato extends ToolCard {
 
-    private int id=10;
+    private final int id=10;
 
 
-    public TamponeDiamantato() throws ToolCardException, NotValidException {
+    public TamponeDiamantato() {
         super();
     }
 
-
-    public void execute(Dice dice) throws ToolCardException {
+    @Override
+    public void execute(Dice dice) {
 
         switch (dice.getNumFacciaUp()){
             case 1:
@@ -39,8 +39,9 @@ public class TamponeDiamantato extends ToolCard {
                 break;
 
             default:
-                throw new ToolCardException("Valore non valido");
+                break;
         }
+        incrementNumOfTokens();
     }
 
 

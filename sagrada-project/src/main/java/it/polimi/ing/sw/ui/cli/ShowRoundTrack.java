@@ -50,6 +50,8 @@ public class ShowRoundTrack {
                 }
 
                 getBackgroundColor(Color.WHITE);
+                if (j==1)
+                    System.out.print("   " + i);
                 System.out.print("\n");
             }
             System.out.print("\n");
@@ -75,6 +77,8 @@ public class ShowRoundTrack {
             }
 
             getBackgroundColor(Color.WHITE);
+            if (j==2)
+                System.out.print("   0");
             System.out.print("\n");
         }
 
@@ -115,6 +119,6 @@ public class ShowRoundTrack {
             System.out.print(ConsoleColors.WHITE_BACKGROUND);
     }
 
-}
 
+}
 
