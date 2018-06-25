@@ -1,17 +1,16 @@
 package it.polimi.ing.sw.ui.gui;
 
-import it.polimi.ing.sw.model.SchemeCard;
+import it.polimi.ing.sw.model.SchemeCardDeck;
 
 import java.awt.*;
 
 public class ChooseSchemeForm extends javax.swing.JFrame {
 
-    private SchemeCard cardA, cardB;
+    private SchemeCardDeck schemeCardDeck;
     private VetrataPanel vetrataPanelA, vetrataPanelB, vetrataPanelC, vetrataPanelD;
 
-    public ChooseSchemeForm(SchemeCard cardA, SchemeCard cardB) {
-        this.cardA = cardA;
-        this.cardB = cardB;
+    public ChooseSchemeForm(SchemeCardDeck schemeCardDeck) {
+        this.schemeCardDeck = schemeCardDeck;
 
         initComponents();
         setLocationRelativeTo(null);
@@ -23,7 +22,7 @@ public class ChooseSchemeForm extends javax.swing.JFrame {
 
     private void setVetrataPanel() {
         vetrataPanelA= new VetrataPanel();
-        vetrataPanelA.fillScheme(cardA.getA());
+        vetrataPanelA.fillScheme(schemeCardDeck.());
         schemeCardPanel1.add(vetrataPanelA);
         vetrataPanelA.setBounds(13,49,203,287);
 

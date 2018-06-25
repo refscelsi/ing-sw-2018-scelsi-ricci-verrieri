@@ -138,5 +138,20 @@ public class PlayerController extends UnicastRemoteObject implements PlayerInter
 
     }
 
+    @Override
+    public void useToolCard6(int indexInDraftPool) throws NetworkException, NotValidException, RemoteException {
+
+    }
+
+    @Override
+    public void useToolCard5(int indexInDraftPool, int round, int indexInRound) throws NetworkException, NotValidException, RemoteException {
+
+    }
+
+    @Override
+    public void useToolCard78(int id) throws NetworkException, NotValidException, RemoteException {
+
+    }
+
 
 }
