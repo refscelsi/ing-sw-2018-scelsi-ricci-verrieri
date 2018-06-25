@@ -193,7 +193,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
 
     public void loginPlayer(String nickname) {
         try {
-            controller = gameController.connect(nickname,this);
+            controller = gameController.connectRMI(nickname,this);
             this.isLogged = true;
             ui.onSuccess("Complimenti, ti sei loggato come " + nickname);
             this.nickname = nickname;
