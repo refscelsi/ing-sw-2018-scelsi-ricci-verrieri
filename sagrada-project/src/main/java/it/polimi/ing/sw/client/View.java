@@ -3,10 +3,13 @@ package it.polimi.ing.sw.client;
 import it.polimi.ing.sw.NetworkException;
 import it.polimi.ing.sw.controller.LoginInterface;
 import it.polimi.ing.sw.controller.PlayerInterface;
+import it.polimi.ing.sw.controller.exceptions.NotPossibleConnection;
+import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
 import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.model.RemotePlayer;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.model.exceptions.NotValidNicknameException;
+import it.polimi.ing.sw.model.exceptions.ToolCardException;
 import it.polimi.ing.sw.util.Constants;
 import it.polimi.ing.sw.ui.cli.CLI;
 
@@ -62,7 +65,9 @@ public class View implements RemotePlayer {
             }
         } while (!input.equals('c')&&!input.equals('g'));
 
-        ui.onChooseNetwork("Vuoi giocare con la RMI [r] o Socket [s]?");
+        //ui.onChooseNetwork("Vuoi giocare con la RMI [r] o Socket [s]?");
+
+        ui.onLogin("Scegli il tuo nickname: ");
 
     }
 
@@ -105,21 +110,15 @@ public class View implements RemotePlayer {
     }
 
     @Override
-    public void onChosenScheme() throws RemoteException {
+    public void onSuccess(String message) throws RemoteException {
 
     }
+
 
     @Override
     public void onGameUpdate(Match match) {
         this.match=match;
         ui.onGameUpdate(match, nickname);
-    }
-
-    @Override
-    public void onTurnStart(Match match, String nickname) {
-        this.match=match;
-        isPlaying=true;
-        ui.onTurnStart(match, nickname);
     }
 
     @Override
@@ -141,7 +140,9 @@ public class View implements RemotePlayer {
 
     @Override
     public void onSetPlaying() throws RemoteException {
-
+        this.match=match;
+        isPlaying=true;
+        ui.onTurnStart(match, nickname);
     }
 
     @Override
@@ -156,12 +157,18 @@ public class View implements RemotePlayer {
     /////////////////////////////////////////////////////////////////////////////////////////
 
 
-    public void chooseNetwork (String choice) {
+    /*public void chooseNetwork (String choice) {
         if(choice.equals('r')){
             try {
-                controller = gameController.connect(this);
+                controller = gameController.connect(nickname,this);
             } catch (RemoteException e) {
                 System.err.println(e.getMessage());
+            } catch (NotPossibleConnection notPossibleConnection) {
+                notPossibleConnection.printStackTrace();
+            } catch (NotValidException e) {
+                e.printStackTrace();
+            } catch (ToolCardException e) {
+                e.printStackTrace();
             }
             ui.onSuccess("Giocherai con RMI");
             ui.onLogin("Scegli il tuo nickname: ");
@@ -172,7 +179,7 @@ public class View implements RemotePlayer {
         }
         else
             ui.onChooseNetwork("Inserisci una lettera valida");
-    }
+    }*/
 
 
     /**
@@ -185,14 +192,29 @@ public class View implements RemotePlayer {
 
     public void loginPlayer(String nickname) {
         try {
-            controller.sendLoginRequest(nickname, this); //TODO: il controller mi notifica l'indice del giocatore
+            controller = gameController.connect(nickname,this);
             this.isLogged = true;
             ui.onSuccess("Complimenti, ti sei loggato come " + nickname);
             this.nickname = nickname;
-        } catch (NetworkException e) {
-            System.err.println(e.getMessage());
         } catch (NotValidNicknameException e) {
             ui.onLogin(e.getMessage() + ". Inserisci un nickname differente");
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (ToolCardException e) {
+            e.printStackTrace();
+        } catch (NotValidException e) {
+            e.printStackTrace();
+        } catch (NotPossibleConnection notPossibleConnection) {
+            notPossibleConnection.printStackTrace();
+        }
+        try {
+            controller.joinMatch(); //TODO: il controller mi notifica l'indice del giocatore
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (ToolCardException e) {
+            e.printStackTrace();
+        } catch (NotValidException e) {
+            e.printStackTrace();
         }
 
         // devo notificare anche il colore del giocatore
@@ -205,6 +227,10 @@ public class View implements RemotePlayer {
             controller.setChosenScheme(id);
         } catch (NetworkException e) {
             System.err.println(e.getMessage());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (NotValidPlayException e) {
+            e.printStackTrace();
         }
     }
 
@@ -220,6 +246,10 @@ public class View implements RemotePlayer {
             System.err.println(e.getMessage());
         } catch (NotValidException e) {
             ui.onPlaceDiceNotValid(e);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (NotValidPlayException e) {
+            e.printStackTrace();
         }
     }
 
@@ -229,6 +259,10 @@ public class View implements RemotePlayer {
             controller.endTurn();
         } catch (NetworkException e) {
             System.err.println(e.getMessage());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (NotValidPlayException e) {
+            e.printStackTrace();
         }
     }
 
@@ -243,6 +277,8 @@ public class View implements RemotePlayer {
             System.err.println(e.getMessage());
         } catch (NotValidException e) {
             ui.onUseToolCard1NotValid(match, e);
+        } catch (NotValidPlayException e) {
+            e.printStackTrace();
         }
     }
 

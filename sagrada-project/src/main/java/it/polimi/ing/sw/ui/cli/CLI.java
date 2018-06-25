@@ -185,11 +185,11 @@ public class CLI implements UiUpdate {
     }
 
 
-    public void chooseNetwork(String message) {
+    /*public void chooseNetwork(String message) {
         System.out.print(message);
         inText = scanner.nextLine();
         controller.chooseNetwork(inText);
-    }
+    }*/
 
 
     /**
@@ -359,6 +359,9 @@ public class CLI implements UiUpdate {
             case 4:
                 useToolCard234(id, match);
                 break;
+            case 5:
+                //useToolCard5(match);
+                break;
 
 
         }
@@ -400,6 +403,24 @@ public class CLI implements UiUpdate {
         } while (destCol < 1 || destCol > Constants.NUM_COLS);
         controller.useToolCard234(id, sourceRow, sourceCol, destRow, destCol);
     }
+
+
+    /*public void useToolCard5 (Match match) {
+        int dice, row, col;
+        do {
+            System.out.println("Digita l'indice del dado che vuoi posizionare, tra 1 e " + match.getDraftPool().getSize());
+            dice = scanner.nextInt();
+        } while (dice < 1 || dice > match.getDraftPool().getSize());
+        do {
+            System.out.println("Digita il numero di round a cui appartiene il, tra 1 e " + Constants.NUM_ROWS);
+            row = scanner.nextInt();
+        } while (row < 1 || row > Constants.NUM_ROWS);
+        do {
+            System.out.println("Digita il numero della colonna dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_COLS);
+            col = scanner.nextInt();
+        } while (col < 1 || col > Constants.NUM_COLS);
+        controller.useToolCard5(dice - 1, inText);
+    }*/
 
 
     /////////////////////////////////////////////////////////////////////////////////////////
@@ -444,10 +465,10 @@ public class CLI implements UiUpdate {
         System.out.println(errorCode);
     }
 
-    @Override
+    /*@Override
     public void onChooseNetwork (String message) {
         chooseNetwork(message);
-    }
+    }*/
 
     @Override
     public void onTurnStart (Match match, String nickname) {

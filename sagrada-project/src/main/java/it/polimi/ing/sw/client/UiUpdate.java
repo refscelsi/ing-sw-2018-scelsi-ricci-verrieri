@@ -15,7 +15,7 @@ public interface UiUpdate {
 
     public void onActionNotValid (String errorCode);
 
-    public void onChooseNetwork (String message);
+    //public void onChooseNetwork (String message);
 
     public void onTurnStart (Match match, String nickname);
 

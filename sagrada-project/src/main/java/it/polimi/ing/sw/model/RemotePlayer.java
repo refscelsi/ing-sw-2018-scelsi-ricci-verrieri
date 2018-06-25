@@ -11,13 +11,10 @@ public interface RemotePlayer extends Remote {
     public void onSchemeToChoose(Match match) throws RemoteException;
 
     //notifica il successo di qualcosa
-    public void onSuccess() throws RemoteException;
+    public void onSuccess(String message) throws RemoteException;
 
     //notifica un generico cambiamento
     public void onGameUpdate(Match match) throws RemoteException;
-
-    //che mi fa??
-    public void onTurnStart(Match match, String nickname) throws RemoteException;
 
     //notifica che il turno è finito--> settare isPlaying a false
     public void onTurnEnd() throws RemoteException;
