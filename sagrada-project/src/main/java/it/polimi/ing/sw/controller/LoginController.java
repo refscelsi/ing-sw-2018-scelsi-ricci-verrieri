@@ -29,14 +29,30 @@ public class LoginController extends UnicastRemoteObject implements Remote, Logi
     //metodo che crea un controller per ogni view che si connette
     @Override
     public synchronized PlayerInterface connect(String nickname, RemotePlayer remotePlayer) throws RemoteException, NotPossibleConnection, ToolCardException, NotValidException {
-        if(clients.size()< Constants.MAX_PLAYERS){
-            match.login(nickname, remotePlayer);
-            PlayerController playerController= new PlayerController(this.match, remotePlayer, match.getPlayer(nickname));
-            clients.add(playerController);
-            return playerController;
+        if (clients.size() < Constants.MAX_PLAYERS) {
+            if (!checkReconnection(nickname)) {
+                match.login(nickname, remotePlayer);
+                PlayerController playerController = new PlayerController(this.match, remotePlayer, match.getPlayer(nickname));
+                clients.add(playerController);
+                return playerController;
+            } else if (checkReconnection(nickname)) {
+                for (PlayerController playerController : clients) {
+                    if (playerController.getNickname().equals(nickname)) {
+                        return playerController;
+                    }
+                }
+            }
         }
-        else
-            throw new NotPossibleConnection("La partita è piena! Sorry");
+        throw new NotPossibleConnection("la partita è piena");
+    }
+
+    public boolean checkReconnection(String nickname){
+        for(PlayerController playerController: clients){
+            if(playerController.getNickname().equals(nickname)){
+                return true;
+            }
+        }
+        return false;
     }
 
 }

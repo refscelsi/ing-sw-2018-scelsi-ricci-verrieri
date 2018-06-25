@@ -16,12 +16,13 @@ public class DiluentePerPastaSalda extends ToolCard {
     }
 
 
+    @Override
     public void execute1 (DraftPool draftPool, int indexInDraftPool, Bag bag) {
         bag.addDice(draftPool.getDice(indexInDraftPool));
         draftPool.setDice(bag.drawDice(), indexInDraftPool);
     }
 
-
+    @Override
     public void execute2 (int numFacciaUp, Scheme scheme, int row, int col) throws NotValidException {
         dice.setNumFacciaUp(numFacciaUp);
         Box destBox = scheme.getBox(row, col);

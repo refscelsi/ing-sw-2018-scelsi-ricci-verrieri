@@ -16,7 +16,7 @@ public class PinzaSgrossatrice extends ToolCard {
         super();
     }
 
-
+    @Override
     public void execute(DraftPool draftPool, int indexInDraftPool, char operation) throws NotValidException {
         int value = draftPool.getDice(indexInDraftPool).getNumFacciaUp();
 

@@ -31,6 +31,8 @@ public class Match implements Serializable {
     private Bag bag;
     //mazzo carte obiettivo
     private ArrayList<ObjectiveCard> publicObjectives;
+    //mazzo di schemi per i giocatori
+    private SchemeCardDeck schemeCardDeck;
     //mazzo toolCards
     private ArrayList<ToolCard> toolCards;
     //riserva della partita
@@ -45,6 +47,8 @@ public class Match implements Serializable {
     private ArrayList<RemotePlayer> remotePlayers;
     //hashmap con la corrispondenza player-remoteplayer
     private HashMap<Player,RemotePlayer> playerMap;
+
+
 
 
     public Match() {
@@ -199,7 +203,7 @@ public class Match implements Serializable {
 
     public void inizializePlayers() {
 
-        SchemeCardDeck schemeCardDeck = new SchemeCardDeck();
+        this.schemeCardDeck = new SchemeCardDeck();
         PrivateObjectiveCardDeck privateObjectiveCardDeck = new PrivateObjectiveCardDeck();
         ArrayList<PrivateObjectiveCard> privateObjectives = privateObjectiveCardDeck.drawObjectiveCard(numPlayers);
         playerPlaying= null;
@@ -353,8 +357,8 @@ public class Match implements Serializable {
     }
 
     public void chooseScheme(Player player, int id) throws RemoteException {
-        //player.setScheme(getSchemeWithId(id));
-        playerMap.get(player).onSuccess();
+        player.setScheme(schemeCardDeck.getSchemeWithId(id));
+        playerMap.get(player).onSuccess("ok hai scelto bene lo schema ");
     }
 
     public void useToolCard1(int indexOfDiceInDraftPool, String operation){

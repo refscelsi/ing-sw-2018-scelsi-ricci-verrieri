@@ -16,7 +16,7 @@ public class TaglierinaCircolare extends ToolCard {
         super();
     }
 
-
+    @Override
     public void execute (DraftPool draftpool, int indexInDraftPool, RoundTrack roundTrack, int round, int indexInRound) {
         Dice diceRoundtrack = roundTrack.getDicesRound(round).getDice(indexInRound);
         Dice diceDraftPool = draftpool.getDice(indexInDraftPool);

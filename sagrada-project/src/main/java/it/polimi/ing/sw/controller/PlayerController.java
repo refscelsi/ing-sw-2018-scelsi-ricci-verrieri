@@ -12,7 +12,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-//classe che gestisce gli input dei client e chiama i metodi di PlayerInterface (sulla rete)
+//classe che gestisce gli input dei client e implementa i metodi di PlayerInterface (sulla rete)
 
 public class PlayerController extends UnicastRemoteObject implements PlayerInterface, Remote{
     //riferimento alla partita
@@ -23,12 +23,15 @@ public class PlayerController extends UnicastRemoteObject implements PlayerInter
     private RemotePlayer remotePlayer;
     //stato del giocatore
     private PlayerState state;
+    //tengo traccia del nickname nel caso lo stronzo si riconnettesse
+    private String nickname;
 
     public PlayerController(Match match, RemotePlayer remotePlayer, Player player) throws RemoteException {
         super();
         this.match=match;
         this.remotePlayer=remotePlayer;
         this.player=player;
+        this.nickname=player.getNickname();
         this.state=PlayerState.INIZIALIZED;
     }
 
@@ -40,9 +43,19 @@ public class PlayerController extends UnicastRemoteObject implements PlayerInter
         return this.remotePlayer;
     }
 
+    public String getNickname(){
+        return this.nickname;
+    }
+
     @Override
     public void joinMatch() throws RemoteException, ToolCardException, NotValidException {
-        match.joinMatch();
+        if(state.equals(PlayerState.OFFLINE)){
+            //gestisci lo stronzo che ritorna in partita
+        }
+        else if(state.equals(PlayerState.INIZIALIZED)) {
+            match.joinMatch();
+            setState(PlayerState.SCHEMETOCHOOSE);
+        }
     }
 
     @Override
@@ -52,7 +65,7 @@ public class PlayerController extends UnicastRemoteObject implements PlayerInter
 
     @Override
     public void setChosenScheme(int id) throws NetworkException, RemoteException , NotValidPlayException{
-        if (state.equals(PlayerState.INIZIALIZED)) {
+        if (state.equals(PlayerState.SCHEMETOCHOOSE)) {
             match.chooseScheme(this.player,id);
             setState(PlayerState.READYTOPLAY);
         }

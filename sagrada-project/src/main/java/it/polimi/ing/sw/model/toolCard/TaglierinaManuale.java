@@ -18,7 +18,7 @@ public class TaglierinaManuale extends ToolCard {
         color = Color.WHITE;
     }
 
-
+    @Override
     public void execute(Scheme scheme, int sourceRow, int sourceCol, int destRow, int destCol, RoundTrack roundTrack) throws NotValidException {
         Box sourceBox = scheme.getBox(sourceRow, sourceCol);
         Box destBox = scheme.getBox(destRow, destCol);

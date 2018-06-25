@@ -14,6 +14,7 @@ public class RigaInSughero extends ToolCard {
         super();
     }
 
+    @Override
     public void execute(Scheme scheme, Dice dice, int row, int col) throws NotValidException {
         Box destBox = scheme.getBox(row, col);
         if (destBox.isFull())

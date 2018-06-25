@@ -16,6 +16,7 @@ public class TenagliaARotelle extends ToolCard {
         super();
     }
 
+    @Override
     public void execute (Player[] playersRound, int playersRoundIndex){
         Player temp, succ;
         succ=playersRound[playersRoundIndex+1];
