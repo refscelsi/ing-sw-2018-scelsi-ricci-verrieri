@@ -13,5 +13,5 @@ public interface LoginInterface extends Remote {
 
     public PlayerInterface connectRMI(String nickname, RemotePlayer remotePlayer) throws RemoteException, NotPossibleConnection, ToolCardException, NotValidException, NotValidNicknameException;
 
-    public void connectSocket();
+    public void connectSocket() throws RemoteException;
 }

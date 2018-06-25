@@ -48,7 +48,7 @@ public class LoginController extends UnicastRemoteObject implements Remote, Logi
     }
 
     @Override
-    public void connectSocket() {
+    public void connectSocket() throws RemoteException {
         return;
     }
 
