@@ -23,4 +23,10 @@ public interface PlayerInterface extends Remote {
     public void sendUseToolCard1Request(int indexInDraftPool, String operation) throws NetworkException, NotValidException, NotValidPlayException, RemoteException;
 
     public void sendUseToolCard234Request(int id, int sourceRow, int sourceCol, int destRow, int destCol) throws NetworkException, NotValidException, RemoteException;
+
+    public void useToolCard6(int indexInDraftPool) throws NetworkException, NotValidException, RemoteException;
+
+    public void useToolCard5(int indexInDraftPool, int round, int indexInRound) throws NetworkException, NotValidException, RemoteException;
+
+    public void useToolCard78(int id) throws NetworkException, NotValidException, RemoteException;
 }

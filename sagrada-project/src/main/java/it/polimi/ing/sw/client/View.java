@@ -105,13 +105,13 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
 
 
     @Override
-    public void onSchemeToChoose(Match match) throws NotValidPlayException {
+    public void onSchemeToChoose(Match match) {
         this.match=match;
         ui.onSchemeToChoose(match, nickname, "Scegli il numero del tuo schema");
     }
 
     @Override
-    public void onSuccess(String message) throws RemoteException {
+    public void onSuccess(String message) {
         ui.onSuccess(message);
     }
 
@@ -135,12 +135,12 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
     }
 
     @Override
-    public void onPlayerLogged() throws RemoteException {
+    public void onPlayerLogged() {
 
     }
 
     @Override
-    public void onSetPlaying() throws RemoteException {
+    public void onSetPlaying() {
         this.match=match;
         isPlaying=true;
         System.out.println("sono il primo giocatore"+ this.nickname);
@@ -148,7 +148,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
     }
 
     @Override
-    public void onOtherInfoToolCard4(Match match) throws RemoteException {
+    public void onOtherInfoToolCard4(Match match) {
         ui.onGameUpdate(match, nickname);
         ui.onOtherInfoToolCard4(match);
     }
@@ -226,7 +226,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
     }
 
 
-    public void setChosenScheme (int id) throws NotValidPlayException {
+    public void setChosenScheme (int id) {
         try {
             controller.setChosenScheme(id);
         } catch (NetworkException e) {
@@ -239,6 +239,8 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         try {
             controller.checkAllReady();
         } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (NotValidPlayException e) {
             e.printStackTrace();
         }
 
@@ -280,7 +282,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
     // SENDERS ToolCards
 
 
-    public void useToolCard1 (int indexInDraftPool, String operation) throws RemoteException {
+    public void useToolCard1 (int indexInDraftPool, String operation) {
         try {
             controller.sendUseToolCard1Request(indexInDraftPool, operation);
         } catch (NetworkException e) {
@@ -289,17 +291,61 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
             ui.onUseToolCard1NotValid(match, e);
         } catch (NotValidPlayException e) {
             e.printStackTrace();
+        } catch (RemoteException e) {
+            e.printStackTrace();
         }
     }
 
 
-    public void useToolCard234 (int id, int sourceRow, int sourceCol, int destRow, int destCol) throws RemoteException {
+    public void useToolCard234 (int id, int sourceRow, int sourceCol, int destRow, int destCol) {
         try {
             controller.sendUseToolCard234Request(id, sourceRow, sourceCol, destRow, destCol);
         } catch (NetworkException e) {
             System.err.println(e.getMessage());
         } catch (NotValidException e) {
             ui.onUseToolCard234NotValid(id, match, e);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void useToolCard5 (int indexInDraftPool, int round, int indexInRound) {
+        try {
+            controller.useToolCard5(indexInDraftPool, round, indexInRound);
+        } catch (NetworkException e) {
+            System.err.println(e.getMessage());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (NotValidException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void useToolCard6 (int indexInDraftPool) {
+        dice = indexInDraftPool;
+        try {
+            controller.useToolCard6(indexInDraftPool);
+        } catch (NetworkException e) {
+            System.err.println(e.getMessage());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (NotValidException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void useToolCard78 (int id) {
+        try {
+            controller.useToolCard78(id);
+        } catch (NetworkException e) {
+            System.err.println(e.getMessage());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (NotValidException e) {
+            e.printStackTrace();
         }
     }
 }
