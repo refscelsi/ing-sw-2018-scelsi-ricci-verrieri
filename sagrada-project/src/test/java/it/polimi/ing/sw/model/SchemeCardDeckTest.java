@@ -11,13 +11,13 @@ public class SchemeCardDeckTest {
     @org.junit.Before
     public void setUp() throws Exception {
         deck=new SchemeCardDeck();
-        assertEquals(24,deck.getSize());
+        assertEquals(7,deck.getSize());
     }
 
     @org.junit.Test
     public void drawSchemeCard() {
         deck.drawSchemeCard();
-        assertEquals(20,deck.getSize());
+        assertEquals(4,deck.getSize());
     }
 
 }

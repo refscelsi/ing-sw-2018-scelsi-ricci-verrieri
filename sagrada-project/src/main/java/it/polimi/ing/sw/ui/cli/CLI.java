@@ -8,6 +8,7 @@ import it.polimi.ing.sw.client.View;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.util.Constants;
 
+import java.rmi.RemoteException;
 import java.util.*;
 
 
@@ -44,7 +45,7 @@ public class CLI implements UiUpdate {
     /**
      * Inizio come Client o Server.
      *
-     * @param args
+     * @param //args
      */
     /*public static void main(String[] args) {
         String serverAddress = Constants.SERVER_ADDRESS;
@@ -338,7 +339,7 @@ public class CLI implements UiUpdate {
     /////////////////////////////////////////////////////////////////////////////////////////
 
 
-    public void handleUseToolCard (Match match) {
+    public void handleUseToolCard (Match match) throws RemoteException {
         int num;
         do {
             System.out.println("Digita il numero della carta utensile che vuoi utilizzare, tra 1 e 3");
@@ -349,7 +350,7 @@ public class CLI implements UiUpdate {
     }
 
 
-    public void useToolCard (int id, Match match) {
+    public void useToolCard (int id, Match match) throws RemoteException {
         switch (id) {
             case 1:
                 useToolCard1(match);
@@ -368,7 +369,7 @@ public class CLI implements UiUpdate {
     }
 
 
-    public void useToolCard1(Match match) {
+    public void useToolCard1(Match match) throws RemoteException {
         int dice;
         do {
             System.out.println("Digita l'indice del dado che vuoi cambiare, tra 1 e " + match.getDraftPool().getSize());
@@ -383,7 +384,7 @@ public class CLI implements UiUpdate {
     }
 
 
-    public void useToolCard234(int id, Match match) {
+    public void useToolCard234(int id, Match match) throws RemoteException {
         int sourceRow, sourceCol, destRow, destCol;
         do {
             System.out.println("Digita il numero della riga dello schema del dado che vuoi spostare, tra 1 e " + Constants.NUM_ROWS);
@@ -510,19 +511,19 @@ public class CLI implements UiUpdate {
     }
 
     @Override
-    public void onUseToolCard1NotValid(Match match, NotValidException e) {
+    public void onUseToolCard1NotValid(Match match, NotValidException e) throws RemoteException {
         System.err.println(e);
         useToolCard1(match);
     }
 
     @Override
-    public void onUseToolCard234NotValid(int id, Match match, NotValidException e) {
+    public void onUseToolCard234NotValid(int id, Match match, NotValidException e) throws RemoteException {
         System.err.println(e);
         useToolCard234(id, match);
     }
 
     @Override
-    public void onOtherInfoToolCard4(Match match) {
+    public void onOtherInfoToolCard4(Match match) throws RemoteException {
         System.out.println("Primo dado mosso correttamente, ora muovi il secondo");
         useToolCard234(4, match);
     }

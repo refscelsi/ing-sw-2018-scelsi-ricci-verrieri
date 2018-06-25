@@ -1,6 +1,6 @@
 package it.polimi.ing.sw.client;
 
-import it.polimi.ing.sw.NetworkException;
+import it.polimi.ing.sw.model.exceptions.NetworkException;
 import it.polimi.ing.sw.controller.LoginInterface;
 import it.polimi.ing.sw.controller.PlayerInterface;
 import it.polimi.ing.sw.controller.exceptions.NotPossibleConnection;
@@ -13,7 +13,6 @@ import it.polimi.ing.sw.model.exceptions.ToolCardException;
 import it.polimi.ing.sw.util.Constants;
 import it.polimi.ing.sw.ui.cli.CLI;
 
-import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
@@ -54,8 +53,8 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
 
     public void start() throws RemoteException{
         System.out.println("Benvenuto in Sagrada, vuoi giocare con la Cli [c] o con la Gui [g]?");
-        input=scanner.nextLine().toLowerCase();
         do{
+            input=scanner.nextLine().toLowerCase();
             if(input.equals("c")){
                 ui = new CLI(this);
             }
@@ -64,7 +63,6 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
             }
             else {
                 System.out.println("Inserisci una lettera valida");
-                input = scanner.nextLine().toLowerCase();
             }
         } while (!input.equals("c")&&!input.equals("g"));
 
@@ -273,7 +271,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
     // SENDERS ToolCards
 
 
-    public void useToolCard1 (int indexInDraftPool, String operation) {
+    public void useToolCard1 (int indexInDraftPool, String operation) throws RemoteException {
         try {
             controller.sendUseToolCard1Request(indexInDraftPool, operation);
         } catch (NetworkException e) {
@@ -286,7 +284,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
     }
 
 
-    public void useToolCard234 (int id, int sourceRow, int sourceCol, int destRow, int destCol) {
+    public void useToolCard234 (int id, int sourceRow, int sourceCol, int destRow, int destCol) throws RemoteException {
         try {
             controller.sendUseToolCard234Request(id, sourceRow, sourceCol, destRow, destCol);
         } catch (NetworkException e) {

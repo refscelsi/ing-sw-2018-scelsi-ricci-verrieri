@@ -128,7 +128,9 @@ public class Match implements Serializable {
             players.add(player);
             remotePlayers.add(remotePlayer);
             numPlayers++;
+            System.out.println(numPlayers);
             notifyLogin(player);
+            return;
         }
         else if(playerMap.size()<Constants.MAX_PLAYERS) {
             if(checkNickname(nickname)) {
@@ -138,7 +140,9 @@ public class Match implements Serializable {
                 players.add(player);
                 remotePlayers.add(remotePlayer);
                 numPlayers++;
+                System.out.println(numPlayers);
                 notifyLogin(player);
+                return;
             }
             else
                 throw new NotValidNicknameException("il nickname scelto è già in uso, scegline un altro!");
@@ -161,7 +165,7 @@ public class Match implements Serializable {
     // metodi VARI per gestire la PARTITA (non il singolo turno)
 
     public void joinMatch() throws ToolCardException, RemoteException, NotValidException {
-        if(players.size()==4){
+        if(players.size()==2){
             //devo aggiungere timer e cazzi vari
             startMatch();
         }
@@ -228,16 +232,16 @@ public class Match implements Serializable {
             createRoundPlayers(0);
             playerPlaying=firstPlayer;
             playersRoundIndex=0;
+            notifyChangement();
             notifyStartTurn(firstPlayer);
-            //notifico anche gli altri??
         }
         else{
             draftPool=bag.draw(numPlayers*2);
             changePlayersRound(firstPlayer);
             firstPlayer=playersRound[0];
             playerPlaying=firstPlayer;
+            notifyChangement();
             notifyStartTurn(firstPlayer);
-            //notifico anche gli altri??
         }
     }
 

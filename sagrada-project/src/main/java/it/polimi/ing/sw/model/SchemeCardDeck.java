@@ -17,9 +17,10 @@ public class SchemeCardDeck implements Serializable{
     }
 
 
-    public void setDeck () {
+    /*public void setDeck () {
         SchemeListFileConverter schemes = new SchemeListFileConverter();
         deck = schemes.readFromFile();
+        System.out.println("ho letto da file");
         int size = deck.size();
         if (size%2==0) {
             for (Scheme scheme: deck) {
@@ -40,8 +41,18 @@ public class SchemeCardDeck implements Serializable{
             int id = rand.nextInt(size) + 1;
             deck.get(size-1).setIdRetro(deck.get(id).getId());
         }
-    }
+    }*/
 
+    public void setDeck(){
+        int index=0;
+        while(index<8) {
+            Box[][] boxes = new Box[4][5];
+            Scheme scheme = new Scheme(index, 2, boxes);
+            deck.add(scheme);
+            index++;
+        }
+
+    }
 
     public ArrayList<Scheme> drawSchemeCard (){
         ArrayList<Scheme> drawnCards = new ArrayList<Scheme>();

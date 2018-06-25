@@ -4,6 +4,7 @@ import it.polimi.ing.sw.model.*;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 
 import java.rmi.Remote;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 //interfaccia remota, implementata da PlayerController, che riceve gli aggiornamenti dal Model
@@ -29,9 +30,9 @@ public interface UiUpdate {
 
     public void onSchemeToChoose (Match match, String nickname, String message);
 
-    public void onUseToolCard1NotValid (Match match, NotValidException e);
+    public void onUseToolCard1NotValid (Match match, NotValidException e) throws RemoteException;
 
-    public void onUseToolCard234NotValid(int id, Match match, NotValidException e);
+    public void onUseToolCard234NotValid(int id, Match match, NotValidException e) throws RemoteException;
 
-    public void onOtherInfoToolCard4(Match match);
+    public void onOtherInfoToolCard4(Match match) throws RemoteException;
 }

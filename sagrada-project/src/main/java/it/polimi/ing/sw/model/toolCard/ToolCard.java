@@ -4,8 +4,11 @@ import it.polimi.ing.sw.model.*;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.model.exceptions.ToolCardException;
 
+import java.awt.*;
+import java.io.Serializable;
 
-public abstract class ToolCard {
+
+public abstract class ToolCard implements Serializable{
 
     private int numOfTokens;
     private int id;

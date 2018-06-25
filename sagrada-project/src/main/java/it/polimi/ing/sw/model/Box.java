@@ -1,6 +1,8 @@
 package it.polimi.ing.sw.model;
 
-public class Box {
+import java.io.Serializable;
+
+public class Box implements Serializable{
     private int x;
     private int y;
     private Dice dice;

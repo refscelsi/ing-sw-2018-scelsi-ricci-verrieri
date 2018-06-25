@@ -1,10 +1,11 @@
 package it.polimi.ing.sw.model;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.Random;
 
 
-public class Bag {
+public class Bag implements Serializable{
 
     private ArrayList<Dice> dices = new ArrayList<Dice>();;
 

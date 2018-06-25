@@ -2,9 +2,10 @@ package it.polimi.ing.sw.model;
 
 import it.polimi.ing.sw.model.objectiveCard.PrivateObjectiveCard;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class PrivateObjectiveCardDeck {
+public class PrivateObjectiveCardDeck implements Serializable {
     private ArrayList<PrivateObjectiveCard> deck;
     private ArrayList<PrivateObjectiveCard> drawnCards;
 

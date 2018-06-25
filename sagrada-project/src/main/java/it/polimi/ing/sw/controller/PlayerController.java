@@ -4,7 +4,7 @@ import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
 import it.polimi.ing.sw.model.RemotePlayer;
 import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.model.Player;
-import it.polimi.ing.sw.NetworkException;
+import it.polimi.ing.sw.model.exceptions.NetworkException;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.model.exceptions.ToolCardException;
 
@@ -37,6 +37,10 @@ public class PlayerController extends UnicastRemoteObject implements PlayerInter
 
     public void setState(PlayerState state){
         this.state=state;
+    }
+
+    public PlayerState getState() {
+        return this.state;
     }
 
     public RemotePlayer getRemotePlayer() {
@@ -101,7 +105,7 @@ public class PlayerController extends UnicastRemoteObject implements PlayerInter
     }
 
     @Override
-    public void sendUseToolCard1Request(int indexInDraftPool, String operation) throws NetworkException, NotValidException, NotValidPlayException {
+    public void sendUseToolCard1Request(int indexInDraftPool, String operation) throws NetworkException, NotValidException, NotValidPlayException, RemoteException {
         if(state.equals(PlayerState.READYTOPLAY)){
             match.useToolCard1(indexInDraftPool,operation);
             setState(PlayerState.USEDTOOLCARD);
@@ -114,7 +118,7 @@ public class PlayerController extends UnicastRemoteObject implements PlayerInter
     }
 
     @Override
-    public void sendUseToolCard234Request(int id, int sourceRow, int sourceCol, int destRow, int destCol) throws NetworkException, NotValidException {
+    public void sendUseToolCard234Request(int id, int sourceRow, int sourceCol, int destRow, int destCol) throws NetworkException, NotValidException, RemoteException{
 
     }
 

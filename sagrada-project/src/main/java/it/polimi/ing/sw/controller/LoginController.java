@@ -4,6 +4,7 @@ import it.polimi.ing.sw.controller.exceptions.NotPossibleConnection;
 import it.polimi.ing.sw.model.RemotePlayer;
 import it.polimi.ing.sw.model.*;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
+import it.polimi.ing.sw.model.exceptions.NotValidNicknameException;
 import it.polimi.ing.sw.model.exceptions.ToolCardException;
 import it.polimi.ing.sw.util.Constants;
 
@@ -28,7 +29,7 @@ public class LoginController extends UnicastRemoteObject implements Remote, Logi
 
     //metodo che crea un controller per ogni view che si connette
     @Override
-    public synchronized PlayerInterface connect(String nickname, RemotePlayer remotePlayer) throws RemoteException, NotPossibleConnection, ToolCardException, NotValidException {
+    public synchronized PlayerInterface connectRMI(String nickname, RemotePlayer remotePlayer) throws RemoteException, NotPossibleConnection, ToolCardException, NotValidException, NotValidNicknameException {
         if (clients.size() < Constants.MAX_PLAYERS) {
             if (!checkReconnection(nickname)) {
                 match.login(nickname, remotePlayer);
@@ -46,9 +47,17 @@ public class LoginController extends UnicastRemoteObject implements Remote, Logi
         throw new NotPossibleConnection("la partita è piena");
     }
 
+    @Override
+    public void connectSocket() {
+        return;
+    }
+
     public boolean checkReconnection(String nickname){
+        if(clients.size()==0){
+            return false;
+        }
         for(PlayerController playerController: clients){
-            if(playerController.getNickname().equals(nickname)){
+            if(playerController.getNickname().equals(nickname) && playerController.getState().equals(PlayerState.OFFLINE)){
                 return true;
             }
         }

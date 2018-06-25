@@ -1,10 +1,11 @@
 package it.polimi.ing.sw.model;
 
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum Color {
+public enum Color implements Serializable{
     RED(1), BLUE(2), GREEN(3), YELLOW(4), PURPLE(5), WHITE(6);
 
     private int value;
