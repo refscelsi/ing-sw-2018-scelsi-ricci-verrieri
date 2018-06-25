@@ -11,7 +11,7 @@ public class TaglierinaManuale extends ToolCard {
     private boolean firstExecutionDone;
     private Color color;
 
-
+/*
     public TaglierinaManuale() {
         super();
         firstExecutionDone = false;
@@ -57,6 +57,6 @@ public class TaglierinaManuale extends ToolCard {
             }
         }
     }
-
+*/
 
 }

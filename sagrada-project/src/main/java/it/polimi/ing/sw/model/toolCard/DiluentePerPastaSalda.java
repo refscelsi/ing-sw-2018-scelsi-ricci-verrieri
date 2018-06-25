@@ -15,7 +15,7 @@ public class DiluentePerPastaSalda extends ToolCard {
         super();
     }
 
-
+/*
     @Override
     public void execute1 (DraftPool draftPool, int indexInDraftPool, Bag bag) {
         bag.addDice(draftPool.getDice(indexInDraftPool));
@@ -36,4 +36,5 @@ public class DiluentePerPastaSalda extends ToolCard {
                 throw new NotValidException("Non stai rispettando le condizioni di piazzamento!");
         }
     }
+    */
 }

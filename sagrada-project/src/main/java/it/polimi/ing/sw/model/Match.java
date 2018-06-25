@@ -359,7 +359,7 @@ public class Match implements Serializable {
 
 
     public void useDice (Player player, int indexOfDiceInDraftpool, int row, int col) throws NotValidException, RemoteException {
-        player.getScheme().placeDice(player.getScheme().getBox(row,col),draftPool.getDice(indexOfDiceInDraftpool));
+        player.getScheme().placeDice(row,col,draftPool.getDice(indexOfDiceInDraftpool));
         draftPool.removeDice(draftPool.getDice(indexOfDiceInDraftpool));
         notifyChangement();
     }

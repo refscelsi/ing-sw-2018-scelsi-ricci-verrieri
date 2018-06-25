@@ -52,6 +52,7 @@ public class SchemeCardDeck implements Serializable{
                     boxes[i][j]=new Box(i,j);
                 }
             }
+
             Scheme scheme = new Scheme(index, 2, boxes);
             deck.add(scheme);
             index++;

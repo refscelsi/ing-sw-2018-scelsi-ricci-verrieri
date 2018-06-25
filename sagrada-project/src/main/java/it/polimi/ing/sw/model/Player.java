@@ -1,4 +1,5 @@
 package it.polimi.ing.sw.model;
+import it.polimi.ing.sw.controller.PlayerState;
 import it.polimi.ing.sw.model.objectiveCard.*;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 

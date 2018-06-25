@@ -91,6 +91,7 @@ public class PlayerController extends UnicastRemoteObject implements PlayerInter
     @Override
     public void sendUseDiceRequest(int indexOfDiceInDraftPool, int row, int col) throws NetworkException, NotValidException, NotValidPlayException, RemoteException {
         System.out.println("giocatore: "+ nickname+ "\n stato:"+ state.toString());
+        System.out.println("aiuto"+ row+col);
         switch (state){
             case USEDDICE: throw new NotValidPlayException("hai già usato un dado in questo turno!");
             case FINISHTURN: throw new NotValidPlayException("non puoi più fare mosse, passa il turno");

@@ -25,12 +25,12 @@ public class Scheme implements Serializable {
     }
 
 
-    public boolean checkFirst( Box box, Dice dice ) {
-        int row = box.getX();
-        int column = box.getY();
+    public boolean checkFirst( int row, int col, Dice dice ) {
 
-        if ( row == 0 || row == Constants.NUM_ROWS-1 || column == 0 || column == Constants.NUM_COLS-1 ) {
-            return (checkBox( box, dice ));
+        System.out.println("controllo primo dado" + row+ col);
+        if ( row == 0 || row == Constants.NUM_ROWS-1 || col == 0 || col == Constants.NUM_COLS-1 ) {
+            System.out.println("non va bene qui");
+            return (checkBox( row, col, dice ));
         } else
             return false;
     }
@@ -48,22 +48,22 @@ public class Scheme implements Serializable {
 
     // controlla che la il dado venga piazzato su una casella che non richieda un dado di colore diverso
 
-    public boolean checkBoxColor( Box box, Dice dice ) {
-        return checkColor( box.getColor(), Color.WHITE ) || checkColor( box.getColor(), dice.getDiceColor() );
+    public boolean checkBoxColor( int row, int col, Dice dice ) {
+        return checkColor( boxes[row][col].getColor(), Color.WHITE ) || checkColor( boxes[row][col].getColor(), dice.getDiceColor() );
     }
 
 
     // controlla che la il dado venga piazzato su una casella che non richieda un dado di sfumatura diversa
 
-    public boolean checkBoxShade( Box box, Dice dice ) {
-        return checkShade( box.getShade(), 0 ) || checkShade( box.getShade(), dice.getNumFacciaUp() );
+    public boolean checkBoxShade( int row, int col, Dice dice ) {
+        return checkShade( boxes[row][col].getShade(), 0 ) || checkShade( boxes[row][col].getShade(), dice.getNumFacciaUp() );
     }
 
 
     // controlla che la il dado venga piazzato su una casella che non richieda un dado di colore o sfumatura diversi
 
-    public boolean checkBox( Box box, Dice dice ) {
-        return checkBoxColor( box, dice ) && checkBoxShade( box, dice );
+    public boolean checkBox( int row , int col, Dice dice ) {
+        return checkBoxColor( row, col, dice ) && checkBoxShade(row,col, dice );
     }
 
 
@@ -72,9 +72,7 @@ public class Scheme implements Serializable {
     // op = 1: controllo di movimento di un dado
     // op = 2: controllo per la toolcard 9
 
-    public boolean checkIfHasDiceAdjacent( Box box, Dice dice, int op ) {
-        int row = box.getX();
-        int column = box.getY();
+    public boolean checkIfHasDiceAdjacent( int row, int column, Dice dice, int op ) {
         Boolean right, left, up, down, upRight, upLeft, downRight, downLeft;
 
         if ( row == Constants.NUM_ROWS-1 )
@@ -196,19 +194,18 @@ public class Scheme implements Serializable {
 
     // controlla tutte le restrizioni di piazzamento e se sono rispettate piazza il dado
 
-    public void placeDice( Box box, Dice dice ) throws NotValidException {
+    public void placeDice( int row, int col, Dice dice ) throws NotValidException {
         if ( isEmpty() ) {
-            System.out.println("primo dado");
-            if ( !checkFirst( box, dice ) )
+            if ( !checkFirst( row,col,dice ) )
                 throw new NotValidException( "Devi inserire il primo dado in una casella del bordo dello schema!" );
             else
                 setNotEmpty();
         } else {
-            if ( box.isFull() || !checkBox( box, dice ) && !checkIfHasDiceAdjacent( box, dice, 0 ) )
+            if ( boxes[row][col].isFull() || !checkBox( row, col, dice ) && !checkIfHasDiceAdjacent( row, col, dice, 0 ) )
                 throw new NotValidException( "Non stai rispettando le restrizioni di piazzamento!" );
         }
 
-        box.placeDice( dice );
+        boxes[row][col].placeDice( dice );
     }
 
     public void setBoxes( Box[][] boxes ) {
@@ -216,7 +213,7 @@ public class Scheme implements Serializable {
     }
 
     public boolean isEmpty() {
-        
+        System.out.println("controllo vuoto");
         this.isEmpty = true;
         for (int i = 0; i < Constants.NUM_ROWS; i++) {
             for (int j = 0; j < Constants.NUM_COLS; j++) {

@@ -11,7 +11,7 @@ public class PennelloPerEglomise extends ToolCard{
 
     private final int id=2;
 
-
+    /*
     public PennelloPerEglomise() {
         super();
     }
@@ -37,6 +37,6 @@ public class PennelloPerEglomise extends ToolCard{
         }
     }
 
-
+*/
 }
 

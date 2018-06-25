@@ -13,7 +13,7 @@ public class AlesatorePerLaminaDiRame extends ToolCard{
     public AlesatorePerLaminaDiRame () {
         super();
     }
-
+/*
     @Override
     public void execute(Scheme scheme, int sourceRow, int sourceCol, int destRow, int destCol) throws NotValidException {
         Box sourceBox = scheme.getBox(sourceRow, sourceCol);
@@ -34,5 +34,5 @@ public class AlesatorePerLaminaDiRame extends ToolCard{
             }
         }
     }
-
+*/
 }
