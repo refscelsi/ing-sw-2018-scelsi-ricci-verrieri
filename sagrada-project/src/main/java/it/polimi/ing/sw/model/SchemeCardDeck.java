@@ -4,6 +4,7 @@ import it.polimi.ing.sw.ui.gui.SchemeListFileConverter;
 
 import java.io.Serializable;
 import java.util.*;
+import java.util.Random;
 
 public class SchemeCardDeck implements Serializable{
 
@@ -19,6 +20,26 @@ public class SchemeCardDeck implements Serializable{
     public void setDeck () {
         SchemeListFileConverter schemes = new SchemeListFileConverter();
         deck = schemes.readFromFile();
+        int size = deck.size();
+        if (size%2==0) {
+            for (Scheme scheme: deck) {
+                if (scheme.getId() % 2 == 0)
+                    scheme.setIdRetro(scheme.getId() - 1);
+                else
+                    scheme.setIdRetro(scheme.getId() + 1);
+            }
+        }
+        else {
+            for (int i=0; i<size-1; i++) {
+                if (deck.get(i).getId() % 2 == 0)
+                    deck.get(i).setIdRetro(deck.get(i).getId() - 1);
+                else
+                    deck.get(i).setIdRetro(deck.get(i).getId() + 1);
+            }
+            Random rand = new Random();
+            int id = rand.nextInt(size) + 1;
+            deck.get(size-1).setIdRetro(deck.get(id).getId());
+        }
     }
 
 
