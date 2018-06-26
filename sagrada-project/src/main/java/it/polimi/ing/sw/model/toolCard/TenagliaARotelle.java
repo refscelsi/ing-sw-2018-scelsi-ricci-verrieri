@@ -13,7 +13,7 @@ public class TenagliaARotelle extends ToolCard {
 
 
     public TenagliaARotelle() {
-        super();
+        super(8);
     }
 
     @Override

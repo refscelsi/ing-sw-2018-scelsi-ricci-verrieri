@@ -15,7 +15,8 @@ public abstract class ToolCard implements Serializable{
     private String name;
     private String description;
 
-    public ToolCard () {
+    public ToolCard (int id) {
+        this.id=id;
         numOfTokens = 1;
     }
 
@@ -34,6 +35,10 @@ public abstract class ToolCard implements Serializable{
 
     public int getId(){
         return id;
+    }
+
+    public boolean getFirstExecutionDone(){
+        return false;
     }
 
     public String getName() {
@@ -82,8 +87,6 @@ public abstract class ToolCard implements Serializable{
     public void execute6(DraftPool draftPool, int indexInDraftPool){
         System.out.println("problemi toolcard");
     }
-
-
 
     public void execute9(Scheme scheme, Dice dice, int row, int col) throws NotValidException{
         System.out.println("problemi toolcard");

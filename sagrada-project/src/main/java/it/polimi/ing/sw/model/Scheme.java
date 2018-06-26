@@ -27,7 +27,6 @@ public class Scheme implements Serializable {
 
     public boolean checkFirst( int row, int col, Dice dice ) {
         if ( row == 0 || row == Constants.NUM_ROWS-1 || col == 0 || col == Constants.NUM_COLS-1 ) {
-            System.out.println("non va bene qui");
             return (checkBox( row, col, dice ));
         } else
             return false;

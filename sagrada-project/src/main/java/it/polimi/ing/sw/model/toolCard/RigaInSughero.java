@@ -11,7 +11,7 @@ public class RigaInSughero extends ToolCard {
     private final int id = 9;
 
     public RigaInSughero() {
-        super();
+        super(9);
     }
 
     @Override

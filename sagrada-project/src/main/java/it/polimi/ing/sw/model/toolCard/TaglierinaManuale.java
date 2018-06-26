@@ -14,9 +14,13 @@ public class TaglierinaManuale extends ToolCard {
 
 
     public TaglierinaManuale() {
-        super();
+        super(12);
         firstExecutionDone = false;
         color = Color.WHITE;
+    }
+
+    public boolean getFirstExecutionDone () {
+        return firstExecutionDone;
     }
 
     @Override

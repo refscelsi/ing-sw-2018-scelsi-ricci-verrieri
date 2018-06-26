@@ -55,7 +55,6 @@ public class PlayerController extends UnicastRemoteObject implements PlayerInter
 
     @Override
     public void joinMatch() throws RemoteException, ToolCardException, NotValidException, NotValidPlayException {
-        System.out.println("giocatore: "+ nickname+ "\n stato:"+ state.toString());
         if(state.equals(PlayerState.OFFLINE)){
             //gestisci lo stronzo che ritorna in partita
         }
@@ -69,12 +68,10 @@ public class PlayerController extends UnicastRemoteObject implements PlayerInter
 
     @Override
     public void checkAllReady() throws RemoteException, NotValidPlayException {
-        System.out.println("giocatore: "+ nickname+ "\n stato:"+ state.toString());
         if(state.equals(PlayerState.READYTOPLAY)){
             match.checkAllReady();
         }
         else throw new NotValidPlayException("non va bene !");
-        System.out.println("giocatore: "+ nickname+ "\n stato:"+ state.toString());
     }
 
 
@@ -91,14 +88,16 @@ public class PlayerController extends UnicastRemoteObject implements PlayerInter
 
     @Override
     public void sendUseDiceRequest(int indexOfDiceInDraftPool, int row, int col) throws NetworkException, NotValidException, NotValidPlayException, RemoteException {
-        System.out.println("giocatore: "+ nickname+ "\n stato:"+ state.toString());
         switch (state){
             case USEDDICE: throw new NotValidPlayException("hai già usato un dado in questo turno!");
             case FINISHTURN: throw new NotValidPlayException("non puoi più fare mosse, passa il turno");
             case USEDTOOLCARD: //devo cfare un caso per ogni toolcard per vedere se lo puoi fare o no;
             case READYTOPLAY:  {//faccio un controllo che sia veramente attivo?? --> mi serve un isPlaying dalla view
+                System.out.println("giocatore: "+ nickname+ "\n stato andata:"+ state.toString());
+
                 match.useDice(player, indexOfDiceInDraftPool, row, col);
                 setState(PlayerState.USEDDICE);
+                System.out.println("giocatore: "+ nickname+ "\n stato ritorno:"+ state.toString());
                 break;
             }
             default: throw new NotValidPlayException("non puoi questa mossa ora");
@@ -110,7 +109,6 @@ public class PlayerController extends UnicastRemoteObject implements PlayerInter
     //i metodi. Oppure facciamo un altro stato per essere più sicuri e quando vieni notificato isPlaying passi allo stato READYTOPLAY???
     @Override
     public void endTurn() throws NetworkException, RemoteException, NotValidPlayException {
-        System.out.println("giocatore: "+ nickname+ "\n stato:"+ state.toString());
         if(state.equals(PlayerState.CHOOSENTOOLCARD)|| state.equals(PlayerState.INIZIALIZED ) || state.equals(PlayerState.OFFLINE)){
             throw new NotValidPlayException("finisci il turno caro!");
         }
@@ -139,6 +137,8 @@ public class PlayerController extends UnicastRemoteObject implements PlayerInter
         if(state.equals(PlayerState.READYTOPLAY)){
             match.useToolCard234(player,id,sourceRow,sourceCol,destRow,destCol);
             setState(PlayerState.USEDTOOLCARD);
+            System.out.println("giocatore: "+ nickname+ "\n stato:"+ state.toString());
+
         }
         else if(state.equals(PlayerState.USEDDICE)){
             match.useToolCard234(player,id,sourceRow,sourceCol,destRow,destCol);

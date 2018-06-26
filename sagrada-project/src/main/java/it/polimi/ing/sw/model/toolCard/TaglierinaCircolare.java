@@ -13,7 +13,7 @@ public class TaglierinaCircolare extends ToolCard {
 
 
     public TaglierinaCircolare () {
-        super();
+        super(5);
     }
 
     @Override

@@ -14,7 +14,7 @@ public class PennelloPerPastaSalda extends ToolCard {
 
 
     public PennelloPerPastaSalda() {
-        super();
+        super(6);
     }
 
 

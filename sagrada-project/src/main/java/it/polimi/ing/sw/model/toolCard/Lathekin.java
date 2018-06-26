@@ -14,7 +14,7 @@ public class Lathekin extends ToolCard {
 
 
     public Lathekin() {
-        super();
+        super(4);
         firstExecutionDone = false;
     }
 

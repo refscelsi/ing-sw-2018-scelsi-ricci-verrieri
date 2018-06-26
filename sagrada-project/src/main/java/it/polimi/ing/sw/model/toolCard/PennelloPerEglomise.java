@@ -13,7 +13,7 @@ public class PennelloPerEglomise extends ToolCard {
 
 
     public PennelloPerEglomise() {
-        super();
+        super(2);
     }
 
     @Override

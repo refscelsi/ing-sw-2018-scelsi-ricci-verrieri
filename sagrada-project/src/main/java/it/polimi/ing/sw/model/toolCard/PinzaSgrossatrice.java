@@ -13,7 +13,7 @@ public class PinzaSgrossatrice extends ToolCard {
 
 
     public PinzaSgrossatrice() {
-        super();
+        super(1);
     }
 
     @Override

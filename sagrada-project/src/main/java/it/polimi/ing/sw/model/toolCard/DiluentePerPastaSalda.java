@@ -12,7 +12,8 @@ public class DiluentePerPastaSalda extends ToolCard {
 
 
     public DiluentePerPastaSalda() {
-        super();
+        super(11);
+
     }
 
 

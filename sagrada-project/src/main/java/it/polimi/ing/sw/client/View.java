@@ -111,7 +111,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
     }
 
     @Override
-    public void onSuccess(String message) {
+    public void onSuccess(String message) throws RemoteException, NotValidException {
         ui.onSuccess(message);
     }
 
@@ -322,6 +322,8 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
             e.printStackTrace();
         } catch (NotValidException e) {
             e.printStackTrace();
+        } catch (NotValidPlayException e) {
+            e.printStackTrace();
         }
     }
 
@@ -336,6 +338,8 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
             e.printStackTrace();
         } catch (NotValidException e) {
             e.printStackTrace();
+        } catch (NotValidPlayException e) {
+            e.printStackTrace();
         }
     }
 
@@ -348,6 +352,8 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         } catch (RemoteException e) {
             e.printStackTrace();
         } catch (NotValidException e) {
+            e.printStackTrace();
+        } catch (NotValidPlayException e) {
             e.printStackTrace();
         }
     }

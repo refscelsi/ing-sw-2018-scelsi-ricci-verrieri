@@ -11,7 +11,7 @@ public class AlesatorePerLaminaDiRame extends ToolCard{
 
 
     public AlesatorePerLaminaDiRame () {
-        super();
+        super(3);
     }
 
     @Override

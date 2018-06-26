@@ -7,6 +7,7 @@ import it.polimi.ing.sw.model.Scheme;
 import it.polimi.ing.sw.client.UiUpdate;
 import it.polimi.ing.sw.client.View;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
+import it.polimi.ing.sw.model.toolCard.ToolCard;
 import it.polimi.ing.sw.util.Constants;
 
 import java.rmi.RemoteException;
@@ -246,7 +247,7 @@ public class CLI implements UiUpdate {
                 }
 
                 case "t": {
-                    //handleUseToolCard(match);   //TODO: metodi per le carte utensili
+                    handleUseToolCard(match);   //TODO: metodi per le carte utensili
                     break;
                 }
 
@@ -271,7 +272,7 @@ public class CLI implements UiUpdate {
 
 
     public void notMyTurn () {
-        System.out.println("Digita Q se vuoi uscire dalla partita");
+        /*System.out.println("Digita Q se vuoi uscire dalla partita");
         do {
             inText = scanner.nextLine();
             if (inText.equals("q")) {
@@ -283,7 +284,7 @@ public class CLI implements UiUpdate {
                 }
             }
         } while (!inText.equals("q"));
-
+        */
     }
 
 
@@ -363,7 +364,11 @@ public class CLI implements UiUpdate {
                 useToolCard1(match);
                 break;
             case 2:
+                useToolCard234(id, match);
+                break;
             case 3:
+                useToolCard234(id, match);
+                break;
             case 4:
                 useToolCard234(id, match);
                 break;
@@ -373,6 +378,7 @@ public class CLI implements UiUpdate {
             case 6:
                 useToolCard6(match);
             case 7:
+                controller.useToolCard78(id);
             case 8:
                 controller.useToolCard78(id);
 

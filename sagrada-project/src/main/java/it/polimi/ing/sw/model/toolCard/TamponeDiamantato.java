@@ -12,7 +12,7 @@ public class TamponeDiamantato extends ToolCard {
 
 
     public TamponeDiamantato() {
-        super();
+        super(10);
     }
 
     @Override

@@ -362,12 +362,18 @@ public class Match implements Serializable {
         player.getScheme().placeDice(row,col,draftPool.getDice(indexOfDiceInDraftpool));
         draftPool.removeDice(draftPool.getDice(indexOfDiceInDraftpool));
         notifyChangement();
+        playerMap.get(player).onSetPlaying();
 
     }
 
     public void chooseScheme(Player player, int id) throws RemoteException {
         player.setScheme(schemeCardDeck.getSchemeWithId(id));
-        playerMap.get(player).onSuccess("ok hai scelto bene lo schema ");
+        player.setNumOfToken(schemeCardDeck.getSchemeWithId(id).getDifficulty());
+        try {
+            playerMap.get(player).onSuccess("ok hai scelto bene lo schema ");
+        } catch (NotValidException e) {
+            e.printStackTrace();
+        }
     }
 
     //toolCard
@@ -395,6 +401,7 @@ public class Match implements Serializable {
             findToolCard(1).execute1(draftPool, indexOfDiceInDraftPool, operation);
             player.setNumOfToken(playerPlaying.getNumOfToken()-findToolCard(1).getNumOfTokens());
             notifyChangement();
+            playerMap.get(player).onSetPlaying();
         }
     }
 
@@ -405,6 +412,7 @@ public class Match implements Serializable {
                     findToolCard(id).execute2(player.getScheme(), sourceRow, sourceCol, destRow, destCol);
                     player.setNumOfToken(player.getNumOfToken()-findToolCard(id).getNumOfTokens());
                     notifyChangement();
+                    playerMap.get(player).onSetPlaying();
                     break;
                 }
             case 3:
@@ -412,16 +420,18 @@ public class Match implements Serializable {
                     findToolCard(id).execute3(player.getScheme(), sourceRow, sourceCol, destRow, destCol);
                     player.setNumOfToken(player.getNumOfToken()-findToolCard(id).getNumOfTokens());
                     notifyChangement();
+                    playerMap.get(player).onSetPlaying();
                     break;
                 }
             case 4:
                 if(checkToken(player,id)) {
                     findToolCard(id).execute4(player.getScheme(), sourceRow, sourceCol, destRow, destCol);
-                    if(findToolCard(id).getFirstExecutionDone){
+                    if(findToolCard(id).getFirstExecutionDone()){
                         playerMap.get(player).onOtherInfoToolCard4(this);
                     }
                     player.setNumOfToken(player.getNumOfToken()-findToolCard(id).getNumOfTokens());
                     notifyChangement();
+                    playerMap.get(player).onSetPlaying();
                     break;
                 }
         }
@@ -432,6 +442,7 @@ public class Match implements Serializable {
             findToolCard(5).execute5(draftPool,indexInDraftpool,roundTrack, round, indexInRound);
             player.setNumOfToken(player.getNumOfToken()-findToolCard(6).getNumOfTokens());
             notifyChangement();
+            playerMap.get(player).onSetPlaying();
         }
     }
 
@@ -440,6 +451,7 @@ public class Match implements Serializable {
             findToolCard(6).execute6(draftPool,indexInDraftPool);
             player.setNumOfToken(player.getNumOfToken()-findToolCard(6).getNumOfTokens());
             notifyChangement();
+            playerMap.get(player).onSetPlaying();
         }
     }
 
@@ -451,11 +463,13 @@ public class Match implements Serializable {
                         findToolCard(7).execute7(draftPool);
                         player.setNumOfToken(player.getNumOfToken()-findToolCard(6).getNumOfTokens());
                         notifyChangement();
+                        playerMap.get(player).onSetPlaying();
                     }
                 }
             case 8:
                 if(checkToken(player,id)){
                     findToolCard(8).execute8(playersRound,playersRoundIndex);
+                    playerMap.get(player).onSetPlaying();
                 }
 
         }
@@ -497,7 +511,11 @@ public class Match implements Serializable {
 
     public void notifySucces(String message) throws RemoteException{
         for(RemotePlayer remotePlayer: remotePlayers){
-            remotePlayer.onSuccess(message);
+            try {
+                remotePlayer.onSuccess(message);
+            } catch (NotValidException e) {
+                e.printStackTrace();
+            }
         }
     }
 

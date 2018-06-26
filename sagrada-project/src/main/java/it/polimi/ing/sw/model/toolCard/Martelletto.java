@@ -13,7 +13,7 @@ public class Martelletto extends ToolCard {
 
 
     public Martelletto() {
-        super();
+        super(7);
     }
 
     @Override
