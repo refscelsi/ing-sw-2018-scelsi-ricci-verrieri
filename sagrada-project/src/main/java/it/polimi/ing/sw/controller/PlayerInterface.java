@@ -10,23 +10,29 @@ import java.rmi.RemoteException;
 
 public interface PlayerInterface extends Remote {
 
-    public void joinMatch() throws RemoteException, ToolCardException, NotValidException, NotValidPlayException;
+    void joinMatch() throws RemoteException, ToolCardException, NotValidException, NotValidPlayException;
 
-    public void checkAllReady() throws RemoteException, NotValidPlayException;
+    void checkAllReady() throws RemoteException, NotValidPlayException;
 
-    public void setChosenScheme (int id) throws NetworkException, RemoteException, NotValidPlayException;
+    void setChosenScheme (int id) throws NetworkException, RemoteException, NotValidPlayException;
 
-    public void sendUseDiceRequest (int indexOfDiceInDraftPool, int row, int col) throws NetworkException, NotValidException, NotValidPlayException, RemoteException;
+    void sendUseDiceRequest (int indexOfDiceInDraftPool, int row, int col) throws NetworkException, NotValidException, NotValidPlayException, RemoteException;
 
-    public void endTurn () throws NetworkException, RemoteException, NotValidPlayException;
+    void endTurn () throws NetworkException, RemoteException, NotValidPlayException;
 
-    public void sendUseToolCard1Request(int indexInDraftPool, String operation) throws NetworkException, NotValidException, NotValidPlayException, RemoteException;
+    void sendUseToolCard1Request(int indexInDraftPool, String operation) throws NetworkException, NotValidException, NotValidPlayException, RemoteException;
 
-    public void sendUseToolCard234Request(int id, int sourceRow, int sourceCol, int destRow, int destCol) throws NetworkException, NotValidException, RemoteException, NotValidPlayException;
+    void sendUseToolCard234Request(int id, int sourceRow, int sourceCol, int destRow, int destCol) throws NetworkException, NotValidException, RemoteException, NotValidPlayException;
 
-    public void useToolCard6(int indexInDraftPool) throws NetworkException, NotValidException, RemoteException, NotValidPlayException;
+    void useToolCard6(int indexInDraftPool) throws NetworkException, NotValidException, RemoteException, NotValidPlayException;
 
-    public void useToolCard5(int indexInDraftPool, int round, int indexInRound) throws NetworkException, NotValidException, RemoteException, NotValidPlayException;
+    void useToolCard5(int indexInDraftPool, int round, int indexInRound) throws NetworkException, NotValidException, RemoteException, NotValidPlayException;
 
-    public void useToolCard78(int id) throws NetworkException, NotValidException, RemoteException, NotValidPlayException;
+    void useToolCard78(int id) throws NetworkException, NotValidException, RemoteException, NotValidPlayException;
+
+    void sendUseToolCard9Request(int dice, int row, int col) throws NetworkException, NotValidException, RemoteException, NotValidPlayException;
+
+    void useToolCard10(int dice) throws NetworkException, RemoteException, NotValidPlayException;
+
+    void useToolCard11(int dice) throws NetworkException, RemoteException, NotValidPlayException, NotValidException;
 }
