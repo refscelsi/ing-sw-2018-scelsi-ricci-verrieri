@@ -14,7 +14,7 @@ public interface PlayerInterface extends Remote {
 
     public void checkAllReady() throws RemoteException, NotValidPlayException;
 
-    public void setChosenScheme (int id) throws NetworkException, RemoteException, NotValidPlayException;
+    public void setChosenScheme (int id) throws NetworkException, RemoteException, NotValidPlayException, NotValidException;
 
     public void sendUseDiceRequest (int indexOfDiceInDraftPool, int row, int col) throws NetworkException, NotValidException, NotValidPlayException, RemoteException;
 

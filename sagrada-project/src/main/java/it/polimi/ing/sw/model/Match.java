@@ -1,6 +1,7 @@
 
 package it.polimi.ing.sw.model;
 
+import it.polimi.ing.sw.controller.PlayerState;
 import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.model.exceptions.NotValidNicknameException;
@@ -178,7 +179,7 @@ public class Match implements Serializable {
         boolean check=true;
 
         for(Player player: players){
-            if(!player.getIsReady()==true){
+            if(!player.getState().equals(PlayerState.READYTOPLAY)){
                 check=false;
             }
         }
@@ -219,6 +220,7 @@ public class Match implements Serializable {
         for (int i=0; i<numPlayers; i++) {
             players.get(i).setPrivateObjective(privateObjectives.get(i));
             players.get(i).setSchemesToChoose(schemeCardDeck.drawSchemeCard());
+            players.get(i).setState(PlayerState.SCHEMETOCHOOSE);
         }
     }
 
@@ -235,7 +237,12 @@ public class Match implements Serializable {
             createRoundPlayers(0);
             playerPlaying=firstPlayer;
             playersRoundIndex=0;
-            System.out.println("il primo giocatore è "+ firstPlayer.getNickname());
+            playerPlaying.setState(PlayerState.TURNSTARTED);
+            for(Player player:players){
+                if(!(player.equals(playerPlaying))){
+                    player.setState(PlayerState.ENDEDTURN);
+                }
+            }
             notifyChangement();
             notifyStartTurn(firstPlayer);
         }
@@ -244,6 +251,12 @@ public class Match implements Serializable {
             changePlayersRound(firstPlayer);
             firstPlayer=playersRound[0];
             playerPlaying=firstPlayer;
+            playerPlaying.setState(PlayerState.TURNSTARTED);
+            for(Player player:players){
+                if(!(player.equals(playerPlaying))){
+                    player.setState(PlayerState.ENDEDTURN);
+                }
+            }
             notifyChangement();
             notifyStartTurn(firstPlayer);
         }
@@ -279,8 +292,10 @@ public class Match implements Serializable {
     public void changePlayer () throws RemoteException {
         if(playersRoundIndex<numPlayers-1) {
             playersRoundIndex++;
+            playerPlaying.setState(PlayerState.ENDEDTURN);
             notifyEndTurn(playerPlaying);
             playerPlaying = playersRound[playersRoundIndex];
+            playerPlaying.setState(PlayerState.TURNSTARTED);
             notifyStartTurn(playerPlaying);
         }
         else if(playersRoundIndex==numPlayers-1){
@@ -361,19 +376,24 @@ public class Match implements Serializable {
     public void useDice (Player player, int indexOfDiceInDraftpool, int row, int col) throws NotValidException, RemoteException {
         player.getScheme().placeDice(row,col,draftPool.getDice(indexOfDiceInDraftpool));
         draftPool.removeDice(draftPool.getDice(indexOfDiceInDraftpool));
+        player.setState(PlayerState.USEDDICE);
         notifyChangement();
         playerMap.get(player).onSetPlaying();
-
     }
 
-    public void chooseScheme(Player player, int id) throws RemoteException {
+    public void useDiceEndTurn(Player player, int indexOfDiceInDraftpool, int row, int col) throws RemoteException, NotValidException {
+        player.getScheme().placeDice(row,col,draftPool.getDice(indexOfDiceInDraftpool));
+        draftPool.removeDice(draftPool.getDice(indexOfDiceInDraftpool));
+        player.setState(PlayerState.FINISHTURN);
+        notifyChangement();
+        playerMap.get(player).onSetPlaying();
+    }
+
+    public void chooseScheme(Player player, int id) throws RemoteException, NotValidException {
         player.setScheme(schemeCardDeck.getSchemeWithId(id));
         player.setNumOfToken(schemeCardDeck.getSchemeWithId(id).getDifficulty());
-        try {
-            playerMap.get(player).onSuccess("ok hai scelto bene lo schema ");
-        } catch (NotValidException e) {
-            e.printStackTrace();
-        }
+        player.setState(PlayerState.READYTOPLAY);
+        playerMap.get(player).onSuccess("ok hai scelto bene lo schema ");
     }
 
     //toolCard
@@ -400,6 +420,7 @@ public class Match implements Serializable {
         if(checkToken(player,1)) {
             findToolCard(1).execute1(draftPool, indexOfDiceInDraftPool, operation);
             player.setNumOfToken(playerPlaying.getNumOfToken()-findToolCard(1).getNumOfTokens());
+            player.setState(PlayerState.USEDTOOLCARD);
             notifyChangement();
             playerMap.get(player).onSetPlaying();
         }
@@ -411,6 +432,7 @@ public class Match implements Serializable {
                 if(checkToken(player,id)) {
                     findToolCard(id).execute2(player.getScheme(), sourceRow, sourceCol, destRow, destCol);
                     player.setNumOfToken(player.getNumOfToken()-findToolCard(id).getNumOfTokens());
+                    player.setState(PlayerState.USEDTOOLCARD);
                     notifyChangement();
                     playerMap.get(player).onSetPlaying();
                     break;
@@ -419,6 +441,7 @@ public class Match implements Serializable {
                 if(checkToken(player,id)) {
                     findToolCard(id).execute3(player.getScheme(), sourceRow, sourceCol, destRow, destCol);
                     player.setNumOfToken(player.getNumOfToken()-findToolCard(id).getNumOfTokens());
+                    player.setState(PlayerState.USEDTOOLCARD);
                     notifyChangement();
                     playerMap.get(player).onSetPlaying();
                     break;
@@ -430,6 +453,7 @@ public class Match implements Serializable {
                         playerMap.get(player).onOtherInfoToolCard4(this);
                     }
                     player.setNumOfToken(player.getNumOfToken()-findToolCard(id).getNumOfTokens());
+                    player.setState(PlayerState.USEDTOOLCARD);
                     notifyChangement();
                     playerMap.get(player).onSetPlaying();
                     break;
@@ -441,6 +465,7 @@ public class Match implements Serializable {
         if(checkToken(player,5)){
             findToolCard(5).execute5(draftPool,indexInDraftpool,roundTrack, round, indexInRound);
             player.setNumOfToken(player.getNumOfToken()-findToolCard(6).getNumOfTokens());
+            player.setState(PlayerState.USEDTOOLCARD);
             notifyChangement();
             playerMap.get(player).onSetPlaying();
         }
@@ -450,6 +475,7 @@ public class Match implements Serializable {
         if(checkToken(player,6)){
             findToolCard(6).execute6(draftPool,indexInDraftPool);
             player.setNumOfToken(player.getNumOfToken()-findToolCard(6).getNumOfTokens());
+            player.setState(PlayerState.USEDTOOLCARD);
             notifyChangement();
             playerMap.get(player).onSetPlaying();
         }
@@ -462,6 +488,7 @@ public class Match implements Serializable {
                     if(playersRoundIndex>numPlayers-1){
                         findToolCard(7).execute7(draftPool);
                         player.setNumOfToken(player.getNumOfToken()-findToolCard(6).getNumOfTokens());
+                        player.setState(PlayerState.USEDTOOLCARD);
                         notifyChangement();
                         playerMap.get(player).onSetPlaying();
                     }
@@ -469,6 +496,7 @@ public class Match implements Serializable {
             case 8:
                 if(checkToken(player,id)){
                     findToolCard(8).execute8(playersRound,playersRoundIndex);
+                    player.setState(PlayerState.USEDTOOLCARD);
                     playerMap.get(player).onSetPlaying();
                 }
 
