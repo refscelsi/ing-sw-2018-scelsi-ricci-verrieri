@@ -1,16 +1,19 @@
 package it.polimi.ing.sw.ui.gui;
 
+import it.polimi.ing.sw.model.Scheme;
 import it.polimi.ing.sw.model.SchemeCardDeck;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChooseSchemeForm extends javax.swing.JFrame {
 
-    private SchemeCardDeck schemeCardDeck;
+    private List<Scheme> schemeList;
     private VetrataPanel vetrataPanelA, vetrataPanelB, vetrataPanelC, vetrataPanelD;
 
-    public ChooseSchemeForm(SchemeCardDeck schemeCardDeck) {
-        this.schemeCardDeck = schemeCardDeck;
+    public ChooseSchemeForm( List<Scheme> schemeList) {
+        this.schemeList = schemeList;
 
         initComponents();
         setLocationRelativeTo(null);
@@ -22,41 +25,41 @@ public class ChooseSchemeForm extends javax.swing.JFrame {
 
     private void setVetrataPanel() {
         vetrataPanelA= new VetrataPanel();
-        vetrataPanelA.fillScheme(schemeCardDeck.());
+        vetrataPanelA.fillScheme(schemeList.get(0));
         schemeCardPanel1.add(vetrataPanelA);
         vetrataPanelA.setBounds(13,49,203,287);
 
         vetrataPanelB= new VetrataPanel();
-        vetrataPanelB.fillScheme(cardA.getBack());
+        vetrataPanelB.fillScheme(schemeList.get(1));
         schemeCardPanel1.add(vetrataPanelB);
         vetrataPanelB.setBounds(228,49,203,287);
 
         vetrataPanelC= new VetrataPanel();
-        vetrataPanelC.fillScheme(cardB.getA());
+        vetrataPanelC.fillScheme(schemeList.get(2));
         schemeCardPanel2.add(vetrataPanelC);
         vetrataPanelC.setBounds(13,49,203,287);
 
         vetrataPanelD= new VetrataPanel();
-        vetrataPanelD.fillScheme(cardB.getBack());
+        vetrataPanelD.fillScheme(schemeList.get(03));
         schemeCardPanel2.add(vetrataPanelD);
         vetrataPanelD.setBounds(228,49,203,287);
     }
 
     private void setTexts() {
-        buttonA.setText("Select Scheme: " + cardA.getId1());
-        buttonB.setText("Select Scheme: " + cardA.getId2());
-        buttonC.setText("Select Scheme: " + cardB.getId1());
-        buttonD.setText("Select Scheme: " + cardB.getId2());
+        buttonA.setText("Select Scheme: " + schemeList.get(0).getId());
+        buttonB.setText("Select Scheme: " + schemeList.get(1).getId());
+        buttonC.setText("Select Scheme: " + schemeList.get(2).getId());
+        buttonD.setText("Select Scheme: " + schemeList.get(3).getId());
 
-        nameSchemeLabel1.setText(String.valueOf("ID: " + cardA.getA().getId()));
-        nameSchemeLabel2.setText(String.valueOf("ID: " + cardA.getBack().getId()));
-        nameSchemeLabel3.setText(String.valueOf("ID: " + cardB.getA().getId()));
-        nameSchemeLabel4.setText(String.valueOf("ID: " + cardB.getBack().getId()));
+        nameSchemeLabel1.setText(String.valueOf("ID: " + schemeList.get(0).getId()));
+        nameSchemeLabel2.setText(String.valueOf("ID: " + schemeList.get(1).getId()));
+        nameSchemeLabel3.setText(String.valueOf("ID: " + schemeList.get(2).getId()));
+        nameSchemeLabel4.setText(String.valueOf("ID: " + schemeList.get(3).getId()));
 
-        diffSchemeLabel1.setText(String.valueOf("Diff: " + cardA.getA().getDifficulty()));
-        diffSchemeLabel2.setText(String.valueOf("Diff: " + cardA.getBack().getDifficulty()));
-        diffSchemeLabel3.setText(String.valueOf("Diff: " + cardB.getA().getDifficulty()));
-        diffSchemeLabel4.setText(String.valueOf("Diff: " + cardB.getBack().getDifficulty()));
+        diffSchemeLabel1.setText(String.valueOf("Diff: " + schemeList.get(0).getDifficulty()));
+        diffSchemeLabel2.setText(String.valueOf("Diff: " + schemeList.get(1).getDifficulty()));
+        diffSchemeLabel3.setText(String.valueOf("Diff: " + schemeList.get(2).getDifficulty()));
+        diffSchemeLabel4.setText(String.valueOf("Diff: " + schemeList.get(3).getDifficulty()));
     }
 
     @SuppressWarnings("unchecked")
@@ -262,17 +265,13 @@ public class ChooseSchemeForm extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                SchemeCard a, b;
+                List<Scheme> list = new ArrayList<>();
                 SchemeListFileConverter schemeListFileConverter = new SchemeListFileConverter();
-
-                a = new SchemeCard((short) 1, (short) 1);
-                b = new SchemeCard((short) 1, (short) 1);
-
-                a.setA(schemeListFileConverter.readFromFile().get(0));
-                a.setBack(schemeListFileConverter.readFromFile().get(0));
-                b.setA(schemeListFileConverter.readFromFile().get(0));
-                b.setBack(schemeListFileConverter.readFromFile().get(0));
-                new ChooseSchemeForm(a, b).setVisible(true);
+                list.add(schemeListFileConverter.readFromFile().get(0));
+                list.add(schemeListFileConverter.readFromFile().get(1));
+                list.add(schemeListFileConverter.readFromFile().get(2));
+                list.add(schemeListFileConverter.readFromFile().get(3));
+                new ChooseSchemeForm(list).setVisible(true);
             }
         });
     }
