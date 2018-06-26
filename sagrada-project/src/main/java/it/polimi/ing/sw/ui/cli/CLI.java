@@ -242,7 +242,7 @@ public class CLI implements UiUpdate {
                 }
 
                 case "d": {
-                    handleUseDice(match);
+                    handleUseDice(match, false);
                     break;
                 }
 
@@ -306,7 +306,7 @@ public class CLI implements UiUpdate {
     // Scelta D: posizionare un dado sullo schema
     /////////////////////////////////////////////////////////////////////////////////////////
 
-    public void handleUseDice (Match match) {
+    public void handleUseDice (Match match, boolean toolCard9) {
         int dice, row, col;
         do {
             System.out.println("Digita l'indice del dado che vuoi posizionare, tra 1 e " + match.getDraftPool().getSize());
@@ -321,7 +321,10 @@ public class CLI implements UiUpdate {
             col = scanner.nextInt();
         } while (col < 1 || col > Constants.NUM_COLS);
 
-        controller.useDice(dice - 1, row-1, col-1);
+        if (toolCard9)
+            controller.useToolCard9(dice-1, row-1, col-1);
+        else
+            controller.useDice(dice-1, row-1, col-1);
 
     }
 
@@ -364,11 +367,7 @@ public class CLI implements UiUpdate {
                 useToolCard1(match);
                 break;
             case 2:
-                useToolCard234(id, match);
-                break;
             case 3:
-                useToolCard234(id, match);
-                break;
             case 4:
                 useToolCard234(id, match);
                 break;
@@ -377,10 +376,20 @@ public class CLI implements UiUpdate {
                 break;
             case 6:
                 useToolCard6(match);
+                break;
             case 7:
-                controller.useToolCard78(id);
             case 8:
                 controller.useToolCard78(id);
+                break;
+            case 9:
+                useToolCard9(match);
+                break;
+            case 10:
+                useToolCard10(match);
+                break;
+            case 11:
+                useToolCard11(match);
+                break;
 
 
         }
@@ -449,6 +458,31 @@ public class CLI implements UiUpdate {
             dice = scanner.nextInt();
         } while (dice < 1 || dice > match.getDraftPool().getSize());
         controller.useToolCard6(dice - 1);
+    }
+
+
+    public void useToolCard9 (Match match) {
+        handleUseDice(match, true);
+    }
+
+
+    public void useToolCard10 (Match match) {
+        int dice;
+        do {
+            System.out.println("Digita l'indice del dado che vuoi cambiare, tra 1 e " + match.getDraftPool().getSize());
+            dice = scanner.nextInt();
+        } while (dice < 1 || dice > match.getDraftPool().getSize());
+        controller.useToolCard10(dice - 1);
+    }
+
+
+    public void useToolCard11 (Match match) {
+        int dice;
+        do {
+            System.out.println("Digita l'indice del dado che vuoi riporre nel sacchetto, tra 1 e " + match.getDraftPool().getSize());
+            dice = scanner.nextInt();
+        } while (dice < 1 || dice > match.getDraftPool().getSize());
+        controller.useToolCard11(dice - 1);
     }
 
 
@@ -560,7 +594,38 @@ public class CLI implements UiUpdate {
     @Override
     public void onToolCard6(Match match) {
         System.out.println("Ora digita la casella dove posizionare il dado");
-        retryPlaceDice();
+        useToolCard6(match);
+    }
+
+    @Override
+    public void onUseToolCard9NotValid(Match match, NotValidException e) {
+        System.err.println(e);
+        useToolCard9(match);
+    }
+
+    @Override
+    public void onOtherInfoToolCard11(Match match) {
+        int dice, row, col;
+        do {
+            System.out.println("Digita il valore del nuovo dado, tra 1 e 6");
+            dice = scanner.nextInt();
+        } while (dice < 1 || dice > 6);
+        do {
+            System.out.println("Digita il numero della riga dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_ROWS);
+            row = scanner.nextInt();
+        } while (row < 1 || row > Constants.NUM_ROWS);
+        do {
+            System.out.println("Digita il numero della colonna dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_COLS);
+            col = scanner.nextInt();
+        } while (col < 1 || col > Constants.NUM_COLS);
+
+        controller.useToolCard11b(dice-1, row-1, col-1);
+    }
+
+    @Override
+    public void onUseToolCard11bNotValid(Match match, NotValidException e) {
+        System.err.println(e);
+        onOtherInfoToolCard11(match);
     }
 
     @Override

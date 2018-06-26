@@ -154,6 +154,13 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         ui.onOtherInfoToolCard4(match);
     }
 
+    @Override
+    public void onOtherInfoToolCard11(Match match) throws RemoteException {
+        ui.onGameUpdate(match, nickname);
+        ui.onOtherInfoToolCard11(match);
+    }
+
+
 
     /////////////////////////////////////////////////////////////////////////////////////////
     // "Senders" (per l'invio di informazioni verso il Server, in Remoto).
@@ -355,6 +362,61 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
             e.printStackTrace();
         } catch (NotValidPlayException e) {
             e.printStackTrace();
+        }
+    }
+
+
+    public void useToolCard9 (int dice, int row, int col) {
+        try {
+            controller.sendUseToolCard9Request(dice, row, col);
+        } catch (NetworkException e) {
+            System.err.println(e.getMessage());
+        } catch (NotValidException e) {
+            ui.onUseToolCard9NotValid(match, e);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (NotValidPlayException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void useToolCard10 (int dice) {
+        try {
+            controller.useToolCard10(dice);
+        } catch (NetworkException e) {
+            System.err.println(e.getMessage());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (NotValidPlayException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void useToolCard11 (int dice) {
+        try {
+            controller.useToolCard11(dice);
+        } catch (NetworkException e) {
+            System.err.println(e.getMessage());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (NotValidPlayException e) {
+            e.printStackTrace();
+        } catch (NotValidException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void useToolCard11b(int i, int i1, int i2) {
+        try {
+            controller.useToolCard11(dice);
+        } catch (NetworkException e) {
+            System.err.println(e.getMessage());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (NotValidPlayException e) {
+            e.printStackTrace();
+        } catch (NotValidException e) {
+            ui.onUseToolCard11bNotValid(match, e);
         }
     }
 }
