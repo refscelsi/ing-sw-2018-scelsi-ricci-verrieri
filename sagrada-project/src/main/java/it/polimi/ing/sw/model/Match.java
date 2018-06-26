@@ -389,7 +389,7 @@ public class Match implements Serializable {
         playerMap.get(player).onSetPlaying();
     }
 
-    public void chooseScheme(Player player, int id) throws RemoteException, NotValidException {
+    public void chooseScheme(Player player, int id) throws RemoteException {
         player.setScheme(schemeCardDeck.getSchemeWithId(id));
         player.setNumOfToken(schemeCardDeck.getSchemeWithId(id).getDifficulty());
         player.setState(PlayerState.READYTOPLAY);
@@ -539,11 +539,7 @@ public class Match implements Serializable {
 
     public void notifySucces(String message) throws RemoteException{
         for(RemotePlayer remotePlayer: remotePlayers){
-            try {
-                remotePlayer.onSuccess(message);
-            } catch (NotValidException e) {
-                e.printStackTrace();
-            }
+            remotePlayer.onSuccess(message);
         }
     }
 

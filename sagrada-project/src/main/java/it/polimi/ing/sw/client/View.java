@@ -111,7 +111,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
     }
 
     @Override
-    public void onSuccess(String message) throws RemoteException, NotValidException {
+    public void onSuccess(String message) throws RemoteException {
         ui.onSuccess(message);
     }
 

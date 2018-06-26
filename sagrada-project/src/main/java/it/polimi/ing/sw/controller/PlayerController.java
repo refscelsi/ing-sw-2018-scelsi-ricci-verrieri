@@ -72,7 +72,7 @@ public class PlayerController extends UnicastRemoteObject implements PlayerInter
 
 
     @Override
-    public void setChosenScheme(int id) throws NetworkException, RemoteException, NotValidPlayException, NotValidException {
+    public void setChosenScheme(int id) throws NetworkException, RemoteException, NotValidPlayException {
         System.out.println("giocatore: "+ nickname+ "\n stato:"+ player.getState().toString());
         if (player.getState().equals(PlayerState.SCHEMETOCHOOSE)) {
             match.chooseScheme(this.player,id);
@@ -175,6 +175,21 @@ public class PlayerController extends UnicastRemoteObject implements PlayerInter
             endTurn();
         }
         else throw new NotValidPlayException("Non puoi usare questa carta");
+    }
+
+    @Override
+    public void sendUseToolCard9Request(int dice, int row, int col) throws NetworkException, NotValidException, RemoteException, NotValidPlayException {
+
+    }
+
+    @Override
+    public void useToolCard10(int dice) throws NetworkException, RemoteException, NotValidPlayException {
+
+    }
+
+    @Override
+    public void useToolCard11(int dice) throws NetworkException, RemoteException, NotValidPlayException, NotValidException {
+
     }
 
 

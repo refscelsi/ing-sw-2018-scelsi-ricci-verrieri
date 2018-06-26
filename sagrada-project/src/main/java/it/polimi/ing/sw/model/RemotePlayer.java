@@ -12,7 +12,7 @@ public interface RemotePlayer extends Remote {
     void onSchemeToChoose(Match match) throws RemoteException, NotValidPlayException;
 
     //notifica il successo di qualcosa
-    void onSuccess(String message) throws RemoteException, NotValidException;
+    void onSuccess(String message) throws RemoteException;
 
     //notifica un generico cambiamento
     void onGameUpdate(Match match) throws RemoteException;
