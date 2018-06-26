@@ -372,6 +372,14 @@ public class Match implements Serializable {
 
     //toolCard
 
+    public boolean checkToken(Player player, int idToolCard) throws NotValidException {
+        if(player.getNumOfToken()>=findToolCard(idToolCard).getNumOfTokens()){
+            return true;
+        }
+        else
+            throw new NotValidException("non hai il numero di segnalini favore necessari");
+    }
+
     public ToolCard findToolCard(int id){
         for(ToolCard toolCard: toolCards){
             if(toolCard.getId()==id){
@@ -379,33 +387,79 @@ public class Match implements Serializable {
             }
         }
         return null;
-        //eccezione se mi chiami una carta che non esiste? gestita nella view??
-        //dove facciamo il controllo dei segnalini favore?
     }
 
 
-    public void useToolCard1(int indexOfDiceInDraftPool, String operation) throws NotValidException {
-        findToolCard(1).execute1(draftPool,indexOfDiceInDraftPool,operation);
-        //notifico il successo
-    }
-
-    public void useToolCard234(Player player, int id, int sourceRow, int sourceCol, int destRow, int destCol) throws NotValidException {
-        switch (id){
-            case 2:
-                findToolCard(id).execute2(player.getScheme(),sourceRow,sourceCol,destRow,destCol);
-                //notifica il successo
-                break;
-            case 3:
-                findToolCard(id).execute3(player.getScheme(),sourceRow,sourceCol,destRow,destCol);
-                //notifico il successo
-                break;
-            case 4:
-                findToolCard(id).execute4(player.getScheme(),sourceRow,sourceCol,destRow,destCol);
-                //notifico il successo
-                break;
+    public void useToolCard1(Player player, int indexOfDiceInDraftPool, String operation) throws NotValidException, RemoteException {
+        if(checkToken(player,1)) {
+            findToolCard(1).execute1(draftPool, indexOfDiceInDraftPool, operation);
+            player.setNumOfToken(playerPlaying.getNumOfToken()-findToolCard(1).getNumOfTokens());
+            notifyChangement();
         }
     }
 
+    public void useToolCard234(Player player, int id, int sourceRow, int sourceCol, int destRow, int destCol) throws NotValidException, RemoteException {
+        switch (id){
+            case 2:
+                if(checkToken(player,id)) {
+                    findToolCard(id).execute2(player.getScheme(), sourceRow, sourceCol, destRow, destCol);
+                    player.setNumOfToken(player.getNumOfToken()-findToolCard(id).getNumOfTokens());
+                    notifyChangement();
+                    break;
+                }
+            case 3:
+                if(checkToken(player,id)) {
+                    findToolCard(id).execute3(player.getScheme(), sourceRow, sourceCol, destRow, destCol);
+                    player.setNumOfToken(player.getNumOfToken()-findToolCard(id).getNumOfTokens());
+                    notifyChangement();
+                    break;
+                }
+            case 4:
+                if(checkToken(player,id)) {
+                    findToolCard(id).execute4(player.getScheme(), sourceRow, sourceCol, destRow, destCol);
+                    if(findToolCard(id).getFirstExecutionDone){
+                        playerMap.get(player).onOtherInfoToolCard4(this);
+                    }
+                    player.setNumOfToken(player.getNumOfToken()-findToolCard(id).getNumOfTokens());
+                    notifyChangement();
+                    break;
+                }
+        }
+    }
+
+    public void useToolCard5(Player player, int indexInDraftpool, int round, int indexInRound) throws NotValidException, RemoteException {
+        if(checkToken(player,5)){
+            findToolCard(5).execute5(draftPool,indexInDraftpool,roundTrack, round, indexInRound);
+            player.setNumOfToken(player.getNumOfToken()-findToolCard(6).getNumOfTokens());
+            notifyChangement();
+        }
+    }
+
+    public void useToolCard6(Player player, int indexInDraftPool) throws NotValidException, RemoteException {
+        if(checkToken(player,6)){
+            findToolCard(6).execute6(draftPool,indexInDraftPool);
+            player.setNumOfToken(player.getNumOfToken()-findToolCard(6).getNumOfTokens());
+            notifyChangement();
+        }
+    }
+
+    public void useToolCard78(Player player,int id) throws NotValidException, RemoteException {
+        switch(id){
+            case 7:
+                if(checkToken(player,id)){
+                    if(playersRoundIndex>numPlayers-1){
+                        findToolCard(7).execute7(draftPool);
+                        player.setNumOfToken(player.getNumOfToken()-findToolCard(6).getNumOfTokens());
+                        notifyChangement();
+                    }
+                }
+            case 8:
+                if(checkToken(player,id)){
+                    findToolCard(8).execute8(playersRound,playersRoundIndex);
+                }
+
+        }
+    }
 
 
 
