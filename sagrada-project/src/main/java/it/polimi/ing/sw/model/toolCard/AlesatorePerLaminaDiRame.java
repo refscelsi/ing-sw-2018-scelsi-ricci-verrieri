@@ -25,12 +25,15 @@ public class AlesatorePerLaminaDiRame extends ToolCard{
                 throw new NotValidException("Non puoi posizionare un dado in una casella già piena!");
             else {
                 Dice dice = sourceBox.getDice();
+                sourceBox.removeDice();
                 if (scheme.checkBoxColor(destRow,destCol, dice) && scheme.checkIfHasDiceAdjacent(destRow,destCol, dice, 1)) {
                     destBox.placeDice(dice);
                     sourceBox.removeDice();
                     incrementNumOfTokens();
-                } else
+                } else {
+                    sourceBox.placeDice(dice);
                     throw new NotValidException("Non stai rispettando le condizioni di piazzamento!");
+                }
             }
         }
     }

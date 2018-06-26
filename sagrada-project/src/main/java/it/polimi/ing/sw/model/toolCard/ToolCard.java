@@ -67,29 +67,29 @@ public abstract class ToolCard implements Serializable{
         System.out.println("problema toolcard");
     }
 
-    public void execute2 (int numFacciaUp, Scheme scheme, int row, int col) throws NotValidException{
+    public void execute11b(int numFacciaUp, Scheme scheme, int row, int col) throws NotValidException{
         System.out.println("problema toolcard");
     }
 
-    public void execute1(DraftPool draftPool, int indexInDraftPool, Bag bag) {
+    public void execute11a(DraftPool draftPool, int indexInDraftPool, Bag bag) {
         System.out.println("problema toolcard");
     }
 
-    public void execute(DraftPool draftPool){
+    public void execute7(DraftPool draftPool){
         System.out.println("problema toolcard");
     }
 
-    public void execute(DraftPool draftPool, int indexInDraftPool){
+    public void execute6(DraftPool draftPool, int indexInDraftPool){
         System.out.println("problemi toolcard");
     }
 
 
 
-    public void execute(Scheme scheme, Dice dice, int row, int col) throws NotValidException{
+    public void execute9(Scheme scheme, Dice dice, int row, int col) throws NotValidException{
         System.out.println("problemi toolcard");
     }
 
-    public void execute (DraftPool draftpool, int indexInDraftPool, RoundTrack roundTrack, int round, int indexInRound){
+    public void execute5(DraftPool draftpool, int indexInDraftPool, RoundTrack roundTrack, int round, int indexInRound){
         System.out.println("problemi toolcard");
     }
 
@@ -97,11 +97,11 @@ public abstract class ToolCard implements Serializable{
         System.out.println("problemi toolcard");
     }
 
-    public void execute(Dice dice){
+    public void execute10(Dice dice){
         System.out.println("problemi toolcard");
     }
 
-    public void execute (Player[] playersRound, int playersRoundIndex){
+    public void execute8(Player[] playersRound, int playersRoundIndex){
         System.out.println("problemi toolcard");
     }
 

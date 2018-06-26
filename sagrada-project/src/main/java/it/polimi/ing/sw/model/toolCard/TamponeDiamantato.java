@@ -16,7 +16,7 @@ public class TamponeDiamantato extends ToolCard {
     }
 
     @Override
-    public void execute(Dice dice) {
+    public void execute10(Dice dice) {
 
         switch (dice.getNumFacciaUp()){
             case 1:

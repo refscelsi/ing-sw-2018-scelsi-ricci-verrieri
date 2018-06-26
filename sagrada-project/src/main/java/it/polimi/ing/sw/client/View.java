@@ -307,6 +307,8 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
             ui.onUseToolCard234NotValid(id, match, e);
         } catch (RemoteException e) {
             e.printStackTrace();
+        } catch (NotValidPlayException e) {
+            e.printStackTrace();
         }
     }
 

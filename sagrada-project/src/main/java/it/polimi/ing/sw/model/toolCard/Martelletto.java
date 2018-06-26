@@ -17,7 +17,7 @@ public class Martelletto extends ToolCard {
     }
 
     @Override
-    public void execute(DraftPool draftPool) {
+    public void execute7(DraftPool draftPool) {
         for(Dice dice: draftPool.getDraftPool()){
             dice.throwDice();
         }
