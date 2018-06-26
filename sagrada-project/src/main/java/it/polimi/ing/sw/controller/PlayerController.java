@@ -1,5 +1,6 @@
 package it.polimi.ing.sw.controller;
 
+import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
 import it.polimi.ing.sw.model.RemotePlayer;
 import it.polimi.ing.sw.model.Match;
@@ -91,7 +92,6 @@ public class PlayerController extends UnicastRemoteObject implements PlayerInter
     @Override
     public void sendUseDiceRequest(int indexOfDiceInDraftPool, int row, int col) throws NetworkException, NotValidException, NotValidPlayException, RemoteException {
         System.out.println("giocatore: "+ nickname+ "\n stato:"+ state.toString());
-        System.out.println("aiuto"+ row+col);
         switch (state){
             case USEDDICE: throw new NotValidPlayException("hai già usato un dado in questo turno!");
             case FINISHTURN: throw new NotValidPlayException("non puoi più fare mosse, passa il turno");
@@ -116,6 +116,7 @@ public class PlayerController extends UnicastRemoteObject implements PlayerInter
         }
         else {
             match.changePlayer();
+            System.out.println("turno finito");
             setState(PlayerState.READYTOPLAY);
         }
     }
@@ -134,7 +135,31 @@ public class PlayerController extends UnicastRemoteObject implements PlayerInter
     }
 
     @Override
-    public void sendUseToolCard234Request(int id, int sourceRow, int sourceCol, int destRow, int destCol) throws NetworkException, NotValidException, RemoteException{
+    public void sendUseToolCard234Request(int id, int sourceRow, int sourceCol, int destRow, int destCol) throws NetworkException, NotValidException, RemoteException, NotValidPlayException {
+        if(state.equals(PlayerState.READYTOPLAY)){
+            match.useToolCard234(player,id,sourceRow,sourceCol,destRow,destCol);
+            setState(PlayerState.USEDTOOLCARD);
+        }
+        else if(state.equals(PlayerState.USEDDICE)){
+            match.useToolCard234(player,id,sourceRow,sourceCol,destRow,destCol);
+            setState(PlayerState.FINISHTURN);
+        }
+        else throw new NotValidPlayException("Non puoi usare questa carta");
+    }
+
+
+    @Override
+    public void useToolCard6(int indexInDraftPool) throws NetworkException, NotValidException, RemoteException {
+
+    }
+
+    @Override
+    public void useToolCard5(int indexInDraftPool, int round, int indexInRound) throws NetworkException, NotValidException, RemoteException {
+
+    }
+
+    @Override
+    public void useToolCard78(int id) throws NetworkException, NotValidException, RemoteException {
 
     }
 

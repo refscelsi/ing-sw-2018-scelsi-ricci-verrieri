@@ -283,6 +283,7 @@ public class CLI implements UiUpdate {
                 }
             }
         } while (!inText.equals("q"));
+
     }
 
 

@@ -362,18 +362,52 @@ public class Match implements Serializable {
         player.getScheme().placeDice(row,col,draftPool.getDice(indexOfDiceInDraftpool));
         draftPool.removeDice(draftPool.getDice(indexOfDiceInDraftpool));
         notifyChangement();
+
     }
 
     public void chooseScheme(Player player, int id) throws RemoteException {
-        System.out.println(id);
         player.setScheme(schemeCardDeck.getSchemeWithId(id));
         playerMap.get(player).onSuccess("ok hai scelto bene lo schema ");
     }
 
-    public void useToolCard1(int indexOfDiceInDraftPool, String operation){
-        //eseguo ToolCard 1
-        //mi serve un metodo per tirarla fuori da ToolCards
+    //toolCard
+
+    public ToolCard findToolCard(int id){
+        for(ToolCard toolCard: toolCards){
+            if(toolCard.getId()==id){
+                return toolCard;
+            }
+        }
+        return null;
+        //eccezione se mi chiami una carta che non esiste? gestita nella view??
+        //dove facciamo il controllo dei segnalini favore?
     }
+
+
+    public void useToolCard1(int indexOfDiceInDraftPool, String operation) throws NotValidException {
+        findToolCard(1).execute1(draftPool,indexOfDiceInDraftPool,operation);
+        //notifico il successo
+    }
+
+    public void useToolCard234(Player player, int id, int sourceRow, int sourceCol, int destRow, int destCol) throws NotValidException {
+        switch (id){
+            case 2:
+                findToolCard(id).execute2(player.getScheme(),sourceRow,sourceCol,destRow,destCol);
+                //notifica il successo
+                break;
+            case 3:
+                findToolCard(id).execute3(player.getScheme(),sourceRow,sourceCol,destRow,destCol);
+                //notifico il successo
+                break;
+            case 4:
+                findToolCard(id).execute4(player.getScheme(),sourceRow,sourceCol,destRow,destCol);
+                //notifico il successo
+                break;
+        }
+    }
+
+
+
 
     // aggiornamenti alle view
 

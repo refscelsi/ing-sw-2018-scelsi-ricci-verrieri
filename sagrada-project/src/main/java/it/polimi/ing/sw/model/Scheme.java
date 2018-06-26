@@ -26,8 +26,6 @@ public class Scheme implements Serializable {
 
 
     public boolean checkFirst( int row, int col, Dice dice ) {
-
-        System.out.println("controllo primo dado" + row+ col);
         if ( row == 0 || row == Constants.NUM_ROWS-1 || col == 0 || col == Constants.NUM_COLS-1 ) {
             System.out.println("non va bene qui");
             return (checkBox( row, col, dice ));
@@ -213,7 +211,6 @@ public class Scheme implements Serializable {
     }
 
     public boolean isEmpty() {
-        System.out.println("controllo vuoto");
         this.isEmpty = true;
         for (int i = 0; i < Constants.NUM_ROWS; i++) {
             for (int j = 0; j < Constants.NUM_COLS; j++) {

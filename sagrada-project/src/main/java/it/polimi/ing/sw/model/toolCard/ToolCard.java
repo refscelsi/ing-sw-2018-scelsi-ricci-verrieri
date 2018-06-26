@@ -52,15 +52,26 @@ public abstract class ToolCard implements Serializable{
         this.description = description;
     }
 
-    public void execute(Scheme scheme, int sourceRow, int sourceCol, int destRow, int destCol) throws NotValidException {
+    public void execute1(DraftPool draftPool, int indexInDraftPool, String operation) throws NotValidException{
+        System.out.println("problemi toolcard");
+    }
+
+    public void execute2(Scheme scheme, int sourceRow, int sourceCol, int destRow, int destCol) throws NotValidException {
+        System.out.println("problema toolcard");
+    }
+    public void execute3(Scheme scheme, int sourceRow, int sourceCol, int destRow, int destCol) throws NotValidException {
         System.out.println("problema toolcard");
     }
 
-    public void execute1(DraftPool draftPool, int indexInDraftPool, Bag bag) {
+    public void execute4(Scheme scheme, int sourceRow, int sourceCol, int destRow, int destCol) throws NotValidException {
         System.out.println("problema toolcard");
     }
 
     public void execute2 (int numFacciaUp, Scheme scheme, int row, int col) throws NotValidException{
+        System.out.println("problema toolcard");
+    }
+
+    public void execute1(DraftPool draftPool, int indexInDraftPool, Bag bag) {
         System.out.println("problema toolcard");
     }
 
@@ -72,9 +83,7 @@ public abstract class ToolCard implements Serializable{
         System.out.println("problemi toolcard");
     }
 
-    public void execute(DraftPool draftPool, int indexInDraftPool, char operation) throws NotValidException{
-        System.out.println("problemi toolcard");
-    }
+
 
     public void execute(Scheme scheme, Dice dice, int row, int col) throws NotValidException{
         System.out.println("problemi toolcard");

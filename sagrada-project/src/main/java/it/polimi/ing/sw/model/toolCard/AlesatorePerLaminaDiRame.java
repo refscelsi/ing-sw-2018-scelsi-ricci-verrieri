@@ -13,9 +13,9 @@ public class AlesatorePerLaminaDiRame extends ToolCard{
     public AlesatorePerLaminaDiRame () {
         super();
     }
-/*
+
     @Override
-    public void execute(Scheme scheme, int sourceRow, int sourceCol, int destRow, int destCol) throws NotValidException {
+    public void execute3(Scheme scheme, int sourceRow, int sourceCol, int destRow, int destCol) throws NotValidException {
         Box sourceBox = scheme.getBox(sourceRow, sourceCol);
         Box destBox = scheme.getBox(destRow, destCol);
         if(!sourceBox.isFull())
@@ -25,7 +25,7 @@ public class AlesatorePerLaminaDiRame extends ToolCard{
                 throw new NotValidException("Non puoi posizionare un dado in una casella già piena!");
             else {
                 Dice dice = sourceBox.getDice();
-                if (scheme.checkBoxColor(destBox, dice) && scheme.checkIfHasDiceAdjacent(destBox, dice, 1)) {
+                if (scheme.checkBoxColor(destRow,destCol, dice) && scheme.checkIfHasDiceAdjacent(destRow,destCol, dice, 1)) {
                     destBox.placeDice(dice);
                     sourceBox.removeDice();
                     incrementNumOfTokens();
@@ -34,5 +34,5 @@ public class AlesatorePerLaminaDiRame extends ToolCard{
             }
         }
     }
-*/
+
 }

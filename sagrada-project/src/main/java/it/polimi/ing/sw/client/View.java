@@ -125,6 +125,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
     @Override
     public void onTurnEnd() {
         isPlaying=false;
+        System.out.println("il mio turno è finito");
         ui.onTurnEnd();
     }
 
@@ -143,7 +144,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
     public void onSetPlaying() {
         this.match=match;
         isPlaying=true;
-        System.out.println("sono il primo giocatore"+ this.nickname);
+        System.out.println("il mio turno è iniziato");
         ui.onTurnStart(match, nickname);
     }
 
