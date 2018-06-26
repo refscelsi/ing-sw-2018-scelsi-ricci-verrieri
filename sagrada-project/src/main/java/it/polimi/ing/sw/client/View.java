@@ -401,6 +401,8 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
             e.printStackTrace();
         } catch (NotValidPlayException e) {
             e.printStackTrace();
+        } catch (NotValidException e) {
+            e.printStackTrace();
         }
     }
 
