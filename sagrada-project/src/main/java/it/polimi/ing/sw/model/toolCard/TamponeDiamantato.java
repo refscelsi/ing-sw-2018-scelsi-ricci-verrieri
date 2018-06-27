@@ -38,8 +38,8 @@ public class TamponeDiamantato extends ToolCard {
                 dice.setNumFacciaUp(1);
                 break;
 
-            default:
-                break;
+            //default:
+                //break;
         }
         incrementNumOfTokens();
     }

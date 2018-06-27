@@ -89,7 +89,7 @@ public class PlayerController extends UnicastRemoteObject implements PlayerInter
                                 break;
             case TURNSTARTED:  match.useDice(player,indexOfDiceInDraftPool,row,col,false);
                                 break;
-            case ENDEDTURN: throw new NotValidPlayException("non puoi fare questa mossa ora");
+            case ENDEDTURN: throw new NotValidPlayException("non è il tuo turno!");
             case READYTOPLAY: throw new NotValidPlayException("non puoi fare questa mossa ora");
             case INIZIALIZED: throw new NotValidPlayException("non puoi fare questa mossa ora");
             case OFFLINE: throw new NotValidPlayException("non puoi fare questa mossa ora");
@@ -198,6 +198,7 @@ public class PlayerController extends UnicastRemoteObject implements PlayerInter
         }
         else if(player.getState().equals(PlayerState.USEDDICE)){
             match.useToolCard10(player,dice,true);
+            System.out.println("aiutoo" );
             endTurn();
         }
         else throw new NotValidPlayException("Non puoi usare questa carta");

@@ -199,14 +199,17 @@ public class CLI implements UiUpdate {
      * Scelta dello schema tra i 4 schemi disponibili da parte di un giocatore
      */
     public void chooseScheme(Match match, String nickname, String message) {
-        int num;
         ArrayList<Scheme> schemes = match.getPlayer(nickname).getSchemesToChoose();
         showSchemesToChoose(schemes);
-        do {
-            System.out.println(message);
-            num = scanner.nextInt();
-        } while (num < 1 || num > 4);
-        controller.setChosenScheme(schemes.get(num-1).getId());   //se per esempio qui c'è un errore, se lo gestisce il PlayerController*/
+        new Thread(()->{
+            int num;
+            do {
+                System.out.println(message);
+                num = scanner.nextInt();
+
+            } while (num < 1 || num > 4);
+            controller.setChosenScheme(schemes.get(num-1).getId());   //se per esempio qui c'è un errore, se lo gestisce il PlayerController*/
+        }).start();
     }
 
     public void showSchemesToChoose (ArrayList<Scheme> schemes) {

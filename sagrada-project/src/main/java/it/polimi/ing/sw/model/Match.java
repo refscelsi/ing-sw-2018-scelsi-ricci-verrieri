@@ -193,6 +193,7 @@ public class Match implements Serializable {
         inizializePlayers();
         setColorOfPawns();
         notifyStartedMatch();
+        System.out.println("i'm back bitch!");
     }
 
     // inizializzo tutte le cose che riguardano il tavolo di gioco
@@ -245,6 +246,7 @@ public class Match implements Serializable {
             }
             notifyChangement();
             notifyStartTurn(firstPlayer);
+            System.out.println("i'm back bitch!");
         }
         else{
             draftPool=bag.draw(numPlayers);
@@ -547,17 +549,20 @@ public class Match implements Serializable {
                 if(checkToken(player,id)){
                     if(playersRoundIndex>numPlayers-1){
                         findToolCard(7).execute7(draftPool);
-                        player.setNumOfToken(player.getNumOfToken()-findToolCard(6).getNumOfTokens());
+                        player.setNumOfToken(player.getNumOfToken()-findToolCard(7).getNumOfTokens());
                         setState(finish,player);
                         notifyChangement();
                         playerMap.get(player).onSetPlaying();
+                        break;
                     }
                 }
+                else throw new NotValidException("non puoi usare la toolcard, aspetta il secondo turno!");
             case 8:
                 if(checkToken(player,id)){
                     findToolCard(8).execute8(playersRound,playersRoundIndex);
                     setState(finish,player);
                     playerMap.get(player).onSetPlaying();
+                    break;
                 }
 
         }

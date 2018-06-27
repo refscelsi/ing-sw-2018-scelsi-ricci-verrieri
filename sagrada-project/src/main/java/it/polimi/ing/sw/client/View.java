@@ -13,7 +13,10 @@ import it.polimi.ing.sw.model.exceptions.ToolCardException;
 import it.polimi.ing.sw.util.Constants;
 import it.polimi.ing.sw.ui.cli.CLI;
 
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
 
@@ -34,7 +37,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
     private boolean isGameStarted;     // flag per vedere se la partita è iniziata: non so se sarà utile o meno
     private boolean isOnline;
     private PlayerInterface controller; //il client può chiamare solo i metodi di PlayerInterface
-    private LoginInterface gameController;
+    private LoginInterface loginController;
     private UiUpdate ui;
     private String input;
     private static Scanner scanner = new Scanner(System.in);
@@ -42,9 +45,8 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
     private int dice;
 
 
-    public View(LoginInterface controller) throws RemoteException {
+    public View() throws RemoteException {
         super();
-        this.gameController=controller;
         isLogged = false;
         isGameStarted = false;
         isPlaying = false;
@@ -202,7 +204,9 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
 
     public void loginPlayer(String nickname) {
         try {
-            controller = gameController.connectRMI(nickname,this);
+            Registry reg = LocateRegistry.getRegistry();
+            LoginInterface loginController= (LoginInterface) reg.lookup("LoginController");
+            controller = loginController.connectRMI(nickname,this);
             this.isLogged = true;
             ui.onSuccess("Complimenti, ti sei loggato come " + nickname);
             this.nickname = nickname;
@@ -216,6 +220,8 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
             e.printStackTrace();
         } catch (NotPossibleConnection notPossibleConnection) {
             notPossibleConnection.printStackTrace();
+        } catch (NotBoundException e) {
+            e.printStackTrace();
         }
         try {
             controller.joinMatch(); //TODO: il controller mi notifica l'indice del giocatore
