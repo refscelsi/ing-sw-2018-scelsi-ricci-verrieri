@@ -182,7 +182,7 @@ public class CLI implements UiUpdate {
      * Login del Client sul Server.
      */
     public void login(String message) {
-        System.out.print(message);
+        System.out.println(message);
         inText = scanner.nextLine();
         controller.loginPlayer(inText);
     }
@@ -405,7 +405,7 @@ public class CLI implements UiUpdate {
         do {
             System.out.println("Digita 'a' se vuoi aumentare il numero del dado di 1, 'd' se vuoi diminuirlo");
             inText = scanner.nextLine();
-        } while ((inText!="a") && (inText!="d"));
+        } while ((inText.toLowerCase()!="a") && (inText.toLowerCase()!="d"));
         controller.useToolCard1(dice - 1, inText);
     }
 
@@ -497,6 +497,7 @@ public class CLI implements UiUpdate {
             System.out.println(player.getNumOfToken());
             ShowScheme scheme = new ShowScheme(player.getScheme());
             System.out.println("");
+            chooseAction(match, nickname);
 
         }
 
@@ -526,6 +527,7 @@ public class CLI implements UiUpdate {
     @Override
     public void onActionNotValid (String errorCode) {
         System.out.println(errorCode);
+
     }
 
     /*@Override
@@ -553,6 +555,7 @@ public class CLI implements UiUpdate {
     public void onGameUpdate (Match match, String nickname) {
         ShowRoundTrack roundTrack = new ShowRoundTrack(match.getRoundTrack());
         ShowPublicObjectives pub = new ShowPublicObjectives(match.getPublicObjectives());
+        ShowPrivateObjectiveCard priv = new ShowPrivateObjectiveCard(match.getPlayer(nickname).getPrivateObjective());
         ShowToolCards tool = new ShowToolCards(match.getToolCards());
         ShowDraftPool draft = new ShowDraftPool(match.getDraftPool());
         ShowScheme scheme = new ShowScheme(match.getPlayer(nickname).getScheme());

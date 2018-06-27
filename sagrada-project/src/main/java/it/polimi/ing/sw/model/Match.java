@@ -326,8 +326,11 @@ public class Match implements Serializable {
         }
         else if(numRound==Constants.NUM_ROUNDS) {
             //notifyChangement(); così vedono la roundtrack aggiornata e poi tutta la roundtrack
+            System.out.println("1");
             calculateRanking();
             //da qua dove vado?? quando notifico la classifica e l'ultimo round??
+            System.out.println(ranking.get(0).getNickname() + ranking.get(0).getScore());
+            System.out.println(ranking.get(1).getNickname() + ranking.get(1).getScore());
         }
     }
 
@@ -336,12 +339,19 @@ public class Match implements Serializable {
 
     public int calculateScore(Player player) {
         int score = 0;
-        for (int i=0; i<3; i++)
-            score = score + publicObjectives.get(i).calculateScore();
+        for (int i=0; i<3; i++) {
+            score = score + publicObjectives.get(i).calculateScore(player.getScheme());
+            System.out.println(score);
+        }
         score = score + player.getPrivateObjective().calculateScore(player.getScheme());
+        System.out.println(score);
         score = score + player.getNumOfToken();
+        System.out.println(score);
         score = score - player.getScheme().countFreeBoxes();
+        System.out.println(score);
         player.setScore(score);
+        System.out.println(score);
+        System.out.println("2" + player.getScore());
         return score;
     }
 
@@ -351,6 +361,7 @@ public class Match implements Serializable {
     public void calculateRanking() {   // ritorna un array di players ordinato dal punteggio massimo al minimo
         int scores[] = new int[numPlayers];
         ranking = new ArrayList<Player>();
+        ArrayList<Player> tempPlayers = players;
         int i, j, max, k=1;
         boolean found = false;
         for (i=0; i<numPlayers; i++) {
@@ -358,27 +369,51 @@ public class Match implements Serializable {
         }
         for(i=0; i<numPlayers; i++) {
             max = 0;
-            for(j=1; j<numPlayers; j++) {
-                if (scores[j] > scores[max])
+            for(j=1; j<tempPlayers.size(); j++) {
+                if (scores[j] > scores[max]) {
                     max = j;
-                else if (scores[j]==scores[max])
-                    if (players.get(j).getPrivateObjective().calculateScore(players.get(j).getScheme())> players.get(max).getPrivateObjective().calculateScore(players.get(max).getScheme()))
-                        max = j;
-                    else if (players.get(j).getPrivateObjective().calculateScore(players.get(j).getScheme())== players.get(max).getPrivateObjective().calculateScore(players.get(max).getScheme()))
-                        if (players.get(j).getNumOfToken()> players.get(max).getNumOfToken())
+                    System.out.println("2");
+                } else {
+                    if (scores[j] == scores[max]) {
+                        System.out.println("3");
+                        if (tempPlayers.get(j).getPrivateObjective().calculateScore(tempPlayers.get(j).getScheme()) > tempPlayers.get(max).getPrivateObjective().calculateScore(tempPlayers.get(max).getScheme())) {
                             max = j;
-                        else if (players.get(j).getNumOfToken()== players.get(max).getNumOfToken())
-                            while (k<=numPlayers&&!found)
-                                if (players.get(players.indexOf(firstPlayer)-k)== players.get(j)) {
+                            System.out.println("4");
+                        } else {
+                            if (tempPlayers.get(j).getPrivateObjective().calculateScore(tempPlayers.get(j).getScheme()) == tempPlayers.get(max).getPrivateObjective().calculateScore(tempPlayers.get(max).getScheme())) {
+                                System.out.println("5");
+                                if (tempPlayers.get(j).getNumOfToken() > tempPlayers.get(max).getNumOfToken()) {
                                     max = j;
-                                    found = true;
+                                    System.out.println("6");
+                                } else {
+                                    if (tempPlayers.get(j).getNumOfToken() == tempPlayers.get(max).getNumOfToken()) {
+                                        int num = 0;
+                                        System.out.println("7");
+                                        while (num <= numPlayers && !found) {
+                                            System.out.println("8");
+                                            if (playersRound[num] == tempPlayers.get(j)) {
+                                                System.out.println("9");
+                                                max = j;
+                                                found = true;
+                                            } else {
+                                                System.out.println("10");
+                                                if (playersRound[num] == tempPlayers.get(max)) {
+                                                    found = true;
+                                                }
+                                            }
+                                            num++;
+                                        }
+                                    }
                                 }
-                                else if (players.get(players.indexOf(firstPlayer)-k)== players.get(max))
-                                    found = true;
-                k++;
+                            }
+                        }
+                    }
+                }
             }
 
-            ranking.add(players.get(max));
+            ranking.add(tempPlayers.get(max));
+            tempPlayers.remove(max);
+            System.out.println("11");
         }
     }
 

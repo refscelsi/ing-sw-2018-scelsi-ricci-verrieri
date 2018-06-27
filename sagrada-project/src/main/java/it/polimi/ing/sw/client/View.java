@@ -207,7 +207,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
             ui.onSuccess("Complimenti, ti sei loggato come " + nickname);
             this.nickname = nickname;
         } catch (NotValidNicknameException e) {
-            ui.onLogin(e.getMessage() + ". Inserisci un nickname differente");
+            ui.onLogin(e.getMessage() + " Inserisci un nickname differente");
         } catch (RemoteException e) {
             e.printStackTrace();
         } catch (ToolCardException e) {
@@ -242,14 +242,14 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         } catch (RemoteException e) {
             e.printStackTrace();
         } catch (NotValidPlayException e) {
-            e.printStackTrace();
+            onNotValidPlay(e.getMessage());
         }
         try {
             controller.checkAllReady();
         } catch (RemoteException e) {
             e.printStackTrace();
         } catch (NotValidPlayException e) {
-            e.printStackTrace();
+            onNotValidPlay(e.getMessage());
         }
 
     }
@@ -269,7 +269,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         } catch (RemoteException e) {
             e.printStackTrace();
         } catch (NotValidPlayException e) {
-            e.printStackTrace();
+            onNotValidPlay(e.getMessage());
         }
     }
 
@@ -282,7 +282,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         } catch (RemoteException e) {
             e.printStackTrace();
         } catch (NotValidPlayException e) {
-            e.printStackTrace();
+            onNotValidPlay(e.getMessage());
         }
     }
 
@@ -298,7 +298,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         } catch (NotValidException e) {
             ui.onUseToolCard1NotValid(match, e);
         } catch (NotValidPlayException e) {
-            e.printStackTrace();
+            onNotValidPlay(e.getMessage());
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -315,7 +315,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         } catch (RemoteException e) {
             e.printStackTrace();
         } catch (NotValidPlayException e) {
-            e.printStackTrace();
+            onNotValidPlay(e.getMessage());
         }
     }
 
@@ -330,7 +330,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         } catch (NotValidException e) {
             e.printStackTrace();
         } catch (NotValidPlayException e) {
-            e.printStackTrace();
+            onNotValidPlay(e.getMessage());
         }
     }
 
@@ -346,7 +346,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         } catch (NotValidException e) {
             e.printStackTrace();
         } catch (NotValidPlayException e) {
-            e.printStackTrace();
+            onNotValidPlay(e.getMessage());
         }
     }
 
@@ -361,7 +361,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         } catch (NotValidException e) {
             e.printStackTrace();
         } catch (NotValidPlayException e) {
-            e.printStackTrace();
+            onNotValidPlay(e.getMessage());
         }
     }
 
@@ -376,7 +376,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         } catch (RemoteException e) {
             e.printStackTrace();
         } catch (NotValidPlayException e) {
-            e.printStackTrace();
+            onNotValidPlay(e.getMessage());
         }
     }
 
@@ -388,7 +388,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         } catch (RemoteException e) {
             e.printStackTrace();
         } catch (NotValidPlayException e) {
-            e.printStackTrace();
+            onNotValidPlay(e.getMessage());
         } catch (NotValidException e) {
             e.printStackTrace();
         }
@@ -402,7 +402,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         } catch (RemoteException e) {
             e.printStackTrace();
         } catch (NotValidPlayException e) {
-            e.printStackTrace();
+            onNotValidPlay(e.getMessage());
         } catch (NotValidException e) {
             e.printStackTrace();
         }
@@ -416,9 +416,16 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         } catch (RemoteException e) {
             e.printStackTrace();
         } catch (NotValidPlayException e) {
-            e.printStackTrace();
+            onNotValidPlay(e.getMessage());
         } catch (NotValidException e) {
             ui.onUseToolCard11bNotValid(match, e);
         }
     }
+
+
+    public void onNotValidPlay (String e) {
+        ui.onActionNotValid(e);
+        ui.onTurnStart(match, nickname);
+    }
+
 }

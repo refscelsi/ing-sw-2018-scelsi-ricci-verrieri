@@ -1,5 +1,6 @@
 package it.polimi.ing.sw.model.toolCard;
 
+import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
 import it.polimi.ing.sw.model.*;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.model.exceptions.ToolCardException;
@@ -92,7 +93,7 @@ public abstract class ToolCard implements Serializable{
         System.out.println("problemi toolcard");
     }
 
-    public void execute5(DraftPool draftpool, int indexInDraftPool, RoundTrack roundTrack, int round, int indexInRound){
+    public void execute5(DraftPool draftpool, int indexInDraftPool, RoundTrack roundTrack, int round, int indexInRound) throws NotValidPlayException {
         System.out.println("problemi toolcard");
     }
 
