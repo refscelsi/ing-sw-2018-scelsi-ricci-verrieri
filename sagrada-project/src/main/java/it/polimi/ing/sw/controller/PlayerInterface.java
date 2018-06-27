@@ -32,7 +32,7 @@ public interface PlayerInterface extends Remote {
 
     void sendUseToolCard9Request(int dice, int row, int col) throws NetworkException, NotValidException, RemoteException, NotValidPlayException;
 
-    void useToolCard10(int dice) throws NetworkException, RemoteException, NotValidPlayException;
+    void useToolCard10(int dice) throws NetworkException, RemoteException, NotValidPlayException, NotValidException;
 
     void useToolCard11(int dice) throws NetworkException, RemoteException, NotValidPlayException, NotValidException;
 }

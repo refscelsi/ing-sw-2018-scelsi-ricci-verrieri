@@ -198,8 +198,15 @@ public class Scheme implements Serializable {
             else
                 setNotEmpty();
         } else {
-            if ( boxes[row][col].isFull() || !checkBox( row, col, dice ) && !checkIfHasDiceAdjacent( row, col, dice, 0 ) )
-                throw new NotValidException( "Non stai rispettando le restrizioni di piazzamento!" );
+            if(boxes[row][col].isFull()){
+                throw new NotValidException("la casella è piena caro");
+            }
+            else if (!checkBox( row, col, dice)) {
+                throw new NotValidException("Non stai rispettando le restrizioni di piazzamento!");
+            }
+            else if(!checkIfHasDiceAdjacent( row, col, dice, 0 )){
+                throw new NotValidException("Non stai rispettando le restrizioni di piazzamento! ");
+            }
         }
 
         boxes[row][col].placeDice( dice );

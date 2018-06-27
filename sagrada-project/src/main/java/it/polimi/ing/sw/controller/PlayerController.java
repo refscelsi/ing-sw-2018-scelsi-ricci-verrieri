@@ -81,11 +81,14 @@ public class PlayerController extends UnicastRemoteObject implements PlayerInter
 
     @Override
     public void sendUseDiceRequest(int indexOfDiceInDraftPool, int row, int col) throws NetworkException, NotValidException, NotValidPlayException, RemoteException {
+        //System.out.println("giocatore: "+ nickname+ "\n stato:"+ player.getState().toString());
         switch (player.getState()){
             case USEDDICE: throw new NotValidPlayException("hai già usato un dado in questo turno!");
             case FINISHTURN: throw new NotValidPlayException("non puoi più fare mosse, passa il turno");
             case USEDTOOLCARD: match.useDice(player,indexOfDiceInDraftPool,row,col,true);
+                                break;
             case TURNSTARTED:  match.useDice(player,indexOfDiceInDraftPool,row,col,false);
+                                break;
             case ENDEDTURN: throw new NotValidPlayException("non puoi fare questa mossa ora");
             case READYTOPLAY: throw new NotValidPlayException("non puoi fare questa mossa ora");
             case INIZIALIZED: throw new NotValidPlayException("non puoi fare questa mossa ora");
@@ -101,6 +104,7 @@ public class PlayerController extends UnicastRemoteObject implements PlayerInter
     //i metodi. Oppure facciamo un altro stato per essere più sicuri e quando vieni notificato isPlaying passi allo stato READYTOPLAY???
     @Override
     public void endTurn() throws NetworkException, RemoteException, NotValidPlayException {
+        //System.out.println("giocatore: "+ nickname+ "\n stato:"+ player.getState().toString());
         if(player.getState().equals(PlayerState.READYTOPLAY)|| player.getState().equals(PlayerState.INIZIALIZED ) || player.getState().equals(PlayerState.OFFLINE)){
             throw new NotValidPlayException("finisci il turno caro!");
         }
@@ -117,7 +121,6 @@ public class PlayerController extends UnicastRemoteObject implements PlayerInter
             match.useToolCard1(player,indexInDraftPool,operation,false);
         }
         else if(player.getState().equals(PlayerState.USEDDICE)){
-            System.out.println("giocatore: "+ nickname+ "\n stato:"+ player.getState().toString());
             System.out.println("giocatore: "+ nickname+ "\n stato:"+ player.getState().toString());
             match.useToolCard1(player ,indexInDraftPool,operation,true);
             endTurn();
@@ -178,12 +181,26 @@ public class PlayerController extends UnicastRemoteObject implements PlayerInter
 
     @Override
     public void sendUseToolCard9Request(int dice, int row, int col) throws NetworkException, NotValidException, RemoteException, NotValidPlayException {
-
+        if(player.getState().equals(PlayerState.TURNSTARTED)){
+            match.useToolCard9(player,dice,row,col,false);
+        }
+        else if(player.getState().equals(PlayerState.USEDDICE)){
+            match.useToolCard9(player,dice,row,col,true);
+            endTurn();
+        }
+        else throw new NotValidPlayException("Non puoi usare questa carta");
     }
 
     @Override
-    public void useToolCard10(int dice) throws NetworkException, RemoteException, NotValidPlayException {
-
+    public void useToolCard10(int dice) throws NetworkException, RemoteException, NotValidPlayException, NotValidException {
+        if(player.getState().equals(PlayerState.TURNSTARTED)){
+            match.useToolCard10(player,dice,false);
+        }
+        else if(player.getState().equals(PlayerState.USEDDICE)){
+            match.useToolCard10(player,dice,true);
+            endTurn();
+        }
+        else throw new NotValidPlayException("Non puoi usare questa carta");
     }
 
     @Override

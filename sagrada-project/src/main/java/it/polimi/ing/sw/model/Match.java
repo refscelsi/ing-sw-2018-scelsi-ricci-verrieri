@@ -27,7 +27,7 @@ public class Match implements Serializable {
     private int playersRoundIndex;
     // primo giocatore del round
     private Player firstPlayer;
-    // indice dell'array playersRound -> giocatore che sta giocando il turno
+    //giocatore che sta giocando il turno
     private Player playerPlaying;
     //bag della partita
     private Bag bag;
@@ -252,6 +252,7 @@ public class Match implements Serializable {
             firstPlayer=playersRound[0];
             playerPlaying=firstPlayer;
             playerPlaying.setState(PlayerState.TURNSTARTED);
+            System.out.println("sono il giocatore "+ playerPlaying.getNickname()+ "nello stato: " + playerPlaying.getState().toString());
             for(Player player:players){
                 if(!(player.equals(playerPlaying))){
                     player.setState(PlayerState.ENDEDTURN);
@@ -268,10 +269,12 @@ public class Match implements Serializable {
 
     public void changePlayersRound (Player firstPlayer) {
         int first=players.indexOf(firstPlayer);
+        //spasso il turno a destra
         if(first<numPlayers-1){
             firstPlayer=players.get(first+1);
             createRoundPlayers(first+1);
         }
+        //passo il turno a destra , ma sono l'ultimo --> riparto dall'inizio
         if(first==numPlayers-1){
             firstPlayer=players.get(0);
             createRoundPlayers(0);
@@ -281,9 +284,16 @@ public class Match implements Serializable {
     public void createRoundPlayers(int firstPlayerIndex){
         int first=firstPlayerIndex;
 
-        for(int i=0; first<numPlayers;i++){
-            playersRound[i]=players.get(first);
-            playersRound[((numPlayers*2)-1)-i]=players.get(first);
+        for(int i=0; i<numPlayers; i++){
+            if(first<numPlayers){
+                playersRound[i]=players.get(first);
+                playersRound[((numPlayers*2)-1)-i]=players.get(first);
+            }
+            else if(first==numPlayers){
+                first=0;
+                playersRound[i]=players.get(first);
+                playersRound[((numPlayers*2)-1)-i]=players.get(first);
+            }
             first++;
         }
 
@@ -298,7 +308,8 @@ public class Match implements Serializable {
             playerPlaying.setState(PlayerState.TURNSTARTED);
             notifyStartTurn(playerPlaying);
         }
-        else if(playersRoundIndex==numPlayers-1){
+        else if(playersRoundIndex==(numPlayers*2)-1){
+            playersRoundIndex=0;
             endRound();
         }
     }
@@ -307,13 +318,16 @@ public class Match implements Serializable {
     // termina il turno e si chiama il metodo che inizia un nuovo turno
 
     public void endRound() throws RemoteException {
-        roundTrack.addDicesRound(draftPool);
         numRound++;
-        if(numRound<=Constants.NUM_ROUNDS){
+        roundTrack.addDicesRound(draftPool);
+
+        if(numRound<Constants.NUM_ROUNDS){
             startRound();
         }
-        else if(numRound==Constants.NUM_ROUNDS+1) {
+        else if(numRound==Constants.NUM_ROUNDS) {
+            //notifyChangement(); così vedono la roundtrack aggiornata e poi tutta la roundtrack
             calculateRanking();
+            //da qua dove vado?? quando notifico la classifica e l'ultimo round??
         }
     }
 
@@ -398,12 +412,12 @@ public class Match implements Serializable {
 
     //metodi ausiliari
 
-    public boolean checkToken(Player player, int idToolCard) throws NotValidException {
+    public boolean checkToken(Player player, int idToolCard) throws NotValidPlayException {
         if(player.getNumOfToken()>=findToolCard(idToolCard).getNumOfTokens()){
             return true;
         }
         else
-            throw new NotValidException("non hai il numero di segnalini favore necessari");
+            throw new NotValidPlayException("non hai il numero di segnalini favore necessari");
     }
 
     public ToolCard findToolCard(int id){
@@ -427,7 +441,7 @@ public class Match implements Serializable {
     //metodi delle carte
 
 
-    public void useToolCard1(Player player, int indexOfDiceInDraftPool, String operation, boolean finish) throws NotValidException, RemoteException {
+    public void useToolCard1(Player player, int indexOfDiceInDraftPool, String operation, boolean finish) throws NotValidException, RemoteException, NotValidPlayException {
         if(checkToken(player,1)) {
             findToolCard(1).execute1(draftPool, indexOfDiceInDraftPool, operation);
             player.setNumOfToken(playerPlaying.getNumOfToken()-findToolCard(1).getNumOfTokens());
@@ -437,7 +451,7 @@ public class Match implements Serializable {
         }
     }
 
-    public void useToolCard234(Player player, int id, int sourceRow, int sourceCol, int destRow, int destCol, boolean finish) throws NotValidException, RemoteException {
+    public void useToolCard234(Player player, int id, int sourceRow, int sourceCol, int destRow, int destCol, boolean finish) throws NotValidException, RemoteException, NotValidPlayException {
         switch (id){
             case 2:
                 if(checkToken(player,id)) {
@@ -472,17 +486,17 @@ public class Match implements Serializable {
         }
     }
 
-    public void useToolCard5(Player player, int indexInDraftpool, int round, int indexInRound, boolean finish) throws NotValidException, RemoteException {
+    public void useToolCard5(Player player, int indexInDraftpool, int round, int indexInRound, boolean finish) throws RemoteException, NotValidPlayException {
         if(checkToken(player,5)){
             findToolCard(5).execute5(draftPool,indexInDraftpool,roundTrack, round, indexInRound);
-            player.setNumOfToken(player.getNumOfToken()-findToolCard(6).getNumOfTokens());
+            player.setNumOfToken(player.getNumOfToken()-findToolCard(5).getNumOfTokens());
             setState(finish,player);
             notifyChangement();
             playerMap.get(player).onSetPlaying();
         }
     }
 
-    public void useToolCard6(Player player, int indexInDraftPool, boolean finish) throws NotValidException, RemoteException {
+    public void useToolCard6(Player player, int indexInDraftPool, boolean finish) throws RemoteException, NotValidPlayException {
         if(checkToken(player,6)){
             findToolCard(6).execute6(draftPool,indexInDraftPool);
             player.setNumOfToken(player.getNumOfToken()-findToolCard(6).getNumOfTokens());
@@ -492,7 +506,7 @@ public class Match implements Serializable {
         }
     }
 
-    public void useToolCard78(Player player,int id,boolean finish) throws NotValidException, RemoteException {
+    public void useToolCard78(Player player,int id,boolean finish) throws NotValidException, RemoteException, NotValidPlayException {
         switch(id){
             case 7:
                 if(checkToken(player,id)){
@@ -514,6 +528,25 @@ public class Match implements Serializable {
         }
     }
 
+    public void useToolCard9(Player player, int dice, int row, int col, boolean finish) throws NotValidException, RemoteException, NotValidPlayException {
+        if(checkToken(player,9)){
+            findToolCard(9).execute9(player.getScheme(),draftPool.getDice(dice),row,col);
+            player.setNumOfToken(player.getNumOfToken()-findToolCard(9).getNumOfTokens());
+            setState(finish,player);
+            notifyChangement();
+            playerMap.get(player).onSetPlaying();
+        }
+    }
+
+    public void useToolCard10(Player player, int dice, boolean finish) throws NotValidException, RemoteException, NotValidPlayException {
+        if(checkToken(player,10)){
+            findToolCard(10).execute10(draftPool.getDice(dice));
+            player.setNumOfToken(player.getNumOfToken()-findToolCard(10).getNumOfTokens());
+            setState(finish,player);
+            notifyChangement();
+            playerMap.get(player).onSetPlaying();
+        }
+    }
 
 
     // aggiornamenti alle view

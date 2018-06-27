@@ -17,7 +17,7 @@ public class SchemeCardDeck implements Serializable{
     }
 
 
-    /*public void setDeck () {
+   /* public void setDeck () {
         SchemeListFileConverter schemes = new SchemeListFileConverter();
         deck = schemes.readFromFile();
         System.out.println("ho letto da file");

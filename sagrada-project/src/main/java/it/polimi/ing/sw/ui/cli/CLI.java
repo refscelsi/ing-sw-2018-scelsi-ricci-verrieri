@@ -405,9 +405,8 @@ public class CLI implements UiUpdate {
         do {
             System.out.println("Digita 'a' se vuoi aumentare il numero del dado di 1, 'd' se vuoi diminuirlo");
             inText = scanner.nextLine();
-        } while (inText!="a"&&inText!="d");
+        } while ((inText!="a") && (inText!="d"));
         controller.useToolCard1(dice - 1, inText);
-
     }
 
 
