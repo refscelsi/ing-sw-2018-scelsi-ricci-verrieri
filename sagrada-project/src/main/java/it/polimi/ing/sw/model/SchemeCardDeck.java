@@ -70,9 +70,6 @@ public class SchemeCardDeck implements Serializable{
             //deck.remove(i);
             //deck.remove(getSchemeWithId(deck.get(i).getIdRetro()));
         }
-        for(Scheme scheme: drawnCards){
-            System.out.println(scheme.getId());
-        }
         return drawnCards;
     }
 

@@ -247,7 +247,7 @@ public class Match implements Serializable {
             notifyStartTurn(firstPlayer);
         }
         else{
-            draftPool=bag.draw(numPlayers*2);
+            draftPool=bag.draw(numPlayers);
             changePlayersRound(firstPlayer);
             firstPlayer=playersRound[0];
             playerPlaying=firstPlayer;
@@ -290,7 +290,7 @@ public class Match implements Serializable {
     }
 
     public void changePlayer () throws RemoteException {
-        if(playersRoundIndex<numPlayers-1) {
+        if(playersRoundIndex<(numPlayers*2)-1) {
             playersRoundIndex++;
             playerPlaying.setState(PlayerState.ENDEDTURN);
             notifyEndTurn(playerPlaying);
@@ -373,21 +373,19 @@ public class Match implements Serializable {
     // metodi VARI per gestire il TURNO di un giocatore
 
 
-    public void useDice (Player player, int indexOfDiceInDraftpool, int row, int col) throws NotValidException, RemoteException {
+    public void useDice (Player player, int indexOfDiceInDraftpool, int row, int col, boolean finish) throws NotValidException, RemoteException {
         player.getScheme().placeDice(row,col,draftPool.getDice(indexOfDiceInDraftpool));
         draftPool.removeDice(draftPool.getDice(indexOfDiceInDraftpool));
-        player.setState(PlayerState.USEDDICE);
+        if(finish){
+            player.setState(PlayerState.FINISHTURN);
+        }
+        else {
+            player.setState(PlayerState.USEDDICE);
+        }
         notifyChangement();
         playerMap.get(player).onSetPlaying();
     }
 
-    public void useDiceEndTurn(Player player, int indexOfDiceInDraftpool, int row, int col) throws RemoteException, NotValidException {
-        player.getScheme().placeDice(row,col,draftPool.getDice(indexOfDiceInDraftpool));
-        draftPool.removeDice(draftPool.getDice(indexOfDiceInDraftpool));
-        player.setState(PlayerState.FINISHTURN);
-        notifyChangement();
-        playerMap.get(player).onSetPlaying();
-    }
 
     public void chooseScheme(Player player, int id) throws RemoteException {
         player.setScheme(schemeCardDeck.getSchemeWithId(id));
@@ -397,6 +395,8 @@ public class Match implements Serializable {
     }
 
     //toolCard
+
+    //metodi ausiliari
 
     public boolean checkToken(Player player, int idToolCard) throws NotValidException {
         if(player.getNumOfToken()>=findToolCard(idToolCard).getNumOfTokens()){
@@ -415,24 +415,35 @@ public class Match implements Serializable {
         return null;
     }
 
+    public void setState(boolean finish, Player player){
+        if(finish){
+            player.setState(PlayerState.FINISHTURN);
+        }
+        else
+            player.setState(PlayerState.USEDTOOLCARD);
+    }
 
-    public void useToolCard1(Player player, int indexOfDiceInDraftPool, String operation) throws NotValidException, RemoteException {
+
+    //metodi delle carte
+
+
+    public void useToolCard1(Player player, int indexOfDiceInDraftPool, String operation, boolean finish) throws NotValidException, RemoteException {
         if(checkToken(player,1)) {
             findToolCard(1).execute1(draftPool, indexOfDiceInDraftPool, operation);
             player.setNumOfToken(playerPlaying.getNumOfToken()-findToolCard(1).getNumOfTokens());
-            player.setState(PlayerState.USEDTOOLCARD);
+            setState(finish,player);
             notifyChangement();
             playerMap.get(player).onSetPlaying();
         }
     }
 
-    public void useToolCard234(Player player, int id, int sourceRow, int sourceCol, int destRow, int destCol) throws NotValidException, RemoteException {
+    public void useToolCard234(Player player, int id, int sourceRow, int sourceCol, int destRow, int destCol, boolean finish) throws NotValidException, RemoteException {
         switch (id){
             case 2:
                 if(checkToken(player,id)) {
                     findToolCard(id).execute2(player.getScheme(), sourceRow, sourceCol, destRow, destCol);
                     player.setNumOfToken(player.getNumOfToken()-findToolCard(id).getNumOfTokens());
-                    player.setState(PlayerState.USEDTOOLCARD);
+                    setState(finish,player);
                     notifyChangement();
                     playerMap.get(player).onSetPlaying();
                     break;
@@ -441,7 +452,7 @@ public class Match implements Serializable {
                 if(checkToken(player,id)) {
                     findToolCard(id).execute3(player.getScheme(), sourceRow, sourceCol, destRow, destCol);
                     player.setNumOfToken(player.getNumOfToken()-findToolCard(id).getNumOfTokens());
-                    player.setState(PlayerState.USEDTOOLCARD);
+                    setState(finish,player);
                     notifyChangement();
                     playerMap.get(player).onSetPlaying();
                     break;
@@ -453,7 +464,7 @@ public class Match implements Serializable {
                         playerMap.get(player).onOtherInfoToolCard4(this);
                     }
                     player.setNumOfToken(player.getNumOfToken()-findToolCard(id).getNumOfTokens());
-                    player.setState(PlayerState.USEDTOOLCARD);
+                    setState(finish,player);
                     notifyChangement();
                     playerMap.get(player).onSetPlaying();
                     break;
@@ -461,34 +472,34 @@ public class Match implements Serializable {
         }
     }
 
-    public void useToolCard5(Player player, int indexInDraftpool, int round, int indexInRound) throws NotValidException, RemoteException {
+    public void useToolCard5(Player player, int indexInDraftpool, int round, int indexInRound, boolean finish) throws NotValidException, RemoteException {
         if(checkToken(player,5)){
             findToolCard(5).execute5(draftPool,indexInDraftpool,roundTrack, round, indexInRound);
             player.setNumOfToken(player.getNumOfToken()-findToolCard(6).getNumOfTokens());
-            player.setState(PlayerState.USEDTOOLCARD);
+            setState(finish,player);
             notifyChangement();
             playerMap.get(player).onSetPlaying();
         }
     }
 
-    public void useToolCard6(Player player, int indexInDraftPool) throws NotValidException, RemoteException {
+    public void useToolCard6(Player player, int indexInDraftPool, boolean finish) throws NotValidException, RemoteException {
         if(checkToken(player,6)){
             findToolCard(6).execute6(draftPool,indexInDraftPool);
             player.setNumOfToken(player.getNumOfToken()-findToolCard(6).getNumOfTokens());
-            player.setState(PlayerState.USEDTOOLCARD);
+            setState(finish,player);
             notifyChangement();
             playerMap.get(player).onSetPlaying();
         }
     }
 
-    public void useToolCard78(Player player,int id) throws NotValidException, RemoteException {
+    public void useToolCard78(Player player,int id,boolean finish) throws NotValidException, RemoteException {
         switch(id){
             case 7:
                 if(checkToken(player,id)){
                     if(playersRoundIndex>numPlayers-1){
                         findToolCard(7).execute7(draftPool);
                         player.setNumOfToken(player.getNumOfToken()-findToolCard(6).getNumOfTokens());
-                        player.setState(PlayerState.USEDTOOLCARD);
+                        setState(finish,player);
                         notifyChangement();
                         playerMap.get(player).onSetPlaying();
                     }
@@ -496,7 +507,7 @@ public class Match implements Serializable {
             case 8:
                 if(checkToken(player,id)){
                     findToolCard(8).execute8(playersRound,playersRoundIndex);
-                    player.setState(PlayerState.USEDTOOLCARD);
+                    setState(finish,player);
                     playerMap.get(player).onSetPlaying();
                 }
 
