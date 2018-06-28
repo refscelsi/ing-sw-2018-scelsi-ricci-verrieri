@@ -212,7 +212,7 @@ public class CLI implements UiUpdate {
 
     public void showSchemesToChoose(ArrayList<Scheme> schemes) {
         for (int i = 0; i < 4; i++) {
-            System.out.println("Schema " + (i + 1) + ":");
+            System.out.println("Schema " + (i + 1) + " (con ID " + schemes.get(i).getId() + "):");
             ShowScheme show = new ShowScheme(schemes.get(i));
             System.out.println("");
         }

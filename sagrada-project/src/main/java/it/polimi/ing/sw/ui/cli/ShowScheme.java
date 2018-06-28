@@ -63,6 +63,8 @@ public class ShowScheme {
         for (h = 0; h < 9 * 5 + 1; h++)
             System.out.print("*" + ConsoleColors.RESET);
 
+        System.out.print("\n");
+
     }
 
 
