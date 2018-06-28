@@ -4,19 +4,19 @@ import it.polimi.ing.sw.model.Box;
 import it.polimi.ing.sw.model.Color;
 import it.polimi.ing.sw.model.Scheme;
 
-import java.util.*;
+import java.util.ArrayList;
 
 public class DifferentColorColumn extends ObjectiveCard {
 
-    public DifferentColorColumn () {
+    public DifferentColorColumn() {
         super();
     }
 
-    public int calculateScore (Scheme scheme) {
-        int i, j, score=0;
+    public int calculateScore(Scheme scheme) {
+        int i, j, score = 0;
         Box[][] boxes = scheme.getBoxes();
         ArrayList<Color> colors = new ArrayList<>();
-        for (i=0; i<5; i++) {
+        for (i = 0; i < 5; i++) {
             colors.add(Color.RED);
             colors.add(Color.GREEN);
             colors.add(Color.BLUE);
@@ -27,7 +27,7 @@ public class DifferentColorColumn extends ObjectiveCard {
                     colors.remove(boxes[j][i].getDice().getDiceColor());
                 }
             }
-            if (colors.size()==1)
+            if (colors.size() == 1)
                 score = score + 5;
             colors.clear();
         }

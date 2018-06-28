@@ -3,7 +3,7 @@ package it.polimi.ing.sw.controller;
 import it.polimi.ing.sw.controller.exceptions.NotPossibleConnection;
 import it.polimi.ing.sw.controller.network.RMI.PlayerInterfaceRMI;
 import it.polimi.ing.sw.controller.network.RMI.RemotePlayerRMI;
-import it.polimi.ing.sw.model.*;
+import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.model.exceptions.NotValidNicknameException;
 import it.polimi.ing.sw.model.exceptions.ToolCardException;
@@ -23,9 +23,9 @@ public class LoginController extends UnicastRemoteObject implements Remote, Logi
     //lista dei clients
     private ArrayList<PlayerController> clients;
 
-    public LoginController(Match match) throws RemoteException{
-        this.match=match;
-        this.clients=new ArrayList<PlayerController>();
+    public LoginController(Match match) throws RemoteException {
+        this.match = match;
+        this.clients = new ArrayList<PlayerController>();
     }
 
     //metodo che crea un controller per ogni view che si connette
@@ -53,12 +53,12 @@ public class LoginController extends UnicastRemoteObject implements Remote, Logi
         return;
     }
 
-    public boolean checkReconnection(String nickname){
-        if(clients.size()==0){
+    public boolean checkReconnection(String nickname) {
+        if (clients.size() == 0) {
             return false;
         }
-        for(PlayerController playerController: clients){
-            if(playerController.getNickname().equals(nickname) && playerController.getState().equals(PlayerState.OFFLINE)){
+        for (PlayerController playerController : clients) {
+            if (playerController.getNickname().equals(nickname) && playerController.getState().equals(PlayerState.OFFLINE)) {
                 return true;
             }
         }

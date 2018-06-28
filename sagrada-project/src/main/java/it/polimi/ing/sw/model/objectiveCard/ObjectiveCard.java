@@ -5,13 +5,13 @@ import it.polimi.ing.sw.model.Scheme;
 
 import java.io.Serializable;
 
-public abstract class ObjectiveCard implements Serializable{
+public abstract class ObjectiveCard implements Serializable {
 
     private int score;
     private String name;
     private String description;
 
-    public ObjectiveCard () {
+    public ObjectiveCard() {
 
     }
 
@@ -31,15 +31,15 @@ public abstract class ObjectiveCard implements Serializable{
         return description;
     }
 
-    public void setScore (int score) {
+    public void setScore(int score) {
         this.score = score;
     }
 
-    public void setName (String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public void setDescription (String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 

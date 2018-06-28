@@ -1,8 +1,8 @@
 package it.polimi.ing.sw.controller.network.RMI;
 
 import it.polimi.ing.sw.controller.PlayerInterface;
-import it.polimi.ing.sw.model.exceptions.NetworkException;
 import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
+import it.polimi.ing.sw.model.exceptions.NetworkException;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.model.exceptions.ToolCardException;
 
@@ -17,11 +17,11 @@ public interface PlayerInterfaceRMI extends Remote, PlayerInterface {
 
     void checkAllReady() throws RemoteException, NotValidPlayException;
 
-    void setChosenScheme (int id) throws NetworkException, RemoteException, NotValidPlayException;
+    void setChosenScheme(int id) throws NetworkException, RemoteException, NotValidPlayException;
 
-    void sendUseDiceRequest (int indexOfDiceInDraftPool, int row, int col) throws NetworkException, NotValidException, NotValidPlayException, RemoteException;
+    void sendUseDiceRequest(int indexOfDiceInDraftPool, int row, int col) throws NetworkException, NotValidException, NotValidPlayException, RemoteException;
 
-    void endTurn () throws NetworkException, RemoteException, NotValidPlayException;
+    void endTurn() throws NetworkException, RemoteException, NotValidPlayException;
 
     void sendUseToolCard1Request(int indexInDraftPool, String operation) throws NetworkException, NotValidException, NotValidPlayException, RemoteException;
 

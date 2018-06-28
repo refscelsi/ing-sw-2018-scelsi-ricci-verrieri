@@ -6,11 +6,11 @@ import java.net.Socket;
 
 public class PlayerControllerSocket {
 
-    public PlayerControllerSocket(Socket clientSocket){
+    public PlayerControllerSocket(Socket clientSocket) {
         handleSocket(clientSocket);
     }
 
-    public void handleSocket(Socket socket){
+    public void handleSocket(Socket socket) {
         System.out.println("ci siamo ");
     }
 

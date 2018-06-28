@@ -1,6 +1,6 @@
 package it.polimi.ing.sw.ui.cli;
 
-import it.polimi.ing.sw.model.*;
+import it.polimi.ing.sw.model.Color;
 import it.polimi.ing.sw.model.objectiveCard.PrivateObjectiveCard;
 import it.polimi.ing.sw.util.ConsoleColors;
 
@@ -8,19 +8,19 @@ public class ShowPrivateObjectiveCard {
 
     private PrivateObjectiveCard privateObjective;
 
-    public ShowPrivateObjectiveCard (PrivateObjectiveCard privateObjective) {
+    public ShowPrivateObjectiveCard(PrivateObjectiveCard privateObjective) {
         this.privateObjective = privateObjective;
         show();
     }
 
-    public void show () {
+    public void show() {
         System.out.print("Il tuo obiettivo privato è: ");
         getBackgroundColor(privateObjective.getColor());
         System.out.println(privateObjective.getName() + ConsoleColors.WHITE_BACKGROUND);
-        System.out.println("Descrizione: "+privateObjective.getDescription());
+        System.out.println("Descrizione: " + privateObjective.getDescription());
     }
 
-    public void getBackgroundColor (Color color) {
+    public void getBackgroundColor(Color color) {
         if (color.equals(Color.RED))
             System.out.print(ConsoleColors.RED_BACKGROUND);
         else if (color.equals(Color.GREEN))
@@ -34,8 +34,7 @@ public class ShowPrivateObjectiveCard {
         else if (color.equals(Color.BLUE)) {
             System.out.print(ConsoleColors.BLUE_BACKGROUND);
             System.out.print(ConsoleColors.WHITE);
-        }
-        else
+        } else
             System.out.print(ConsoleColors.WHITE_BACKGROUND);
     }
 

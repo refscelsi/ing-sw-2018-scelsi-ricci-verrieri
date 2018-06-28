@@ -2,10 +2,8 @@ package it.polimi.ing.sw.model.toolCard;
 
 import it.polimi.ing.sw.model.Box;
 import it.polimi.ing.sw.model.Dice;
-import it.polimi.ing.sw.model.Player;
 import it.polimi.ing.sw.model.Scheme;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
-import it.polimi.ing.sw.model.exceptions.ToolCardException;
 
 public class RigaInSughero extends ToolCard {
     private final int id = 9;

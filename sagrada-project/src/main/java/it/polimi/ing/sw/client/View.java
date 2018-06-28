@@ -1,17 +1,20 @@
 package it.polimi.ing.sw.client;
 
-import it.polimi.ing.sw.controller.*;
-import it.polimi.ing.sw.controller.network.RMI.RemotePlayerRMI;
-import it.polimi.ing.sw.controller.network.Socket.PlayerInterfaceSocket;
-import it.polimi.ing.sw.model.exceptions.NetworkException;
+import it.polimi.ing.sw.controller.LoginInterface;
+import it.polimi.ing.sw.controller.PlayerInterface;
+import it.polimi.ing.sw.controller.RemotePlayer;
 import it.polimi.ing.sw.controller.exceptions.NotPossibleConnection;
 import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
+import it.polimi.ing.sw.controller.network.RMI.RemotePlayerRMI;
+import it.polimi.ing.sw.controller.network.Socket.PlayerInterfaceSocket;
 import it.polimi.ing.sw.model.Match;
+import it.polimi.ing.sw.model.exceptions.NetworkException;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.model.exceptions.NotValidNicknameException;
 import it.polimi.ing.sw.model.exceptions.ToolCardException;
-import it.polimi.ing.sw.util.Constants;
 import it.polimi.ing.sw.ui.cli.CLI;
+import it.polimi.ing.sw.ui.gui.GUI;
+import it.polimi.ing.sw.util.Constants;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -22,10 +25,10 @@ import java.util.Scanner;
 
 public class View extends UnicastRemoteObject implements RemotePlayer, RemotePlayerRMI {
     /**
-     *  ogni giocatore è identificato dal valore dell'attributo index nel model: il giocatore con index=0 avrà come
-     *  nickname nicknames.get(0), come schema schemesOfAllPlayers.get(0), come colore di pedina playersColor[0],
-     *  come punteggio di fine partita playersScore[0] e occuperà la posizione contenuta in playersRanking[0]
-     *  nella classifica finale.
+     * ogni giocatore è identificato dal valore dell'attributo index nel model: il giocatore con index=0 avrà come
+     * nickname nicknames.get(0), come schema schemesOfAllPlayers.get(0), come colore di pedina playersColor[0],
+     * come punteggio di fine partita playersScore[0] e occuperà la posizione contenuta in playersRanking[0]
+     * nella classifica finale.
      */
 
     private static final String SERVER_ADDRESS = Constants.SERVER_ADDRESS;
@@ -53,27 +56,24 @@ public class View extends UnicastRemoteObject implements RemotePlayer, RemotePla
     }
 
 
-    public void start() throws RemoteException{
+    public void start() throws RemoteException {
         System.out.println("Benvenuto in Sagrada, vuoi giocare con la Cli [c] o con la Gui [g]?");
-        do{
-            input=scanner.nextLine().toLowerCase();
-            if(input.equals("c")){
+        do {
+            input = scanner.nextLine().toLowerCase();
+            if (input.equals("c")) {
                 ui = new CLI(this);
-            }
-            else if(input.equals("g")){
-                //ui = new GUI(this);
-            }
-            else {
+            } else if (input.equals("g")) {
+                ui = new GUI(this);
+            } else {
                 System.out.println("Inserisci una lettera valida");
             }
-        } while (!input.equals("c")&&!input.equals("g"));
+        } while (!input.equals("c") && !input.equals("g"));
 
         //ui.onChooseNetwork("Vuoi giocare con la RMI [r] o Socket [s]?");
 
         ui.onLogin("Scegli il tuo nickname: ");
 
     }
-
 
 
     /////////////////////////////////////////////////////////////////////////////////////////
@@ -108,7 +108,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer, RemotePla
 
     @Override
     public void onSchemeToChoose(Match match) {
-        this.match=match;
+        this.match = match;
         ui.onSchemeToChoose(match, nickname, "Scegli il numero del tuo schema");
     }
 
@@ -120,20 +120,20 @@ public class View extends UnicastRemoteObject implements RemotePlayer, RemotePla
 
     @Override
     public void onGameUpdate(Match match) {
-        this.match=match;
+        this.match = match;
         ui.onGameUpdate(match, nickname);
     }
 
     @Override
     public void onTurnEnd() {
-        isPlaying=false;
+        isPlaying = false;
         System.out.println("il mio turno è finito");
         ui.onTurnEnd();
     }
 
     @Override
     public void onGameEnd(Match match) {
-        this.match=match;
+        this.match = match;
         ui.onGameEnd(match);
     }
 
@@ -144,8 +144,8 @@ public class View extends UnicastRemoteObject implements RemotePlayer, RemotePla
 
     @Override
     public void onSetPlaying() {
-        this.match=match;
-        isPlaying=true;
+        this.match = match;
+        isPlaying = true;
         System.out.println("il mio turno è iniziato");
         ui.onTurnStart(match, nickname);
     }
@@ -161,7 +161,6 @@ public class View extends UnicastRemoteObject implements RemotePlayer, RemotePla
         ui.onGameUpdate(match, nickname);
         ui.onOtherInfoToolCard11(match);
     }
-
 
 
     /////////////////////////////////////////////////////////////////////////////////////////
@@ -195,18 +194,16 @@ public class View extends UnicastRemoteObject implements RemotePlayer, RemotePla
 
 
     /**
-     *
      * Metodo per effettuare il login presso il Server.
      *
-     * @param nickname
-     *            nickname da usare per il login presso il Server.
+     * @param nickname nickname da usare per il login presso il Server.
      */
 
     public void loginPlayerRMI(String nickname) {
         try {
             Registry reg = LocateRegistry.getRegistry();
-            LoginInterface loginController= (LoginInterface) reg.lookup("LoginController");
-            controller = loginController.connectRMI(nickname,this );
+            LoginInterface loginController = (LoginInterface) reg.lookup("LoginController");
+            controller = loginController.connectRMI(nickname, this);
             this.isLogged = true;
             ui.onSuccess("Complimenti, ti sei loggato come " + nickname);
             this.nickname = nickname;
@@ -239,14 +236,14 @@ public class View extends UnicastRemoteObject implements RemotePlayer, RemotePla
 
     }
 
-    public void loginPlayerSocket(){
+    public void loginPlayerSocket() {
         //metodi per creare la connessione socket
-        PlayerInterfaceSocket playerInterfaceSocket= new PlayerInterfaceSocket();
-        this.controller=playerInterfaceSocket;
+        PlayerInterfaceSocket playerInterfaceSocket = new PlayerInterfaceSocket();
+        this.controller = playerInterfaceSocket;
 
     }
 
-    public void setChosenScheme (int id) {
+    public void setChosenScheme(int id) {
         try {
             controller.setChosenScheme(id);
         } catch (NetworkException e) {
@@ -267,13 +264,13 @@ public class View extends UnicastRemoteObject implements RemotePlayer, RemotePla
     }
 
 
-    public void useDice (int indexOfDiceInDraftPool, int row, int col) {
+    public void useDice(int indexOfDiceInDraftPool, int row, int col) {
         if (indexOfDiceInDraftPool == -1)
             indexOfDiceInDraftPool = dice;
         else
             dice = indexOfDiceInDraftPool;
         try {
-            controller.sendUseDiceRequest (indexOfDiceInDraftPool, row, col);
+            controller.sendUseDiceRequest(indexOfDiceInDraftPool, row, col);
         } catch (NetworkException e) {
             System.err.println(e.getMessage());
         } catch (NotValidException e) {
@@ -286,7 +283,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer, RemotePla
     }
 
 
-    public void endTurn () {
+    public void endTurn() {
         try {
             controller.endTurn();
         } catch (NetworkException e) {
@@ -302,7 +299,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer, RemotePla
     // SENDERS ToolCards
 
 
-    public void useToolCard1 (int indexInDraftPool, String operation) {
+    public void useToolCard1(int indexInDraftPool, String operation) {
         try {
             controller.sendUseToolCard1Request(indexInDraftPool, operation);
         } catch (NetworkException e) {
@@ -317,7 +314,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer, RemotePla
     }
 
 
-    public void useToolCard234 (int id, int sourceRow, int sourceCol, int destRow, int destCol) {
+    public void useToolCard234(int id, int sourceRow, int sourceCol, int destRow, int destCol) {
         try {
             controller.sendUseToolCard234Request(id, sourceRow, sourceCol, destRow, destCol);
         } catch (NetworkException e) {
@@ -332,7 +329,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer, RemotePla
     }
 
 
-    public void useToolCard5 (int indexInDraftPool, int round, int indexInRound) {
+    public void useToolCard5(int indexInDraftPool, int round, int indexInRound) {
         try {
             controller.useToolCard5(indexInDraftPool, round, indexInRound);
         } catch (NetworkException e) {
@@ -347,7 +344,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer, RemotePla
     }
 
 
-    public void useToolCard6 (int indexInDraftPool) {
+    public void useToolCard6(int indexInDraftPool) {
         dice = indexInDraftPool;
         try {
             controller.useToolCard6(indexInDraftPool);
@@ -363,7 +360,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer, RemotePla
     }
 
 
-    public void useToolCard78 (int id) {
+    public void useToolCard78(int id) {
         try {
             controller.useToolCard78(id);
         } catch (NetworkException e) {
@@ -378,7 +375,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer, RemotePla
     }
 
 
-    public void useToolCard9 (int dice, int row, int col) {
+    public void useToolCard9(int dice, int row, int col) {
         try {
             controller.sendUseToolCard9Request(dice, row, col);
         } catch (NetworkException e) {
@@ -392,7 +389,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer, RemotePla
         }
     }
 
-    public void useToolCard10 (int dice) {
+    public void useToolCard10(int dice) {
         try {
             controller.useToolCard10(dice);
         } catch (NetworkException e) {
@@ -406,7 +403,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer, RemotePla
         }
     }
 
-    public void useToolCard11 (int dice) {
+    public void useToolCard11(int dice) {
         try {
             controller.useToolCard11(dice);
         } catch (NetworkException e) {
@@ -435,7 +432,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer, RemotePla
     }
 
 
-    public void onNotValidPlay (String e) {
+    public void onNotValidPlay(String e) {
         ui.onActionNotValid(e);
         ui.onTurnStart(match, nickname);
     }

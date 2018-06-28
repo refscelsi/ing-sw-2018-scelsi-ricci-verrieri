@@ -4,22 +4,20 @@ import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
 import it.polimi.ing.sw.model.Dice;
 import it.polimi.ing.sw.model.DraftPool;
 import it.polimi.ing.sw.model.RoundTrack;
-import it.polimi.ing.sw.model.exceptions.NotValidException;
-import it.polimi.ing.sw.model.exceptions.ToolCardException;
 
 
 public class TaglierinaCircolare extends ToolCard {
 
-    private final int id=5;
+    private final int id = 5;
 
 
-    public TaglierinaCircolare () {
+    public TaglierinaCircolare() {
         super(5);
     }
 
     @Override
     public void execute5(DraftPool draftpool, int indexInDraftPool, RoundTrack roundTrack, int round, int indexInRound) throws NotValidPlayException {
-        if (roundTrack.getRoundTrackSize()<1)
+        if (roundTrack.getRoundTrackSize() < 1)
             throw new NotValidPlayException("Non puoi utilizzare questa carta durante il primo round perché non ci sono dadi sul tracciato dei round!");
         else {
             Dice diceRoundtrack = roundTrack.getDicesRound(round).getDice(indexInRound);
