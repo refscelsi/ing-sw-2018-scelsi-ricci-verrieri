@@ -1,14 +1,11 @@
 package it.polimi.ing.sw.model.toolCard;
 
 import it.polimi.ing.sw.model.Dice;
-import it.polimi.ing.sw.model.Player;
-import it.polimi.ing.sw.model.exceptions.NotValidException;
-import it.polimi.ing.sw.model.exceptions.ToolCardException;
 
 
 public class TamponeDiamantato extends ToolCard {
 
-    private final int id=10;
+    private final int id = 10;
 
 
     public TamponeDiamantato() {
@@ -18,7 +15,7 @@ public class TamponeDiamantato extends ToolCard {
     @Override
     public void execute10(Dice dice) {
 
-        switch (dice.getNumFacciaUp()){
+        switch (dice.getNumFacciaUp()) {
             case 1:
                 dice.setNumFacciaUp(6);
                 break;
@@ -39,7 +36,7 @@ public class TamponeDiamantato extends ToolCard {
                 break;
 
             //default:
-                //break;
+            //break;
         }
         incrementNumOfTokens();
     }

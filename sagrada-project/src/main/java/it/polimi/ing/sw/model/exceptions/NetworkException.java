@@ -1,7 +1,5 @@
 package it.polimi.ing.sw.model.exceptions;
 
-import java.io.IOException;
-
 /**
  * Eccezione scatenata quando sussiste un errore di comunicazione tra client e
  * server.

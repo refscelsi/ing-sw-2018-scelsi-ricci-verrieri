@@ -1,6 +1,8 @@
 package it.polimi.ing.sw.ui.cli;
 
-import it.polimi.ing.sw.model.*;
+import it.polimi.ing.sw.model.Color;
+import it.polimi.ing.sw.model.Dice;
+import it.polimi.ing.sw.model.DraftPool;
 import it.polimi.ing.sw.util.ConsoleColors;
 
 import java.util.ArrayList;
@@ -9,16 +11,16 @@ public class ShowDraftPool {
 
     private DraftPool draftPool;
 
-    public ShowDraftPool (DraftPool draftPool) {
+    public ShowDraftPool(DraftPool draftPool) {
         this.draftPool = draftPool;
         show();
     }
 
-    public void show () {
+    public void show() {
         int j, k, h;
         ArrayList<Dice> draft = draftPool.getDraftPool();
 
-        for (j=0; j<5; j++) {
+        for (j = 0; j < 5; j++) {
             // seleziono la riga della console
 
             for (k = 0; k < draftPool.getSize(); k++) {
@@ -51,7 +53,7 @@ public class ShowDraftPool {
                 // seleziono la singola casella della console
 
                 if (h == 5)
-                    System.out.print(k+1);
+                    System.out.print(k + 1);
                 else
                     System.out.print(" ");
 
@@ -63,7 +65,7 @@ public class ShowDraftPool {
 
     }
 
-    public void getBackgroundColor (Color color) {
+    public void getBackgroundColor(Color color) {
         if (color.equals(Color.RED))
             System.out.print(ConsoleColors.RED_BACKGROUND);
         else if (color.equals(Color.GREEN))

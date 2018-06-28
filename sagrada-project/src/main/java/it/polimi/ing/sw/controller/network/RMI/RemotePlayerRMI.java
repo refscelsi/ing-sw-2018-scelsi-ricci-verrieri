@@ -3,9 +3,7 @@ package it.polimi.ing.sw.controller.network.RMI;
 import it.polimi.ing.sw.controller.RemotePlayer;
 import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
 import it.polimi.ing.sw.model.Match;
-import it.polimi.ing.sw.model.exceptions.NotValidException;
 
-import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface RemotePlayerRMI extends RemotePlayer {
