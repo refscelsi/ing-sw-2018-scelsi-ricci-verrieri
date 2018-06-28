@@ -1,25 +1,64 @@
 package it.polimi.ing.sw.controller.network.Socket;
 
+import com.google.gson.Gson;
 import it.polimi.ing.sw.controller.PlayerInterface;
 import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
 import it.polimi.ing.sw.model.exceptions.NetworkException;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
+
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
 
 //classe che viene istanziata come controller in caso di socket e chiama i metodi di PlayerControllerSocket a cui passa
 //i dati impacchettati in file json
 
 
 public class PlayerInterfaceSocket implements PlayerInterface {
-    public void joinMatch() {
-        //manda solo il metodo della chiamata
+    private Socket clientSocket;
+    private final ObjectOutputStream out;
+
+
+    public  PlayerInterfaceSocket(Socket clientSocket) throws IOException {
+        this.clientSocket=clientSocket;
+        out=new ObjectOutputStream(clientSocket.getOutputStream());
+    }
+
+
+
+    public void joinMatch() throws IOException {
+        Gson gson= new Gson();
+        String json=gson.toJson(new Data("joinMatch", null));
+        try {
+            out.writeObject(json);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void checkAllReady() {
-
+        Gson gson= new Gson();
+        String json=gson.toJson(new Data("checkAllReady", null));
+        try {
+            out.writeObject(json);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setChosenScheme(int id) throws NetworkException, NotValidPlayException {
-
+        Gson gson= new Gson();
+        ArrayList<Integer> par=new ArrayList<Integer>(Arrays.asList(new Integer[]{id}));
+        String json=gson.toJson(new Data("setChosenScheme", null));
+        try {
+            out.writeObject(json);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void sendUseDiceRequest(int indexOfDiceInDraftPool, int row, int col) throws NetworkException, NotValidException, NotValidPlayException {
@@ -60,6 +99,18 @@ public class PlayerInterfaceSocket implements PlayerInterface {
 
     public void useToolCard11(int dice) throws NetworkException, NotValidPlayException, NotValidException {
 
+    }
+
+
+}
+
+class Data{
+    String name;
+    ArrayList<Integer> params;
+
+    Data(String name, ArrayList<Integer> params){
+        this.name=name;
+        this.params=params;
     }
 
 

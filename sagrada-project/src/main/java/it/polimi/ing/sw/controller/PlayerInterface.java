@@ -5,6 +5,7 @@ import it.polimi.ing.sw.model.exceptions.NetworkException;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.model.exceptions.ToolCardException;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 
 //interfaccia implementata sia da PlayerInterfaceSocket sia da PlayerInterfaceRMI , controller della view
@@ -12,7 +13,7 @@ import java.rmi.RemoteException;
 
 public interface PlayerInterface {
 
-    void joinMatch() throws RemoteException, ToolCardException, NotValidException, NotValidPlayException;
+    void joinMatch() throws IOException, ToolCardException, NotValidException, NotValidPlayException;
 
     void checkAllReady() throws RemoteException, NotValidPlayException;
 
