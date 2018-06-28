@@ -182,15 +182,17 @@ public class CLI implements UiUpdate {
     public void login(String message) {
         System.out.println(message);
         inText = scanner.nextLine();
-        controller.loginPlayerRMI(inText);
+        controller.login(inText);
     }
 
 
-    /*public void chooseNetwork(String message) {
-        System.out.print(message);
-        inText = scanner.nextLine();
+    public void chooseNetwork(String message) {
+        do {
+            System.out.println(message);
+            inText = scanner.nextLine();
+        } while (!inText.toLowerCase().equals("s") && !inText.toLowerCase().equals("r"));
         controller.chooseNetwork(inText);
-    }*/
+    }
 
 
     /**
@@ -199,15 +201,13 @@ public class CLI implements UiUpdate {
     public void chooseScheme(Match match, String nickname, String message) {
         ArrayList<Scheme> schemes = match.getPlayer(nickname).getSchemesToChoose();
         showSchemesToChoose(schemes);
-        new Thread(() -> {
-            int num;
-            do {
-                System.out.println(message);
-                num = scanner.nextInt();
+        int num;
+        do {
+            System.out.println(message);
+            num = scanner.nextInt();
 
-            } while (num < 1 || num > 4);
-            controller.setChosenScheme(schemes.get(num - 1).getId());   //se per esempio qui c'è un errore, se lo gestisce il PlayerController*/
-        }).start();
+        } while (num < 1 || num > 4);
+        controller.setChosenScheme(schemes.get(num - 1).getId());   //se per esempio qui c'è un errore, se lo gestisce il PlayerController*/
     }
 
     public void showSchemesToChoose(ArrayList<Scheme> schemes) {
@@ -273,7 +273,7 @@ public class CLI implements UiUpdate {
 
 
     public void notMyTurn() {
-        /*System.out.println("Digita Q se vuoi uscire dalla partita");
+        System.out.println("Digita Q se vuoi uscire dalla partita");
         do {
             inText = scanner.nextLine();
             if (inText.equals("q")) {
@@ -285,7 +285,6 @@ public class CLI implements UiUpdate {
                 }
             }
         } while (!inText.equals("q"));
-        */
     }
 
 
@@ -529,10 +528,10 @@ public class CLI implements UiUpdate {
 
     }
 
-    /*@Override
+    @Override
     public void onChooseNetwork (String message) {
-        chooseNetwork(message);
-    }*/
+            chooseNetwork(message);
+    }
 
     @Override
     public void onTurnStart(Match match, String nickname) {

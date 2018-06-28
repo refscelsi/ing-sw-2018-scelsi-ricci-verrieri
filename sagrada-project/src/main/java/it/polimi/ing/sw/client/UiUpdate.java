@@ -12,7 +12,7 @@ public interface UiUpdate {
 
     void onActionNotValid(String errorCode);
 
-    //public void onChooseNetwork (String message);
+    public void onChooseNetwork (String message);
 
     void onTurnStart(Match match, String nickname);
 

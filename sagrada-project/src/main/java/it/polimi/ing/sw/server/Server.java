@@ -2,8 +2,12 @@ package it.polimi.ing.sw.server;
 
 import it.polimi.ing.sw.controller.LoginController;
 import it.polimi.ing.sw.controller.PlayerController;
+import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
 import it.polimi.ing.sw.controller.network.Socket.PlayerControllerSocket;
 import it.polimi.ing.sw.model.Match;
+import it.polimi.ing.sw.model.exceptions.NetworkException;
+import it.polimi.ing.sw.model.exceptions.NotValidException;
+import it.polimi.ing.sw.model.exceptions.ToolCardException;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -30,18 +34,30 @@ public class Server {
         }
         System.out.println("Server on...");
 
-        new Thread(()->{
+        /*new Thread(()->{
             try(ServerSocket serverSocket=new ServerSocket(SOCKET_PORT)){
                 while(true){
                     Socket clientSocket= serverSocket.accept();
                     new Thread(()->{
-                        new PlayerControllerSocket(clientSocket);
+                        try {
+                            new PlayerControllerSocket(clientSocket);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (ToolCardException e) {
+                            e.printStackTrace();
+                        } catch (NotValidException e) {
+                            e.printStackTrace();
+                        } catch (NetworkException e) {
+                            e.printStackTrace();
+                        } catch (NotValidPlayException e) {
+                            e.printStackTrace();
+                        }
                     }).start();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }).start();
+        }).start();*/
     }
 }
 

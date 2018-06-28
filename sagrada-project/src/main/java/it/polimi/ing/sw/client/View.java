@@ -13,9 +13,10 @@ import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.model.exceptions.NotValidNicknameException;
 import it.polimi.ing.sw.model.exceptions.ToolCardException;
 import it.polimi.ing.sw.ui.cli.CLI;
-import it.polimi.ing.sw.ui.gui.GUI;
+//import it.polimi.ing.sw.ui.gui.GUI;
 import it.polimi.ing.sw.util.Constants;
 
+import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -46,6 +47,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer, RemotePla
     private static Scanner scanner = new Scanner(System.in);
     private String nickname;
     private int dice;
+    private String networkChoice;
 
 
     public View() throws RemoteException {
@@ -63,15 +65,13 @@ public class View extends UnicastRemoteObject implements RemotePlayer, RemotePla
             if (input.equals("c")) {
                 ui = new CLI(this);
             } else if (input.equals("g")) {
-                ui = new GUI(this);
+                //ui = new GUI(this);
             } else {
                 System.out.println("Inserisci una lettera valida");
             }
         } while (!input.equals("c") && !input.equals("g"));
 
-        //ui.onChooseNetwork("Vuoi giocare con la RMI [r] o Socket [s]?");
-
-        ui.onLogin("Scegli il tuo nickname: ");
+        ui.onChooseNetwork("Vuoi giocare con la RMI [r] o Socket [s]?");
 
     }
 
@@ -109,7 +109,11 @@ public class View extends UnicastRemoteObject implements RemotePlayer, RemotePla
     @Override
     public void onSchemeToChoose(Match match) {
         this.match = match;
-        ui.onSchemeToChoose(match, nickname, "Scegli il numero del tuo schema");
+        Runnable task = () -> {
+            ui.onSchemeToChoose(match, nickname, "Scegli il numero del tuo schema");
+        };
+        Thread thread = new Thread(task);
+        thread.start();
     }
 
     @Override
@@ -122,13 +126,18 @@ public class View extends UnicastRemoteObject implements RemotePlayer, RemotePla
     public void onGameUpdate(Match match) {
         this.match = match;
         ui.onGameUpdate(match, nickname);
+        if (isPlaying == false)
+            onTurnEnd();
     }
 
     @Override
     public void onTurnEnd() {
         isPlaying = false;
-        System.out.println("il mio turno è finito");
-        ui.onTurnEnd();
+        Runnable task = () -> {
+            ui.onTurnEnd();
+        };
+        Thread thread = new Thread(task);
+        thread.start();
     }
 
     @Override
@@ -146,20 +155,31 @@ public class View extends UnicastRemoteObject implements RemotePlayer, RemotePla
     public void onSetPlaying() {
         this.match = match;
         isPlaying = true;
-        System.out.println("il mio turno è iniziato");
-        ui.onTurnStart(match, nickname);
+        Runnable task = () -> {
+            ui.onTurnStart(match, nickname);
+        };
+        Thread thread = new Thread(task);
+        thread.start();
     }
 
     @Override
     public void onOtherInfoToolCard4(Match match) {
         ui.onGameUpdate(match, nickname);
-        ui.onOtherInfoToolCard4(match);
+        Runnable task = () -> {
+            ui.onOtherInfoToolCard4(match);
+        };
+        Thread thread = new Thread(task);
+        thread.start();
     }
 
     @Override
     public void onOtherInfoToolCard11(Match match) throws RemoteException {
         ui.onGameUpdate(match, nickname);
-        ui.onOtherInfoToolCard11(match);
+        Runnable task = () -> {
+            ui.onOtherInfoToolCard11(match);
+        };
+        Thread thread = new Thread(task);
+        thread.start();
     }
 
 
@@ -168,29 +188,18 @@ public class View extends UnicastRemoteObject implements RemotePlayer, RemotePla
     /////////////////////////////////////////////////////////////////////////////////////////
 
 
-    /*public void chooseNetwork (String choice) {
-        if(choice.equals('r')){
-            try {
-                controller = gameController.connect(nickname,this);
-            } catch (RemoteException e) {
-                System.err.println(e.getMessage());
-            } catch (NotPossibleConnection notPossibleConnection) {
-                notPossibleConnection.printStackTrace();
-            } catch (NotValidException e) {
-                e.printStackTrace();
-            } catch (ToolCardException e) {
-                e.printStackTrace();
-            }
-            ui.onSuccess("Giocherai con RMI");
-            ui.onLogin("Scegli il tuo nickname: ");
-        }
-        else if(input.equals('g')){
-            //ui = new GUI(this);
-            ui.onSuccess("Giocherai con Socket");
-        }
-        else
-            ui.onChooseNetwork("Inserisci una lettera valida");
-    }*/
+    public void chooseNetwork (String choice) {
+        networkChoice = choice;
+        ui.onLogin("Scegli il tuo nickname: ");
+    }
+
+
+    public void login(String nickname) {
+        if (networkChoice.equals("r"))
+            loginPlayerRMI(nickname);
+        /*else
+            loginPlayerSocket();*/
+    }
 
 
     /**
@@ -230,18 +239,25 @@ public class View extends UnicastRemoteObject implements RemotePlayer, RemotePla
             e.printStackTrace();
         } catch (NotValidPlayException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         // devo notificare anche il colore del giocatore
 
     }
 
-    public void loginPlayerSocket() {
+    /*public void loginPlayerSocket() {
         //metodi per creare la connessione socket
-        PlayerInterfaceSocket playerInterfaceSocket = new PlayerInterfaceSocket();
+        PlayerInterfaceSocket playerInterfaceSocket = null;
+        try {
+            playerInterfaceSocket = new PlayerInterfaceSocket();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         this.controller = playerInterfaceSocket;
 
-    }
+    }*/
 
     public void setChosenScheme(int id) {
         try {
