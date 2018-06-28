@@ -7,36 +7,39 @@ import it.polimi.ing.sw.model.Scheme;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 
-public class PennelloPerEglomise extends ToolCard{
+public class PennelloPerEglomise extends ToolCard {
 
-    private final int id=2;
+    private final int id = 2;
 
-    /*
+
     public PennelloPerEglomise() {
-        super();
+        super(2);
     }
 
     @Override
-    public void execute(Scheme scheme, int sourceRow, int sourceCol, int destRow, int destCol) throws NotValidException {
+    public void execute2(Scheme scheme, int sourceRow, int sourceCol, int destRow, int destCol) throws NotValidException {
         Box sourceBox = scheme.getBox(sourceRow, sourceCol);
         Box destBox = scheme.getBox(destRow, destCol);
-        if(!sourceBox.isFull())
+        if (!sourceBox.isFull()) {
             throw new NotValidException("Hai scelto come origine una casella vuota!");
+        }
         else {
-            if (destBox.isFull())
+            if (destBox.isFull()) {
                 throw new NotValidException("Non puoi posizionare un dado in una casella già piena!");
+            }
             else {
                 Dice dice = sourceBox.getDice();
-                if (scheme.checkBoxShade(destBox, dice) && scheme.checkIfHasDiceAdjacent(destBox, dice, 1)) {
+                sourceBox.removeDice();
+                if (scheme.checkBoxShade(destRow, destCol, dice) && scheme.checkIfHasDiceAdjacent(destRow, destCol, dice, 1)) {
                     destBox.placeDice(dice);
-                    sourceBox.removeDice();
                     incrementNumOfTokens();
-                } else
+                }
+                else {
+                    sourceBox.placeDice(dice);
                     throw new NotValidException("Non stai rispettando le condizioni di piazzamento!");
+                }
             }
         }
     }
-
-*/
 }
 

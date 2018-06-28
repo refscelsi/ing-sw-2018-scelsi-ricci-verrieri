@@ -13,15 +13,15 @@ public class PinzaSgrossatrice extends ToolCard {
 
 
     public PinzaSgrossatrice() {
-        super();
+        super(1);
     }
 
     @Override
-    public void execute(DraftPool draftPool, int indexInDraftPool, char operation) throws NotValidException {
+    public void execute1(DraftPool draftPool, int indexInDraftPool, String operation) throws NotValidException {
         int value = draftPool.getDice(indexInDraftPool).getNumFacciaUp();
 
         switch(operation){
-            case 'a':
+            case "a":
                 if(value<6 && value>0) {
                     draftPool.getDice(indexInDraftPool).setNumFacciaUp(value++);
                     incrementNumOfTokens();
@@ -30,7 +30,7 @@ public class PinzaSgrossatrice extends ToolCard {
                     throw new NotValidException("Non puoi cambiare un 6 in 1");
                 break;
 
-            case 'd':
+            case "d":
                 if(value>1 && value<7) {
                     draftPool.getDice(indexInDraftPool).setNumFacciaUp(value--);
                     incrementNumOfTokens();

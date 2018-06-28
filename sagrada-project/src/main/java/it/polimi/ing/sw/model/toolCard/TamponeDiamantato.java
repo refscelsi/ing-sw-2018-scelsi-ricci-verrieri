@@ -12,11 +12,11 @@ public class TamponeDiamantato extends ToolCard {
 
 
     public TamponeDiamantato() {
-        super();
+        super(10);
     }
 
     @Override
-    public void execute(Dice dice) {
+    public void execute10(Dice dice) {
 
         switch (dice.getNumFacciaUp()){
             case 1:
@@ -38,8 +38,8 @@ public class TamponeDiamantato extends ToolCard {
                 dice.setNumFacciaUp(1);
                 break;
 
-            default:
-                break;
+            //default:
+                //break;
         }
         incrementNumOfTokens();
     }

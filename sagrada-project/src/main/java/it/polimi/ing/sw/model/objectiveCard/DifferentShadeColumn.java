@@ -12,8 +12,7 @@ public class DifferentShadeColumn extends ObjectiveCard {
 
     public int calculateScore (Scheme scheme) {
         int i, j, score=0;
-        Box[][] boxes = new Box[4][5];
-        boxes = scheme.getBoxes();
+        Box[][] boxes = scheme.getBoxes();
         ArrayList<Integer> shades = new ArrayList<>();
         for (i=0; i<5; i++) {
             shades.add(1);
@@ -22,8 +21,11 @@ public class DifferentShadeColumn extends ObjectiveCard {
             shades.add(4);
             shades.add(5);
             shades.add(6);
-            for (j=0; j<4; j++)
-                shades.remove(boxes[j][i].getDice().getNumFacciaUp());
+            for (j=0; j<4; j++) {
+                if (boxes[j][i].isFull()) {
+                    shades.remove((boxes[j][i].getDice().getNumFacciaUp())-1);
+                }
+            }
             if (shades.size()==2)
                 score = score + 4;
             shades.clear();

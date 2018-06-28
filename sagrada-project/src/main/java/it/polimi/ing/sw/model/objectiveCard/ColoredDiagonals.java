@@ -6,7 +6,7 @@ import it.polimi.ing.sw.model.Scheme;
 
 public class ColoredDiagonals extends ObjectiveCard {
 
-    Box[][] boxes = new Box[4][5];
+    Box[][] boxes;
 
     public ColoredDiagonals () {
         super();
@@ -15,8 +15,10 @@ public class ColoredDiagonals extends ObjectiveCard {
     public int numSameColor1 (int row, int column, int length) {
         int num = 0;
         for (int i=0; i<length; i++) {
-           if (boxes[row-i][column-i].getDice().getDiceColor() == boxes[row-i-1][column-i-1].getDice().getDiceColor())
-               num++;
+            if (boxes[row-i][column-i].isFull() && boxes[row-i-1][column-i-1].isFull()) {
+                if (boxes[row - i][column - i].getDice().getDiceColor() == boxes[row - i - 1][column - i - 1].getDice().getDiceColor())
+                    num++;
+            }
         }
         return num;
     }
@@ -24,8 +26,10 @@ public class ColoredDiagonals extends ObjectiveCard {
     public int numSameColor2 (int row, int column, int length) {
         int num = 0;
         for (int i=0; i<length; i++) {
-            if (boxes[row-i][column+i].getDice().getDiceColor() == boxes[row-i-1][column+i+1].getDice().getDiceColor())
-                num++;
+            if (boxes[row-i][column+i].isFull() && boxes[row-i-1][column+i+1].isFull()) {
+                if (boxes[row - i][column + i].getDice().getDiceColor() == boxes[row - i - 1][column + i + 1].getDice().getDiceColor())
+                    num++;
+            }
         }
         return num;
     }

@@ -1,6 +1,8 @@
 package it.polimi.ing.sw.model.objectiveCard;
 
 
+import it.polimi.ing.sw.model.Scheme;
+
 import java.io.Serializable;
 
 public abstract class ObjectiveCard implements Serializable{
@@ -13,7 +15,7 @@ public abstract class ObjectiveCard implements Serializable{
 
     }
 
-    public int calculateScore() {
+    public int calculateScore(Scheme scheme) {
         return 0;
     }
 

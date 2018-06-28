@@ -13,11 +13,11 @@ public class Martelletto extends ToolCard {
 
 
     public Martelletto() {
-        super();
+        super(7);
     }
 
     @Override
-    public void execute(DraftPool draftPool) {
+    public void execute7(DraftPool draftPool) {
         for(Dice dice: draftPool.getDraftPool()){
             dice.throwDice();
         }

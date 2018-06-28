@@ -1,7 +1,8 @@
 package it.polimi.ing.sw.controller;
 
 import it.polimi.ing.sw.controller.exceptions.NotPossibleConnection;
-import it.polimi.ing.sw.model.RemotePlayer;
+import it.polimi.ing.sw.controller.network.RMI.PlayerInterfaceRMI;
+import it.polimi.ing.sw.controller.network.RMI.RemotePlayerRMI;
 import it.polimi.ing.sw.model.*;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.model.exceptions.NotValidNicknameException;
@@ -29,11 +30,11 @@ public class LoginController extends UnicastRemoteObject implements Remote, Logi
 
     //metodo che crea un controller per ogni view che si connette
     @Override
-    public synchronized PlayerInterface connectRMI(String nickname, RemotePlayer remotePlayer) throws RemoteException, NotPossibleConnection, ToolCardException, NotValidException, NotValidNicknameException {
+    public synchronized PlayerInterfaceRMI connectRMI(String nickname, RemotePlayerRMI remotePlayerRMI) throws RemoteException, NotPossibleConnection, ToolCardException, NotValidException, NotValidNicknameException {
         if (clients.size() < Constants.MAX_PLAYERS) {
             if (!checkReconnection(nickname)) {
-                match.login(nickname, remotePlayer);
-                PlayerController playerController = new PlayerController(this.match, remotePlayer, match.getPlayer(nickname));
+                match.login(nickname, remotePlayerRMI);
+                PlayerController playerController = new PlayerController(this.match, remotePlayerRMI, match.getPlayer(nickname));
                 clients.add(playerController);
                 return playerController;
             } else if (checkReconnection(nickname)) {

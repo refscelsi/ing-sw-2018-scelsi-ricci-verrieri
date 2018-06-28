@@ -14,11 +14,12 @@ public class PennelloPerPastaSalda extends ToolCard {
 
 
     public PennelloPerPastaSalda() {
-        super();
+        super(6);
     }
 
+
     @Override
-    public void execute(DraftPool draftPool, int indexInDraftPool) {
+    public void execute6(DraftPool draftPool, int indexInDraftPool) {
         draftPool.getDice(indexInDraftPool).throwDice();
         incrementNumOfTokens();
     }

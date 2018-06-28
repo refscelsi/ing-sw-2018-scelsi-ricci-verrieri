@@ -25,13 +25,11 @@ public class SchemeListFileConverter {
 
         Scheme schema;
         Box boxes[][];
-        Box box = new Box( );
-        Dice dice = new Dice( );
+        Box box ;
 
         JSONObject jScheme;
         JSONObject jBox;
         JSONObject jBoxes;
-        JSONObject jSchemeList;
 
         JSONParser parser;
 

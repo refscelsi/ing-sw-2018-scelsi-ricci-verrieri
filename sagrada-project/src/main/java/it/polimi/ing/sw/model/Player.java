@@ -12,19 +12,19 @@ public class Player implements Serializable{
     private int orderInRound;    // ordine che viene assegnato al giocatore nel primo round. Questo numero identifica il giocatore ed è molto più comodo gestire tutta la parte di passaggio da un giocatore all'altro utilizzando questo
     private int numOfToken;
     private int score;
-    private boolean isReady;
     private boolean isLogged;
     private boolean isOnline; //true quando sta giocando (posso ricevere i comandi) false altrimenti
     private Scheme scheme;
     private PrivateObjectiveCard privateObjective;
     private Color color;
     private ArrayList<Scheme> schemesToChoose;
+    private PlayerState state;
 
 
     public Player (String nickname){
         this.nickname=nickname;
         this.isOnline=true;
-        this.isReady=false;
+        this.state=PlayerState.INIZIALIZED;
     };
 
     public boolean isOnline() {
@@ -33,6 +33,10 @@ public class Player implements Serializable{
 
     public int getNumOfToken() {
         return numOfToken;
+    }
+
+    public PlayerState getState(){
+        return this.state;
     }
 
     public int getOrderInRound() {
@@ -67,10 +71,6 @@ public class Player implements Serializable{
         return scheme;
     }
 
-    public boolean getIsReady(){
-        return this.isReady;
-    }
-
     public void setScore(int score) {
         this.score = score;
     }
@@ -89,8 +89,7 @@ public class Player implements Serializable{
 
     public void setScheme(Scheme scheme) {
         this.scheme = scheme;
-        this.isReady=true;
-        System.out.println("il mio schema ha id   "+ scheme.getId());
+        this.setState(PlayerState.READYTOPLAY);
     }
 
     public void setColor(Color color) {
@@ -101,6 +100,11 @@ public class Player implements Serializable{
         this.schemesToChoose = schemesToChoose;
 
     }
+
+    public void setState(PlayerState state){
+        this.state=state;
+    }
+
 
     public void setLogged(boolean isLogged){
         this.isLogged=isLogged;
