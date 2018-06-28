@@ -1,21 +1,23 @@
 package it.polimi.ing.sw.ui.cli;
 
-import it.polimi.ing.sw.model.*;
+import it.polimi.ing.sw.model.Box;
+import it.polimi.ing.sw.model.Color;
+import it.polimi.ing.sw.model.Scheme;
 import it.polimi.ing.sw.util.ConsoleColors;
 
 public class ShowScheme {
     private Scheme scheme;
 
-    public ShowScheme (Scheme scheme) {
+    public ShowScheme(Scheme scheme) {
         this.scheme = scheme;
         show();
     }
 
-    public void show () {
+    public void show() {
         int i, j, k, h;
-        Box boxes [][] = scheme.getBoxes();
+        Box boxes[][] = scheme.getBoxes();
 
-        for (i=0; i<4; i++) {
+        for (i = 0; i < 4; i++) {
             // seleziono la riga dello schema
 
             for (j = 0; j < 5; j++) {
@@ -58,13 +60,13 @@ public class ShowScheme {
                 System.out.print("\n");
             }
         }
-        for (h=0; h<9*5+1; h++)
+        for (h = 0; h < 9 * 5 + 1; h++)
             System.out.print("*" + ConsoleColors.RESET);
 
     }
 
 
-    public void getTextColor (Color color) {
+    public void getTextColor(Color color) {
         if (color.equals(Color.RED))
             System.out.print(ConsoleColors.RED);
         else if (color.equals(Color.GREEN))
@@ -81,7 +83,7 @@ public class ShowScheme {
             System.out.print(ConsoleColors.RESET);
     }
 
-    public void getBackgroundColor (Color color) {
+    public void getBackgroundColor(Color color) {
         if (color.equals(Color.RED))
             System.out.print(ConsoleColors.RED_BACKGROUND);
         else if (color.equals(Color.GREEN))
