@@ -209,6 +209,4 @@ public class PlayerController extends UnicastRemoteObject implements PlayerInter
     public void useToolCard11(int dice) throws NetworkException, RemoteException, NotValidPlayException, NotValidException {
 
     }
-
-
 }
