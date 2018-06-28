@@ -71,7 +71,7 @@
         <Container class="javax.swing.JPanel" name="toolCardPanel">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="250" y="230" width="519" height="245"/>
+              <AbsoluteConstraints x="250" y="250" width="519" height="245"/>
             </Constraint>
           </Constraints>
 

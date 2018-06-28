@@ -228,6 +228,8 @@ public class AddScheme extends javax.swing.JFrame {
         try {
             SchemeListFileConverter schemeListFileConverter = new SchemeListFileConverter( );
             schemeArrayList = schemeListFileConverter.readFromFile( );
+
+            System.out.println(schemeArrayList);
         } catch (Exception e) {
             //messaggio di errore
             System.out.println("Eh no");
@@ -236,7 +238,8 @@ public class AddScheme extends javax.swing.JFrame {
     //</editor-fold>
 
     public void fillLista() {
-        Scheme firstScheme = schemeArrayList.get(0);
+        System.out.println(schemeArrayList.size());
+        Scheme firstScheme = schemeArrayList.get(schemeArrayList.size()-1);
         idSchemeTextField.setText(String.valueOf(firstScheme.getId( )));
         difficultiesTextField.setText(String.valueOf(firstScheme.getDifficulty( )));
 
@@ -770,7 +773,7 @@ public class AddScheme extends javax.swing.JFrame {
         //schema.setDifficulty(difficulty);
         schema.setBoxes(boxes);
         System.out.println(schema);
-        schemeArrayList = new ArrayList<Scheme>( );
+
         schemeArrayList.add(schema);
     }
     //</editor-fold>
