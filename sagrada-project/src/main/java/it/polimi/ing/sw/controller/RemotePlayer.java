@@ -1,11 +1,12 @@
-package it.polimi.ing.sw.model;
+package it.polimi.ing.sw.controller;
 
 import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
-import it.polimi.ing.sw.model.exceptions.NotValidException;
+import it.polimi.ing.sw.model.Match;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
+//interfaccia che accomuna i due RemotePlayer e viene implementata dalla View
 public interface RemotePlayer extends Remote {
 
     //notifica gli schemi da scegliere

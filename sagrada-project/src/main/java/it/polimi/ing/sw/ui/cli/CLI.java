@@ -184,7 +184,7 @@ public class CLI implements UiUpdate {
     public void login(String message) {
         System.out.println(message);
         inText = scanner.nextLine();
-        controller.loginPlayer(inText);
+        controller.loginPlayerRMI(inText);
     }
 
 

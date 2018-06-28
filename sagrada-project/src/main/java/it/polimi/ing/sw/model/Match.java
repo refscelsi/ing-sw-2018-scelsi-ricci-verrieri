@@ -2,6 +2,7 @@
 package it.polimi.ing.sw.model;
 
 import it.polimi.ing.sw.controller.PlayerState;
+import it.polimi.ing.sw.controller.network.RMI.RemotePlayerRMI;
 import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.model.exceptions.NotValidNicknameException;
@@ -46,17 +47,17 @@ public class Match implements Serializable {
     //array che contiente la classifica dei players
     private ArrayList<Player> ranking;
     //array di clientObserver che mi serve per notificare la ui dei cambiamenti avvenuti
-    private ArrayList<RemotePlayer> remotePlayers;
+    private ArrayList<RemotePlayerRMI> remotePlayerRMIS;
     //hashmap con la corrispondenza player-remoteplayer
-    private HashMap<Player,RemotePlayer> playerMap;
+    private HashMap<Player,RemotePlayerRMI> playerMap;
 
 
 
 
     public Match() {
-        this.playerMap=new HashMap<Player,RemotePlayer>();
+        this.playerMap=new HashMap<Player,RemotePlayerRMI>();
         this.players=new ArrayList<Player>();
-        this.remotePlayers= new ArrayList<RemotePlayer>();
+        this.remotePlayerRMIS = new ArrayList<RemotePlayerRMI>();
     }
 
 
@@ -122,13 +123,13 @@ public class Match implements Serializable {
     //metodi per gestire il LOGIN
 
     //quando si loggano in almeno 2 setta un boolean a true
-    public void login (String nickname,RemotePlayer remotePlayer) throws NotValidNicknameException, RemoteException, ToolCardException, NotValidException {
+    public void login (String nickname,RemotePlayerRMI remotePlayerRMI) throws NotValidNicknameException, RemoteException, ToolCardException, NotValidException {
         if(playerMap.size()==0){
             Player player=new Player(nickname);
             player.setLogged(true);
-            playerMap.put(player,remotePlayer);
+            playerMap.put(player, remotePlayerRMI);
             players.add(player);
-            remotePlayers.add(remotePlayer);
+            remotePlayerRMIS.add(remotePlayerRMI);
             numPlayers++;
             System.out.println(numPlayers);
             notifyLogin(player);
@@ -138,9 +139,9 @@ public class Match implements Serializable {
             if(checkNickname(nickname)) {
                 Player player = new Player(nickname);
                 player.setLogged(true);
-                playerMap.put(player, remotePlayer);
+                playerMap.put(player, remotePlayerRMI);
                 players.add(player);
-                remotePlayers.add(remotePlayer);
+                remotePlayerRMIS.add(remotePlayerRMI);
                 numPlayers++;
                 System.out.println(numPlayers);
                 notifyLogin(player);
@@ -592,8 +593,8 @@ public class Match implements Serializable {
     // aggiornamenti alle view
 
     public void notifyChangement() throws RemoteException {
-        for(RemotePlayer remotePlayer: remotePlayers){
-            remotePlayer.onGameUpdate(this);
+        for(RemotePlayerRMI remotePlayerRMI : remotePlayerRMIS){
+            remotePlayerRMI.onGameUpdate(this);
         }
     }
 
@@ -608,8 +609,8 @@ public class Match implements Serializable {
     }
 
     private void notifyStartedMatch() throws RemoteException, NotValidPlayException {
-        for(RemotePlayer remotePlayer: remotePlayers){
-            remotePlayer.onSchemeToChoose(this);
+        for(RemotePlayerRMI remotePlayerRMI : remotePlayerRMIS){
+            remotePlayerRMI.onSchemeToChoose(this);
         }
     }
 
@@ -622,8 +623,8 @@ public class Match implements Serializable {
     }
 
     public void notifySucces(String message) throws RemoteException{
-        for(RemotePlayer remotePlayer: remotePlayers){
-            remotePlayer.onSuccess(message);
+        for(RemotePlayerRMI remotePlayerRMI : remotePlayerRMIS){
+            remotePlayerRMI.onSuccess(message);
         }
     }
 

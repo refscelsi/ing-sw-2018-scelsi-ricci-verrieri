@@ -1,7 +1,8 @@
 package it.polimi.ing.sw.controller;
 
 import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
-import it.polimi.ing.sw.model.RemotePlayer;
+import it.polimi.ing.sw.controller.network.RMI.PlayerInterfaceRMI;
+import it.polimi.ing.sw.controller.network.RMI.RemotePlayerRMI;
 import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.model.Player;
 import it.polimi.ing.sw.model.exceptions.NetworkException;
@@ -12,24 +13,24 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-//classe che gestisce gli input dei client e implementa i metodi di PlayerInterface (sulla rete)
+//classe che gestisce gli input dei client e implementa i metodi di PlayerInterfaceSocket (sulla rete)
 
-public class PlayerController extends UnicastRemoteObject implements PlayerInterface, Remote{
+public class PlayerController extends UnicastRemoteObject implements PlayerInterfaceRMI, Remote{
     //riferimento alla partita
     private Match match;
     //riferimento al player
     private Player player;
     //riferimento alla view
-    private RemotePlayer remotePlayer;
+    private RemotePlayerRMI remotePlayerRMI;
     //stato del giocatore
     private PlayerState state;
     //tengo traccia del nickname nel caso lo stronzo si riconnettesse
     private String nickname;
 
-    public PlayerController(Match match, RemotePlayer remotePlayer, Player player) throws RemoteException {
+    public PlayerController(Match match, RemotePlayerRMI remotePlayerRMI, Player player) throws RemoteException {
         super();
         this.match=match;
-        this.remotePlayer=remotePlayer;
+        this.remotePlayerRMI = remotePlayerRMI;
         this.player=player;
         this.nickname=player.getNickname();
         //this.state=player.getState();
@@ -43,8 +44,8 @@ public class PlayerController extends UnicastRemoteObject implements PlayerInter
         return this.player.getState();
     }
 
-    public RemotePlayer getRemotePlayer() {
-        return this.remotePlayer;
+    public RemotePlayerRMI getRemotePlayerRMI() {
+        return this.remotePlayerRMI;
     }
 
     public String getNickname(){

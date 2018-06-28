@@ -1,6 +1,8 @@
 package it.polimi.ing.sw.server;
 
 import it.polimi.ing.sw.controller.LoginController;
+import it.polimi.ing.sw.controller.PlayerController;
+import it.polimi.ing.sw.controller.network.Socket.PlayerControllerSocket;
 import it.polimi.ing.sw.model.Match;
 
 import java.io.IOException;
@@ -33,7 +35,7 @@ public class Server {
                 while(true){
                     Socket clientSocket= serverSocket.accept();
                     new Thread(()->{
-                        //gestisci socket, passata come parametro
+                        new PlayerControllerSocket(clientSocket);
                     }).start();
                 }
             } catch (IOException e) {

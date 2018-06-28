@@ -1,12 +1,12 @@
 package it.polimi.ing.sw.client;
 
+import it.polimi.ing.sw.controller.*;
+import it.polimi.ing.sw.controller.network.RMI.RemotePlayerRMI;
+import it.polimi.ing.sw.controller.network.Socket.PlayerInterfaceSocket;
 import it.polimi.ing.sw.model.exceptions.NetworkException;
-import it.polimi.ing.sw.controller.LoginInterface;
-import it.polimi.ing.sw.controller.PlayerInterface;
 import it.polimi.ing.sw.controller.exceptions.NotPossibleConnection;
 import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
 import it.polimi.ing.sw.model.Match;
-import it.polimi.ing.sw.model.RemotePlayer;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.model.exceptions.NotValidNicknameException;
 import it.polimi.ing.sw.model.exceptions.ToolCardException;
@@ -20,7 +20,7 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
 
-public class View extends UnicastRemoteObject implements RemotePlayer {
+public class View extends UnicastRemoteObject implements RemotePlayer, RemotePlayerRMI {
     /**
      *  ogni giocatore è identificato dal valore dell'attributo index nel model: il giocatore con index=0 avrà come
      *  nickname nicknames.get(0), come schema schemesOfAllPlayers.get(0), come colore di pedina playersColor[0],
@@ -36,7 +36,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
     private Match match;
     private boolean isGameStarted;     // flag per vedere se la partita è iniziata: non so se sarà utile o meno
     private boolean isOnline;
-    private PlayerInterface controller; //il client può chiamare solo i metodi di PlayerInterface
+    private PlayerInterface controller;//il client può chiamare solo i metodi di PlayerInterfaceSocket
     private LoginInterface loginController;
     private UiUpdate ui;
     private String input;
@@ -102,7 +102,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Metodi con cui il model notifica la view in seguito ad un aggiornamento (vedi interfaccia RemotePlayer)
+    // Metodi con cui il model notifica la view in seguito ad un aggiornamento (vedi interfaccia RemotePlayerRMI)
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -202,11 +202,11 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
      *            nickname da usare per il login presso il Server.
      */
 
-    public void loginPlayer(String nickname) {
+    public void loginPlayerRMI(String nickname) {
         try {
             Registry reg = LocateRegistry.getRegistry();
             LoginInterface loginController= (LoginInterface) reg.lookup("LoginController");
-            controller = loginController.connectRMI(nickname,this);
+            controller = loginController.connectRMI(nickname,this );
             this.isLogged = true;
             ui.onSuccess("Complimenti, ti sei loggato come " + nickname);
             this.nickname = nickname;
@@ -239,6 +239,12 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
 
     }
 
+    public void loginPlayerSocket(){
+        //metodi per creare la connessione socket
+        PlayerInterfaceSocket playerInterfaceSocket= new PlayerInterfaceSocket();
+        this.controller=playerInterfaceSocket;
+
+    }
 
     public void setChosenScheme (int id) {
         try {

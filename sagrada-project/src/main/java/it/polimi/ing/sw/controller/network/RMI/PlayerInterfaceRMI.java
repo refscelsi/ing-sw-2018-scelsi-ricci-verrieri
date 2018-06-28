@@ -1,17 +1,17 @@
-package it.polimi.ing.sw.controller;
+package it.polimi.ing.sw.controller.network.RMI;
 
-import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
+import it.polimi.ing.sw.controller.PlayerInterface;
 import it.polimi.ing.sw.model.exceptions.NetworkException;
+import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.model.exceptions.ToolCardException;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-//interfaccia implementata sia da PlayerInterfaceSocket sia da PlayerInterfaceRMI , controller della view
-//garantisce la trasparenza della rete
+//interfaccia per chiamare i metodi del controller in RMI
 
-public interface PlayerInterface{
+public interface PlayerInterfaceRMI extends Remote, PlayerInterface {
 
     void joinMatch() throws RemoteException, ToolCardException, NotValidException, NotValidPlayException;
 
@@ -39,5 +39,3 @@ public interface PlayerInterface{
 
     void useToolCard11(int dice) throws NetworkException, RemoteException, NotValidPlayException, NotValidException;
 }
-
-
