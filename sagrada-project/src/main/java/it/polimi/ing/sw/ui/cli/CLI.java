@@ -272,21 +272,6 @@ public class CLI implements UiUpdate {
     }
 
 
-    public void notMyTurn() {
-        System.out.println("Digita Q se vuoi uscire dalla partita");
-        do {
-            inText = scanner.nextLine();
-            if (inText.equals("q")) {
-                System.out.println("Sei sicuro che vuoi uscire dalla partita? Digita S per sì o N per no.");
-                if (scanner.nextLine().toLowerCase().equalsIgnoreCase("s")) {
-                    // TODO: gestire terminazione corretta del programma!
-                    System.out.println("Uscendo dalla partita...");
-                    System.exit(0);
-                }
-            }
-        } while (!inText.equals("q"));
-    }
-
 
     /////////////////////////////////////////////////////////////////////////////////////////
     // Connessione e disconnessione del Client --> da fare probabilmente
@@ -542,11 +527,6 @@ public class CLI implements UiUpdate {
     public void onPlaceDiceNotValid(NotValidException e) {
         System.out.println(e);
         retryPlaceDice();
-    }
-
-    @Override
-    public void onTurnEnd() {
-        notMyTurn();
     }
 
     @Override

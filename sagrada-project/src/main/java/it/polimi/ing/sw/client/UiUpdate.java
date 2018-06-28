@@ -18,8 +18,6 @@ public interface UiUpdate {
 
     void onPlaceDiceNotValid(NotValidException e);
 
-    void onTurnEnd();
-
     void onGameUpdate(Match match, String nickname);
 
     void onGameEnd(Match match);

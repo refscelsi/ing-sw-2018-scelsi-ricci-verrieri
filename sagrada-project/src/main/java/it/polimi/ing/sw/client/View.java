@@ -76,6 +76,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer, RemotePla
     }
 
 
+
     /////////////////////////////////////////////////////////////////////////////////////////
     // "Getters" (per verificare lo stato del Client, in Locale).
     /////////////////////////////////////////////////////////////////////////////////////////
@@ -126,18 +127,12 @@ public class View extends UnicastRemoteObject implements RemotePlayer, RemotePla
     public void onGameUpdate(Match match) {
         this.match = match;
         ui.onGameUpdate(match, nickname);
-        if (isPlaying == false)
-            onTurnEnd();
     }
 
     @Override
     public void onTurnEnd() {
         isPlaying = false;
-        Runnable task = () -> {
-            ui.onTurnEnd();
-        };
-        Thread thread = new Thread(task);
-        thread.start();
+        ui.onSuccess("In attesa che giochino gli altri giocatori...");
     }
 
     @Override
