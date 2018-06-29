@@ -24,22 +24,22 @@ public class ChooseSchemeForm extends javax.swing.JFrame {
     }
 
     private void setVetrataPanel() {
-        vetrataPanelA= new VetrataPanel();
+        vetrataPanelA= new VetrataPanel(1);
         vetrataPanelA.fillScheme(schemeList.get(0));
         schemeCardPanel1.add(vetrataPanelA);
         vetrataPanelA.setBounds(13,49,203,287);
 
-        vetrataPanelB= new VetrataPanel();
+        vetrataPanelB= new VetrataPanel(2);
         vetrataPanelB.fillScheme(schemeList.get(1));
         schemeCardPanel1.add(vetrataPanelB);
         vetrataPanelB.setBounds(228,49,203,287);
 
-        vetrataPanelC= new VetrataPanel();
+        vetrataPanelC= new VetrataPanel(3);
         vetrataPanelC.fillScheme(schemeList.get(2));
         schemeCardPanel2.add(vetrataPanelC);
         vetrataPanelC.setBounds(13,49,203,287);
 
-        vetrataPanelD= new VetrataPanel();
+        vetrataPanelD= new VetrataPanel(4);
         vetrataPanelD.fillScheme(schemeList.get(03));
         schemeCardPanel2.add(vetrataPanelD);
         vetrataPanelD.setBounds(228,49,203,287);
