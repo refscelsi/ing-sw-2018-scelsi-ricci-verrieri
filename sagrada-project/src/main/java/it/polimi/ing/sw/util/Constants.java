@@ -23,14 +23,7 @@ public class Constants {
     public static final String SETCHOSENSCHEME= "setChosenScheme";
     public static final String USEDICEREQUEST= "sendUseDiceRequest";
     public static final String ENDTURN= "endTurn";
-    public static final String TOOLCARD1= "sendUseToolCard1Request";
-    public static final String TOOLCARD234 = "sendUseToolCard234Request";
-    public static final String TOOLCARD5 ="useToolCard5";
-    public static final String TOOLCARD6 ="useToolCard6";
-    public static final String TOOLCARD78= "useToolCard78";
-    public static final String TOOLCARD9 ="sendUseToolCard9Request";
-    public static final String TOOLCARD10= "useToolCard10";
-    public static final String TOOLCARD11= "useToolCard11";
+    public static final String TOOLCARD= "useToolCard";
 
     //metodi PlayerController
     public static final String ONSCHEMETOCHOOSE="onSchemeToChoose";

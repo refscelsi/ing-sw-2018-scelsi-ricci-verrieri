@@ -138,14 +138,8 @@ public class Match implements Serializable {
                 this.remotePlayer.add(remotePlayer);
                 numPlayers++;
                 System.out.println(numPlayers);
-                try {
-                    Bag bag=new Bag();
-                    draftPool=bag.draw(3);
-                    startMatch();
-                } catch (NotValidPlayException e) {
-                    e.printStackTrace();
-                }
-                notifyLogin(player);
+                notifyChangement();
+                //notifyLogin(player);
                 return;
             }
             else

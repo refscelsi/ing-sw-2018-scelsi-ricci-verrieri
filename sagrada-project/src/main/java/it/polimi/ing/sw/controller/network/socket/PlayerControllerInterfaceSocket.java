@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import it.polimi.ing.sw.client.View;
 import it.polimi.ing.sw.controller.PlayerControllerInterface;
 import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
+import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.model.exceptions.NetworkException;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.util.Constants;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
+import static java.lang.String.CASE_INSENSITIVE_ORDER;
 import static java.lang.String.valueOf;
 
 //classe che viene istanziata come controller in caso di socket e chiama i metodi di PlayerControllerSocket a cui passa
@@ -71,11 +73,27 @@ public class PlayerControllerInterfaceSocket implements PlayerControllerInterfac
 
     private void handleUpdate(String method) {
         switch(method){
-            case "onPlayerLogged": view.onPlayerLogged();
+            case Constants.ONTURNEND: view.onTurnEnd();
                 break;
-
+            case Constants.ONSUCCES:
+                try {
+                    view.onSuccess((String )jsonObject.get(1));
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+                break;
             case Constants.ONSETPLAYING: view.onSetPlaying();
                 break;
+            case Constants.ONSCHEMETOCHOOSE: {
+                //view.onSchemeToChoose((Match) match);
+                break;
+            }
+            case Constants.ONGAMEUPDATE:
+                break;
+            case Constants.ONGAMEEND:
+                break;
+
+
         }
 
 

@@ -85,7 +85,7 @@ public class PlayerControllerSocket implements RemotePlayer {
                 }
                 break;
 
-            case "joinMatch": controller.joinMatch();
+            case Constants.JOINMATCH: controller.joinMatch();
                 break;
 
             case Constants.CHECKREADY: controller.checkAllReady();
@@ -100,7 +100,7 @@ public class PlayerControllerSocket implements RemotePlayer {
             case Constants.USEDICEREQUEST: controller.sendUseDiceRequest(Integer.valueOf(params.get(0)),Integer.valueOf(params.get(1)),Integer.valueOf(params.get(2)) );
                 break;
 
-            case Constants.TOOLCARD: controller.sendUseToolCard(Integer.valueOf(params.get(0)), params.get(1));
+            case Constants.TOOLCARD: controller.useToolCard(Integer.valueOf(params.get(0)),Integer.valueOf(params.get(1)),Integer.valueOf(params.get(2)),Integer.valueOf(params.get(3)),Integer.valueOf(params.get(4)),Integer.valueOf(params.get(5)),Integer.valueOf(params.get(6)));
                 break;
         }
 
@@ -108,7 +108,7 @@ public class PlayerControllerSocket implements RemotePlayer {
 
     @Override
     public void onSchemeToChoose(Match match) throws RemoteException, NotValidPlayException {
-        String matchToSend= new MatchToSend(match).convertStartMatch();
+        String matchToSend= new MatchToSend(match).convertMatch();
         Gson gson= new Gson();
         String json=gson.toJson(new Data(Constants.ONSCHEMETOCHOOSE, matchToSend));
         try {
@@ -142,7 +142,14 @@ public class PlayerControllerSocket implements RemotePlayer {
 
     @Override
     public void onGameEnd(Match match) throws RemoteException {
-
+        String matchToSend= new MatchToSend(match).convertMatch();
+        Gson gson=new Gson();
+        String json= gson.toJson(new Data(Constants.ONGAMEEND, matchToSend));
+        try {
+            out.writeObject(json);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -159,7 +166,7 @@ public class PlayerControllerSocket implements RemotePlayer {
     @Override
     public void onSetPlaying() throws RemoteException {
         Gson gson= new Gson();
-        String json=gson.toJson(new Data(Constants.ONSETPLAYING, null));
+        String json=gson.toJson(new SimpleData(Constants.ONSETPLAYING));
         try {
             out.writeObject(json);
         } catch (IOException e) {
@@ -193,7 +200,6 @@ public class PlayerControllerSocket implements RemotePlayer {
 
     class SimpleData{
         String method;
-
         SimpleData(String method){
             this.method=method;
         }
