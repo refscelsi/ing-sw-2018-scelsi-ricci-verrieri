@@ -252,8 +252,134 @@
     }
   },
   "2": {
-    "Difficulty": "5",
+    "Difficulty": "4",
     "ID": "3",
+    "Boxes": {
+      "00": {
+        "Color": "YELLOW",
+        "X": "0",
+        "Y": "0",
+        "Shade": "0"
+      },
+      "11": {
+        "Color": "WHITE",
+        "X": "1",
+        "Y": "1",
+        "Shade": "1"
+      },
+      "22": {
+        "Color": "RED",
+        "X": "2",
+        "Y": "2",
+        "Shade": "0"
+      },
+      "33": {
+        "Color": "WHITE",
+        "X": "3",
+        "Y": "3",
+        "Shade": "3"
+      },
+      "01": {
+        "Color": "WHITE",
+        "X": "0",
+        "Y": "1",
+        "Shade": "0"
+      },
+      "12": {
+        "Color": "WHITE",
+        "X": "1",
+        "Y": "2",
+        "Shade": "5"
+      },
+      "23": {
+        "Color": "PURPLE",
+        "X": "2",
+        "Y": "3",
+        "Shade": "0"
+      },
+      "34": {
+        "Color": "RED",
+        "X": "3",
+        "Y": "4",
+        "Shade": "0"
+      },
+      "02": {
+        "Color": "WHITE",
+        "X": "0",
+        "Y": "2",
+        "Shade": "6"
+      },
+      "13": {
+        "Color": "WHITE",
+        "X": "1",
+        "Y": "3",
+        "Shade": "0"
+      },
+      "24": {
+        "Color": "WHITE",
+        "X": "2",
+        "Y": "4",
+        "Shade": "0"
+      },
+      "03": {
+        "Color": "WHITE",
+        "X": "0",
+        "Y": "3",
+        "Shade": "0"
+      },
+      "14": {
+        "Color": "WHITE",
+        "X": "1",
+        "Y": "4",
+        "Shade": "2"
+      },
+      "04": {
+        "Color": "WHITE",
+        "X": "0",
+        "Y": "4",
+        "Shade": "0"
+      },
+      "30": {
+        "Color": "WHITE",
+        "X": "3",
+        "Y": "0",
+        "Shade": "0"
+      },
+      "20": {
+        "Color": "WHITE",
+        "X": "2",
+        "Y": "0",
+        "Shade": "3"
+      },
+      "31": {
+        "Color": "WHITE",
+        "X": "3",
+        "Y": "1",
+        "Shade": "0"
+      },
+      "10": {
+        "Color": "WHITE",
+        "X": "1",
+        "Y": "0",
+        "Shade": "0"
+      },
+      "21": {
+        "Color": "YELLOW",
+        "X": "2",
+        "Y": "1",
+        "Shade": "0"
+      },
+      "32": {
+        "Color": "WHITE",
+        "X": "3",
+        "Y": "2",
+        "Shade": "4"
+      }
+    }
+  },
+  "3": {
+    "Difficulty": "5",
+    "ID": "4",
     "Boxes": {
       "00": {
         "Color": "WHITE",
@@ -346,7 +472,7 @@
         "Shade": "1"
       },
       "20": {
-        "Color": "WHITE",
+        "Color": "YELLOW",
         "X": "2",
         "Y": "0",
         "Shade": "0"
@@ -374,132 +500,6 @@
         "X": "3",
         "Y": "2",
         "Shade": "0"
-      }
-    }
-  },
-  "3": {
-    "Difficulty": "3",
-    "ID": "4",
-    "Boxes": {
-      "00": {
-        "Color": "YELLOW",
-        "X": "0",
-        "Y": "0",
-        "Shade": "0"
-      },
-      "11": {
-        "Color": "WHITE",
-        "X": "1",
-        "Y": "1",
-        "Shade": "1"
-      },
-      "22": {
-        "Color": "RED",
-        "X": "2",
-        "Y": "2",
-        "Shade": "0"
-      },
-      "33": {
-        "Color": "WHITE",
-        "X": "3",
-        "Y": "3",
-        "Shade": "3"
-      },
-      "01": {
-        "Color": "WHITE",
-        "X": "0",
-        "Y": "1",
-        "Shade": "0"
-      },
-      "12": {
-        "Color": "WHITE",
-        "X": "1",
-        "Y": "2",
-        "Shade": "5"
-      },
-      "23": {
-        "Color": "PURPLE",
-        "X": "2",
-        "Y": "3",
-        "Shade": "0"
-      },
-      "34": {
-        "Color": "RED",
-        "X": "3",
-        "Y": "4",
-        "Shade": "0"
-      },
-      "02": {
-        "Color": "WHITE",
-        "X": "0",
-        "Y": "2",
-        "Shade": "6"
-      },
-      "13": {
-        "Color": "WHITE",
-        "X": "1",
-        "Y": "3",
-        "Shade": "0"
-      },
-      "24": {
-        "Color": "WHITE",
-        "X": "2",
-        "Y": "4",
-        "Shade": "0"
-      },
-      "03": {
-        "Color": "WHITE",
-        "X": "0",
-        "Y": "3",
-        "Shade": "0"
-      },
-      "14": {
-        "Color": "WHITE",
-        "X": "1",
-        "Y": "4",
-        "Shade": "2"
-      },
-      "04": {
-        "Color": "WHITE",
-        "X": "0",
-        "Y": "4",
-        "Shade": "0"
-      },
-      "30": {
-        "Color": "WHITE",
-        "X": "3",
-        "Y": "0",
-        "Shade": "0"
-      },
-      "20": {
-        "Color": "WHITE",
-        "X": "2",
-        "Y": "0",
-        "Shade": "3"
-      },
-      "31": {
-        "Color": "WHITE",
-        "X": "3",
-        "Y": "1",
-        "Shade": "0"
-      },
-      "10": {
-        "Color": "WHITE",
-        "X": "1",
-        "Y": "0",
-        "Shade": "0"
-      },
-      "21": {
-        "Color": "YELLOW",
-        "X": "2",
-        "Y": "1",
-        "Shade": "0"
-      },
-      "32": {
-        "Color": "WHITE",
-        "X": "3",
-        "Y": "2",
-        "Shade": "4"
       }
     }
   },
@@ -508,7 +508,7 @@
     "ID": "5",
     "Boxes": {
       "00": {
-        "Color": "WHITE",
+        "Color": "BLUE",
         "X": "0",
         "Y": "0",
         "Shade": "0"
@@ -517,40 +517,40 @@
         "Color": "WHITE",
         "X": "1",
         "Y": "1",
-        "Shade": "4"
+        "Shade": "3"
       },
       "22": {
         "Color": "WHITE",
         "X": "2",
         "Y": "2",
-        "Shade": "5"
+        "Shade": "6"
       },
       "33": {
         "Color": "WHITE",
         "X": "3",
         "Y": "3",
-        "Shade": "0"
+        "Shade": "1"
       },
       "01": {
-        "Color": "BLUE",
+        "Color": "WHITE",
         "X": "0",
         "Y": "1",
-        "Shade": "0"
+        "Shade": "6"
       },
       "12": {
-        "Color": "WHITE",
+        "Color": "BLUE",
         "X": "1",
         "Y": "2",
         "Shade": "0"
       },
       "23": {
-        "Color": "YELLOW",
+        "Color": "WHITE",
         "X": "2",
         "Y": "3",
-        "Shade": "0"
+        "Shade": "2"
       },
       "34": {
-        "Color": "PURPLE",
+        "Color": "GREEN",
         "X": "3",
         "Y": "4",
         "Shade": "0"
@@ -559,10 +559,10 @@
         "Color": "WHITE",
         "X": "0",
         "Y": "2",
-        "Shade": "2"
+        "Shade": "0"
       },
       "13": {
-        "Color": "RED",
+        "Color": "WHITE",
         "X": "1",
         "Y": "3",
         "Shade": "0"
@@ -592,7 +592,7 @@
         "Shade": "0"
       },
       "30": {
-        "Color": "GREEN",
+        "Color": "WHITE",
         "X": "3",
         "Y": "0",
         "Shade": "0"
@@ -607,7 +607,7 @@
         "Color": "WHITE",
         "X": "3",
         "Y": "1",
-        "Shade": "3"
+        "Shade": "4"
       },
       "10": {
         "Color": "WHITE",
@@ -619,7 +619,7 @@
         "Color": "WHITE",
         "X": "2",
         "Y": "1",
-        "Shade": "0"
+        "Shade": "5"
       },
       "32": {
         "Color": "WHITE",
@@ -634,7 +634,7 @@
     "ID": "6",
     "Boxes": {
       "00": {
-        "Color": "BLUE",
+        "Color": "WHITE",
         "X": "0",
         "Y": "0",
         "Shade": "0"
@@ -643,40 +643,40 @@
         "Color": "WHITE",
         "X": "1",
         "Y": "1",
-        "Shade": "3"
+        "Shade": "4"
       },
       "22": {
         "Color": "WHITE",
         "X": "2",
         "Y": "2",
-        "Shade": "6"
+        "Shade": "5"
       },
       "33": {
         "Color": "WHITE",
         "X": "3",
         "Y": "3",
-        "Shade": "1"
+        "Shade": "0"
       },
       "01": {
         "Color": "BLUE",
         "X": "0",
         "Y": "1",
-        "Shade": "6"
+        "Shade": "0"
       },
       "12": {
-        "Color": "BLUE",
+        "Color": "WHITE",
         "X": "1",
         "Y": "2",
         "Shade": "0"
       },
       "23": {
-        "Color": "WHITE",
+        "Color": "YELLOW",
         "X": "2",
         "Y": "3",
-        "Shade": "2"
+        "Shade": "0"
       },
       "34": {
-        "Color": "GREEN",
+        "Color": "PURPLE",
         "X": "3",
         "Y": "4",
         "Shade": "0"
@@ -685,10 +685,10 @@
         "Color": "WHITE",
         "X": "0",
         "Y": "2",
-        "Shade": "0"
+        "Shade": "2"
       },
       "13": {
-        "Color": "WHITE",
+        "Color": "RED",
         "X": "1",
         "Y": "3",
         "Shade": "0"
@@ -718,7 +718,7 @@
         "Shade": "0"
       },
       "30": {
-        "Color": "WHITE",
+        "Color": "GREEN",
         "X": "3",
         "Y": "0",
         "Shade": "0"
@@ -733,7 +733,7 @@
         "Color": "WHITE",
         "X": "3",
         "Y": "1",
-        "Shade": "4"
+        "Shade": "3"
       },
       "10": {
         "Color": "WHITE",
@@ -745,7 +745,7 @@
         "Color": "WHITE",
         "X": "2",
         "Y": "1",
-        "Shade": "5"
+        "Shade": "0"
       },
       "32": {
         "Color": "WHITE",
@@ -757,68 +757,68 @@
   },
 
   "6": {
-    "Difficulty": "3",
+    "Difficulty": "6",
     "ID": "7",
     "Boxes": {
       "00": {
-        "Color": "PURPLE",
+        "Color": "WHITE",
         "X": "0",
         "Y": "0",
-        "Shade": "0"
+        "Shade": "2"
       },
       "11": {
-        "Color": "PURPLE",
+        "Color": "WHITE",
         "X": "1",
         "Y": "1",
-        "Shade": "0"
+        "Shade": "6"
       },
       "22": {
-        "Color": "PURPLE",
+        "Color": "WHITE",
         "X": "2",
         "Y": "2",
-        "Shade": "0"
+        "Shade": "4"
       },
       "33": {
-        "Color": "PURPLE",
+        "Color": "WHITE",
         "X": "3",
         "Y": "3",
-        "Shade": "0"
+        "Shade": "5"
       },
       "01": {
         "Color": "WHITE",
         "X": "0",
         "Y": "1",
-        "Shade": "6"
+        "Shade": "0"
       },
       "12": {
-        "Color": "WHITE",
+        "Color": "PURPLE",
         "X": "1",
         "Y": "2",
-        "Shade": "3"
+        "Shade": "0"
       },
       "23": {
-        "Color": "WHITE",
+        "Color": "GREEN",
         "X": "2",
         "Y": "3",
-        "Shade": "1"
+        "Shade": "0"
       },
       "34": {
         "Color": "WHITE",
         "X": "3",
         "Y": "4",
-        "Shade": "4"
+        "Shade": "0"
       },
       "02": {
         "Color": "WHITE",
         "X": "0",
         "Y": "2",
-        "Shade": "0"
+        "Shade": "5"
       },
       "13": {
         "Color": "WHITE",
         "X": "1",
         "Y": "3",
-        "Shade": "0"
+        "Shade": "2"
       },
       "24": {
         "Color": "WHITE",
@@ -833,7 +833,7 @@
         "Shade": "0"
       },
       "14": {
-        "Color": "WHITE",
+        "Color": "RED",
         "X": "1",
         "Y": "4",
         "Shade": "0"
@@ -842,7 +842,7 @@
         "Color": "WHITE",
         "X": "0",
         "Y": "4",
-        "Shade": "3"
+        "Shade": "1"
       },
       "30": {
         "Color": "WHITE",
@@ -860,82 +860,82 @@
         "Color": "WHITE",
         "X": "3",
         "Y": "1",
-        "Shade": "1"
+        "Shade": "3"
       },
       "10": {
-        "Color": "WHITE",
+        "Color": "YELLOW",
         "X": "1",
         "Y": "0",
-        "Shade": "5"
+        "Shade": "0"
       },
       "21": {
-        "Color": "WHITE",
+        "Color": "BLUE",
         "X": "2",
         "Y": "1",
-        "Shade": "2"
+        "Shade": "0"
       },
       "32": {
         "Color": "WHITE",
         "X": "3",
         "Y": "2",
-        "Shade": "5"
+        "Shade": "0"
       }
     }
   },
   "7": {
-    "Difficulty": "6",
+    "Difficulty": "5",
     "ID": "8",
     "Boxes": {
       "00": {
-        "Color": "WHITE",
+        "Color": "PURPLE",
         "X": "0",
         "Y": "0",
         "Shade": "0"
       },
       "11": {
-        "Color": "WHITE",
+        "Color": "PURPLE",
         "X": "1",
         "Y": "1",
-        "Shade": "4"
+        "Shade": "0"
       },
       "22": {
-        "Color": "WHITE",
+        "Color": "PURPLE",
         "X": "2",
         "Y": "2",
         "Shade": "0"
       },
       "33": {
-        "Color": "WHITE",
+        "Color": "PURPLE",
         "X": "3",
         "Y": "3",
-        "Shade": "1"
+        "Shade": "0"
       },
       "01": {
-        "Color": "BLUE",
+        "Color": "WHITE",
         "X": "0",
         "Y": "1",
-        "Shade": "0"
+        "Shade": "6"
       },
       "12": {
         "Color": "WHITE",
         "X": "1",
         "Y": "2",
-        "Shade": "5"
+        "Shade": "3"
       },
       "23": {
-        "Color": "RED",
+        "Color": "WHITE",
         "X": "2",
         "Y": "3",
-        "Shade": "0"
+        "Shade": "1"
       },
       "34": {
         "Color": "WHITE",
         "X": "3",
         "Y": "4",
-        "Shade": "0"
+        "Shade": "4"
       },
       "02": {
-        "Color": "RED",
+        "Color": "WHITE",
         "X": "0",
         "Y": "2",
         "Shade": "0"
@@ -950,7 +950,7 @@
         "Color": "WHITE",
         "X": "2",
         "Y": "4",
-        "Shade": "5"
+        "Shade": "0"
       },
       "03": {
         "Color": "WHITE",
@@ -959,7 +959,7 @@
         "Shade": "0"
       },
       "14": {
-        "Color": "BLUE",
+        "Color": "WHITE",
         "X": "1",
         "Y": "4",
         "Shade": "0"
@@ -968,31 +968,31 @@
         "Color": "WHITE",
         "X": "0",
         "Y": "4",
-        "Shade": "0"
+        "Shade": "3"
       },
       "30": {
         "Color": "WHITE",
         "X": "3",
         "Y": "0",
-        "Shade": "6"
+        "Shade": "0"
       },
       "20": {
-        "Color": "BLUE",
+        "Color": "WHITE",
         "X": "2",
         "Y": "0",
         "Shade": "0"
       },
       "31": {
-        "Color": "RED",
+        "Color": "WHITE",
         "X": "3",
         "Y": "1",
-        "Shade": "0"
+        "Shade": "1"
       },
       "10": {
         "Color": "WHITE",
         "X": "1",
         "Y": "0",
-        "Shade": "0"
+        "Shade": "5"
       },
       "21": {
         "Color": "WHITE",
@@ -1004,19 +1004,19 @@
         "Color": "WHITE",
         "X": "3",
         "Y": "2",
-        "Shade": "3"
+        "Shade": "5"
       }
     }
   },
   "8": {
-    "Difficulty": "4",
+    "Difficulty": "5",
     "ID": "9",
     "Boxes": {
       "00": {
         "Color": "WHITE",
         "X": "0",
         "Y": "0",
-        "Shade": "0"
+        "Shade": "1"
       },
       "11": {
         "Color": "WHITE",
@@ -1028,25 +1028,25 @@
         "Color": "WHITE",
         "X": "2",
         "Y": "2",
-        "Shade": "0"
+        "Shade": "5"
       },
       "33": {
         "Color": "WHITE",
         "X": "3",
         "Y": "3",
-        "Shade": "1"
+        "Shade": "3"
       },
       "01": {
-        "Color": "BLUE",
+        "Color": "RED",
         "X": "0",
         "Y": "1",
         "Shade": "0"
       },
       "12": {
-        "Color": "WHITE",
+        "Color": "RED",
         "X": "1",
         "Y": "2",
-        "Shade": "5"
+        "Shade": "0"
       },
       "23": {
         "Color": "RED",
@@ -1055,28 +1055,28 @@
         "Shade": "0"
       },
       "34": {
-        "Color": "WHITE",
+        "Color": "RED",
         "X": "3",
         "Y": "4",
         "Shade": "0"
       },
       "02": {
-        "Color": "RED",
+        "Color": "WHITE",
         "X": "0",
         "Y": "2",
-        "Shade": "0"
+        "Shade": "3"
       },
       "13": {
         "Color": "WHITE",
         "X": "1",
         "Y": "3",
-        "Shade": "0"
+        "Shade": "2"
       },
       "24": {
         "Color": "WHITE",
         "X": "2",
         "Y": "4",
-        "Shade": "5"
+        "Shade": "1"
       },
       "03": {
         "Color": "WHITE",
@@ -1085,7 +1085,7 @@
         "Shade": "0"
       },
       "14": {
-        "Color": "BLUE",
+        "Color": "WHITE",
         "X": "1",
         "Y": "4",
         "Shade": "0"
@@ -1094,22 +1094,22 @@
         "Color": "WHITE",
         "X": "0",
         "Y": "4",
-        "Shade": "0"
+        "Shade": "6"
       },
       "30": {
         "Color": "WHITE",
         "X": "3",
         "Y": "0",
-        "Shade": "6"
+        "Shade": "0"
       },
       "20": {
-        "Color": "BLUE",
+        "Color": "WHITE",
         "X": "2",
         "Y": "0",
         "Shade": "0"
       },
       "31": {
-        "Color": "RED",
+        "Color": "WHITE",
         "X": "3",
         "Y": "1",
         "Shade": "0"
@@ -1118,37 +1118,37 @@
         "Color": "WHITE",
         "X": "1",
         "Y": "0",
-        "Shade": "0"
+        "Shade": "5"
       },
       "21": {
         "Color": "WHITE",
         "X": "2",
         "Y": "1",
-        "Shade": "2"
+        "Shade": "0"
       },
       "32": {
         "Color": "WHITE",
         "X": "3",
         "Y": "2",
-        "Shade": "3"
+        "Shade": "0"
       }
     }
   },
   "9": {
-    "Difficulty": "5",
+    "Difficulty": "4",
     "ID": "10",
     "Boxes": {
       "00": {
-        "Color": "WHITE",
+        "Color": "RED",
         "X": "0",
         "Y": "0",
         "Shade": "0"
       },
       "11": {
-        "Color": "WHITE",
+        "Color": "PURPLE",
         "X": "1",
         "Y": "1",
-        "Shade": "4"
+        "Shade": "0"
       },
       "22": {
         "Color": "WHITE",
@@ -1160,10 +1160,10 @@
         "Color": "WHITE",
         "X": "3",
         "Y": "3",
-        "Shade": "1"
+        "Shade": "0"
       },
       "01": {
-        "Color": "BLUE",
+        "Color": "WHITE",
         "X": "0",
         "Y": "1",
         "Shade": "0"
@@ -1172,13 +1172,13 @@
         "Color": "WHITE",
         "X": "1",
         "Y": "2",
-        "Shade": "5"
+        "Shade": "3"
       },
       "23": {
-        "Color": "RED",
+        "Color": "WHITE",
         "X": "2",
         "Y": "3",
-        "Shade": "0"
+        "Shade": "5"
       },
       "34": {
         "Color": "WHITE",
@@ -1187,13 +1187,13 @@
         "Shade": "0"
       },
       "02": {
-        "Color": "RED",
+        "Color": "BLUE",
         "X": "0",
         "Y": "2",
         "Shade": "0"
       },
       "13": {
-        "Color": "WHITE",
+        "Color": "GREEN",
         "X": "1",
         "Y": "3",
         "Shade": "0"
@@ -1202,7 +1202,7 @@
         "Color": "WHITE",
         "X": "2",
         "Y": "4",
-        "Shade": "5"
+        "Shade": "0"
       },
       "03": {
         "Color": "WHITE",
@@ -1211,13 +1211,13 @@
         "Shade": "0"
       },
       "14": {
-        "Color": "BLUE",
+        "Color": "WHITE",
         "X": "1",
         "Y": "4",
-        "Shade": "0"
+        "Shade": "2"
       },
       "04": {
-        "Color": "WHITE",
+        "Color": "YELLOW",
         "X": "0",
         "Y": "4",
         "Shade": "0"
@@ -1226,16 +1226,16 @@
         "Color": "WHITE",
         "X": "3",
         "Y": "0",
-        "Shade": "6"
+        "Shade": "0"
       },
       "20": {
-        "Color": "BLUE",
+        "Color": "WHITE",
         "X": "2",
         "Y": "0",
         "Shade": "0"
       },
       "31": {
-        "Color": "RED",
+        "Color": "WHITE",
         "X": "3",
         "Y": "1",
         "Shade": "0"
@@ -1244,19 +1244,19 @@
         "Color": "WHITE",
         "X": "1",
         "Y": "0",
-        "Shade": "0"
+        "Shade": "4"
       },
       "21": {
         "Color": "WHITE",
         "X": "2",
         "Y": "1",
-        "Shade": "2"
+        "Shade": "1"
       },
       "32": {
         "Color": "WHITE",
         "X": "3",
         "Y": "2",
-        "Shade": "3"
+        "Shade": "6"
       }
     }
   },
@@ -1274,10 +1274,10 @@
         "Color": "WHITE",
         "X": "1",
         "Y": "1",
-        "Shade": "4"
+        "Shade": "5"
       },
       "22": {
-        "Color": "WHITE",
+        "Color": "YELLOW",
         "X": "2",
         "Y": "2",
         "Shade": "0"
@@ -1286,22 +1286,22 @@
         "Color": "WHITE",
         "X": "3",
         "Y": "3",
-        "Shade": "1"
+        "Shade": "5"
       },
       "01": {
-        "Color": "BLUE",
+        "Color": "WHITE",
         "X": "0",
         "Y": "1",
         "Shade": "0"
       },
       "12": {
-        "Color": "WHITE",
+        "Color": "BLUE",
         "X": "1",
         "Y": "2",
-        "Shade": "5"
+        "Shade": "0"
       },
       "23": {
-        "Color": "RED",
+        "Color": "PURPLE",
         "X": "2",
         "Y": "3",
         "Shade": "0"
@@ -1310,25 +1310,25 @@
         "Color": "WHITE",
         "X": "3",
         "Y": "4",
-        "Shade": "0"
+        "Shade": "3"
       },
       "02": {
-        "Color": "RED",
+        "Color": "WHITE",
         "X": "0",
         "Y": "2",
-        "Shade": "0"
+        "Shade": "6"
       },
       "13": {
         "Color": "WHITE",
         "X": "1",
         "Y": "3",
-        "Shade": "0"
+        "Shade": "4"
       },
       "24": {
         "Color": "WHITE",
         "X": "2",
         "Y": "4",
-        "Shade": "5"
+        "Shade": "2"
       },
       "03": {
         "Color": "WHITE",
@@ -1337,7 +1337,7 @@
         "Shade": "0"
       },
       "14": {
-        "Color": "BLUE",
+        "Color": "WHITE",
         "X": "1",
         "Y": "4",
         "Shade": "0"
@@ -1352,19 +1352,19 @@
         "Color": "WHITE",
         "X": "3",
         "Y": "0",
-        "Shade": "6"
+        "Shade": "1"
       },
       "20": {
-        "Color": "BLUE",
+        "Color": "WHITE",
         "X": "2",
         "Y": "0",
-        "Shade": "0"
+        "Shade": "3"
       },
       "31": {
-        "Color": "RED",
+        "Color": "WHITE",
         "X": "3",
         "Y": "1",
-        "Shade": "0"
+        "Shade": "4"
       },
       "10": {
         "Color": "WHITE",
@@ -1373,16 +1373,16 @@
         "Shade": "0"
       },
       "21": {
-        "Color": "WHITE",
+        "Color": "GREEN",
         "X": "2",
         "Y": "1",
-        "Shade": "2"
+        "Shade": "0"
       },
       "32": {
-        "Color": "WHITE",
+        "Color": "RED",
         "X": "3",
         "Y": "2",
-        "Shade": "3"
+        "Shade": "0"
       }
     }
   },
@@ -1394,13 +1394,13 @@
         "Color": "WHITE",
         "X": "0",
         "Y": "0",
-        "Shade": "0"
+        "Shade": "6"
       },
       "11": {
         "Color": "WHITE",
         "X": "1",
         "Y": "1",
-        "Shade": "4"
+        "Shade": "0"
       },
       "22": {
         "Color": "WHITE",
@@ -1412,22 +1412,22 @@
         "Color": "WHITE",
         "X": "3",
         "Y": "3",
-        "Shade": "1"
+        "Shade": "4"
       },
       "01": {
-        "Color": "BLUE",
+        "Color": "PURPLE",
         "X": "0",
         "Y": "1",
         "Shade": "0"
       },
       "12": {
-        "Color": "WHITE",
+        "Color": "PURPLE",
         "X": "1",
         "Y": "2",
-        "Shade": "5"
+        "Shade": "0"
       },
       "23": {
-        "Color": "RED",
+        "Color": "PURPLE",
         "X": "2",
         "Y": "3",
         "Shade": "0"
@@ -1436,10 +1436,10 @@
         "Color": "WHITE",
         "X": "3",
         "Y": "4",
-        "Shade": "0"
+        "Shade": "3"
       },
       "02": {
-        "Color": "RED",
+        "Color": "WHITE",
         "X": "0",
         "Y": "2",
         "Shade": "0"
@@ -1454,7 +1454,7 @@
         "Color": "WHITE",
         "X": "2",
         "Y": "4",
-        "Shade": "5"
+        "Shade": "0"
       },
       "03": {
         "Color": "WHITE",
@@ -1463,7 +1463,7 @@
         "Shade": "0"
       },
       "14": {
-        "Color": "BLUE",
+        "Color": "WHITE",
         "X": "1",
         "Y": "4",
         "Shade": "0"
@@ -1472,16 +1472,16 @@
         "Color": "WHITE",
         "X": "0",
         "Y": "4",
-        "Shade": "0"
+        "Shade": "5"
       },
       "30": {
-        "Color": "WHITE",
+        "Color": "YELLOW",
         "X": "3",
         "Y": "0",
-        "Shade": "6"
+        "Shade": "0"
       },
       "20": {
-        "Color": "BLUE",
+        "Color": "RED",
         "X": "2",
         "Y": "0",
         "Shade": "0"
@@ -1496,24 +1496,24 @@
         "Color": "WHITE",
         "X": "1",
         "Y": "0",
-        "Shade": "0"
+        "Shade": "5"
       },
       "21": {
         "Color": "WHITE",
         "X": "2",
         "Y": "1",
-        "Shade": "2"
+        "Shade": "6"
       },
       "32": {
         "Color": "WHITE",
         "X": "3",
         "Y": "2",
-        "Shade": "3"
+        "Shade": "5"
       }
     }
   },
   "12": {
-    "Difficulty": "5",
+    "Difficulty": "3",
     "ID": "13",
     "Boxes": {
       "00": {
@@ -1526,10 +1526,10 @@
         "Color": "WHITE",
         "X": "1",
         "Y": "1",
-        "Shade": "4"
+        "Shade": "0"
       },
       "22": {
-        "Color": "WHITE",
+        "Color": "RED",
         "X": "2",
         "Y": "2",
         "Shade": "0"
@@ -1538,22 +1538,22 @@
         "Color": "WHITE",
         "X": "3",
         "Y": "3",
-        "Shade": "1"
+        "Shade": "0"
       },
       "01": {
-        "Color": "BLUE",
+        "Color": "WHITE",
         "X": "0",
         "Y": "1",
-        "Shade": "0"
+        "Shade": "4"
       },
       "12": {
         "Color": "WHITE",
         "X": "1",
         "Y": "2",
-        "Shade": "5"
+        "Shade": "2"
       },
       "23": {
-        "Color": "RED",
+        "Color": "PURPLE",
         "X": "2",
         "Y": "3",
         "Shade": "0"
@@ -1565,7 +1565,7 @@
         "Shade": "0"
       },
       "02": {
-        "Color": "RED",
+        "Color": "WHITE",
         "X": "0",
         "Y": "2",
         "Shade": "0"
@@ -1580,16 +1580,16 @@
         "Color": "WHITE",
         "X": "2",
         "Y": "4",
-        "Shade": "5"
+        "Shade": "1"
       },
       "03": {
-        "Color": "WHITE",
+        "Color": "YELLOW",
         "X": "0",
         "Y": "3",
         "Shade": "0"
       },
       "14": {
-        "Color": "BLUE",
+        "Color": "WHITE",
         "X": "1",
         "Y": "4",
         "Shade": "0"
@@ -1598,28 +1598,28 @@
         "Color": "WHITE",
         "X": "0",
         "Y": "4",
-        "Shade": "0"
-      },
-      "30": {
-        "Color": "WHITE",
-        "X": "3",
-        "Y": "0",
         "Shade": "6"
       },
-      "20": {
+      "30": {
         "Color": "BLUE",
+        "X": "3",
+        "Y": "0",
+        "Shade": "0"
+      },
+      "20": {
+        "Color": "WHITE",
         "X": "2",
         "Y": "0",
         "Shade": "0"
       },
       "31": {
-        "Color": "RED",
+        "Color": "YELLOW",
         "X": "3",
         "Y": "1",
         "Shade": "0"
       },
       "10": {
-        "Color": "WHITE",
+        "Color": "RED",
         "X": "1",
         "Y": "0",
         "Shade": "0"
@@ -1628,31 +1628,31 @@
         "Color": "WHITE",
         "X": "2",
         "Y": "1",
-        "Shade": "2"
+        "Shade": "0"
       },
       "32": {
         "Color": "WHITE",
         "X": "3",
         "Y": "2",
-        "Shade": "3"
+        "Shade": "0"
       }
     }
   },
   "13": {
-    "Difficulty": "3",
+    "Difficulty": "5",
     "ID": "14",
     "Boxes": {
       "00": {
         "Color": "WHITE",
         "X": "0",
         "Y": "0",
-        "Shade": "0"
+        "Shade": "1"
       },
       "11": {
         "Color": "WHITE",
         "X": "1",
         "Y": "1",
-        "Shade": "4"
+        "Shade": "2"
       },
       "22": {
         "Color": "WHITE",
@@ -1664,37 +1664,37 @@
         "Color": "WHITE",
         "X": "3",
         "Y": "3",
-        "Shade": "1"
+        "Shade": "0"
       },
       "01": {
-        "Color": "BLUE",
+        "Color": "WHITE",
         "X": "0",
         "Y": "1",
         "Shade": "0"
       },
       "12": {
-        "Color": "WHITE",
+        "Color": "BLUE",
         "X": "1",
         "Y": "2",
-        "Shade": "5"
+        "Shade": "0"
       },
       "23": {
-        "Color": "RED",
+        "Color": "WHITE",
         "X": "2",
         "Y": "3",
-        "Shade": "0"
+        "Shade": "4"
       },
       "34": {
         "Color": "WHITE",
         "X": "3",
         "Y": "4",
-        "Shade": "0"
+        "Shade": "1"
       },
       "02": {
-        "Color": "RED",
+        "Color": "WHITE",
         "X": "0",
         "Y": "2",
-        "Shade": "0"
+        "Shade": "3"
       },
       "13": {
         "Color": "WHITE",
@@ -1706,16 +1706,16 @@
         "Color": "WHITE",
         "X": "2",
         "Y": "4",
-        "Shade": "5"
+        "Shade": "0"
       },
       "03": {
-        "Color": "WHITE",
+        "Color": "BLUE",
         "X": "0",
         "Y": "3",
         "Shade": "0"
       },
       "14": {
-        "Color": "BLUE",
+        "Color": "WHITE",
         "X": "1",
         "Y": "4",
         "Shade": "0"
@@ -1727,22 +1727,22 @@
         "Shade": "0"
       },
       "30": {
-        "Color": "WHITE",
+        "Color": "BLUE",
         "X": "3",
+        "Y": "0",
+        "Shade": "0"
+      },
+      "20": {
+        "Color": "WHITE",
+        "X": "2",
         "Y": "0",
         "Shade": "6"
       },
-      "20": {
-        "Color": "BLUE",
-        "X": "2",
-        "Y": "0",
-        "Shade": "0"
-      },
       "31": {
-        "Color": "RED",
+        "Color": "WHITE",
         "X": "3",
         "Y": "1",
-        "Shade": "0"
+        "Shade": "5"
       },
       "10": {
         "Color": "WHITE",
@@ -1751,21 +1751,21 @@
         "Shade": "0"
       },
       "21": {
-        "Color": "WHITE",
+        "Color": "BLUE",
         "X": "2",
         "Y": "1",
-        "Shade": "2"
+        "Shade": "0"
       },
       "32": {
         "Color": "WHITE",
         "X": "3",
         "Y": "2",
-        "Shade": "3"
+        "Shade": "2"
       }
     }
   },
   "14": {
-    "Difficulty": "5",
+    "Difficulty": "4",
     "ID": "15",
     "Boxes": {
       "00": {
@@ -1775,25 +1775,25 @@
         "Shade": "0"
       },
       "11": {
-        "Color": "WHITE",
+        "Color": "YELLOW",
         "X": "1",
         "Y": "1",
-        "Shade": "4"
+        "Shade": "0"
       },
       "22": {
         "Color": "WHITE",
         "X": "2",
         "Y": "2",
-        "Shade": "0"
+        "Shade": "3"
       },
       "33": {
         "Color": "WHITE",
         "X": "3",
         "Y": "3",
-        "Shade": "1"
+        "Shade": "0"
       },
       "01": {
-        "Color": "BLUE",
+        "Color": "WHITE",
         "X": "0",
         "Y": "1",
         "Shade": "0"
@@ -1805,7 +1805,7 @@
         "Shade": "5"
       },
       "23": {
-        "Color": "RED",
+        "Color": "PURPLE",
         "X": "2",
         "Y": "3",
         "Shade": "0"
@@ -1814,16 +1814,16 @@
         "Color": "WHITE",
         "X": "3",
         "Y": "4",
-        "Shade": "0"
+        "Shade": "4"
       },
       "02": {
-        "Color": "RED",
+        "Color": "GREEN",
         "X": "0",
         "Y": "2",
         "Shade": "0"
       },
       "13": {
-        "Color": "WHITE",
+        "Color": "BLUE",
         "X": "1",
         "Y": "3",
         "Shade": "0"
@@ -1832,7 +1832,7 @@
         "Color": "WHITE",
         "X": "2",
         "Y": "4",
-        "Shade": "5"
+        "Shade": "0"
       },
       "03": {
         "Color": "WHITE",
@@ -1841,10 +1841,10 @@
         "Shade": "0"
       },
       "14": {
-        "Color": "BLUE",
+        "Color": "WHITE",
         "X": "1",
         "Y": "4",
-        "Shade": "0"
+        "Shade": "1"
       },
       "04": {
         "Color": "WHITE",
@@ -1856,16 +1856,16 @@
         "Color": "WHITE",
         "X": "3",
         "Y": "0",
-        "Shade": "6"
+        "Shade": "1"
       },
       "20": {
-        "Color": "BLUE",
+        "Color": "WHITE",
         "X": "2",
         "Y": "0",
         "Shade": "0"
       },
       "31": {
-        "Color": "RED",
+        "Color": "WHITE",
         "X": "3",
         "Y": "1",
         "Shade": "0"
@@ -1874,24 +1874,24 @@
         "Color": "WHITE",
         "X": "1",
         "Y": "0",
-        "Shade": "0"
+        "Shade": "2"
       },
       "21": {
-        "Color": "WHITE",
+        "Color": "RED",
         "X": "2",
         "Y": "1",
-        "Shade": "2"
+        "Shade": "0"
       },
       "32": {
         "Color": "WHITE",
         "X": "3",
         "Y": "2",
-        "Shade": "3"
+        "Shade": "6"
       }
     }
   },
   "15": {
-    "Difficulty": "4",
+    "Difficulty": "5",
     "ID": "16",
     "Boxes": {
       "00": {
@@ -1901,40 +1901,40 @@
         "Shade": "0"
       },
       "11": {
-        "Color": "WHITE",
+        "Color": "PURPLE",
         "X": "1",
         "Y": "1",
-        "Shade": "4"
+        "Shade": "0"
       },
       "22": {
         "Color": "WHITE",
         "X": "2",
         "Y": "2",
-        "Shade": "0"
+        "Shade": "5"
       },
       "33": {
         "Color": "WHITE",
         "X": "3",
         "Y": "3",
-        "Shade": "1"
+        "Shade": "0"
       },
       "01": {
-        "Color": "BLUE",
+        "Color": "WHITE",
         "X": "0",
         "Y": "1",
-        "Shade": "0"
+        "Shade": "1"
       },
       "12": {
         "Color": "WHITE",
         "X": "1",
         "Y": "2",
-        "Shade": "5"
+        "Shade": "2"
       },
       "23": {
-        "Color": "RED",
+        "Color": "WHITE",
         "X": "2",
         "Y": "3",
-        "Shade": "0"
+        "Shade": "3"
       },
       "34": {
         "Color": "WHITE",
@@ -1943,7 +1943,7 @@
         "Shade": "0"
       },
       "02": {
-        "Color": "RED",
+        "Color": "GREEN",
         "X": "0",
         "Y": "2",
         "Shade": "0"
@@ -1952,22 +1952,22 @@
         "Color": "WHITE",
         "X": "1",
         "Y": "3",
-        "Shade": "0"
-      },
-      "24": {
-        "Color": "WHITE",
-        "X": "2",
-        "Y": "4",
         "Shade": "5"
       },
+      "24": {
+        "Color": "PURPLE",
+        "X": "2",
+        "Y": "4",
+        "Shade": "0"
+      },
       "03": {
-        "Color": "WHITE",
+        "Color": "PURPLE",
         "X": "0",
         "Y": "3",
         "Shade": "0"
       },
       "14": {
-        "Color": "BLUE",
+        "Color": "GREEN",
         "X": "1",
         "Y": "4",
         "Shade": "0"
@@ -1976,22 +1976,22 @@
         "Color": "WHITE",
         "X": "0",
         "Y": "4",
-        "Shade": "0"
+        "Shade": "4"
       },
       "30": {
         "Color": "WHITE",
         "X": "3",
         "Y": "0",
-        "Shade": "6"
-      },
-      "20": {
-        "Color": "BLUE",
-        "X": "2",
-        "Y": "0",
         "Shade": "0"
       },
+      "20": {
+        "Color": "WHITE",
+        "X": "2",
+        "Y": "0",
+        "Shade": "1"
+      },
       "31": {
-        "Color": "RED",
+        "Color": "WHITE",
         "X": "3",
         "Y": "1",
         "Shade": "0"
@@ -2000,24 +2000,24 @@
         "Color": "WHITE",
         "X": "1",
         "Y": "0",
-        "Shade": "0"
+        "Shade": "6"
       },
       "21": {
-        "Color": "WHITE",
+        "Color": "GREEN",
         "X": "2",
         "Y": "1",
-        "Shade": "2"
+        "Shade": "0"
       },
       "32": {
         "Color": "WHITE",
         "X": "3",
         "Y": "2",
-        "Shade": "3"
+        "Shade": "0"
       }
     }
   },
   "16": {
-    "Difficulty": "5",
+    "Difficulty": "3",
     "ID": "17",
     "Boxes": {
       "00": {
@@ -2042,10 +2042,10 @@
         "Color": "WHITE",
         "X": "3",
         "Y": "3",
-        "Shade": "1"
+        "Shade": "0"
       },
       "01": {
-        "Color": "BLUE",
+        "Color": "WHITE",
         "X": "0",
         "Y": "1",
         "Shade": "0"
@@ -2054,10 +2054,10 @@
         "Color": "WHITE",
         "X": "1",
         "Y": "2",
-        "Shade": "5"
+        "Shade": "0"
       },
       "23": {
-        "Color": "RED",
+        "Color": "BLUE",
         "X": "2",
         "Y": "3",
         "Shade": "0"
@@ -2075,7 +2075,7 @@
         "Shade": "0"
       },
       "13": {
-        "Color": "WHITE",
+        "Color": "GREEN",
         "X": "1",
         "Y": "3",
         "Shade": "0"
@@ -2084,19 +2084,19 @@
         "Color": "WHITE",
         "X": "2",
         "Y": "4",
-        "Shade": "5"
+        "Shade": "0"
       },
       "03": {
         "Color": "WHITE",
         "X": "0",
         "Y": "3",
-        "Shade": "0"
+        "Shade": "5"
       },
       "14": {
-        "Color": "BLUE",
+        "Color": "WHITE",
         "X": "1",
         "Y": "4",
-        "Shade": "0"
+        "Shade": "3"
       },
       "04": {
         "Color": "WHITE",
@@ -2108,22 +2108,22 @@
         "Color": "WHITE",
         "X": "3",
         "Y": "0",
-        "Shade": "6"
-      },
-      "20": {
-        "Color": "BLUE",
-        "X": "2",
-        "Y": "0",
         "Shade": "0"
       },
+      "20": {
+        "Color": "WHITE",
+        "X": "2",
+        "Y": "0",
+        "Shade": "6"
+      },
       "31": {
-        "Color": "RED",
+        "Color": "YELLOW",
         "X": "3",
         "Y": "1",
         "Shade": "0"
       },
       "10": {
-        "Color": "WHITE",
+        "Color": "PURPLE",
         "X": "1",
         "Y": "0",
         "Shade": "0"
@@ -2132,31 +2132,31 @@
         "Color": "WHITE",
         "X": "2",
         "Y": "1",
-        "Shade": "2"
+        "Shade": "0"
       },
       "32": {
         "Color": "WHITE",
         "X": "3",
         "Y": "2",
-        "Shade": "3"
+        "Shade": "2"
       }
     }
   },
   "17": {
-    "Difficulty": "3",
+    "Difficulty": "5",
     "ID": "18",
     "Boxes": {
       "00": {
         "Color": "WHITE",
         "X": "0",
         "Y": "0",
-        "Shade": "0"
+        "Shade": "3"
       },
       "11": {
         "Color": "WHITE",
         "X": "1",
         "Y": "1",
-        "Shade": "4"
+        "Shade": "6"
       },
       "22": {
         "Color": "WHITE",
@@ -2165,25 +2165,25 @@
         "Shade": "0"
       },
       "33": {
-        "Color": "WHITE",
+        "Color": "RED",
         "X": "3",
         "Y": "3",
-        "Shade": "1"
+        "Shade": "0"
       },
       "01": {
-        "Color": "BLUE",
+        "Color": "WHITE",
         "X": "0",
         "Y": "1",
-        "Shade": "0"
+        "Shade": "4"
       },
       "12": {
         "Color": "WHITE",
         "X": "1",
         "Y": "2",
-        "Shade": "5"
+        "Shade": "2"
       },
       "23": {
-        "Color": "RED",
+        "Color": "YELLOW",
         "X": "2",
         "Y": "3",
         "Shade": "0"
@@ -2192,13 +2192,13 @@
         "Color": "WHITE",
         "X": "3",
         "Y": "4",
-        "Shade": "0"
+        "Shade": "6"
       },
       "02": {
-        "Color": "RED",
+        "Color": "WHITE",
         "X": "0",
         "Y": "2",
-        "Shade": "0"
+        "Shade": "1"
       },
       "13": {
         "Color": "WHITE",
@@ -2207,19 +2207,19 @@
         "Shade": "0"
       },
       "24": {
-        "Color": "WHITE",
+        "Color": "RED",
         "X": "2",
         "Y": "4",
-        "Shade": "5"
+        "Shade": "0"
       },
       "03": {
         "Color": "WHITE",
         "X": "0",
         "Y": "3",
-        "Shade": "0"
+        "Shade": "5"
       },
       "14": {
-        "Color": "BLUE",
+        "Color": "YELLOW",
         "X": "1",
         "Y": "4",
         "Shade": "0"
@@ -2234,16 +2234,16 @@
         "Color": "WHITE",
         "X": "3",
         "Y": "0",
-        "Shade": "6"
+        "Shade": "5"
       },
       "20": {
-        "Color": "BLUE",
+        "Color": "WHITE",
         "X": "2",
         "Y": "0",
         "Shade": "0"
       },
       "31": {
-        "Color": "RED",
+        "Color": "WHITE",
         "X": "3",
         "Y": "1",
         "Shade": "0"
@@ -2258,18 +2258,18 @@
         "Color": "WHITE",
         "X": "2",
         "Y": "1",
-        "Shade": "2"
+        "Shade": "0"
       },
       "32": {
-        "Color": "WHITE",
+        "Color": "YELLOW",
         "X": "3",
         "Y": "2",
-        "Shade": "3"
+        "Shade": "0"
       }
     }
   },
   "18": {
-    "Difficulty": "6",
+    "Difficulty": "5",
     "ID": "19",
     "Boxes": {
       "00": {
@@ -2282,13 +2282,13 @@
         "Color": "WHITE",
         "X": "1",
         "Y": "1",
-        "Shade": "4"
+        "Shade": "0"
       },
       "22": {
         "Color": "WHITE",
         "X": "2",
         "Y": "2",
-        "Shade": "0"
+        "Shade": "3"
       },
       "33": {
         "Color": "WHITE",
@@ -2297,31 +2297,31 @@
         "Shade": "1"
       },
       "01": {
-        "Color": "BLUE",
+        "Color": "WHITE",
         "X": "0",
         "Y": "1",
         "Shade": "0"
       },
       "12": {
-        "Color": "WHITE",
+        "Color": "PURPLE",
         "X": "1",
         "Y": "2",
-        "Shade": "5"
+        "Shade": "0"
       },
       "23": {
-        "Color": "RED",
+        "Color": "YELLOW",
         "X": "2",
         "Y": "3",
         "Shade": "0"
       },
       "34": {
-        "Color": "WHITE",
+        "Color": "RED",
         "X": "3",
         "Y": "4",
         "Shade": "0"
       },
       "02": {
-        "Color": "RED",
+        "Color": "WHITE",
         "X": "0",
         "Y": "2",
         "Shade": "0"
@@ -2330,16 +2330,16 @@
         "Color": "WHITE",
         "X": "1",
         "Y": "3",
-        "Shade": "0"
+        "Shade": "4"
       },
       "24": {
         "Color": "WHITE",
         "X": "2",
         "Y": "4",
-        "Shade": "5"
+        "Shade": "6"
       },
       "03": {
-        "Color": "WHITE",
+        "Color": "RED",
         "X": "0",
         "Y": "3",
         "Shade": "0"
@@ -2354,25 +2354,25 @@
         "Color": "WHITE",
         "X": "0",
         "Y": "4",
-        "Shade": "0"
+        "Shade": "5"
       },
       "30": {
-        "Color": "WHITE",
+        "Color": "YELLOW",
         "X": "3",
         "Y": "0",
-        "Shade": "6"
+        "Shade": "0"
       },
       "20": {
-        "Color": "BLUE",
+        "Color": "WHITE",
         "X": "2",
         "Y": "0",
         "Shade": "0"
       },
       "31": {
-        "Color": "RED",
+        "Color": "WHITE",
         "X": "3",
         "Y": "1",
-        "Shade": "0"
+        "Shade": "2"
       },
       "10": {
         "Color": "WHITE",
@@ -2381,46 +2381,46 @@
         "Shade": "0"
       },
       "21": {
-        "Color": "WHITE",
+        "Color": "BLUE",
         "X": "2",
         "Y": "1",
-        "Shade": "2"
+        "Shade": "0"
       },
       "32": {
-        "Color": "WHITE",
+        "Color": "GREEN",
         "X": "3",
         "Y": "2",
-        "Shade": "3"
+        "Shade": "0"
       }
     }
   },
   "19": {
-    "Difficulty": "5",
+    "Difficulty": "6",
     "ID": "20",
     "Boxes": {
       "00": {
         "Color": "WHITE",
         "X": "0",
         "Y": "0",
-        "Shade": "0"
+        "Shade": "6"
       },
       "11": {
         "Color": "WHITE",
         "X": "1",
         "Y": "1",
-        "Shade": "4"
+        "Shade": "5"
       },
       "22": {
         "Color": "WHITE",
         "X": "2",
         "Y": "2",
-        "Shade": "0"
+        "Shade": "2"
       },
       "33": {
         "Color": "WHITE",
         "X": "3",
         "Y": "3",
-        "Shade": "1"
+        "Shade": "3"
       },
       "01": {
         "Color": "BLUE",
@@ -2429,25 +2429,25 @@
         "Shade": "0"
       },
       "12": {
-        "Color": "WHITE",
+        "Color": "BLUE",
         "X": "1",
         "Y": "2",
-        "Shade": "5"
+        "Shade": "0"
       },
       "23": {
-        "Color": "RED",
+        "Color": "BLUE",
         "X": "2",
         "Y": "3",
         "Shade": "0"
       },
       "34": {
-        "Color": "WHITE",
+        "Color": "PURPLE",
         "X": "3",
         "Y": "4",
         "Shade": "0"
       },
       "02": {
-        "Color": "RED",
+        "Color": "WHITE",
         "X": "0",
         "Y": "2",
         "Shade": "0"
@@ -2462,7 +2462,7 @@
         "Color": "WHITE",
         "X": "2",
         "Y": "4",
-        "Shade": "5"
+        "Shade": "0"
       },
       "03": {
         "Color": "WHITE",
@@ -2471,7 +2471,7 @@
         "Shade": "0"
       },
       "14": {
-        "Color": "BLUE",
+        "Color": "WHITE",
         "X": "1",
         "Y": "4",
         "Shade": "0"
@@ -2480,25 +2480,25 @@
         "Color": "WHITE",
         "X": "0",
         "Y": "4",
-        "Shade": "0"
+        "Shade": "1"
       },
       "30": {
-        "Color": "WHITE",
+        "Color": "GREEN",
         "X": "3",
         "Y": "0",
-        "Shade": "6"
+        "Shade": "0"
       },
       "20": {
-        "Color": "BLUE",
+        "Color": "WHITE",
         "X": "2",
         "Y": "0",
-        "Shade": "0"
+        "Shade": "4"
       },
       "31": {
-        "Color": "RED",
+        "Color": "WHITE",
         "X": "3",
         "Y": "1",
-        "Shade": "0"
+        "Shade": "6"
       },
       "10": {
         "Color": "WHITE",
@@ -2507,25 +2507,25 @@
         "Shade": "0"
       },
       "21": {
-        "Color": "WHITE",
+        "Color": "RED",
         "X": "2",
         "Y": "1",
-        "Shade": "2"
+        "Shade": "0"
       },
       "32": {
-        "Color": "WHITE",
+        "Color": "YELLOW",
         "X": "3",
         "Y": "2",
-        "Shade": "3"
+        "Shade": "0"
       }
     }
   },
   "20": {
-    "Difficulty": "6",
+    "Difficulty": "5",
     "ID": "21",
     "Boxes": {
       "00": {
-        "Color": "WHITE",
+        "Color": "YELLOW",
         "X": "0",
         "Y": "0",
         "Shade": "0"
@@ -2546,10 +2546,10 @@
         "Color": "WHITE",
         "X": "3",
         "Y": "3",
-        "Shade": "1"
+        "Shade": "3"
       },
       "01": {
-        "Color": "BLUE",
+        "Color": "WHITE",
         "X": "0",
         "Y": "1",
         "Shade": "0"
@@ -2558,10 +2558,10 @@
         "Color": "WHITE",
         "X": "1",
         "Y": "2",
-        "Shade": "5"
+        "Shade": "0"
       },
       "23": {
-        "Color": "RED",
+        "Color": "YELLOW",
         "X": "2",
         "Y": "3",
         "Shade": "0"
@@ -2573,16 +2573,16 @@
         "Shade": "0"
       },
       "02": {
-        "Color": "RED",
+        "Color": "WHITE",
         "X": "0",
         "Y": "2",
-        "Shade": "0"
+        "Shade": "2"
       },
       "13": {
         "Color": "WHITE",
         "X": "1",
         "Y": "3",
-        "Shade": "0"
+        "Shade": "5"
       },
       "24": {
         "Color": "WHITE",
@@ -2597,7 +2597,7 @@
         "Shade": "0"
       },
       "14": {
-        "Color": "BLUE",
+        "Color": "YELLOW",
         "X": "1",
         "Y": "4",
         "Shade": "0"
@@ -2606,25 +2606,25 @@
         "Color": "WHITE",
         "X": "0",
         "Y": "4",
-        "Shade": "0"
+        "Shade": "6"
       },
       "30": {
         "Color": "WHITE",
         "X": "3",
         "Y": "0",
-        "Shade": "6"
+        "Shade": "1"
       },
       "20": {
-        "Color": "BLUE",
+        "Color": "WHITE",
         "X": "2",
         "Y": "0",
         "Shade": "0"
       },
       "31": {
-        "Color": "RED",
+        "Color": "WHITE",
         "X": "3",
         "Y": "1",
-        "Shade": "0"
+        "Shade": "2"
       },
       "10": {
         "Color": "WHITE",
@@ -2636,18 +2636,18 @@
         "Color": "WHITE",
         "X": "2",
         "Y": "1",
-        "Shade": "2"
+        "Shade": "0"
       },
       "32": {
-        "Color": "WHITE",
+        "Color": "YELLOW",
         "X": "3",
         "Y": "2",
-        "Shade": "3"
+        "Shade": "0"
       }
     }
   },
   "21": {
-    "Difficulty": "5",
+    "Difficulty": "6",
     "ID": "22",
     "Boxes": {
       "00": {
@@ -2657,25 +2657,25 @@
         "Shade": "0"
       },
       "11": {
-        "Color": "WHITE",
+        "Color": "GREEN",
         "X": "1",
         "Y": "1",
-        "Shade": "4"
+        "Shade": "0"
       },
       "22": {
         "Color": "WHITE",
         "X": "2",
         "Y": "2",
-        "Shade": "0"
+        "Shade": "4"
       },
       "33": {
-        "Color": "WHITE",
+        "Color": "GREEN",
         "X": "3",
         "Y": "3",
-        "Shade": "1"
+        "Shade": "0"
       },
       "01": {
-        "Color": "BLUE",
+        "Color": "WHITE",
         "X": "0",
         "Y": "1",
         "Shade": "0"
@@ -2684,13 +2684,13 @@
         "Color": "WHITE",
         "X": "1",
         "Y": "2",
-        "Shade": "5"
+        "Shade": "3"
       },
       "23": {
-        "Color": "RED",
+        "Color": "WHITE",
         "X": "2",
         "Y": "3",
-        "Shade": "0"
+        "Shade": "6"
       },
       "34": {
         "Color": "WHITE",
@@ -2699,22 +2699,22 @@
         "Shade": "0"
       },
       "02": {
-        "Color": "RED",
+        "Color": "WHITE",
         "X": "0",
         "Y": "2",
-        "Shade": "0"
+        "Shade": "1"
       },
       "13": {
-        "Color": "WHITE",
+        "Color": "BLUE",
         "X": "1",
         "Y": "3",
         "Shade": "0"
       },
       "24": {
-        "Color": "WHITE",
+        "Color": "GREEN",
         "X": "2",
         "Y": "4",
-        "Shade": "5"
+        "Shade": "0"
       },
       "03": {
         "Color": "WHITE",
@@ -2723,10 +2723,10 @@
         "Shade": "0"
       },
       "14": {
-        "Color": "BLUE",
+        "Color": "WHITE",
         "X": "1",
         "Y": "4",
-        "Shade": "0"
+        "Shade": "2"
       },
       "04": {
         "Color": "WHITE",
@@ -2738,7 +2738,7 @@
         "Color": "WHITE",
         "X": "3",
         "Y": "0",
-        "Shade": "6"
+        "Shade": "0"
       },
       "20": {
         "Color": "BLUE",
@@ -2747,7 +2747,7 @@
         "Shade": "0"
       },
       "31": {
-        "Color": "RED",
+        "Color": "BLUE",
         "X": "3",
         "Y": "1",
         "Shade": "0"
@@ -2756,24 +2756,24 @@
         "Color": "WHITE",
         "X": "1",
         "Y": "0",
-        "Shade": "0"
+        "Shade": "1"
       },
       "21": {
         "Color": "WHITE",
         "X": "2",
         "Y": "1",
-        "Shade": "2"
+        "Shade": "5"
       },
       "32": {
         "Color": "WHITE",
         "X": "3",
         "Y": "2",
-        "Shade": "3"
+        "Shade": "5"
       }
     }
   },
   "22": {
-    "Difficulty": "6",
+    "Difficulty": "5",
     "ID": "23",
     "Boxes": {
       "00": {
@@ -2899,20 +2899,20 @@
     }
   },
   "23": {
-    "Difficulty": "5",
+    "Difficulty": "6",
     "ID": "24",
     "Boxes": {
       "00": {
         "Color": "WHITE",
         "X": "0",
         "Y": "0",
-        "Shade": "0"
+        "Shade": "1"
       },
       "11": {
-        "Color": "WHITE",
+        "Color": "YELLOW",
         "X": "1",
         "Y": "1",
-        "Shade": "4"
+        "Shade": "0"
       },
       "22": {
         "Color": "WHITE",
@@ -2924,10 +2924,10 @@
         "Color": "WHITE",
         "X": "3",
         "Y": "3",
-        "Shade": "1"
+        "Shade": "2"
       },
       "01": {
-        "Color": "BLUE",
+        "Color": "PURPLE",
         "X": "0",
         "Y": "1",
         "Shade": "0"
@@ -2936,22 +2936,22 @@
         "Color": "WHITE",
         "X": "1",
         "Y": "2",
-        "Shade": "5"
+        "Shade": "0"
       },
       "23": {
-        "Color": "RED",
+        "Color": "WHITE",
         "X": "2",
         "Y": "3",
-        "Shade": "0"
+        "Shade": "5"
       },
       "34": {
         "Color": "WHITE",
         "X": "3",
         "Y": "4",
-        "Shade": "0"
+        "Shade": "1"
       },
       "02": {
-        "Color": "RED",
+        "Color": "YELLOW",
         "X": "0",
         "Y": "2",
         "Shade": "0"
@@ -2966,7 +2966,7 @@
         "Color": "WHITE",
         "X": "2",
         "Y": "4",
-        "Shade": "5"
+        "Shade": "3"
       },
       "03": {
         "Color": "WHITE",
@@ -2975,37 +2975,37 @@
         "Shade": "0"
       },
       "14": {
-        "Color": "BLUE",
+        "Color": "WHITE",
         "X": "1",
         "Y": "4",
-        "Shade": "0"
+        "Shade": "6"
       },
       "04": {
         "Color": "WHITE",
         "X": "0",
         "Y": "4",
-        "Shade": "0"
+        "Shade": "4"
       },
       "30": {
         "Color": "WHITE",
         "X": "3",
         "Y": "0",
-        "Shade": "6"
+        "Shade": "0"
       },
       "20": {
-        "Color": "BLUE",
+        "Color": "YELLOW",
         "X": "2",
         "Y": "0",
         "Shade": "0"
       },
       "31": {
-        "Color": "RED",
+        "Color": "WHITE",
         "X": "3",
         "Y": "1",
-        "Shade": "0"
+        "Shade": "5"
       },
       "10": {
-        "Color": "WHITE",
+        "Color": "PURPLE",
         "X": "1",
         "Y": "0",
         "Shade": "0"
@@ -3014,13 +3014,13 @@
         "Color": "WHITE",
         "X": "2",
         "Y": "1",
-        "Shade": "2"
+        "Shade": "0"
       },
       "32": {
         "Color": "WHITE",
         "X": "3",
         "Y": "2",
-        "Shade": "3"
+        "Shade": "4"
       }
     }
   },
