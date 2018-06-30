@@ -29,6 +29,7 @@ import static java.lang.String.valueOf;
 
 
 public class PlayerControllerInterfaceSocket implements PlayerControllerInterface {
+    private MatchToSend matchToSend;
     private View view;
     private final Socket clientSocket;
     private final ObjectOutputStream out;
@@ -57,43 +58,50 @@ public class PlayerControllerInterfaceSocket implements PlayerControllerInterfac
         try {
             ObjectInputStream in= new ObjectInputStream(clientSocket.getInputStream());
             while (true){
-                String update = (String) in.readObject();
-                jsonObject = (JSONObject) parser.parse(update);
-                String method= (String) jsonObject.get("method");
+                matchToSend=(MatchToSend) in.readObject();
+                String method=matchToSend.getMethod();
                 handleUpdate(method);
             }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
         }
     }
 
     private void handleUpdate(String method) {
         switch(method){
-            case Constants.ONTURNEND: view.onTurnEnd();
+            case Constants.ONTURNEND: {
+                view.onTurnEnd();
                 break;
-            case Constants.ONSUCCES:
+            }
+            case Constants.ONSUCCES: {
+                String message = (String) matchToSend.getMessage();
                 try {
-                    view.onSuccess((String )jsonObject.get(1));
+                    view.onSuccess(message);
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
-                break;
-            case Constants.ONSETPLAYING: view.onSetPlaying();
-                break;
-            case Constants.ONSCHEMETOCHOOSE: {
-                //view.onSchemeToChoose((Match) match);
+            }
+            case Constants.ONSETPLAYING: {
+                view.onSetPlaying();
                 break;
             }
-            case Constants.ONGAMEUPDATE:
+            case Constants.ONSCHEMETOCHOOSE: {
+                Match match=(Match)matchToSend.getMatch();
+                view.onSchemeToChoose(match);
                 break;
-            case Constants.ONGAMEEND:
+            }
+            case Constants.ONGAMEUPDATE: {
+                Match match = (Match) matchToSend.getMatch();
+                view.onGameUpdate(match);
                 break;
-
-
+            }
+            case Constants.ONGAMEEND:{
+                Match match=(Match)matchToSend.getMatch();
+                view.onGameEnd(match);
+                break;
+            }
         }
 
 

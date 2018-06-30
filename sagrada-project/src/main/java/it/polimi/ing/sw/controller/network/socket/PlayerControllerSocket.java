@@ -24,6 +24,7 @@ import java.net.Socket;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import static java.lang.String.format;
 import static java.lang.String.valueOf;
 
 public class PlayerControllerSocket implements RemotePlayer {
@@ -108,11 +109,9 @@ public class PlayerControllerSocket implements RemotePlayer {
 
     @Override
     public void onSchemeToChoose(Match match) throws RemoteException, NotValidPlayException {
-        String matchToSend= new MatchToSend(match).convertMatch();
-        Gson gson= new Gson();
-        String json=gson.toJson(new Data(Constants.ONSCHEMETOCHOOSE, matchToSend));
+        MatchToSend matchToSend=new MatchToSend(Constants.ONSCHEMETOCHOOSE,match);
         try {
-            out.writeObject(json);
+            out.writeObject(matchToSend);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -120,16 +119,22 @@ public class PlayerControllerSocket implements RemotePlayer {
 
     @Override
     public void onSuccess(String message) throws RemoteException {
+        MatchToSend matchToSend=new MatchToSend(Constants.ONSUCCES, message);
+        try {
+            out.writeObject(matchToSend);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
 
     }
 
     @Override
     public void onGameUpdate(Match match) throws RemoteException {
-        String matchToSend= new MatchToSend(match).convertMatch();
-        Gson gson=new Gson();
-        String json= gson.toJson(new Data(Constants.ONGAMEUPDATE, matchToSend));
+        MatchToSend matchToSend=new MatchToSend(Constants.ONGAMEUPDATE, match);
         try {
-            out.writeObject(json);
+            out.writeObject(matchToSend);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -137,16 +142,19 @@ public class PlayerControllerSocket implements RemotePlayer {
 
     @Override
     public void onTurnEnd() throws RemoteException {
-
+        MatchToSend matchToSend=new MatchToSend(Constants.ONTURNEND);
+        try {
+            out.writeObject(matchToSend);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void onGameEnd(Match match) throws RemoteException {
-        String matchToSend= new MatchToSend(match).convertMatch();
-        Gson gson=new Gson();
-        String json= gson.toJson(new Data(Constants.ONGAMEEND, matchToSend));
+        MatchToSend matchToSend=new MatchToSend(Constants.ONGAMEEND, match);
         try {
-            out.writeObject(json);
+            out.writeObject(matchToSend);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -154,10 +162,9 @@ public class PlayerControllerSocket implements RemotePlayer {
 
     @Override
     public void onPlayerLogged() throws RemoteException {
-        Gson gson= new Gson();
-        String json=gson.toJson(new SimpleData("onPlayerLogged"));
+        MatchToSend matchToSend=new MatchToSend(Constants.ONPLAYERLOGGED);
         try {
-            out.writeObject(json);
+            out.writeObject(matchToSend);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -165,10 +172,9 @@ public class PlayerControllerSocket implements RemotePlayer {
 
     @Override
     public void onSetPlaying() throws RemoteException {
-        Gson gson= new Gson();
-        String json=gson.toJson(new SimpleData(Constants.ONSETPLAYING));
+        MatchToSend matchToSend=new MatchToSend(Constants.ONSETPLAYING);
         try {
-            out.writeObject(json);
+            out.writeObject(matchToSend);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -187,21 +193,5 @@ public class PlayerControllerSocket implements RemotePlayer {
     @Override
     public void onOtherInfoToolCard12(Match match) throws RemoteException {
 
-    }
-    class Data {
-        String method;
-        String match;
-
-        Data(String method, String match) {
-            this.method = method;
-            this.match = match;
-        }
-    }
-
-    class SimpleData{
-        String method;
-        SimpleData(String method){
-            this.method=method;
-        }
     }
 }
