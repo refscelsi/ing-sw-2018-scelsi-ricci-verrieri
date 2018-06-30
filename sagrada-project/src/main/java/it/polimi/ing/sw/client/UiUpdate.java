@@ -12,7 +12,7 @@ public interface UiUpdate {
 
     void onActionNotValid(String errorCode);
 
-    public void onChooseNetwork (String message);
+    void onChooseNetwork (String message);
 
     void onTurnStart(Match match, String nickname);
 
@@ -37,4 +37,6 @@ public interface UiUpdate {
     void onOtherInfoToolCard11(Match match);
 
     void onUseToolCard11bNotValid(Match match, NotValidException e);
+
+    void onUseToolCard12NotValid(Match match, String e);
 }

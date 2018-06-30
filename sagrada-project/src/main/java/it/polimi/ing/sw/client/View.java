@@ -102,6 +102,10 @@ public class View extends UnicastRemoteObject implements RemotePlayer, RemotePla
         return nickname;
     }
 
+    public boolean checkIfRoundTrackIsFull() {
+        return match.getRoundTrack().getRoundTrackSize()!=0;
+    }
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Metodi con cui il model notifica la view in seguito ad un aggiornamento (vedi interfaccia RemotePlayerRMI)
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -110,11 +114,11 @@ public class View extends UnicastRemoteObject implements RemotePlayer, RemotePla
     @Override
     public void onSchemeToChoose(Match match) {
         this.match = match;
-        Runnable task = () -> {
+        Runnable task2 = () -> {
             ui.onSchemeToChoose(match, nickname, "Scegli il numero del tuo schema");
         };
-        Thread thread = new Thread(task);
-        thread.start();
+        Thread thread2 = new Thread(task2);
+        thread2.start();
     }
 
     @Override
@@ -150,31 +154,47 @@ public class View extends UnicastRemoteObject implements RemotePlayer, RemotePla
     public void onSetPlaying() {
         this.match = match;
         isPlaying = true;
-        Runnable task = () -> {
+        Runnable task1 = () -> {
             ui.onTurnStart(match, nickname);
         };
-        Thread thread = new Thread(task);
-        thread.start();
+        Thread thread1 = new Thread(task1);
+        thread1.start();
     }
 
     @Override
     public void onOtherInfoToolCard4(Match match) {
         ui.onGameUpdate(match, nickname);
-        Runnable task = () -> {
+        Runnable task3 = () -> {
             ui.onOtherInfoToolCard4(match);
         };
-        Thread thread = new Thread(task);
-        thread.start();
+        Thread thread3 = new Thread(task3);
+        thread3.start();
     }
 
     @Override
     public void onOtherInfoToolCard11(Match match) throws RemoteException {
         ui.onGameUpdate(match, nickname);
-        Runnable task = () -> {
+        Runnable task4 = () -> {
             ui.onOtherInfoToolCard11(match);
         };
-        Thread thread = new Thread(task);
-        thread.start();
+        Thread thread4 = new Thread(task4);
+        thread4.start();
+    }
+
+    @Override
+    public void onOtherInfoToolCard12(Match match) throws RemoteException {
+        ui.onGameUpdate(match, nickname);
+        Runnable task5 = () -> {
+            ui.onUseToolCard12NotValid(match, "Primo spostamento corretto, ora esegui il secondo");
+        };
+        Thread thread5 = new Thread(task5);
+        thread5.start();
+    }
+
+
+    public void onNotValidPlay(String e) {
+        ui.onActionNotValid(e);
+        ui.onTurnStart(match, nickname);
     }
 
 
@@ -443,9 +463,17 @@ public class View extends UnicastRemoteObject implements RemotePlayer, RemotePla
     }
 
 
-    public void onNotValidPlay(String e) {
-        ui.onActionNotValid(e);
-        ui.onTurnStart(match, nickname);
+    public void useToolCard12(int sourceRow, int sourceCol, int destRow, int destCol) {
+        try {
+            controller.useToolCard11(dice);
+        } catch (NetworkException e) {
+            System.err.println(e.getMessage());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (NotValidPlayException e) {
+            onNotValidPlay(e.getMessage());
+        } catch (NotValidException e) {
+            ui.onUseToolCard12NotValid(match, e.getMessage());
+        }
     }
-
 }

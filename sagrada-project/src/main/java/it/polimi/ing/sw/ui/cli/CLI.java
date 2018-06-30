@@ -210,6 +210,7 @@ public class CLI implements UiUpdate {
         controller.setChosenScheme(schemes.get(num - 1).getId());   //se per esempio qui c'è un errore, se lo gestisce il PlayerController*/
     }
 
+
     public void showSchemesToChoose(ArrayList<Scheme> schemes) {
         for (int i = 0; i < 4; i++) {
             System.out.println("Schema " + (i + 1) + " (con ID " + schemes.get(i).getId() + "):");
@@ -418,19 +419,26 @@ public class CLI implements UiUpdate {
 
     public void useToolCard5(Match match) {
         int dice, round, indexInRound;
-        do {
-            System.out.println("Digita l'indice del dado che vuoi posizionare, tra 1 e " + match.getDraftPool().getSize());
-            dice = scanner.nextInt();
-        } while (dice < 1 || dice > match.getDraftPool().getSize());
-        do {
-            System.out.println("Digita il numero di round a cui appartiene il dado con cui vuoi scambiarlo, tra 1 e " + match.getRoundTrack().getRoundTrackSize());
-            round = scanner.nextInt();
-        } while (round < 1 || round > match.getRoundTrack().getRoundTrackSize());
-        do {
-            System.out.println("Digita l'indice del dado nel round che hai scelto, tra 0 e " + (match.getRoundTrack().getNumberOfDices(round) - 1));
-            indexInRound = scanner.nextInt();
-        } while (indexInRound < 1 || indexInRound > Constants.NUM_COLS);
-        controller.useToolCard5(dice - 1, round, indexInRound);
+        boolean roundTrackIsFull = controller.checkIfRoundTrackIsFull();
+        if (!roundTrackIsFull) {
+            System.out.println("Non puoi utilizzare questa carta perché ancora non ci sono dadi sul tracciato dei round");
+            chooseAction(match, controller.getNickname());
+        }
+        else {
+            do {
+                System.out.println("Digita l'indice del dado della riserva che vuoi scambiare, tra 1 e " + match.getDraftPool().getSize());
+                dice = scanner.nextInt();
+            } while (dice < 1 || dice > match.getDraftPool().getSize());
+            do {
+                System.out.println("Digita il numero di round a cui appartiene il dado con cui vuoi scambiarlo, tra 1 e " + match.getRoundTrack().getRoundTrackSize());
+                round = scanner.nextInt();
+            } while (round < 1 || round > match.getRoundTrack().getRoundTrackSize());
+            do {
+                System.out.println("Digita l'indice del dado nel round che hai scelto, tra 0 e " + (match.getRoundTrack().getNumberOfDices(round) - 1));
+                indexInRound = scanner.nextInt();
+            } while (indexInRound < 1 || indexInRound > Constants.NUM_COLS);
+            controller.useToolCard5(dice - 1, round, indexInRound);
+        }
     }
 
 
@@ -466,6 +474,35 @@ public class CLI implements UiUpdate {
             dice = scanner.nextInt();
         } while (dice < 1 || dice > match.getDraftPool().getSize());
         controller.useToolCard11(dice - 1);
+    }
+
+
+    public void useToolCard12(Match match) {
+        int sourceRow, sourceCol, destRow, destCol;
+        boolean roundTrackIsFull = controller.checkIfRoundTrackIsFull();
+        if (!roundTrackIsFull) {
+            System.out.println("Non puoi utilizzare questa carta perché ancora non ci sono dadi sul tracciato dei round");
+            chooseAction(match, controller.getNickname());
+        }
+        else {
+            do {
+                System.out.println("Digita il numero della riga dello schema del dado che vuoi spostare, tra 1 e " + Constants.NUM_ROWS);
+                sourceRow = scanner.nextInt();
+            } while (sourceRow < 1 || sourceRow > Constants.NUM_ROWS);
+            do {
+                System.out.println("Digita il numero della colonna dello schema del dado che vuoi spostare, tra 1 e " + Constants.NUM_COLS);
+                sourceCol = scanner.nextInt();
+            } while (sourceCol < 1 || sourceCol > Constants.NUM_COLS);
+            do {
+                System.out.println("Digita il numero della riga dello schema in cui vuoi spostare il dado, tra 1 e " + Constants.NUM_ROWS);
+                destRow = scanner.nextInt();
+            } while (destRow < 1 || destRow > Constants.NUM_ROWS);
+            do {
+                System.out.println("Digita il numero della colonna dello schema in cui vuoi spostare il dado, tra 1 e " + Constants.NUM_COLS);
+                destCol = scanner.nextInt();
+            } while (destCol < 1 || destCol > Constants.NUM_COLS);
+            controller.useToolCard12(sourceRow, sourceCol, destRow, destCol);
+        }
     }
 
 
@@ -535,6 +572,7 @@ public class CLI implements UiUpdate {
         ShowPublicObjectives pub = new ShowPublicObjectives(match.getPublicObjectives());
         ShowPrivateObjectiveCard priv = new ShowPrivateObjectiveCard(match.getPlayer(nickname).getPrivateObjective());
         ShowToolCards tool = new ShowToolCards(match.getToolCards());
+        System.out.println("Hai " + match.getPlayer(nickname).getNumOfToken() + " segnalini favore");
         ShowDraftPool draft = new ShowDraftPool(match.getDraftPool());
         ShowScheme scheme = new ShowScheme(match.getPlayer(nickname).getScheme());
     }
@@ -606,6 +644,12 @@ public class CLI implements UiUpdate {
     public void onUseToolCard11bNotValid(Match match, NotValidException e) {
         System.err.println(e);
         onOtherInfoToolCard11(match);
+    }
+
+    @Override
+    public void onUseToolCard12NotValid(Match match, String e) {
+        System.out.println(e);
+        useToolCard12(match);
     }
 
     @Override
