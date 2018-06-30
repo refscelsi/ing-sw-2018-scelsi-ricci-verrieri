@@ -100,34 +100,15 @@ public class PlayerControllerSocket implements RemotePlayer {
             case Constants.USEDICEREQUEST: controller.sendUseDiceRequest(Integer.valueOf(params.get(0)),Integer.valueOf(params.get(1)),Integer.valueOf(params.get(2)) );
                 break;
 
-            case Constants.TOOLCARD1: controller.sendUseToolCard1Request(Integer.valueOf(params.get(0)), params.get(1));
+            case Constants.TOOLCARD: controller.sendUseToolCard(Integer.valueOf(params.get(0)), params.get(1));
                 break;
-
-            case Constants.TOOLCARD234: controller.sendUseToolCard234Request(Integer.valueOf(params.get(0)),Integer.valueOf(params.get(1)),Integer.valueOf(params.get(2)),Integer.valueOf(params.get(3)), Integer.valueOf(params.get(4)));
-                break;
-
-            case Constants.TOOLCARD5: controller.useToolCard5(Integer.valueOf(params.get(0)),Integer.valueOf(params.get(1)),Integer.valueOf(params.get(2)));
-                break;
-
-            case Constants.TOOLCARD6: controller.useToolCard6(Integer.valueOf(params.get(0)));
-                break;
-
-            case Constants.TOOLCARD78: controller.useToolCard78(Integer.valueOf(params.get(0)));
-                break;
-
-            case Constants.TOOLCARD9: controller.sendUseToolCard9Request(Integer.valueOf(params.get(0)),Integer.valueOf(params.get(1)),Integer.valueOf(params.get(2)));
-                break;
-
-            case Constants.TOOLCARD10:controller.useToolCard10(Integer.valueOf(params.get(0)));
-                break;
-
         }
 
     }
 
     @Override
     public void onSchemeToChoose(Match match) throws RemoteException, NotValidPlayException {
-        String matchToSend= new MatchToSend(match).convertMatch();
+        String matchToSend= new MatchToSend(match).convertStartMatch();
         Gson gson= new Gson();
         String json=gson.toJson(new Data(Constants.ONSCHEMETOCHOOSE, matchToSend));
         try {
@@ -144,7 +125,14 @@ public class PlayerControllerSocket implements RemotePlayer {
 
     @Override
     public void onGameUpdate(Match match) throws RemoteException {
-
+        String matchToSend= new MatchToSend(match).convertMatch();
+        Gson gson=new Gson();
+        String json= gson.toJson(new Data(Constants.ONGAMEUPDATE, matchToSend));
+        try {
+            out.writeObject(json);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

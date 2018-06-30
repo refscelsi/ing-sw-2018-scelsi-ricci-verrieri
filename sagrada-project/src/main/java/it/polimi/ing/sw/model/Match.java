@@ -104,6 +104,7 @@ public class Match implements Serializable {
         return toolCards;
     }
 
+    public ArrayList<Player> getPlayers(){return this.players;}
 
 
     // metodi SETTERS
@@ -133,6 +134,13 @@ public class Match implements Serializable {
                 this.remotePlayer.add(remotePlayer);
                 numPlayers++;
                 System.out.println(numPlayers);
+                try {
+                    Bag bag=new Bag();
+                    draftPool=bag.draw(3);
+                    startMatch();
+                } catch (NotValidPlayException e) {
+                    e.printStackTrace();
+                }
                 notifyLogin(player);
                 return;
             }
@@ -144,7 +152,6 @@ public class Match implements Serializable {
     //controllo sui nickname
     public boolean checkNickname(String nickname){
         boolean check=true;
-
         for(Player player: players){
             if(player.getNickname().equals(nickname)){
                 check=false;
