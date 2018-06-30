@@ -16,4 +16,11 @@ public class Constants {
     public static final int CONNECTION_RETRY_SECONDS = 2;
     public static final boolean START_AS_SERVER_IF_CLIENT_CONNECTION_FAILS = false;
 
+    //metodi PlayerInterface
+
+
+
+
+    //metodi PlayerController
+
 }
