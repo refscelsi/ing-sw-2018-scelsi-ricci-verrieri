@@ -82,7 +82,7 @@ public class CLI implements UiUpdate {
     }
 
     /**
-     * Avvia Client (RMI o Socket).
+     * Avvia Client (RMI o socket).
      *
      */
     /*public void mainClient(String serverAddress, int socketPort, int rmiPort) {
@@ -90,18 +90,18 @@ public class CLI implements UiUpdate {
     }
 
     /**
-     * Avvia Client (RMI o Socket)
+     * Avvia Client (RMI o socket)
      * @param clientUI
      */
 
     /*public PlayerController mainClient(String serverAddress, int socketPort, int rmiPort, UiUpdate clientUI) {
         ui = clientUI;
 
-        System.out.print("Digita R per connetterti tramite RMI o S per connetterti tramite Socket (Default: RMI)");
+        System.out.print("Digita R per connetterti tramite RMI o S per connetterti tramite socket (Default: RMI)");
         inText = scanner.nextLine().toUpperCase();
 
         if (inText.equals("S")) {
-            inText = "Socket";
+            inText = "socket";
         } else if (inText.equals("R")) {
             inText = "RMI";
         }
@@ -166,7 +166,7 @@ public class CLI implements UiUpdate {
             server.startServer(socketPort, rmiPort);
 
             System.out.print("\nServer in ascolto a: ");
-            System.out.println("127.0.0.1" + " (RMI: " + rmiPort + ", Socket: " + socketPort + ")");
+            System.out.println("127.0.0.1" + " (RMI: " + rmiPort + ", socket: " + socketPort + ")");
             System.out.println();
 
         } catch (ServerException e) {

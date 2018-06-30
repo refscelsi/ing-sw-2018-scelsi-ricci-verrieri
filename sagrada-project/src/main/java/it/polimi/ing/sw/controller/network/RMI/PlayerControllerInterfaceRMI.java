@@ -1,6 +1,6 @@
 package it.polimi.ing.sw.controller.network.RMI;
 
-import it.polimi.ing.sw.controller.PlayerInterface;
+import it.polimi.ing.sw.controller.PlayerControllerInterface;
 import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
 import it.polimi.ing.sw.model.exceptions.NetworkException;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
@@ -11,7 +11,7 @@ import java.rmi.RemoteException;
 
 //interfaccia per chiamare i metodi del controller in RMI
 
-public interface PlayerInterfaceRMI extends Remote, PlayerInterface {
+public interface PlayerControllerInterfaceRMI extends Remote, PlayerControllerInterface {
 
     void joinMatch() throws RemoteException, ToolCardException, NotValidException, NotValidPlayException;
 

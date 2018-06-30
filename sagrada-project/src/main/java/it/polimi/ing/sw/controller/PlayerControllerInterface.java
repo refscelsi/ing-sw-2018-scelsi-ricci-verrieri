@@ -8,10 +8,10 @@ import it.polimi.ing.sw.model.exceptions.ToolCardException;
 import java.io.IOException;
 import java.rmi.RemoteException;
 
-//interfaccia implementata sia da PlayerInterfaceSocket sia da PlayerInterfaceRMI , controller della view
+//interfaccia implementata sia da PlayerControllerInterfaceSocket sia da PlayerControllerInterfaceRMI , controller della view
 //garantisce la trasparenza della rete
 
-public interface PlayerInterface {
+public interface PlayerControllerInterface {
 
     void joinMatch() throws IOException, ToolCardException, NotValidException, NotValidPlayException;
 

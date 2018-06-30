@@ -1,10 +1,13 @@
-package it.polimi.ing.sw.controller.network.Socket;
+package it.polimi.ing.sw.controller.network.socket;
 
 //classe che riceve i pacchetti da socket e chiama i metodi di PlayerController
 
+import it.polimi.ing.sw.controller.LoginController;
 import it.polimi.ing.sw.controller.PlayerController;
-import it.polimi.ing.sw.controller.PlayerInterface;
+import it.polimi.ing.sw.controller.RemotePlayer;
+import it.polimi.ing.sw.controller.exceptions.NotPossibleConnection;
 import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
+import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.model.exceptions.NetworkException;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.model.exceptions.ToolCardException;
@@ -19,51 +22,118 @@ import java.net.Socket;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-public class PlayerControllerSocket  {
-    ObjectInputStream in;
-    Socket clientSocket;
-    JSONParser parser= new JSONParser();
-    JSONObject jsonObject;
-    PlayerController controller;
+public class PlayerControllerSocket implements RemotePlayer {
+    private ObjectOutputStream out;
+    private Socket clientSocket;
+    private JSONParser parser= new JSONParser();
+    private JSONObject jsonObject;
+    private PlayerController controller;
+    private LoginController loginController;
 
 
-    public PlayerControllerSocket(Socket clientSocket, PlayerController playerController) throws IOException, ToolCardException, NotValidException, NetworkException, NotValidPlayException {
-        this.controller=playerController;
-        this.clientSocket = clientSocket;
-        handleSocket(clientSocket);
+    public PlayerControllerSocket(Socket clientSocket, LoginController loginController) {
+        try {
+            this.loginController= loginController;
+            this.out= new ObjectOutputStream(clientSocket.getOutputStream());
+            handleSocket(clientSocket);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
-    public void handleSocket(Socket socket) throws IOException, ToolCardException, NotValidException, NetworkException, NotValidPlayException {
+    public void handleSocket(Socket socket) {
         try(ObjectInputStream in= new ObjectInputStream( socket.getInputStream())) {
             while (true) {
                 String input = (String) in.readObject();
                 jsonObject = (JSONObject) parser.parse(input);
-                ArrayList<String> data = (ArrayList<String>) jsonObject.get("data");
-                System.out.println(data);
-                handleInput(data);
+                String method= (String) jsonObject.get("method");
+                ArrayList<String > params= (ArrayList<String>) jsonObject.get("params");
+                handleInput(method, params);
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (ParseException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ToolCardException e) {
+            e.printStackTrace();
+        } catch (NotValidException e) {
+            e.printStackTrace();
+        } catch (NotValidPlayException e) {
+            e.printStackTrace();
+        } catch (NetworkException e) {
+            e.printStackTrace();
         }
     }
 
 
-    public void handleInput(ArrayList<String > data) throws RemoteException, NotValidException, ToolCardException, NotValidPlayException, NetworkException {
-        String name=data.get(0);
+    public void handleInput(String method, ArrayList<String> params) throws RemoteException, NotValidException, ToolCardException, NotValidPlayException, NetworkException {
 
-        switch (name){
+        switch (method){
             case "joinMatch": controller.joinMatch();
             break;
 
             case "checkAllReady": controller.checkAllReady();
             break;
 
-            case "setChosenScheme": controller.setChosenScheme(Integer.valueOf(data.get(1)));
+            case "setChosenScheme": controller.setChosenScheme(Integer.valueOf(params.get(0)));
             break;
+
+            case "connectSocket":
+                String nickname= params.get(0);
+                try {
+                    this.controller = loginController.connectSocket(nickname, this  );
+                } catch (NotPossibleConnection notPossibleConnection) {
+                    notPossibleConnection.printStackTrace();
+                }
+                break;
         }
 
     }
 
+    @Override
+    public void onSchemeToChoose(Match match) throws RemoteException, NotValidPlayException {
+
+    }
+
+    @Override
+    public void onSuccess(String message) throws RemoteException {
+
+    }
+
+    @Override
+    public void onGameUpdate(Match match) throws RemoteException {
+
+    }
+
+    @Override
+    public void onTurnEnd() throws RemoteException {
+
+    }
+
+    @Override
+    public void onGameEnd(Match match) throws RemoteException {
+
+    }
+
+    @Override
+    public void onPlayerLogged() throws RemoteException {
+    }
+
+    @Override
+    public void onSetPlaying() throws RemoteException {
+
+    }
+
+    @Override
+    public void onOtherInfoToolCard4(Match match) throws RemoteException {
+
+    }
+
+    @Override
+    public void onOtherInfoToolCard11(Match match) throws RemoteException {
+
+    }
 }

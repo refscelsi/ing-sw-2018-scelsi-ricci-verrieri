@@ -37,7 +37,7 @@ public class Server {
         /*new Thread(()->{
             try(ServerSocket serverSocket=new ServerSocket(SOCKET_PORT)){
                 while(true){
-                    Socket clientSocket= serverSocket.accept();
+                    socket clientSocket= serverSocket.accept();
                     new Thread(()->{
                         try {
                             new PlayerControllerSocket(clientSocket);
