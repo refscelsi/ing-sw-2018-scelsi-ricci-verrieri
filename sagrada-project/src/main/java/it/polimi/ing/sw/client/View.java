@@ -328,6 +328,21 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
     // SENDERS ToolCards
 
 
+    public void useToolCard(int id, int dice, int operation, int sourceRow, int sourceCol, int destRow, int destCol) {
+        try {
+            controller.useToolCard(id, dice, operation, sourceRow, sourceCol, destRow, destCol);
+        } catch (NetworkException e) {
+            System.err.println(e.getMessage());
+        } catch (NotValidException e) {
+            ui.onUseToolCard1NotValid(match, e);
+        } catch (NotValidPlayException e) {
+            onNotValidPlay(e.getMessage());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public void useToolCard1(int indexInDraftPool, String operation) {
         try {
             controller.sendUseToolCard1Request(indexInDraftPool, operation);

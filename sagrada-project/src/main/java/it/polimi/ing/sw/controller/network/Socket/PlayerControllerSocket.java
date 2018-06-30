@@ -165,4 +165,9 @@ public class PlayerControllerSocket implements RemotePlayer {
     public void onOtherInfoToolCard11(Match match) throws RemoteException {
 
     }
+
+    @Override
+    public void onOtherInfoToolCard12(Match match) throws RemoteException {
+
+    }
 }

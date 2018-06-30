@@ -481,6 +481,12 @@ public class Match implements Serializable {
     //metodi delle carte
 
 
+    public void useToolCard (Player player, int id, int dice, int operation, int sourceRow, int sourceCol, int destRow, int destCol) throws RemoteException, NotValidException {
+        findToolCard(id).execute(getDraftPool(), dice, operation, sourceRow, sourceCol, destRow, destCol);
+        notifyChangement();
+    }
+
+
     public void useToolCard1(Player player, int indexOfDiceInDraftPool, String operation, boolean finish) throws NotValidException, RemoteException, NotValidPlayException {
         if(checkToken(player,1)) {
             findToolCard(1).execute1(draftPool, indexOfDiceInDraftPool, operation);

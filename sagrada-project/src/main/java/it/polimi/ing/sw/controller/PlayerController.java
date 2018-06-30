@@ -122,6 +122,11 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
     }
 
     @Override
+    public void useToolCard(int id, int dice, int operation, int sourceRow, int sourceCol, int destRow, int destCol) throws NetworkException, NotValidException, NotValidPlayException, RemoteException {
+        match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol);
+    }
+
+    @Override
     public void sendUseToolCard1Request(int indexInDraftPool, String operation) throws NetworkException, NotValidException, NotValidPlayException, RemoteException {
         if (player.getState().equals(PlayerState.TURNSTARTED)) {
             System.out.println("giocatore: " + nickname + "\n stato:" + player.getState().toString());

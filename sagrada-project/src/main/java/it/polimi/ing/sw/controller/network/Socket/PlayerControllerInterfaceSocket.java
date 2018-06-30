@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -93,6 +94,11 @@ public class PlayerControllerInterfaceSocket implements PlayerControllerInterfac
     }
 
     public void endTurn() throws NetworkException, NotValidPlayException {
+
+    }
+
+    @Override
+    public void useToolCard(int id, int dice, int operation, int sourceRow, int sourceCol, int destRow, int destCol) throws NetworkException, NotValidException, NotValidPlayException, RemoteException {
 
     }
 

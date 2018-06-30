@@ -110,7 +110,7 @@ public abstract class ToolCard implements Serializable{
     }
 
 
-
-
-
+    public void execute(DraftPool draftPool, int dice, int operation, int sourceRow, int sourceCol, int destRow, int destCol) throws NotValidException {
+        System.out.println("problemi toolcard");
+    }
 }

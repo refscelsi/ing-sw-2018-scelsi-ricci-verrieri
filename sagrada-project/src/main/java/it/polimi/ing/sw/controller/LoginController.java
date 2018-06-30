@@ -76,6 +76,10 @@ public class LoginController extends UnicastRemoteObject implements Remote, Logi
                     e.printStackTrace();
                 } catch (NotValidNicknameException e) {
                     e.printStackTrace();
+                } catch (ToolCardException e) {
+                    e.printStackTrace();
+                } catch (NotValidException e) {
+                    e.printStackTrace();
                 }
             } else if (checkReconnection(nickname)) {
                 //sbatti

@@ -382,16 +382,16 @@ public class CLI implements UiUpdate {
 
 
     public void useToolCard1(Match match) {
-        int dice;
+        int dice, operation;
         do {
             System.out.println("Digita l'indice del dado che vuoi cambiare, tra 1 e " + match.getDraftPool().getSize());
             dice = scanner.nextInt();
         } while (dice < 1 || dice > match.getDraftPool().getSize());
         do {
-            System.out.println("Digita 'a' se vuoi aumentare il numero del dado di 1, 'd' se vuoi diminuirlo");
-            inText = scanner.nextLine();
-        } while ((inText.toLowerCase() != "a") && (inText.toLowerCase() != "d"));
-        controller.useToolCard1(dice - 1, inText);
+            System.out.println("Digita 0 se vuoi aumentare il numero del dado di 1, 1 se vuoi diminuirlo");
+            operation = scanner.nextInt();
+        } while ((operation!=0) && (operation!=1));
+        controller.useToolCard(1, dice-1, operation, -1, -1, -1, -1);
     }
 
 
