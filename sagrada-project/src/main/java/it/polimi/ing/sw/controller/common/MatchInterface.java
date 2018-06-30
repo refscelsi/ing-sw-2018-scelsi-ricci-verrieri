@@ -1,8 +1,6 @@
 package it.polimi.ing.sw.controller.common;
 
-import it.polimi.ing.sw.model.DraftPool;
 import it.polimi.ing.sw.model.Player;
-import it.polimi.ing.sw.model.RoundTrack;
 import it.polimi.ing.sw.model.objectiveCard.ObjectiveCard;
 import it.polimi.ing.sw.model.toolCard.ToolCard;
 

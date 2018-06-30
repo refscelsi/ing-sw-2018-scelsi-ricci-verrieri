@@ -1,4 +1,4 @@
-package it.polimi.ing.sw.controller.network.Socket;
+package it.polimi.ing.sw.controller.network.socket;
 
 import com.google.gson.Gson;
 import it.polimi.ing.sw.client.View;

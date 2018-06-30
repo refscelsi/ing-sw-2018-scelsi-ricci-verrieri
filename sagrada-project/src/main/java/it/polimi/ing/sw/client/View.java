@@ -5,7 +5,7 @@ import it.polimi.ing.sw.controller.PlayerInterface;
 import it.polimi.ing.sw.controller.RemotePlayer;
 import it.polimi.ing.sw.controller.exceptions.NotPossibleConnection;
 import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
-import it.polimi.ing.sw.controller.network.RMI.RemotePlayerRMI;
+import it.polimi.ing.sw.controller.network.RMI.RMI.RemotePlayerRMI;
 import it.polimi.ing.sw.controller.network.Socket.PlayerInterfaceSocket;
 import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.model.exceptions.NetworkException;
@@ -71,7 +71,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer, RemotePla
             }
         } while (!input.equals("c") && !input.equals("g"));
 
-        ui.onChooseNetwork("Vuoi giocare con la RMI [r] o Socket [s]?");
+        ui.onChooseNetwork("Vuoi giocare con la RMI [r] o socket [s]?");
 
     }
 

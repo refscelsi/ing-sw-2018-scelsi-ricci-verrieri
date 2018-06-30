@@ -11,6 +11,6 @@ public interface SchemeInterface extends Serializable {
 
     int getIdRetro();
 
-    Box getBox(int row, int col );
+    Box getBox(int row, int col);
 
 }
