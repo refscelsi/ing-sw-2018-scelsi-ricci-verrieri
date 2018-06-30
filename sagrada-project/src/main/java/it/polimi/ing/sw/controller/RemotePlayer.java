@@ -33,4 +33,6 @@ public interface RemotePlayer extends Remote {
     void onOtherInfoToolCard4(Match match) throws RemoteException;
 
     void onOtherInfoToolCard11(Match match) throws RemoteException;
+
+    void onOtherInfoToolCard12(Match match) throws RemoteException;
 }

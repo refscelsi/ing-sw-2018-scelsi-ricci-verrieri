@@ -11,6 +11,7 @@ import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.model.exceptions.NetworkException;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.model.exceptions.ToolCardException;
+import it.polimi.ing.sw.util.Constants;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -72,15 +73,6 @@ public class PlayerControllerSocket implements RemotePlayer {
     public void handleInput(String method, ArrayList<String> params) throws RemoteException, NotValidException, ToolCardException, NotValidPlayException, NetworkException {
 
         switch (method){
-            case "joinMatch": controller.joinMatch();
-            break;
-
-            case "checkAllReady": controller.checkAllReady();
-            break;
-
-            case "setChosenScheme": controller.setChosenScheme(Integer.valueOf(params.get(0)));
-            break;
-
             case "connectSocket":
                 String nickname= params.get(0);
                 try {
@@ -89,6 +81,43 @@ public class PlayerControllerSocket implements RemotePlayer {
                     notPossibleConnection.printStackTrace();
                 }
                 break;
+
+            case Constants.JOINMATCH: controller.joinMatch();
+                break;
+
+            case Constants.CHECKREADY: controller.checkAllReady();
+                break;
+
+            case Constants.SETCHOSENSCHEME: controller.setChosenScheme(Integer.valueOf(params.get(0)));
+                break;
+
+            case Constants.ENDTURN: controller.endTurn();
+                break;
+
+            case Constants.USEDICEREQUEST: controller.sendUseDiceRequest(Integer.valueOf(params.get(0)),Integer.valueOf(params.get(1)),Integer.valueOf(params.get(2)) );
+                break;
+
+            case Constants.TOOLCARD1: controller.sendUseToolCard1Request(Integer.valueOf(params.get(0)), params.get(1));
+                break;
+
+            case Constants.TOOLCARD234: controller.sendUseToolCard234Request(Integer.valueOf(params.get(0)),Integer.valueOf(params.get(1)),Integer.valueOf(params.get(2)),Integer.valueOf(params.get(3)), Integer.valueOf(params.get(4)));
+                break;
+
+            case Constants.TOOLCARD5: controller.useToolCard5(Integer.valueOf(params.get(0)),Integer.valueOf(params.get(1)),Integer.valueOf(params.get(2)));
+                break;
+
+            case Constants.TOOLCARD6: controller.useToolCard6(Integer.valueOf(params.get(0)));
+                break;
+
+            case Constants.TOOLCARD78: controller.useToolCard78(Integer.valueOf(params.get(0)));
+                break;
+
+            case Constants.TOOLCARD9: controller.sendUseToolCard9Request(Integer.valueOf(params.get(0)),Integer.valueOf(params.get(1)),Integer.valueOf(params.get(2)));
+                break;
+
+            case Constants.TOOLCARD10:controller.useToolCard10(Integer.valueOf(params.get(0)));
+                break;
+
         }
 
     }

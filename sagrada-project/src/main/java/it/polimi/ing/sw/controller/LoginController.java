@@ -67,13 +67,7 @@ public class LoginController extends UnicastRemoteObject implements Remote, Logi
         if (playerControllers.size() < Constants.MAX_PLAYERS) {
             if (!checkReconnection(nickname)) {
                 try {
-                    try {
-                        match.login(nickname,playerControllerSocket );
-                    } catch (ToolCardException e) {
-                        e.printStackTrace();
-                    } catch (NotValidException e) {
-                        e.printStackTrace();
-                    }
+                    match.login(nickname,playerControllerSocket );
                     PlayerController playerController= null;
                     playerController = new PlayerController(match, playerControllerSocket, match.getPlayer(nickname));
                     playerControllers.add(playerController);

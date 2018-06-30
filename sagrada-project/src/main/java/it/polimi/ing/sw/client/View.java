@@ -1,12 +1,11 @@
 package it.polimi.ing.sw.client;
 
 import it.polimi.ing.sw.controller.LoginInterface;
-import it.polimi.ing.sw.controller.PlayerInterface;
+import it.polimi.ing.sw.controller.PlayerControllerInterface;
 import it.polimi.ing.sw.controller.RemotePlayer;
 import it.polimi.ing.sw.controller.exceptions.NotPossibleConnection;
 import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
-import it.polimi.ing.sw.controller.network.RMI.RMI.RemotePlayerRMI;
-import it.polimi.ing.sw.controller.network.Socket.PlayerInterfaceSocket;
+import it.polimi.ing.sw.controller.network.socket.PlayerControllerInterfaceSocket;
 import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.model.exceptions.NetworkException;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
@@ -24,7 +23,7 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
 
-public class View extends UnicastRemoteObject implements RemotePlayer, RemotePlayerRMI {
+public class View extends UnicastRemoteObject implements RemotePlayer {
     /**
      * ogni giocatore è identificato dal valore dell'attributo index nel model: il giocatore con index=0 avrà come
      * nickname nicknames.get(0), come schema schemesOfAllPlayers.get(0), come colore di pedina playersColor[0],
@@ -40,7 +39,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer, RemotePla
     private Match match;
     private boolean isGameStarted;     // flag per vedere se la partita è iniziata: non so se sarà utile o meno
     private boolean isOnline;
-    private PlayerInterface controller;//il client può chiamare solo i metodi di PlayerInterfaceSocket
+    private PlayerControllerInterface controller;//il client può chiamare solo i metodi di PlayerInterfaceSocket
     private LoginInterface loginController;
     private UiUpdate ui;
     private String input;
@@ -212,8 +211,8 @@ public class View extends UnicastRemoteObject implements RemotePlayer, RemotePla
     public void login(String nickname) {
         if (networkChoice.equals("r"))
             loginPlayerRMI(nickname);
-        /*else
-            loginPlayerSocket();*/
+        else
+            loginPlayerSocket(nickname);
     }
 
 
@@ -262,17 +261,16 @@ public class View extends UnicastRemoteObject implements RemotePlayer, RemotePla
 
     }
 
-    /*public void loginPlayerSocket() {
-        //metodi per creare la connessione socket
-        PlayerInterfaceSocket playerInterfaceSocket = null;
+
+    public void loginPlayerSocket(String nickname) {
+        PlayerControllerInterfaceSocket playerInterfaceSocket = null;
         try {
-            playerInterfaceSocket = new PlayerInterfaceSocket();
+            playerInterfaceSocket = new PlayerControllerInterfaceSocket(nickname, this );
         } catch (IOException e) {
             e.printStackTrace();
         }
         this.controller = playerInterfaceSocket;
-
-    }*/
+    }
 
     public void setChosenScheme(int id) {
         try {
