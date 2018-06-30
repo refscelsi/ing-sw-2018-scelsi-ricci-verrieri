@@ -92,17 +92,7 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
                 break;
             case ENDEDTURN:
                 throw new NotValidPlayException("non è il tuo turno!");
-            case READYTOPLAY:
-                throw new NotValidPlayException("non puoi fare questa mossa ora");
-            case INIZIALIZED:
-                throw new NotValidPlayException("non puoi fare questa mossa ora");
-            case OFFLINE:
-                throw new NotValidPlayException("non puoi fare questa mossa ora");
-            case SCHEMETOCHOOSE:
-                throw new NotValidPlayException("non puoi fare questa mossa ora");
-            case USEDDICETOOLCARD:
-                throw new NotValidPlayException("non puoi fare questa mossa ora");
-            case FIRSTSTEPTOOLCARD:
+            default:
                 throw new NotValidPlayException("non puoi fare questa mossa ora");
 
         }
@@ -123,87 +113,81 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
 
     @Override
     public void useToolCard(int id, int dice, int operation, int sourceRow, int sourceCol, int destRow, int destCol) throws NetworkException, NotValidException, NotValidPlayException, RemoteException {
-        match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol);
+        switch(id) {
+
+            // carte che si possono utilizzare in qualsiasi momento
+            case 1:
+            case 2:
+            case 3:
+            case 5:
+            case 10: {
+                if (player.getState().equals(PlayerState.TURNSTARTED)) {
+                    System.out.println("giocatore: " + nickname + "\n stato:" + player.getState().toString());
+                    match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol, false);
+                    player.setState(PlayerState.USEDTOOLCARD);
+                } else if (player.getState().equals(PlayerState.USEDDICE)) {
+                    System.out.println("giocatore: " + nickname + "\n stato:" + player.getState().toString());
+                    match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol, true);
+                    endTurn();
+                } else throw new NotValidPlayException("Non puoi usare questa carta");
+            }
+
+            // carte che si possono utilizzare in qualsiasi momento ma si eseguono in 2 step
+            case 4:
+            case 12: {
+                if (player.getState().equals(PlayerState.FIRSTSTEPTOOLCARD)) {
+                    System.out.println("giocatore: " + nickname + "\n stato:" + player.getState().toString());
+                    match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol, true);
+                    endTurn();
+                }
+                else if (player.getState().equals(PlayerState.TURNSTARTED)||player.getState().equals(PlayerState.USEDDICE)) {
+                    System.out.println("giocatore: " + nickname + "\n stato:" + player.getState().toString());
+                    match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol, false);
+                } else throw new NotValidPlayException("Non puoi usare questa carta");
+            }
+
+            // carte utilizzabili solo se non si è già utilizzato un dado nel turno e che prevedono 2 step
+            case 6:
+            case 11: {
+                if (player.getState().equals(PlayerState.FIRSTSTEPTOOLCARD)) {
+                    System.out.println("giocatore: " + nickname + "\n stato:" + player.getState().toString());
+                    match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol, true);
+                    endTurn();
+                }
+                else if (player.getState().equals(PlayerState.TURNSTARTED)) {
+                    System.out.println("giocatore: " + nickname + "\n stato:" + player.getState().toString());
+                    match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol, false);
+                } else throw new NotValidPlayException("Non puoi usare questa carta");
+            }
+
+            // carta che può essere utilizzata solo durante il secondo turno e prima di scegliere il secondo dado
+            case 7: {
+                if (player.getState().equals(PlayerState.TURNSTARTED)&&match.getPlayersRoundIndex()>=match.getNumPlayers()) {
+                    System.out.println("giocatore: " + nickname + "\n stato:" + player.getState().toString());
+                    match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol, false);
+                } else throw new NotValidPlayException("Non puoi usare questa carta");
+            }
+
+            // carta che può essere utilizzata solo durante il primo turno
+            case 8: {
+                if (player.getState().equals(PlayerState.TURNSTARTED)&&match.getPlayersRoundIndex()<match.getNumPlayers()) {
+                    System.out.println("giocatore: " + nickname + "\n stato:" + player.getState().toString());
+                    match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol, false);
+                } else if (player.getState().equals(PlayerState.USEDDICE)/*&& sto nel primo turno*/) {
+                    System.out.println("giocatore: " + nickname + "\n stato:" + player.getState().toString());
+                    match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol, true);
+                    endTurn();
+                } else throw new NotValidPlayException("Non puoi usare questa carta");
+            }
+
+            // carta che può essere utilizzata solo se non si è già piazzato un dado
+            case 9: {
+                if (player.getState().equals(PlayerState.TURNSTARTED)) {
+                    System.out.println("giocatore: " + nickname + "\n stato:" + player.getState().toString());
+                    match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol, false);
+                } else throw new NotValidPlayException("Non puoi usare questa carta");
+            }
+        }
     }
 
-    @Override
-    public void sendUseToolCard1Request(int indexInDraftPool, String operation) throws NetworkException, NotValidException, NotValidPlayException, RemoteException {
-        if (player.getState().equals(PlayerState.TURNSTARTED)) {
-            System.out.println("giocatore: " + nickname + "\n stato:" + player.getState().toString());
-            match.useToolCard1(player, indexInDraftPool, operation, false);
-        } else if (player.getState().equals(PlayerState.USEDDICE)) {
-            System.out.println("giocatore: " + nickname + "\n stato:" + player.getState().toString());
-            match.useToolCard1(player, indexInDraftPool, operation, true);
-            endTurn();
-        } else throw new NotValidPlayException("Non puoi usare questa carta");
-    }
-
-    @Override
-    public void sendUseToolCard234Request(int id, int sourceRow, int sourceCol, int destRow, int destCol) throws NetworkException, NotValidException, RemoteException, NotValidPlayException {
-        if (player.getState().equals(PlayerState.TURNSTARTED)) {
-            match.useToolCard234(player, id, sourceRow, sourceCol, destRow, destCol, false);
-            System.out.println("giocatore: " + nickname + "\n stato:" + player.getState().toString());
-
-        } else if (player.getState().equals(PlayerState.USEDDICE)) {
-            match.useToolCard234(player, id, sourceRow, sourceCol, destRow, destCol, true);
-            endTurn();
-        } else throw new NotValidPlayException("Non puoi usare questa carta");
-    }
-
-    @Override
-    public void useToolCard5(int indexInDraftPool, int round, int indexInRound) throws NetworkException, NotValidException, RemoteException, NotValidPlayException {
-        if (player.getState().equals(PlayerState.TURNSTARTED)) {
-            match.useToolCard5(player, indexInDraftPool, round, indexInRound, false);
-        } else if (player.getState().equals(PlayerState.USEDDICE)) {
-            match.useToolCard5(player, indexInDraftPool, round, indexInRound, true);
-            endTurn();
-        } else throw new NotValidPlayException("Non puoi usare questa carta");
-    }
-
-    @Override
-    public void useToolCard6(int indexInDraftPool) throws NetworkException, NotValidException, RemoteException, NotValidPlayException {
-        if (player.getState().equals(PlayerState.TURNSTARTED)) {
-            match.useToolCard6(player, indexInDraftPool, false);
-        } else if (player.getState().equals(PlayerState.USEDDICE)) {
-            match.useToolCard6(player, indexInDraftPool, true);
-            endTurn();
-        } else throw new NotValidPlayException("Non puoi usare questa carta");
-    }
-
-
-    @Override
-    public void useToolCard78(int id) throws NetworkException, NotValidException, RemoteException, NotValidPlayException {
-        if (player.getState().equals(PlayerState.TURNSTARTED)) {
-            match.useToolCard78(player, id, false);
-        } else if (player.getState().equals(PlayerState.USEDDICE)) {
-            match.useToolCard78(player, id, true);
-            endTurn();
-        } else throw new NotValidPlayException("Non puoi usare questa carta");
-    }
-
-    @Override
-    public void sendUseToolCard9Request(int dice, int row, int col) throws NetworkException, NotValidException, RemoteException, NotValidPlayException {
-        if (player.getState().equals(PlayerState.TURNSTARTED)) {
-            match.useToolCard9(player, dice, row, col, false);
-        } else if (player.getState().equals(PlayerState.USEDDICE)) {
-            match.useToolCard9(player, dice, row, col, true);
-            endTurn();
-        } else throw new NotValidPlayException("Non puoi usare questa carta");
-    }
-
-    @Override
-    public void useToolCard10(int dice) throws NetworkException, RemoteException, NotValidPlayException, NotValidException {
-        if (player.getState().equals(PlayerState.TURNSTARTED)) {
-            match.useToolCard10(player, dice, false);
-        } else if (player.getState().equals(PlayerState.USEDDICE)) {
-            match.useToolCard10(player, dice, true);
-            System.out.println("aiutoo");
-            endTurn();
-        } else throw new NotValidPlayException("Non puoi usare questa carta");
-    }
-
-    @Override
-    public void useToolCard11(int dice) throws NetworkException, RemoteException, NotValidPlayException, NotValidException {
-
-    }
 }

@@ -308,7 +308,7 @@ public class CLI implements UiUpdate {
         } while (col < 1 || col > Constants.NUM_COLS);
 
         if (toolCard9)
-            controller.useToolCard9(dice - 1, row - 1, col - 1);
+            controller.useToolCard(9, dice - 1, -1,row - 1, col - 1, -1, -1);
         else
             controller.useDice(dice - 1, row - 1, col - 1);
 
@@ -354,7 +354,7 @@ public class CLI implements UiUpdate {
             case 2:
             case 3:
             case 4:
-                useToolCard234(id, match);
+                useToolCard23412(id);
                 break;
             case 5:
                 useToolCard5(match);
@@ -364,7 +364,7 @@ public class CLI implements UiUpdate {
                 break;
             case 7:
             case 8:
-                controller.useToolCard78(id);
+                controller.useToolCard(id, -1, -1, -1, -1, -1, -1);
                 break;
             case 9:
                 useToolCard9(match);
@@ -375,8 +375,10 @@ public class CLI implements UiUpdate {
             case 11:
                 useToolCard11(match);
                 break;
-
-
+            case 12:
+                useToolCard12(match);
+            default:
+                break;
         }
     }
 
@@ -395,7 +397,7 @@ public class CLI implements UiUpdate {
     }
 
 
-    public void useToolCard234(int id, Match match) {
+    public void useToolCard23412(int id) {
         int sourceRow, sourceCol, destRow, destCol;
         do {
             System.out.println("Digita il numero della riga dello schema del dado che vuoi spostare, tra 1 e " + Constants.NUM_ROWS);
@@ -413,7 +415,7 @@ public class CLI implements UiUpdate {
             System.out.println("Digita il numero della colonna dello schema in cui vuoi spostare il dado, tra 1 e " + Constants.NUM_COLS);
             destCol = scanner.nextInt();
         } while (destCol < 1 || destCol > Constants.NUM_COLS);
-        controller.useToolCard234(id, sourceRow - 1, sourceCol - 1, destRow - 1, destCol - 1);
+        controller.useToolCard(id, -1,-1,sourceRow - 1, sourceCol - 1, destRow - 1, destCol - 1);
     }
 
 
@@ -436,8 +438,8 @@ public class CLI implements UiUpdate {
             do {
                 System.out.println("Digita l'indice del dado nel round che hai scelto, tra 0 e " + (match.getRoundTrack().getNumberOfDices(round) - 1));
                 indexInRound = scanner.nextInt();
-            } while (indexInRound < 1 || indexInRound > Constants.NUM_COLS);
-            controller.useToolCard5(dice - 1, round, indexInRound);
+            } while (indexInRound < 0 || indexInRound > match.getRoundTrack().getNumberOfDices(round) - 1);
+            controller.useToolCard(5, dice - 1, -1, round, indexInRound, -1, -1);
         }
     }
 
@@ -448,7 +450,7 @@ public class CLI implements UiUpdate {
             System.out.println("Digita l'indice del dado che vuoi tirare, tra 1 e " + match.getDraftPool().getSize());
             dice = scanner.nextInt();
         } while (dice < 1 || dice > match.getDraftPool().getSize());
-        controller.useToolCard6(dice - 1);
+        controller.useToolCard(6, dice - 1, -1, -1, -1, -1, -1);
     }
 
 
@@ -463,7 +465,7 @@ public class CLI implements UiUpdate {
             System.out.println("Digita l'indice del dado che vuoi cambiare, tra 1 e " + match.getDraftPool().getSize());
             dice = scanner.nextInt();
         } while (dice < 1 || dice > match.getDraftPool().getSize());
-        controller.useToolCard10(dice - 1);
+        controller.useToolCard(10,dice - 1, -1, -1, -1, -1, -1);
     }
 
 
@@ -473,35 +475,18 @@ public class CLI implements UiUpdate {
             System.out.println("Digita l'indice del dado che vuoi riporre nel sacchetto, tra 1 e " + match.getDraftPool().getSize());
             dice = scanner.nextInt();
         } while (dice < 1 || dice > match.getDraftPool().getSize());
-        controller.useToolCard11(dice - 1);
+        controller.useToolCard(11, dice - 1, -1, -1, -1, -1, -1);
     }
 
 
     public void useToolCard12(Match match) {
-        int sourceRow, sourceCol, destRow, destCol;
         boolean roundTrackIsFull = controller.checkIfRoundTrackIsFull();
         if (!roundTrackIsFull) {
             System.out.println("Non puoi utilizzare questa carta perché ancora non ci sono dadi sul tracciato dei round");
             chooseAction(match, controller.getNickname());
         }
         else {
-            do {
-                System.out.println("Digita il numero della riga dello schema del dado che vuoi spostare, tra 1 e " + Constants.NUM_ROWS);
-                sourceRow = scanner.nextInt();
-            } while (sourceRow < 1 || sourceRow > Constants.NUM_ROWS);
-            do {
-                System.out.println("Digita il numero della colonna dello schema del dado che vuoi spostare, tra 1 e " + Constants.NUM_COLS);
-                sourceCol = scanner.nextInt();
-            } while (sourceCol < 1 || sourceCol > Constants.NUM_COLS);
-            do {
-                System.out.println("Digita il numero della riga dello schema in cui vuoi spostare il dado, tra 1 e " + Constants.NUM_ROWS);
-                destRow = scanner.nextInt();
-            } while (destRow < 1 || destRow > Constants.NUM_ROWS);
-            do {
-                System.out.println("Digita il numero della colonna dello schema in cui vuoi spostare il dado, tra 1 e " + Constants.NUM_COLS);
-                destCol = scanner.nextInt();
-            } while (destCol < 1 || destCol > Constants.NUM_COLS);
-            controller.useToolCard12(sourceRow, sourceCol, destRow, destCol);
+            useToolCard23412(12);
         }
     }
 
@@ -600,13 +585,13 @@ public class CLI implements UiUpdate {
     @Override
     public void onUseToolCard234NotValid(int id, Match match, NotValidException e) {
         System.err.println(e);
-        useToolCard234(id, match);
+        useToolCard23412(id);
     }
 
     @Override
     public void onOtherInfoToolCard4(Match match) {
         System.out.println("Primo dado mosso correttamente, ora muovi il secondo");
-        useToolCard234(4, match);
+        useToolCard23412(4);
     }
 
     @Override
@@ -637,7 +622,7 @@ public class CLI implements UiUpdate {
             col = scanner.nextInt();
         } while (col < 1 || col > Constants.NUM_COLS);
 
-        controller.useToolCard11b(dice - 1, row - 1, col - 1);
+        //controller.useToolCard11(match);
     }
 
     @Override

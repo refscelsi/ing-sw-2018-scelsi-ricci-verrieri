@@ -25,21 +25,6 @@ public interface PlayerControllerInterface {
 
     void useToolCard(int id, int dice, int operation, int sourceRow, int sourceCol, int destRow, int destCol) throws NetworkException, NotValidException, NotValidPlayException, RemoteException;
 
-    void sendUseToolCard1Request(int indexInDraftPool, String operation) throws NetworkException, NotValidException, NotValidPlayException, RemoteException;
-
-    void sendUseToolCard234Request(int id, int sourceRow, int sourceCol, int destRow, int destCol) throws NetworkException, NotValidException, RemoteException, NotValidPlayException;
-
-    void useToolCard6(int indexInDraftPool) throws NetworkException, NotValidException, RemoteException, NotValidPlayException;
-
-    void useToolCard5(int indexInDraftPool, int round, int indexInRound) throws NetworkException, NotValidException, RemoteException, NotValidPlayException;
-
-    void useToolCard78(int id) throws NetworkException, NotValidException, RemoteException, NotValidPlayException;
-
-    void sendUseToolCard9Request(int dice, int row, int col) throws NetworkException, NotValidException, RemoteException, NotValidPlayException;
-
-    void useToolCard10(int dice) throws NetworkException, RemoteException, NotValidPlayException, NotValidException;
-
-    void useToolCard11(int dice) throws NetworkException, RemoteException, NotValidPlayException, NotValidException;
 }
 
 

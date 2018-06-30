@@ -83,7 +83,7 @@ public class MatchToSend {
     }
     class DraftPool {
         DraftPool draftPool;
-        DraftPool()
+        DraftPool();
     }
 
     //RUNDTRACK
