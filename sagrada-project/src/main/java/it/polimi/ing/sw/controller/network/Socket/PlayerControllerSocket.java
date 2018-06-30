@@ -2,6 +2,7 @@ package it.polimi.ing.sw.controller.network.socket;
 
 //classe che riceve i pacchetti da socket e chiama i metodi di PlayerController
 
+import com.google.gson.Gson;
 import it.polimi.ing.sw.controller.LoginController;
 import it.polimi.ing.sw.controller.PlayerController;
 import it.polimi.ing.sw.controller.RemotePlayer;
@@ -22,6 +23,8 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+
+import static java.lang.String.valueOf;
 
 public class PlayerControllerSocket implements RemotePlayer {
     private ObjectOutputStream out;
@@ -82,7 +85,7 @@ public class PlayerControllerSocket implements RemotePlayer {
                 }
                 break;
 
-            case Constants.JOINMATCH: controller.joinMatch();
+            case "joinMatch": controller.joinMatch();
                 break;
 
             case Constants.CHECKREADY: controller.checkAllReady();
@@ -124,7 +127,14 @@ public class PlayerControllerSocket implements RemotePlayer {
 
     @Override
     public void onSchemeToChoose(Match match) throws RemoteException, NotValidPlayException {
-
+        String matchToSend= new MatchToSend(match).convertMatch();
+        Gson gson= new Gson();
+        String json=gson.toJson(new Data(Constants.ONSCHEMETOCHOOSE, matchToSend));
+        try {
+            out.writeObject(json);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -149,11 +159,24 @@ public class PlayerControllerSocket implements RemotePlayer {
 
     @Override
     public void onPlayerLogged() throws RemoteException {
+        Gson gson= new Gson();
+        String json=gson.toJson(new SimpleData("onPlayerLogged"));
+        try {
+            out.writeObject(json);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void onSetPlaying() throws RemoteException {
-
+        Gson gson= new Gson();
+        String json=gson.toJson(new Data(Constants.ONSETPLAYING, null));
+        try {
+            out.writeObject(json);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -169,5 +192,22 @@ public class PlayerControllerSocket implements RemotePlayer {
     @Override
     public void onOtherInfoToolCard12(Match match) throws RemoteException {
 
+    }
+    class Data {
+        String method;
+        String match;
+
+        Data(String method, String match) {
+            this.method = method;
+            this.match = match;
+        }
+    }
+
+    class SimpleData{
+        String method;
+
+        SimpleData(String method){
+            this.method=method;
+        }
     }
 }

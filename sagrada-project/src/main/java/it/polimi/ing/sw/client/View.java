@@ -270,6 +270,17 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
             e.printStackTrace();
         }
         this.controller = playerInterfaceSocket;
+        try {
+            controller.joinMatch();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ToolCardException e) {
+            e.printStackTrace();
+        } catch (NotValidException e) {
+            e.printStackTrace();
+        } catch (NotValidPlayException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setChosenScheme(int id) {

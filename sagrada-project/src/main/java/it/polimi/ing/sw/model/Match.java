@@ -124,18 +124,7 @@ public class Match implements Serializable {
 
     //quando si loggano in almeno 2 setta un boolean a true
     public void login (String nickname, RemotePlayer remotePlayer) throws NotValidNicknameException, RemoteException, ToolCardException, NotValidException {
-        if(playerMap.size()==0){
-            Player player=new Player(nickname);
-            player.setLogged(true);
-            playerMap.put(player, remotePlayer);
-            players.add(player);
-            this.remotePlayer.add(remotePlayer);
-            numPlayers++;
-            System.out.println(numPlayers);
-            notifyLogin(player);
-            return;
-        }
-        else if(playerMap.size()<Constants.MAX_PLAYERS) {
+        if(playerMap.size()<Constants.MAX_PLAYERS) {
             if(checkNickname(nickname)) {
                 Player player = new Player(nickname);
                 player.setLogged(true);
