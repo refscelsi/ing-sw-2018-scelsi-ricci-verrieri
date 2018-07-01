@@ -1,5 +1,6 @@
 package it.polimi.ing.sw.ui.gui;
 
+import it.polimi.ing.sw.client.View;
 import it.polimi.ing.sw.model.Scheme;
 
 import java.awt.*;
@@ -16,9 +17,11 @@ public class ChooseSchemeForm extends javax.swing.JFrame {
 	private VetrataPanel vetrataPanelB;
 	private VetrataPanel vetrataPanelC;
 	private VetrataPanel vetrataPanelD;
+	private View controller;
 
-	public ChooseSchemeForm( List<Scheme> schemeList ) {
+	public ChooseSchemeForm( List<Scheme> schemeList, View controller ) {
 		this.schemeList = schemeList;
+		this.controller=controller;
 
 		initComponents();
 		setLocationRelativeTo( null );
@@ -239,49 +242,11 @@ public class ChooseSchemeForm extends javax.swing.JFrame {
 	}//GEN-LAST:event_buttonAActionPerformed
 
 	private void schemeSelected(Scheme scheme){
-		//TODO Mandare messaggio al controller con lo stato del match
+		controller.setChosenScheme( scheme.getId() );   //se per esempio qui c'è un errore, se lo gestisce il PlayerController*/
 	}
 	private void setIcons() {
 		setIconImage( Toolkit.getDefaultToolkit().getImage( getClass().getResource( SAGRADA_ICO ) ) );
 		this.setTitle( DEFAULT_TITLE );
-	}
-
-	public static void main( String args[] ) {
-		/* Set the Nimbus look and feel */
-		//<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-		/* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-		 * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-		 */
-		try {
-			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-				if ( "Nimbus".equals( info.getName() ) ) {
-					javax.swing.UIManager.setLookAndFeel( info.getClassName() );
-					break;
-				}
-			}
-		} catch ( ClassNotFoundException ex ) {
-			java.util.logging.Logger.getLogger( ChooseSchemeForm.class.getName() ).log( java.util.logging.Level.SEVERE, null, ex );
-		} catch ( InstantiationException ex ) {
-			java.util.logging.Logger.getLogger( ChooseSchemeForm.class.getName() ).log( java.util.logging.Level.SEVERE, null, ex );
-		} catch ( IllegalAccessException ex ) {
-			java.util.logging.Logger.getLogger( ChooseSchemeForm.class.getName() ).log( java.util.logging.Level.SEVERE, null, ex );
-		} catch ( javax.swing.UnsupportedLookAndFeelException ex ) {
-			java.util.logging.Logger.getLogger( ChooseSchemeForm.class.getName() ).log( java.util.logging.Level.SEVERE, null, ex );
-		}
-		//</editor-fold>
-
-		/* Create and display the form */
-		java.awt.EventQueue.invokeLater( new Runnable() {
-			public void run() {
-				List<Scheme> list = new ArrayList<>();
-				SchemeListFileConverter schemeListFileConverter = new SchemeListFileConverter();
-				list.add( schemeListFileConverter.readFromFile().get( 0 ) );
-				list.add( schemeListFileConverter.readFromFile().get( 1 ) );
-				list.add( schemeListFileConverter.readFromFile().get( 2 ) );
-				list.add( schemeListFileConverter.readFromFile().get( 3 ) );
-				new ChooseSchemeForm( list ).setVisible( true );
-			}
-		} );
 	}
 
 	// Variables declaration - do not modify//GEN-BEGIN:variables

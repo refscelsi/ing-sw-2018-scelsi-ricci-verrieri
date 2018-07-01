@@ -47,21 +47,14 @@ public class GUI implements UiUpdate {
 		newPlayerFrom.setVisible( true );
 	}
 
-	public void chooseScheme( Match match, String nickname, String message ) {
+	public void chooseScheme( Match match, String nickname, String message ) throws RemoteException {
 		ArrayList<Scheme> schemes = match.getPlayer( nickname ).getSchemesToChoose();
 		showSchemesToChoose( schemes );
-		int num;
-		do {
-			System.out.println( message );
-			num = scanner.nextInt();
-
-		} while (num < 1 || num > 4);
-		controller.setChosenScheme( schemes.get( num - 1 ).getId() );   //se per esempio qui c'è un errore, se lo gestisce il PlayerController*/
 	}
 
 
-	public void showSchemesToChoose( ArrayList<Scheme> schemes ) {
-		ChooseSchemeForm chooseSchemeForm = new ChooseSchemeForm( schemes );
+	public void showSchemesToChoose( ArrayList<Scheme> schemes ) throws RemoteException {
+		ChooseSchemeForm chooseSchemeForm = new ChooseSchemeForm( schemes, getController() );
 		chooseSchemeForm.setVisible( true );
 	}
 
@@ -170,15 +163,12 @@ public class GUI implements UiUpdate {
 			System.out.println( "Digita il numero della colonna dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_COLS );
 			col = scanner.nextInt();
 		} while (col < 1 || col > Constants.NUM_COLS);
-
 		controller.useDice( -1, row - 1, col - 1 );
 	}
-
 
 	/////////////////////////////////////////////////////////////////////////////////////////
 	// Scelta T: utilizzare una toolcard
 	/////////////////////////////////////////////////////////////////////////////////////////
-
 
 	public void handleUseToolCard( Match match ) {
 		int num;
@@ -189,7 +179,6 @@ public class GUI implements UiUpdate {
 		int id = match.getToolCards().get( num - 1 ).getId();
 		useToolCard( id, match );
 	}
-
 
 	public void useToolCard( int id, Match match ) {
 		switch (id) {
@@ -416,7 +405,7 @@ public class GUI implements UiUpdate {
 	}
 
 	@Override
-	public void onSchemeToChoose( Match match, String nickname, String message ) {
+	public void onSchemeToChoose( Match match, String nickname, String message ) throws RemoteException {
 		chooseScheme( match, nickname, message );
 	}
 

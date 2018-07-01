@@ -24,7 +24,7 @@ public interface UiUpdate {
 
     void onGameEnd(Match match);
 
-    void onSchemeToChoose(Match match, String nickname, String message);
+    void onSchemeToChoose(Match match, String nickname, String message) throws RemoteException;
 
     void onUseToolCardNotValid(int id, Match match, String e);
 
