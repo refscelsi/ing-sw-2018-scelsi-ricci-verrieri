@@ -3,6 +3,8 @@ package it.polimi.ing.sw.client;
 import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 
+import java.rmi.RemoteException;
+
 //interfaccia remota, implementata da PlayerController, che riceve gli aggiornamenti dal Model
 public interface UiUpdate {
 
@@ -12,7 +14,7 @@ public interface UiUpdate {
 
     void onActionNotValid(String errorCode);
 
-    void onChooseNetwork (String message);
+    void onChooseNetwork (String message) throws RemoteException;
 
     void onTurnStart(Match match, String nickname);
 

@@ -12,7 +12,10 @@ import static it.polimi.ing.sw.util.Constants.SAGRADA_ICO;
 public class ChooseSchemeForm extends javax.swing.JFrame {
 
 	private List<Scheme> schemeList;
-	private VetrataPanel vetrataPanelA, vetrataPanelB, vetrataPanelC, vetrataPanelD;
+	private VetrataPanel vetrataPanelA;
+	private VetrataPanel vetrataPanelB;
+	private VetrataPanel vetrataPanelC;
+	private VetrataPanel vetrataPanelD;
 
 	public ChooseSchemeForm( List<Scheme> schemeList ) {
 		this.schemeList = schemeList;
@@ -42,7 +45,7 @@ public class ChooseSchemeForm extends javax.swing.JFrame {
 		vetrataPanelC.setBounds( 13, 49, 203, 287 );
 
 		vetrataPanelD = new VetrataPanel( 4 );
-		vetrataPanelD.fillScheme( schemeList.get( 03 ) );
+		vetrataPanelD.fillScheme( schemeList.get( 3 ) );
 		schemeCardPanel2.add( vetrataPanelD );
 		vetrataPanelD.setBounds( 228, 49, 203, 287 );
 	}

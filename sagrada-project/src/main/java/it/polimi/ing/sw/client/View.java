@@ -13,6 +13,7 @@ import it.polimi.ing.sw.model.exceptions.NotValidNicknameException;
 import it.polimi.ing.sw.model.exceptions.ToolCardException;
 import it.polimi.ing.sw.ui.cli.CLI;
 //import it.polimi.ing.sw.ui.gui.GUI;
+import it.polimi.ing.sw.ui.gui.GUI;
 import it.polimi.ing.sw.util.Constants;
 
 import java.io.IOException;
@@ -23,6 +24,8 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
 
+import static it.polimi.ing.sw.util.Constants.RMI_CODE;
+
 public class View extends UnicastRemoteObject implements RemotePlayer {
     /**
      * ogni giocatore è identificato dal valore dell'attributo index nel model: il giocatore con index=0 avrà come
@@ -31,9 +34,6 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
      * nella classifica finale.
      */
 
-    private static final String SERVER_ADDRESS = Constants.SERVER_ADDRESS;
-    private static final int SERVER_SOCKET_PORT = Constants.SOCKET_PORT;
-    private static final int SERVER_RMI_PORT = Constants.RMI_PORT;
     private boolean isLogged;
     private boolean isPlaying;     // flag per vedere se è il turno del giocatore a cui appartiene questa view
     private Match match;
@@ -64,7 +64,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
             if (input.equals("c")) {
                 ui = new CLI(this);
             } else if (input.equals("g")) {
-                //ui = new GUI(this);
+                ui = new GUI(this);
             } else {
                 System.out.println("Inserisci una lettera valida");
             }
@@ -168,8 +168,6 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         thread3.start();*/
     }
 
-
-
     public void onNotValidPlay(String e) {
         ui.onActionNotValid(e);
         ui.onTurnStart(match, nickname);
@@ -188,7 +186,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
 
 
     public void login(String nickname) {
-        if (networkChoice.equals("r"))
+        if (networkChoice.equals(RMI_CODE))
             loginPlayerRMI(nickname);
         else
             loginPlayerSocket(nickname);
