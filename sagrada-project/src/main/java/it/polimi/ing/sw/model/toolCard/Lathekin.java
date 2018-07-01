@@ -26,32 +26,38 @@ public class Lathekin extends ToolCard {
         Box sourceBox = scheme.getBox(sourceRow, sourceCol);
         Box destBox = scheme.getBox(destRow, destCol);
         if (!sourceBox.isFull()) {
-            if (firstExecutionDone)
-                replaceDice(scheme);
             throw new NotValidException("Hai scelto come origine una casella vuota!");
         } else {
             if (destBox.isFull()) {
-                if (firstExecutionDone)
-                    replaceDice(scheme);
                 throw new NotValidException("Non puoi posizionare un dado in una casella già piena!");
             } else {
                 Dice dice = sourceBox.getDice();
-                sourceBox.removeDice();
+
+                if (!firstExecutionDone) {
+                    sourceRow1 = sourceRow;
+                    sourceCol1 = sourceCol;
+                    destRow1 = destRow;
+                    destCol1 = destCol;
+                }
+
+                else {
+                    Box sourceBox1 = scheme.getBox(sourceRow1, sourceCol1);
+                    Box destBox1 = scheme.getBox(destRow1, destCol1);
+                    destBox1.placeDice(sourceBox1.getDice());
+                    sourceBox1.removeDice();
+                }
 
                 if (scheme.checkBox(destRow, destCol, dice) && scheme.checkIfHasDiceAdjacent(destRow, destCol, dice, 1)) {
-                    destBox.placeDice(dice);
                     if (!firstExecutionDone) {
                         firstExecutionDone = true;
-                        sourceRow1 = sourceRow;
-                        sourceCol1 = sourceCol;
-                        destRow1 = destRow;
-                        destCol1 = destCol;
-                    } else {
-                        //incrementNumOfTokens();
-                        firstExecutionDone = false;
                     }
-                } else {
-                    sourceBox.placeDice(dice);
+                    else {
+                        firstExecutionDone = false;
+                        destBox.placeDice(dice);
+                        sourceBox.removeDice();
+                    }
+                }
+                else {
                     if (firstExecutionDone)
                         replaceDice(scheme);
                     throw new NotValidException("Non stai rispettando le condizioni di piazzamento!");

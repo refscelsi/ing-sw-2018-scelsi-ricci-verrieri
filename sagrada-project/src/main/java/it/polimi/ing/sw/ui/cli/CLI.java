@@ -208,9 +208,9 @@ public class CLI implements UiUpdate {
             num = scanner.nextInt();
 
         } while (num < 1 || num > 4);
-        //System.out.println("Ho scelto schema nella cli");
+        System.out.println("Ho scelto schema nella cli");
         controller.setChosenScheme(schemes.get(num - 1).getId());   //se per esempio qui c'è un errore, se lo gestisce il PlayerController*/
-        //System.out.println("Ho scelto schema nella cli, torno subitooo");
+        System.out.println("Ho scelto schema nella cli, torno subitooo");
     }
 
 
@@ -330,8 +330,7 @@ public class CLI implements UiUpdate {
             System.out.println("Digita il numero della colonna dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_COLS);
             col = scanner.nextInt();
         } while (col < 1 || col > Constants.NUM_COLS);
-
-        controller.useDice(-1, row - 1, col - 1);
+            controller.useDice(-1, row - 1, col - 1);
     }
 
 
@@ -605,7 +604,7 @@ public class CLI implements UiUpdate {
     public void onOtherInfoToolCard(int id, Match match) {
         switch (id) {
             case 4: {
-                System.out.println("Primo dado mosso correttamente, ora muovi il secondo");
+                //System.out.println("Primo dado mosso correttamente, ora muovi il secondo");
                 useToolCard23412(4);
             }
             break;
@@ -638,7 +637,7 @@ public class CLI implements UiUpdate {
                     choice = scanner.nextInt();
                 } while (choice!=0 && choice!=1);
                 if (choice==0)
-                    controller.useToolCard(12, -1, -1, -1, -1, -1, -1);
+                    controller.useToolCard(12, -2, -1, -1, -1, -1, -1);
                 else
                     useToolCard23412(12);
             }
