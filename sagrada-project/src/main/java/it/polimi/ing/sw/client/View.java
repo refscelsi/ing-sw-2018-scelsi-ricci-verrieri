@@ -120,8 +120,12 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
             if(match==null){
                 System.out.println("sbatti");
             }
-            ui.onSchemeToChoose(match, nickname, "Scegli il numero del tuo schema");
-        };
+			try {
+				ui.onSchemeToChoose(match, nickname, "Scegli il numero del tuo schema");
+			} catch ( RemoteException e ) {
+				e.printStackTrace();
+			}
+		};
         new Thread(task2).start();
 
     }

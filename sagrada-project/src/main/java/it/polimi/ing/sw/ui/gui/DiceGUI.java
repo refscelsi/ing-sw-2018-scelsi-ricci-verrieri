@@ -20,15 +20,6 @@ public class DiceGUI extends javax.swing.JPanel {
 
 	private int dimXdice;
 	private int dimYdice;
-/*
-	public DiceGUI( int dimXdice, int dimYdice ) {
-		this.dimXdice = dimXdice;
-		this.dimYdice = dimYdice;
-		initComponents();
-		//updateIcon("1g");
-
-		box = new Box();
-	}*/
 
 	public DiceGUI( Boolean isVoid, int dimXdice, int dimYdice ) {
 		this.dimXdice = dimXdice;
@@ -104,7 +95,6 @@ public class DiceGUI extends javax.swing.JPanel {
 				if ( intName > 0 && intName < 7 ) {
 					PATH = IMAGE_PATH + name + "g.png";
 				}
-
 			}
 			if ( !PATH.isEmpty() ) {
 				ImageIcon icon;
