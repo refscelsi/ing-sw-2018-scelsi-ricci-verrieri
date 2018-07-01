@@ -22,18 +22,15 @@ public class TaglierinaManuale extends ToolCard {
         return firstExecutionDone;
     }
 
+
     @Override
-    public void execute(Scheme scheme, int sourceRow, int sourceCol, int destRow, int destCol, RoundTrack roundTrack) throws NotValidException {
+    public void execute(DraftPool neverUsed1, RoundTrack roundTrack, Scheme scheme, Player[] neverUsed2, Bag neverUsed3, int neverUsed4, int neverUsed5, int sourceRow, int sourceCol, int destRow, int destCol) throws NotValidException {
         Box sourceBox = scheme.getBox(sourceRow, sourceCol);
         Box destBox = scheme.getBox(destRow, destCol);
         if (!sourceBox.isFull()) {
-            if (firstExecutionDone)
-                replaceDice(scheme);
             throw new NotValidException("Hai scelto come origine una casella vuota!");
         } else {
             if (destBox.isFull()) {
-                if (firstExecutionDone)
-                    replaceDice(scheme);
                 throw new NotValidException("Non puoi posizionare un dado in una casella già piena!");
             } else {
                 Dice dice = sourceBox.getDice();
@@ -48,8 +45,6 @@ public class TaglierinaManuale extends ToolCard {
                         throw new NotValidException("Non esiste un dado di questo colore sul tracciato dei round!");
                 } else {
                     if (diceColor != color) {
-                        if (firstExecutionDone)
-                            replaceDice(scheme);
                         throw new NotValidException("Puoi spostare solo un dado dello stesso colore del precedente");
                     }
                 }
@@ -64,24 +59,14 @@ public class TaglierinaManuale extends ToolCard {
                     } else {
                         firstExecutionDone = false;
                         color = Color.WHITE;
-                        incrementNumOfTokens();
+                        //incrementNumOfTokens();
                     }
                 } else {
                     sourceBox.placeDice(dice);
-                    if (firstExecutionDone)
-                        replaceDice(scheme);
                     throw new NotValidException("Non stai rispettando le condizioni di piazzamento!");
                 }
             }
         }
-    }
-
-
-    public void replaceDice(Scheme scheme) {
-        Box sourceBox = scheme.getBox(sourceRow1, sourceCol1);
-        Box destBox = scheme.getBox(destRow1, destCol1);
-        sourceBox.placeDice(destBox.getDice());
-        destBox.removeDice();
     }
 
 

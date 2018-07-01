@@ -1,6 +1,6 @@
 package it.polimi.ing.sw.ui.gui;
 
-import it.polimi.ing.sw.client.UiUpdate;
+/*import it.polimi.ing.sw.client.UiUpdate;
 import it.polimi.ing.sw.client.View;
 import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.model.Player;
@@ -31,7 +31,7 @@ public class GUI implements UiUpdate {
     /**
      * Login del Client sul Server.
      */
-    public void login(String message) {
+    /*public void login(String message) {
         System.out.println(message);
         inText = scanner.nextLine();
         controller.loginPlayerRMI(inText);
@@ -40,7 +40,7 @@ public class GUI implements UiUpdate {
     /**
      * Scelta dello schema tra i 4 schemi disponibili da parte di un giocatore
      */
-    public void chooseScheme(Match match, String nickname, String message) {
+    /*public void chooseScheme(Match match, String nickname, String message) {
         ArrayList<Scheme> schemes = match.getPlayer(nickname).getSchemesToChoose();
         showSchemesToChoose(schemes);
         new Thread(() -> {
@@ -51,7 +51,7 @@ public class GUI implements UiUpdate {
 
             } while (num < 1 || num > 4);
             controller.setChosenScheme(schemes.get(num - 1).getId());   //se per esempio qui c'è un errore, se lo gestisce il PlayerController*/
-        }).start();
+        /*}).start();
     }
 
     public void showSchemesToChoose(ArrayList<Scheme> schemes) {
@@ -63,7 +63,7 @@ public class GUI implements UiUpdate {
     /**
      * Scelta dell'azione da parte del giocatore
      */
-    public void chooseAction(Match match, String nickname) {
+    /*public void chooseAction(Match match, String nickname) {
         boolean ok;
         System.out.print("Digita: \n- D se vuoi posizionare un dado sul tuo schema; \n- T se vuoi utilizzare una carta utensile; \n- I se vuoi visualizzare le informazioni degli altri giocatori; \n- E se vuoi terminare il tuo turno; \n- Q se vuoi uscire dalla partita.\n");
 
@@ -126,7 +126,7 @@ public class GUI implements UiUpdate {
                 }
             }
         } while (!inText.equals("q"));
-        */
+
     }
 
 
@@ -148,7 +148,7 @@ public class GUI implements UiUpdate {
     // Scelta D: posizionare un dado sullo schema
     /////////////////////////////////////////////////////////////////////////////////////////
 
-    public void handleUseDice(Match match, boolean toolCard9) {
+    /*public void handleUseDice(Match match, boolean toolCard9) {
         int dice, row, col;
         do {
             System.out.println("Digita l'indice del dado che vuoi posizionare, tra 1 e " + match.getDraftPool().getSize());
@@ -370,10 +370,10 @@ public class GUI implements UiUpdate {
 
     }
 
-    /*@Override
+    @Override
     public void onChooseNetwork (String message) {
         chooseNetwork(message);
-    }*/
+    }
 
     @Override
     public void onTurnStart(Match match, String nickname) {
@@ -475,4 +475,4 @@ public class GUI implements UiUpdate {
         System.out.println(message);
     }
 
-}
+}*/

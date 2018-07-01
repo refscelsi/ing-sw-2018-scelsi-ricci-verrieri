@@ -8,6 +8,7 @@ import it.polimi.ing.sw.model.Scheme;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.util.Constants;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -82,7 +83,7 @@ public class CLI implements UiUpdate {
     }
 
     /**
-     * Avvia Client (RMI o Socket).
+     * Avvia Client (RMI o socket).
      *
      */
     /*public void mainClient(String serverAddress, int socketPort, int rmiPort) {
@@ -90,18 +91,18 @@ public class CLI implements UiUpdate {
     }
 
     /**
-     * Avvia Client (RMI o Socket)
+     * Avvia Client (RMI o socket)
      * @param clientUI
      */
 
     /*public PlayerController mainClient(String serverAddress, int socketPort, int rmiPort, UiUpdate clientUI) {
         ui = clientUI;
 
-        System.out.print("Digita R per connetterti tramite RMI o S per connetterti tramite Socket (Default: RMI)");
+        System.out.print("Digita R per connetterti tramite RMI o S per connetterti tramite socket (Default: RMI)");
         inText = scanner.nextLine().toUpperCase();
 
         if (inText.equals("S")) {
-            inText = "Socket";
+            inText = "socket";
         } else if (inText.equals("R")) {
             inText = "RMI";
         }
@@ -166,7 +167,7 @@ public class CLI implements UiUpdate {
             server.startServer(socketPort, rmiPort);
 
             System.out.print("\nServer in ascolto a: ");
-            System.out.println("127.0.0.1" + " (RMI: " + rmiPort + ", Socket: " + socketPort + ")");
+            System.out.println("127.0.0.1" + " (RMI: " + rmiPort + ", socket: " + socketPort + ")");
             System.out.println();
 
         } catch (ServerException e) {
@@ -182,15 +183,17 @@ public class CLI implements UiUpdate {
     public void login(String message) {
         System.out.println(message);
         inText = scanner.nextLine();
-        controller.loginPlayerRMI(inText);
+        controller.login(inText);
     }
 
 
-    /*public void chooseNetwork(String message) {
-        System.out.print(message);
-        inText = scanner.nextLine();
+    public void chooseNetwork(String message) {
+        do {
+            System.out.println(message);
+            inText = scanner.nextLine();
+        } while (!inText.toLowerCase().equals("s") && !inText.toLowerCase().equals("r"));
         controller.chooseNetwork(inText);
-    }*/
+    }
 
 
     /**
@@ -199,20 +202,19 @@ public class CLI implements UiUpdate {
     public void chooseScheme(Match match, String nickname, String message) {
         ArrayList<Scheme> schemes = match.getPlayer(nickname).getSchemesToChoose();
         showSchemesToChoose(schemes);
-        new Thread(() -> {
-            int num;
-            do {
-                System.out.println(message);
-                num = scanner.nextInt();
+        int num;
+        do {
+            System.out.println(message);
+            num = scanner.nextInt();
 
-            } while (num < 1 || num > 4);
-            controller.setChosenScheme(schemes.get(num - 1).getId());   //se per esempio qui c'è un errore, se lo gestisce il PlayerController*/
-        }).start();
+        } while (num < 1 || num > 4);
+        controller.setChosenScheme(schemes.get(num - 1).getId());   //se per esempio qui c'è un errore, se lo gestisce il PlayerController*/
     }
+
 
     public void showSchemesToChoose(ArrayList<Scheme> schemes) {
         for (int i = 0; i < 4; i++) {
-            System.out.println("Schema " + (i + 1) + ":");
+            System.out.println("Schema " + (i + 1) + " (con ID " + schemes.get(i).getId() + "):");
             ShowScheme show = new ShowScheme(schemes.get(i));
             System.out.println("");
         }
@@ -272,22 +274,6 @@ public class CLI implements UiUpdate {
     }
 
 
-    public void notMyTurn() {
-        /*System.out.println("Digita Q se vuoi uscire dalla partita");
-        do {
-            inText = scanner.nextLine();
-            if (inText.equals("q")) {
-                System.out.println("Sei sicuro che vuoi uscire dalla partita? Digita S per sì o N per no.");
-                if (scanner.nextLine().toLowerCase().equalsIgnoreCase("s")) {
-                    // TODO: gestire terminazione corretta del programma!
-                    System.out.println("Uscendo dalla partita...");
-                    System.exit(0);
-                }
-            }
-        } while (!inText.equals("q"));
-        */
-    }
-
 
     /////////////////////////////////////////////////////////////////////////////////////////
     // Connessione e disconnessione del Client --> da fare probabilmente
@@ -323,7 +309,7 @@ public class CLI implements UiUpdate {
         } while (col < 1 || col > Constants.NUM_COLS);
 
         if (toolCard9)
-            controller.useToolCard9(dice - 1, row - 1, col - 1);
+            controller.useToolCard(9, dice - 1, -1,row - 1, col - 1, -1, -1);
         else
             controller.useDice(dice - 1, row - 1, col - 1);
 
@@ -369,7 +355,7 @@ public class CLI implements UiUpdate {
             case 2:
             case 3:
             case 4:
-                useToolCard234(id, match);
+                useToolCard23412(id);
                 break;
             case 5:
                 useToolCard5(match);
@@ -379,7 +365,7 @@ public class CLI implements UiUpdate {
                 break;
             case 7:
             case 8:
-                controller.useToolCard78(id);
+                controller.useToolCard(id, -1, -1, -1, -1, -1, -1);
                 break;
             case 9:
                 useToolCard9(match);
@@ -390,27 +376,29 @@ public class CLI implements UiUpdate {
             case 11:
                 useToolCard11(match);
                 break;
-
-
+            case 12:
+                useToolCard12(match);
+            default:
+                break;
         }
     }
 
 
     public void useToolCard1(Match match) {
-        int dice;
+        int dice, operation;
         do {
             System.out.println("Digita l'indice del dado che vuoi cambiare, tra 1 e " + match.getDraftPool().getSize());
             dice = scanner.nextInt();
         } while (dice < 1 || dice > match.getDraftPool().getSize());
         do {
-            System.out.println("Digita 'a' se vuoi aumentare il numero del dado di 1, 'd' se vuoi diminuirlo");
-            inText = scanner.nextLine();
-        } while ((inText.toLowerCase() != "a") && (inText.toLowerCase() != "d"));
-        controller.useToolCard1(dice - 1, inText);
+            System.out.println("Digita 0 se vuoi aumentare il numero del dado di 1, 1 se vuoi diminuirlo");
+            operation = scanner.nextInt();
+        } while ((operation!=0) && (operation!=1));
+        controller.useToolCard(1, dice-1, operation, -1, -1, -1, -1);
     }
 
 
-    public void useToolCard234(int id, Match match) {
+    public void useToolCard23412(int id) {
         int sourceRow, sourceCol, destRow, destCol;
         do {
             System.out.println("Digita il numero della riga dello schema del dado che vuoi spostare, tra 1 e " + Constants.NUM_ROWS);
@@ -428,25 +416,32 @@ public class CLI implements UiUpdate {
             System.out.println("Digita il numero della colonna dello schema in cui vuoi spostare il dado, tra 1 e " + Constants.NUM_COLS);
             destCol = scanner.nextInt();
         } while (destCol < 1 || destCol > Constants.NUM_COLS);
-        controller.useToolCard234(id, sourceRow - 1, sourceCol - 1, destRow - 1, destCol - 1);
+        controller.useToolCard(id, -1,-1,sourceRow - 1, sourceCol - 1, destRow - 1, destCol - 1);
     }
 
 
     public void useToolCard5(Match match) {
         int dice, round, indexInRound;
-        do {
-            System.out.println("Digita l'indice del dado che vuoi posizionare, tra 1 e " + match.getDraftPool().getSize());
-            dice = scanner.nextInt();
-        } while (dice < 1 || dice > match.getDraftPool().getSize());
-        do {
-            System.out.println("Digita il numero di round a cui appartiene il dado con cui vuoi scambiarlo, tra 1 e " + match.getRoundTrack().getRoundTrackSize());
-            round = scanner.nextInt();
-        } while (round < 1 || round > match.getRoundTrack().getRoundTrackSize());
-        do {
-            System.out.println("Digita l'indice del dado nel round che hai scelto, tra 0 e " + (match.getRoundTrack().getNumberOfDices(round) - 1));
-            indexInRound = scanner.nextInt();
-        } while (indexInRound < 1 || indexInRound > Constants.NUM_COLS);
-        controller.useToolCard5(dice - 1, round, indexInRound);
+        boolean roundTrackIsFull = controller.checkIfRoundTrackIsFull();
+        if (!roundTrackIsFull) {
+            System.out.println("Non puoi utilizzare questa carta perché ancora non ci sono dadi sul tracciato dei round");
+            chooseAction(match, controller.getNickname());
+        }
+        else {
+            do {
+                System.out.println("Digita l'indice del dado della riserva che vuoi scambiare, tra 1 e " + match.getDraftPool().getSize());
+                dice = scanner.nextInt();
+            } while (dice < 1 || dice > match.getDraftPool().getSize());
+            do {
+                System.out.println("Digita il numero di round a cui appartiene il dado con cui vuoi scambiarlo, tra 1 e " + match.getRoundTrack().getRoundTrackSize());
+                round = scanner.nextInt();
+            } while (round < 1 || round > match.getRoundTrack().getRoundTrackSize());
+            do {
+                System.out.println("Digita l'indice del dado nel round che hai scelto, tra 0 e " + (match.getRoundTrack().getNumberOfDices(round) - 1));
+                indexInRound = scanner.nextInt();
+            } while (indexInRound < 0 || indexInRound > match.getRoundTrack().getNumberOfDices(round) - 1);
+            controller.useToolCard(5, dice - 1, -1, round, indexInRound, -1, -1);
+        }
     }
 
 
@@ -456,7 +451,7 @@ public class CLI implements UiUpdate {
             System.out.println("Digita l'indice del dado che vuoi tirare, tra 1 e " + match.getDraftPool().getSize());
             dice = scanner.nextInt();
         } while (dice < 1 || dice > match.getDraftPool().getSize());
-        controller.useToolCard6(dice - 1);
+        controller.useToolCard(6, dice - 1, -1, -1, -1, -1, -1);
     }
 
 
@@ -471,7 +466,7 @@ public class CLI implements UiUpdate {
             System.out.println("Digita l'indice del dado che vuoi cambiare, tra 1 e " + match.getDraftPool().getSize());
             dice = scanner.nextInt();
         } while (dice < 1 || dice > match.getDraftPool().getSize());
-        controller.useToolCard10(dice - 1);
+        controller.useToolCard(10,dice - 1, -1, -1, -1, -1, -1);
     }
 
 
@@ -481,7 +476,19 @@ public class CLI implements UiUpdate {
             System.out.println("Digita l'indice del dado che vuoi riporre nel sacchetto, tra 1 e " + match.getDraftPool().getSize());
             dice = scanner.nextInt();
         } while (dice < 1 || dice > match.getDraftPool().getSize());
-        controller.useToolCard11(dice - 1);
+        controller.useToolCard(11, dice - 1, -1, -1, -1, -1, -1);
+    }
+
+
+    public void useToolCard12(Match match) {
+        boolean roundTrackIsFull = controller.checkIfRoundTrackIsFull();
+        if (!roundTrackIsFull) {
+            System.out.println("Non puoi utilizzare questa carta perché ancora non ci sono dadi sul tracciato dei round");
+            chooseAction(match, controller.getNickname());
+        }
+        else {
+            useToolCard23412(12);
+        }
     }
 
 
@@ -529,10 +536,10 @@ public class CLI implements UiUpdate {
 
     }
 
-    /*@Override
+    @Override
     public void onChooseNetwork (String message) {
-        chooseNetwork(message);
-    }*/
+            chooseNetwork(message);
+    }
 
     @Override
     public void onTurnStart(Match match, String nickname) {
@@ -546,16 +553,12 @@ public class CLI implements UiUpdate {
     }
 
     @Override
-    public void onTurnEnd() {
-        notMyTurn();
-    }
-
-    @Override
     public void onGameUpdate(Match match, String nickname) {
         ShowRoundTrack roundTrack = new ShowRoundTrack(match.getRoundTrack());
         ShowPublicObjectives pub = new ShowPublicObjectives(match.getPublicObjectives());
         ShowPrivateObjectiveCard priv = new ShowPrivateObjectiveCard(match.getPlayer(nickname).getPrivateObjective());
         ShowToolCards tool = new ShowToolCards(match.getToolCards());
+        System.out.println("Hai " + match.getPlayer(nickname).getNumOfToken() + " segnalini favore");
         ShowDraftPool draft = new ShowDraftPool(match.getDraftPool());
         ShowScheme scheme = new ShowScheme(match.getPlayer(nickname).getScheme());
     }
@@ -575,59 +578,70 @@ public class CLI implements UiUpdate {
     }
 
     @Override
-    public void onUseToolCard1NotValid(Match match, NotValidException e) {
-        System.err.println(e);
-        useToolCard1(match);
+    public void onUseToolCardNotValid(int id, Match match, String e) {
+        System.out.println(e);
+        switch (id) {
+            case 6:
+                onOtherInfoToolCard(6, match);    // perché tanto la 6 può lanciare una notValidException solo nel secondo step
+                break;
+            case 11:
+                onOtherInfoToolCard(11, match);   // perché tanto la 11 può lanciare una notValidException solo nel secondo step
+                break;
+            case 12:
+                onOtherInfoToolCard(12, match);   //TODO: distingui eccezione se ti trovi nel primo step o nel secondo
+                break;
+            default:
+                useToolCard(id, match);
+                break;
+        }
     }
+
 
     @Override
-    public void onUseToolCard234NotValid(int id, Match match, NotValidException e) {
-        System.err.println(e);
-        useToolCard234(id, match);
+    public void onOtherInfoToolCard(int id, Match match) {
+        switch (id) {
+            case 4: {
+                System.out.println("Primo dado mosso correttamente, ora muovi il secondo");
+                useToolCard23412(4);
+            }
+            break;
+            case 6: {
+                System.out.println("Ora digita la casella dove posizionare il dado");
+                retryPlaceDice();
+            }
+            break;
+            case 11: {
+                int dice, row, col;
+                do {
+                    System.out.println("Digita il valore del nuovo dado, tra 1 e 6");
+                    dice = scanner.nextInt();
+                } while (dice < 1 || dice > 6);
+                do {
+                    System.out.println("Digita il numero della riga dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_ROWS);
+                    row = scanner.nextInt();
+                } while (row < 1 || row > Constants.NUM_ROWS);
+                do {
+                    System.out.println("Digita il numero della colonna dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_COLS);
+                    col = scanner.nextInt();
+                } while (col < 1 || col > Constants.NUM_COLS);
+                controller.useToolCard(11, -1, dice, row-1, col-1, -1, -1);
+            }
+            break;
+            case 12: {
+                int choice;
+                do {
+                    System.out.println("Primo dado mosso correttamente, digita 0 se non vuoi spostare più dadi o 1 se vuoi spostarne un altro");
+                    choice = scanner.nextInt();
+                } while (choice!=0 && choice!=1);
+                if (choice==0)
+                    controller.useToolCard(12, -1, -1, -1, -1, -1, -1);
+                else
+                    useToolCard23412(12);
+            }
+        }
+
     }
 
-    @Override
-    public void onOtherInfoToolCard4(Match match) {
-        System.out.println("Primo dado mosso correttamente, ora muovi il secondo");
-        useToolCard234(4, match);
-    }
-
-    @Override
-    public void onToolCard6(Match match) {
-        System.out.println("Ora digita la casella dove posizionare il dado");
-        useToolCard6(match);
-    }
-
-    @Override
-    public void onUseToolCard9NotValid(Match match, NotValidException e) {
-        System.err.println(e);
-        useToolCard9(match);
-    }
-
-    @Override
-    public void onOtherInfoToolCard11(Match match) {
-        int dice, row, col;
-        do {
-            System.out.println("Digita il valore del nuovo dado, tra 1 e 6");
-            dice = scanner.nextInt();
-        } while (dice < 1 || dice > 6);
-        do {
-            System.out.println("Digita il numero della riga dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_ROWS);
-            row = scanner.nextInt();
-        } while (row < 1 || row > Constants.NUM_ROWS);
-        do {
-            System.out.println("Digita il numero della colonna dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_COLS);
-            col = scanner.nextInt();
-        } while (col < 1 || col > Constants.NUM_COLS);
-
-        controller.useToolCard11b(dice - 1, row - 1, col - 1);
-    }
-
-    @Override
-    public void onUseToolCard11bNotValid(Match match, NotValidException e) {
-        System.err.println(e);
-        onOtherInfoToolCard11(match);
-    }
 
     @Override
     public void onSuccess(String message) {
