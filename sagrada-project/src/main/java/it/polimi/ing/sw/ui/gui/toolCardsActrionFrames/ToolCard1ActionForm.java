@@ -1,19 +1,25 @@
 package it.polimi.ing.sw.ui.gui.toolCardsActrionFrames;
 
-import it.polimi.ing.sw.model.Color;
+import it.polimi.ing.sw.client.View;
 import it.polimi.ing.sw.model.Dice;
 import it.polimi.ing.sw.util.ModelColorToAWTColor;
 
-public class ToolCard1ActionForm extends javax.swing.JFrame {
+import java.rmi.RemoteException;
+
+public class ToolCard1ActionForm extends javax.swing.JWindow {
 
     private int numFaceUp;
     private Dice dice;
-    private int operation=-1;
+    private int operation = -1;
+    private View controller;
 
-    public ToolCard1ActionForm(Dice dice) {
+    public ToolCard1ActionForm(Dice dice, View controller) {
+        this.controller=controller;
         initComponents();
         this.numFaceUp = dice.getNumFacciaUp();
         this.dice = dice;
+
+        diceLabel.setText(String.valueOf(numFaceUp));
 
         diceLabel.setBackground(ModelColorToAWTColor.toColor(dice.getDiceColor()));
         setLocationRelativeTo(null);
@@ -30,8 +36,6 @@ public class ToolCard1ActionForm extends javax.swing.JFrame {
         cancelButton = new javax.swing.JToggleButton();
         diceLabel = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         plusLabel.setBackground(new java.awt.Color(0, 0, 0));
         plusLabel.setFont(new java.awt.Font("Elephant", 1, 18)); // NOI18N
         plusLabel.setForeground(new java.awt.Color(0, 0, 0));
@@ -42,12 +46,15 @@ public class ToolCard1ActionForm extends javax.swing.JFrame {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 plusLabelMouseEntered(evt);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 plusLabelMouseExited(evt);
             }
+
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 plusLabelMousePressed(evt);
             }
+
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 plusLabelMouseReleased(evt);
             }
@@ -63,12 +70,15 @@ public class ToolCard1ActionForm extends javax.swing.JFrame {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 minusLabelMouseEntered(evt);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 minusLabelMouseExited(evt);
             }
+
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 minusLabelMousePressed(evt);
             }
+
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 minusLabelMouseReleased(evt);
             }
@@ -77,7 +87,11 @@ public class ToolCard1ActionForm extends javax.swing.JFrame {
         okButton.setText("OK");
         okButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                okButtonActionPerformed(evt);
+                try {
+                    okButtonActionPerformed(evt);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -97,52 +111,52 @@ public class ToolCard1ActionForm extends javax.swing.JFrame {
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(cancelButton))
-                    .addComponent(minusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
-                .addComponent(diceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(51, 51, 51)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(okButton)
-                        .addGap(31, 31, 31))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(plusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addGap(12, 12, 12)
+                                                .addComponent(cancelButton))
+                                        .addComponent(minusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                                .addComponent(diceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(51, 51, 51)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                                .addComponent(okButton)
+                                                .addGap(31, 31, 31))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                                .addComponent(plusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(plusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(minusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(okButton)
-                            .addComponent(cancelButton))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(diceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(plusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(minusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(okButton)
+                                                        .addComponent(cancelButton))
+                                                .addGap(0, 0, Short.MAX_VALUE))
+                                        .addComponent(diceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -164,14 +178,11 @@ public class ToolCard1ActionForm extends javax.swing.JFrame {
         plusLabel.setForeground(new java.awt.Color(0, 0, 0));
     }//GEN-LAST:event_plusLabelMouseExited
 
-    private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
-        if (-1!=operation){
-            //controller.useToolCard(1, dice.getNumFacciaUp() - 1, operation, -1, -1, -1, -1);
+    private void okButtonActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_okButtonActionPerformed
+        if (-1 != operation) {
+            controller.useToolCard(1, dice.getNumFacciaUp() - 1, operation, -1, -1, -1, -1);
             setVisible(false);
-        }else{
-
         }
-
     }//GEN-LAST:event_okButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
@@ -181,9 +192,10 @@ public class ToolCard1ActionForm extends javax.swing.JFrame {
     private void plusLabelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_plusLabelMousePressed
         plusLabel.setForeground(new java.awt.Color(255, 0, 0));
 
-        if (((dice.getNumFacciaUp() - 1) == numFaceUp || numFaceUp == dice.getNumFacciaUp()) && numFaceUp < 6){
-            operation=1;
+        if (((dice.getNumFacciaUp() - 1) == numFaceUp || numFaceUp == dice.getNumFacciaUp()) && numFaceUp < 6) {
+            operation = 1;
             numFaceUp++;
+            diceLabel.setText(String.valueOf(numFaceUp));
         }
 
     }//GEN-LAST:event_plusLabelMousePressed
@@ -195,10 +207,10 @@ public class ToolCard1ActionForm extends javax.swing.JFrame {
     private void minusLabelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minusLabelMousePressed
         minusLabel.setForeground(new java.awt.Color(255, 0, 0));
 
-        if (((dice.getNumFacciaUp() + 1) == numFaceUp || numFaceUp == dice.getNumFacciaUp()) && numFaceUp > 1){
-            operation=0;
+        if (((dice.getNumFacciaUp() + 1) == numFaceUp || numFaceUp == dice.getNumFacciaUp()) && numFaceUp > 1) {
+            operation = 0;
             numFaceUp--;
-            
+            diceLabel.setText(String.valueOf(numFaceUp));
         }
 
     }//GEN-LAST:event_minusLabelMousePressed
@@ -207,40 +219,6 @@ public class ToolCard1ActionForm extends javax.swing.JFrame {
         minusLabel.setForeground(new java.awt.Color(222, 222, 222));
     }//GEN-LAST:event_minusLabelMouseReleased
 
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ToolCard1ActionForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ToolCard1ActionForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ToolCard1ActionForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ToolCard1ActionForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                Dice dice = new Dice();
-                dice.setDiceColor(Color.RED);
-                dice.setNumFacciaUp(3);
-                new ToolCard1ActionForm(dice).setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton cancelButton;
