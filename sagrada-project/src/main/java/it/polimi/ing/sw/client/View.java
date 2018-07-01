@@ -1,5 +1,6 @@
 package it.polimi.ing.sw.client;
 
+import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 import it.polimi.ing.sw.controller.LoginInterface;
 import it.polimi.ing.sw.controller.PlayerControllerInterface;
 import it.polimi.ing.sw.controller.RemotePlayer;
@@ -116,10 +117,13 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         System.out.println("Devo scegliere lo schema (prima di lancio thread");
         Runnable task2 = () -> {
             System.out.println("Devo scegliere lo schema (dopo di lancio thread");
+            if(match==null){
+                System.out.println("sbatti");
+            }
             ui.onSchemeToChoose(match, nickname, "Scegli il numero del tuo schema");
         };
-        Thread thread2 = new Thread(task2);
-        thread2.start();
+        new Thread(task2).start();
+
     }
 
     @Override
@@ -147,10 +151,6 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         ui.onGameEnd(match);
     }
 
-    @Override
-    public void onPlayerLogged() {
-
-    }
 
     @Override
     public void onSetPlaying() {

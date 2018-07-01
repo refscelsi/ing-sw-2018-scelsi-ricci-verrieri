@@ -138,8 +138,6 @@ public class Match implements Serializable {
                 this.remotePlayer.add(remotePlayer);
                 numPlayers++;
                 System.out.println(numPlayers);
-                //notifyChangement();
-                notifyLogin(player);
                 return;
             }
             else
@@ -517,9 +515,6 @@ public class Match implements Serializable {
         return otherPlayers;
     }
 
-    public void notifyLogin(Player player) throws RemoteException {
-        playerMap.get(player).onPlayerLogged();
-    }
 
     private void notifyStartedMatch() throws RemoteException, NotValidPlayException {
         for(RemotePlayer remotePlayer : remotePlayer){

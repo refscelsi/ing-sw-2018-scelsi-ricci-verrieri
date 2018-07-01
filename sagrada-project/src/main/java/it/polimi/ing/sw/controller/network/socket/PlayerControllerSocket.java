@@ -89,6 +89,7 @@ public class PlayerControllerSocket implements RemotePlayer {
                 break;
 
             case Constants.CHECKREADY: controller.checkAllReady();
+                System.out.println("t'appo");
                 break;
 
             case Constants.SETCHOSENSCHEME: controller.setChosenScheme(Integer.valueOf(params.get(0)));
@@ -144,7 +145,13 @@ public class PlayerControllerSocket implements RemotePlayer {
 
     @Override
     public void onTurnEnd() throws RemoteException {
-
+        MatchToSend matchToSend=new MatchToSend(Constants.ONTURNEND);
+        try {
+            out.writeObject(matchToSend);
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -159,16 +166,6 @@ public class PlayerControllerSocket implements RemotePlayer {
         }
     }
 
-    @Override
-    public void onPlayerLogged() throws RemoteException {
-        MatchToSend matchToSend=new MatchToSend(Constants.ONPLAYERLOGGED);
-        try {
-            out.writeObject(matchToSend);
-            out.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public void onSetPlaying() throws RemoteException {
@@ -183,7 +180,7 @@ public class PlayerControllerSocket implements RemotePlayer {
 
     @Override
     public void onOtherInfoToolCard(int id) throws RemoteException {
-        MatchToSend matchToSend=new MatchToSend(Constants.ONOTHERINFOTOOLCARD12);
+        MatchToSend matchToSend=new MatchToSend(Constants.ONOTHERINFOTOOLCARD);
         matchToSend.setId(id);
         try {
             out.writeObject(matchToSend);
