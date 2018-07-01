@@ -184,7 +184,6 @@ public class DiceGUI extends javax.swing.JPanel {
         wasPressed = false;
         if (this != evt.getComponent()) {
             floatingDiceFrame.setVisible(false);
-            //TODO remove local dice
             removeDice();
             injectDice(evt);
             floatingDiceFrame = null;
@@ -193,7 +192,7 @@ public class DiceGUI extends javax.swing.JPanel {
 
     private void removeDice() {
         box.removeDice();
-        updateBox();
+        diceLabel.setIcon(null);
     }
 
     private void diceLabelMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_diceLabelMouseDragged

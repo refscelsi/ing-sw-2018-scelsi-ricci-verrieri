@@ -6,6 +6,7 @@ import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.model.Scheme;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.ui.cli.ShowRoundTrack;
+import it.polimi.ing.sw.ui.gui.toolCardsActrionFrames.ToolCard1ActionForm;
 import it.polimi.ing.sw.util.Constants;
 
 import javax.swing.*;
@@ -32,6 +33,23 @@ public class GUI implements UiUpdate {
     }
 
     public void chooseNetwork(String message) throws RemoteException {
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(ToolCard1ActionForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(ToolCard1ActionForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(ToolCard1ActionForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(ToolCard1ActionForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+
         NewPlayerForm newPlayerForm = new NewPlayerForm(getController());
         newPlayerForm.setVisible(true);
     }
