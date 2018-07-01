@@ -323,6 +323,7 @@ public class Match implements Serializable {
             //da qua dove vado?? quando notifico la classifica e l'ultimo round??
             System.out.println(ranking.get(0).getNickname() + ranking.get(0).getScore());
             System.out.println(ranking.get(1).getNickname() + ranking.get(1).getScore());
+            notifyChangement();
         }
     }
 
@@ -424,7 +425,7 @@ public class Match implements Serializable {
         player.setScheme(schemeCardDeck.getSchemeWithId(id));
         player.setNumOfToken(schemeCardDeck.getSchemeWithId(id).getDifficulty());
         player.setState(PlayerState.READYTOPLAY);
-        System.out.println("Ho scelto schema nel match");
+        System.out.println("Ho scelto schema nel match " + player.getScheme().getId());
         playerMap.get(player).onSuccess("ok hai scelto bene lo schema ");
         System.out.println("Notifico schema dal match");
     }
@@ -434,6 +435,8 @@ public class Match implements Serializable {
     //metodi ausiliari
 
     public boolean checkToken(Player player, int idToolCard) throws NotValidPlayException {
+        if (!player.getState().equals(PlayerState.TURNSTARTED)&&!player.getState().equals(PlayerState.USEDDICE))
+            return true;
         if(player.getNumOfToken()>=findToolCard(idToolCard).getNumOfTokens()){
             return true;
         }
@@ -466,23 +469,43 @@ public class Match implements Serializable {
     public void useToolCard (Player player, int id, int dice, int operation, int sourceRow, int sourceCol, int destRow, int destCol) throws NotValidException, NotValidPlayException {
         if(checkToken(player,id)) {
             findToolCard(id).execute(draftPool, roundTrack, player.getScheme(), playersRound, bag, dice, operation, sourceRow, sourceCol, destRow, destCol);
-            player.setNumOfToken(player.getNumOfToken()-findToolCard(id).getNumOfTokens());
-            findToolCard(id).incrementNumOfTokens();
+            switch (id) {
+                case 4:
+                case 6:
+                case 11:
+                case 12: {
+                    if (!findToolCard(id).getFirstExecutionDone()) {
+                        player.setNumOfToken(player.getNumOfToken()-findToolCard(id).getNumOfTokens());
+                        findToolCard(id).incrementNumOfTokens();
+                    }
+                    break;
+                }
+                default: {
+                    player.setNumOfToken(player.getNumOfToken()-findToolCard(id).getNumOfTokens());
+                    findToolCard(id).incrementNumOfTokens();
+                    break;
+                }
+            }
         }
     }
 
 
     public void usedToolCard (Player player, int id) throws RemoteException {
-        notifyChangement();
         switch (id) {
-            case 4:
+            case 4: {
+                playerMap.get(player).onOtherInfoToolCard(id);
+                break;
+            }
+
             case 6:
             case 11:
             case 12: {
+                notifyChangement();
                 playerMap.get(player).onOtherInfoToolCard(id);
                 break;
             }
             default: {
+                notifyChangement();
                 notifyStartTurn(player);
                 break;
             }
@@ -516,6 +539,12 @@ public class Match implements Serializable {
 
     public void notifyEndTurn(Player player) throws RemoteException {
         playerMap.get(player).onTurnEnd();
+    }
+
+    public void notifyGameEnd() throws RemoteException {
+        for(RemotePlayer remotePlayer : remotePlayer){
+            remotePlayer.onGameEnd(this);
+        }
     }
 
     public void notifySucces(String message) throws RemoteException{

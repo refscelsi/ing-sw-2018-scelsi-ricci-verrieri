@@ -15,14 +15,15 @@ public class TaglierinaCircolare extends ToolCard {
 
 
     @Override
-    public void execute(DraftPool draftPool, RoundTrack roundTrack, Scheme neverUsed1, Player[] neverUsed2, Bag neverUsed3, int indexInDraftPool, int round, int indexInRound, int neverUsed4, int neverUsed5, int neverUsed6) throws NotValidPlayException {
+    public void execute(DraftPool draftPool, RoundTrack roundTrack, Scheme neverUsed1, Player[] neverUsed2, Bag neverUsed3, int indexInDraftPool, int neverUsed4, int round, int indexInRound, int neverUsed5, int neverUsed6) throws NotValidPlayException {
         if (roundTrack.getRoundTrackSize() < 1)
             throw new NotValidPlayException("Non puoi utilizzare questa carta durante il primo round perché non ci sono dadi sul tracciato dei round!");
         else {
-            Dice diceRoundtrack = roundTrack.getDicesRound(round).getDice(indexInRound);
+            Dice diceRoundTrack = roundTrack.getDicesRound(round).getDice(indexInRound);
             Dice diceDraftPool = draftPool.getDice(indexInDraftPool);
+            Dice diceRT = new Dice(diceRoundTrack.getNumFacciaUp(), diceRoundTrack.getDiceColor());
             roundTrack.getDicesRound(round).getDice(indexInRound).setDice(diceDraftPool.getNumFacciaUp(), diceDraftPool.getDiceColor());
-            draftPool.getDice(indexInDraftPool).setDice(diceRoundtrack.getNumFacciaUp(), diceRoundtrack.getDiceColor());
+            draftPool.getDice(indexInDraftPool).setDice(diceRT.getNumFacciaUp(), diceRT.getDiceColor());
             //incrementNumOfTokens();
         }
     }

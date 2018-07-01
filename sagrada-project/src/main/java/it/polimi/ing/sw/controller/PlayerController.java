@@ -71,7 +71,7 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
 
     @Override
     public void setChosenScheme(int id) throws NetworkException, RemoteException, NotValidPlayException {
-        System.out.println("Ho scelto schema nel controller");
+        System.out.println("Ho scelto schema nel controller " + id);
         if (player.getState().equals(PlayerState.SCHEMETOCHOOSE)) {
             match.chooseScheme(this.player, id);
         } else throw new NotValidPlayException("non puoi fare questa mossa ora!" + player.getState().toString());
@@ -187,8 +187,23 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
                 }
             }
 
+
             // carte utilizzabili solo se non si è già utilizzato un dado nel turno e che prevedono 2 step
-            case 6:
+            case 6: {
+                if (player.getState().equals(PlayerState.TURNSTARTED)) {
+                    System.out.println("giocatore: " + nickname + "\n stato:" + player.getState().toString());
+                    match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol);
+                    player.setState(PlayerState.USEDTOOLCARD);
+                    System.out.println("giocatore: " + nickname + "\n stato:" + player.getState().toString());
+                    match.usedToolCard(player, id);
+                    break;
+                }
+                else
+                    throw new NotValidPlayException("Non puoi usare questa carta 6 11");
+
+            }
+
+            // carte utilizzabili solo se non si è già utilizzato un dado nel turno e che prevedono 2 step
             case 11: {
                 if (player.getState().equals(PlayerState.TURNSTARTED)) {
                     System.out.println("giocatore: " + nickname + "\n stato:" + player.getState().toString());
@@ -206,9 +221,10 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
                         break;
                     }
                     else
-                        throw new NotValidPlayException("Non puoi usare questa carta");
+                        throw new NotValidPlayException("Non puoi usare questa carta 6 11");
                 }
             }
+
 
             // carta che può essere utilizzata solo durante il secondo turno e prima di scegliere il secondo dado
             case 7: {
@@ -241,6 +257,7 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
                         throw new NotValidPlayException("Non puoi usare questa carta");
                 }
             }
+
 
             // carta che può essere utilizzata solo se non si è già piazzato un dado
             case 9: {
