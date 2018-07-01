@@ -172,12 +172,13 @@ public class DiceGUI extends javax.swing.JPanel {
 
     private void diceLabelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_diceLabelMousePressed
         if (TableFrame.aToolCardIsUsed()) {
-            switch (TableFrame.idSelectedTc){
+            switch (TableFrame.idSelectedTc) {
                 case "1":
                     ToolCard1ActionForm toolCard1ActionForm = new ToolCard1ActionForm(box.getDice(), controller);
                     toolCard1ActionForm.setVisible(true);
                     break;
-                case "2": break;
+                case "2":
+                    break;
             }
         } else {
             if (box.isFull()) {
@@ -189,7 +190,7 @@ public class DiceGUI extends javax.swing.JPanel {
 
     private void diceLabelMouseReleased(java.awt.event.MouseEvent evt) throws RemoteException {//GEN-FIRST:event_diceLabelMouseReleased
         wasPressed = false;
-        if (this != evt.getComponent()) {
+        if (this != evt.getComponent() && floatingDiceFrame != null) {
             floatingDiceFrame.setVisible(false);
             removeDice();
             injectDice(evt);
