@@ -21,21 +21,21 @@ import java.util.Collections;
 
 public class Match implements Serializable {
 
-    private int numPlayers=0, numRound=0;
+    private transient int numPlayers=0, numRound=0;
     //array ordine players nel round
-    private Player[] playersRound;
+    private transient Player[] playersRound;
     //indice playerPlaying in playersRound
-    private int playersRoundIndex;
+    private transient int playersRoundIndex;
     // primo giocatore del round
-    private Player firstPlayer;
+    private transient Player firstPlayer;
     //giocatore che sta giocando il turno
-    private Player playerPlaying;
+    private transient Player playerPlaying;
     //bag della partita
-    private Bag bag;
+    private transient Bag bag;
     //mazzo carte obiettivo
     private ArrayList<ObjectiveCard> publicObjectives;
     //mazzo di schemi per i giocatori
-    private SchemeCardDeck schemeCardDeck;
+    private transient SchemeCardDeck schemeCardDeck;
     //mazzo toolCards
     private ArrayList<ToolCard> toolCards;
     //riserva della partita
@@ -47,9 +47,9 @@ public class Match implements Serializable {
     //array che contiente la classifica dei players
     private ArrayList<Player> ranking;
     //array di clientObserver che mi serve per notificare la ui dei cambiamenti avvenuti
-    private ArrayList<RemotePlayer> remotePlayer;
+    private transient ArrayList<RemotePlayer> remotePlayer;
     //hashmap con la corrispondenza player-remoteplayer
-    private HashMap<Player,RemotePlayer> playerMap;
+    private transient HashMap<Player,RemotePlayer> playerMap;
 
 
 

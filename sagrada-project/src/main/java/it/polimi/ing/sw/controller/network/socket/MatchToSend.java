@@ -4,34 +4,41 @@ import it.polimi.ing.sw.model.Match;
 
 import java.io.Serializable;
 
-public class MatchToSend implements Serializable{
+public class MatchToSend implements Serializable {
     private String method;
     private Match match;
     private String message;
-
-    public MatchToSend(String method, Match match){
-        this.method=method;
-        this.match=match;
-    }
-
-    public MatchToSend(String method, String message){
-        this.method=method;
-        this.message=message;
-    }
+    private int id;
 
     public MatchToSend(String method){
         this.method=method;
     }
 
-    public String getMethod(){
-        return this.method;
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void setMatch(Match match) {
+        this.match = match;
+    }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public Match getMatch() {
+        return match;
     }
 
     public String getMessage() {
         return message;
     }
 
-    public Match getMatch() {
-        return match;
+    public void setId(int id) {
+        this.id = id;
     }
 }

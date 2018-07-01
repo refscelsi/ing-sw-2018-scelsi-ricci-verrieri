@@ -251,10 +251,14 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         PlayerControllerInterfaceSocket playerInterfaceSocket = null;
         try {
             playerInterfaceSocket = new PlayerControllerInterfaceSocket(nickname, this );
+
         } catch (IOException e) {
             e.printStackTrace();
         }
         this.controller = playerInterfaceSocket;
+        this.isLogged = true;
+        ui.onSuccess("Complimenti, ti sei loggato come " + nickname);
+        this.nickname = nickname;
         try {
             controller.joinMatch();
         } catch (IOException e) {

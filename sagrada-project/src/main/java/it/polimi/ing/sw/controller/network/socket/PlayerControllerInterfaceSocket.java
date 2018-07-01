@@ -4,14 +4,14 @@ import com.google.gson.Gson;
 import it.polimi.ing.sw.client.View;
 import it.polimi.ing.sw.controller.PlayerControllerInterface;
 import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
+import it.polimi.ing.sw.model.DraftPool;
 import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.model.exceptions.NetworkException;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.util.Constants;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import com.google.gson.*;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -29,12 +29,11 @@ import static java.lang.String.valueOf;
 
 
 public class PlayerControllerInterfaceSocket implements PlayerControllerInterface {
-    private MatchToSend matchToSend;
+    private MatchToSend match;
     private View view;
     private final Socket clientSocket;
     private final ObjectOutputStream out;
-    private JSONParser parser= new JSONParser();
-    private JSONObject jsonObject;
+
 
 
     public PlayerControllerInterfaceSocket(String nickname, View view) throws IOException {
@@ -58,8 +57,8 @@ public class PlayerControllerInterfaceSocket implements PlayerControllerInterfac
         try {
             ObjectInputStream in= new ObjectInputStream(clientSocket.getInputStream());
             while (true){
-                matchToSend=(MatchToSend) in.readObject();
-                String method=matchToSend.getMethod();
+                this.match=(MatchToSend) in.readObject();
+                String method= match.getMethod();
                 handleUpdate(method);
             }
         } catch (IOException e) {
@@ -76,30 +75,27 @@ public class PlayerControllerInterfaceSocket implements PlayerControllerInterfac
                 break;
             }
             case Constants.ONSUCCES: {
-                String message = (String) matchToSend.getMessage();
                 try {
-                    view.onSuccess(message);
+                    view.onSuccess(match.getMessage());
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
+                break;
             }
             case Constants.ONSETPLAYING: {
                 view.onSetPlaying();
                 break;
             }
             case Constants.ONSCHEMETOCHOOSE: {
-                Match match=(Match)matchToSend.getMatch();
-                view.onSchemeToChoose(match);
+                view.onSchemeToChoose(match.getMatch());
                 break;
             }
             case Constants.ONGAMEUPDATE: {
-                Match match = (Match) matchToSend.getMatch();
-                view.onGameUpdate(match);
+                view.onGameUpdate(match.getMatch());
                 break;
             }
             case Constants.ONGAMEEND:{
-                Match match=(Match)matchToSend.getMatch();
-                view.onGameEnd(match);
+                view.onGameEnd(match.getMatch());
                 break;
             }
         }
@@ -162,19 +158,18 @@ public class PlayerControllerInterfaceSocket implements PlayerControllerInterfac
 
     @Override
     public void useToolCard(int id, int dice, int operation, int sourceRow, int sourceCol, int destRow, int destCol) throws NetworkException, NotValidException, NotValidPlayException, RemoteException {
-
+        Gson gson= new Gson();
+        String json=gson.toJson(new Data(Constants.TOOLCARD, null));
+        try {
+            out.writeObject(json);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
 
-class Data{
-    String method;
-    ArrayList<String> params;
-
-    Data(String method, ArrayList<String> params){
-        this.method=method;
-        this.params=params;
-    }
 
 
-}
+
+
