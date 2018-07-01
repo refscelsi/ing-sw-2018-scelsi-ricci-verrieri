@@ -49,12 +49,14 @@ public class PlayerControllerSocket implements RemotePlayer {
 
     public void handleSocket(Socket socket) {
         try(ObjectInputStream in= new ObjectInputStream( socket.getInputStream())) {
-            while (true) {
+            Boolean condition=true;
+            while (condition) {
                 String input = (String) in.readObject();
                 jsonObject = (JSONObject) parser.parse(input);
                 String method= (String) jsonObject.get("method");
                 ArrayList<String > params= (ArrayList<String>) jsonObject.get("params");
                 handleInput(method, params);
+                condition=false;
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -104,7 +106,6 @@ public class PlayerControllerSocket implements RemotePlayer {
             case Constants.TOOLCARD: controller.useToolCard(Integer.valueOf(params.get(0)),Integer.valueOf(params.get(1)),Integer.valueOf(params.get(2)),Integer.valueOf(params.get(3)),Integer.valueOf(params.get(4)),Integer.valueOf(params.get(5)),Integer.valueOf(params.get(6)));
                 break;
         }
-
     }
 
     @Override
@@ -125,9 +126,6 @@ public class PlayerControllerSocket implements RemotePlayer {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-
     }
 
     @Override
@@ -181,17 +179,7 @@ public class PlayerControllerSocket implements RemotePlayer {
     }
 
     @Override
-    public void onOtherInfoToolCard4(Match match) throws RemoteException {
-
-    }
-
-    @Override
-    public void onOtherInfoToolCard11(Match match) throws RemoteException {
-
-    }
-
-    @Override
-    public void onOtherInfoToolCard12(Match match) throws RemoteException {
+    public void onOtherInfoToolCard( int id ) throws RemoteException {
 
     }
 }
