@@ -1,9 +1,8 @@
-package it.polimi.ing.sw.ui.gui.model;
+package it.polimi.ing.sw.ui.gui;
 
 import it.polimi.ing.sw.client.View;
 import it.polimi.ing.sw.model.Box;
 import it.polimi.ing.sw.model.Dice;
-import it.polimi.ing.sw.ui.gui.TableFrame;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;

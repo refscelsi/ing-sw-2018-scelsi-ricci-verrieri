@@ -2,7 +2,6 @@ package it.polimi.ing.sw.ui.gui;
 
 import it.polimi.ing.sw.client.View;
 import it.polimi.ing.sw.model.Scheme;
-import it.polimi.ing.sw.ui.gui.model.VetrataPanel;
 
 import java.awt.*;
 import java.rmi.RemoteException;

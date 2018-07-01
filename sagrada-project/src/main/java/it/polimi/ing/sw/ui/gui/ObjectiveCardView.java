@@ -1,4 +1,4 @@
-package it.polimi.ing.sw.ui.gui.model;
+package it.polimi.ing.sw.ui.gui;
 
 import javax.swing.*;
 

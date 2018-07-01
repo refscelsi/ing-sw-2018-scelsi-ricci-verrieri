@@ -5,7 +5,6 @@ import it.polimi.ing.sw.client.View;
 import it.polimi.ing.sw.model.Dice;
 import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.model.Player;
-import it.polimi.ing.sw.ui.gui.model.*;
 
 import java.awt.*;
 import java.rmi.RemoteException;
