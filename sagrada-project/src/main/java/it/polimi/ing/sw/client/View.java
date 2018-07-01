@@ -114,8 +114,12 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
     public void onSchemeToChoose(Match match) {
         this.match = match;
         Runnable task2 = () -> {
-            ui.onSchemeToChoose(match, nickname, "Scegli il numero del tuo schema");
-        };
+			try {
+				ui.onSchemeToChoose(match, nickname, "Scegli il numero del tuo schema");
+			} catch ( RemoteException e ) {
+				e.printStackTrace();
+			}
+		};
         Thread thread2 = new Thread(task2);
         thread2.start();
     }
@@ -173,17 +177,14 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         ui.onTurnStart(match, nickname);
     }
 
-
     /////////////////////////////////////////////////////////////////////////////////////////
     // "Senders" (per l'invio di informazioni verso il Server, in Remoto).
     /////////////////////////////////////////////////////////////////////////////////////////
-
 
     public void chooseNetwork (String choice) {
         networkChoice = choice;
         ui.onLogin("Scegli il tuo nickname: ");
     }
-
 
     public void login(String nickname) {
         if (networkChoice.equals(RMI_CODE))
@@ -191,7 +192,6 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         else
             loginPlayerSocket(nickname);
     }
-
 
     /**
      * Metodo per effettuare il login presso il Server.
@@ -238,7 +238,6 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
 
     }
 
-
     public void loginPlayerSocket(String nickname) {
         PlayerControllerInterfaceSocket playerInterfaceSocket = null;
         try {
@@ -277,9 +276,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         } catch (NotValidPlayException e) {
             onNotValidPlay(e.getMessage());
         }
-
     }
-
 
     public void useDice(int indexOfDiceInDraftPool, int row, int col) {
         if (indexOfDiceInDraftPool == -1)
@@ -299,7 +296,6 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         }
     }
 
-
     public void endTurn() {
         try {
             controller.endTurn();
@@ -312,10 +308,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         }
     }
 
-
     // SENDERS ToolCards
-
-
     public void useToolCard(int id, int dice, int operation, int sourceRow, int sourceCol, int destRow, int destCol) {
         if (id==6)
             this.dice = dice;
@@ -333,5 +326,4 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
             e.printStackTrace();
         }
     }
-
 }

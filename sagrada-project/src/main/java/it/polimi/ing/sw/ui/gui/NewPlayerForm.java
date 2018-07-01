@@ -7,14 +7,14 @@ import java.rmi.RemoteException;
 
 import static it.polimi.ing.sw.util.Constants.*;
 
-public class NewPlayerFrom extends javax.swing.JFrame {
+public class NewPlayerForm extends javax.swing.JFrame {
 
 	private Boolean serverModified;
 	private Boolean nameModified;
 	private View controller ;
 	private static String network;
 
-	public NewPlayerFrom(View controller) throws RemoteException {
+	public NewPlayerForm( View controller) throws RemoteException {
 		this.controller=controller;
 		initComponents();
 		serverModified = false;

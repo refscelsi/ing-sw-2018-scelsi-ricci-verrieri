@@ -15,15 +15,21 @@ public class TableFrame extends javax.swing.JFrame {
 
 	private static Match match;
 	private static List<CardField> toolCardList, objCardList;
-	private RoundTrack roundTrack;
-	private static VetrataPanel player1, player2, player3, player4;
+	private static RoundTrack roundTrack;
+	private static VetrataPanel player1;
+	private static VetrataPanel player2;
+	private static VetrataPanel player3;
+	private static VetrataPanel player4;
 	private DiceFieldPanel diceFieldPanel;
-	private SumPlayerPanel sumPlayer1, sumPlayer2, sumPlayer3, sumPlayer4;
-	private int dimXcard;
-	private int dimYcard;
+	private SumPlayerPanel sumPlayer1;
+	private SumPlayerPanel sumPlayer2;
+	private SumPlayerPanel sumPlayer3;
+	private SumPlayerPanel sumPlayer4;
+	private static int dimXcard;
+	private static int dimYcard;
 
-	public TableFrame(/*Match match*/ ) {
-		//this.match = match;
+	public TableFrame( Match match ) {
+		this.match = match;
 
 		toolCardList = new ArrayList<>();
 		objCardList = new ArrayList<>();
@@ -68,12 +74,12 @@ public class TableFrame extends javax.swing.JFrame {
         cf.setBounds(0, 0, 173, 245);
         */
 
-		//TODO WORKS
+		/*//TODO WORKS
 		//TEST campi carte
 		String ids1[] = {"disabled.png", "tc02.png", "tc03.png"};
 		setToolCards( ids1 );
 		String ids2[] = {"po01.png", "po02.png", "po03.png"};
-		setOBJCards( ids2 );
+		setOBJCards( ids2 );*/
 
         /*//TODO WORKS
         //TEST set dice
@@ -104,6 +110,30 @@ public class TableFrame extends javax.swing.JFrame {
 
 	public static Match getMatch() {
 		return match;
+	}
+
+	public static void updateMatch( Match match ) {
+
+		roundTrack.setDraftPool( match.getRoundTrack().getRoundTrack() );
+
+		List<String> ids = new ArrayList<>();
+		ids.set( 0, match.getPublicObjectives().get( 0 ).getName() );
+		ids.set( 1, match.getPublicObjectives().get( 1 ).getName() );
+		ids.set( 2, match.getPublicObjectives().get( 2 ).getName() );
+		setOBJCards( ids );
+
+		//TODO setup set private obj card
+
+		ids.set( 0, String.valueOf( match.getToolCards().get( 0 ).getId() ) );
+		ids.set( 1, String.valueOf( match.getToolCards().get( 1 ).getId() ) );
+		ids.set( 2, String.valueOf( match.getToolCards().get( 2 ).getId() ) );
+		/*
+		ShowPrivateObjectiveCard priv = new ShowPrivateObjectiveCard( match.getPlayer( nickname ).getPrivateObjective() );
+
+		ShowToolCards tool = new ShowToolCards( match.getToolCards() );
+		System.out.println( "Hai " + match.getPlayer( nickname ).getNumOfToken() + " segnalini favore" );
+		ShowDraftPool draft = new ShowDraftPool( match.getDraftPool() );
+		ShowScheme scheme = new ShowScheme( match.getPlayer( nickname ).getScheme() );*/
 	}
 
 	private void addSumsPlayer() {
@@ -231,25 +261,21 @@ public class TableFrame extends javax.swing.JFrame {
 
 	private void setToolCards( String[] id ) {
 		toolCardPanel.setLayout( null );
-		//toolCardPanel.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 2, true));
 		for (int i = 0; i < 3; i++) {
 			CardField schemeCard = new CardField( id[i], "tc/", dimXcard, dimYcard );
 			toolCardPanel.add( schemeCard );
 			toolCardList.add( schemeCard );
 			schemeCard.setBounds( i * (173), 0, 173, 245 );
-			//schemeCard.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 2, true));
 		}
 	}
 
-	private void setOBJCards( String[] id ) {
+	private static void setOBJCards( List<String> id ) {
 		objCardPanel.setLayout( null );
-		//objCardPanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
 		for (int i = 0; i < 3; i++) {
-			CardField schemeCard = new CardField( id[i], "po/", dimXcard, dimYcard );
+			CardField schemeCard = new CardField( id.get( i ), "po/", dimXcard, dimYcard );
 			objCardPanel.add( schemeCard );
 			objCardList.add( schemeCard );
 			schemeCard.setBounds( i * (173), 0, 173, 245 );
-			//schemeCard.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 2, true));
 		}
 	}
 
@@ -274,10 +300,10 @@ public class TableFrame extends javax.swing.JFrame {
 		}
 		/* Create and display the form */
 
-		//final Match match = new Match();
+		Match match = new Match();
 		java.awt.EventQueue.invokeLater( new Runnable() {
 			public void run() {
-				new TableFrame(/*match*/ ).setVisible( true );
+				new TableFrame( match ).setVisible( true );
 			}
 		} );
 	}
@@ -298,7 +324,6 @@ public class TableFrame extends javax.swing.JFrame {
 				break;
 		}
 	}
-
 
 	public static void setCurrentComponentName( String nameComponentEntered, Boolean isAdiceGui ) {
 		currentComponentName = nameComponentEntered;
@@ -324,7 +349,7 @@ public class TableFrame extends javax.swing.JFrame {
 
 	// Variables declaration - do not modify//GEN-BEGIN:variables
 	private javax.swing.JLabel backgroundTableFRameLabel;
-	private javax.swing.JPanel objCardPanel;
+	private static javax.swing.JPanel objCardPanel;
 	private javax.swing.JPanel tableFramePanel;
 	private javax.swing.JPanel toolCardPanel;
 	// End of variables declaration//GEN-END:variables

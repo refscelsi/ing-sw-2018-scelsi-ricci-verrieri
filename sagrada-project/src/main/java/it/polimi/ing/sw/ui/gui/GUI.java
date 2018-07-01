@@ -3,7 +3,6 @@ package it.polimi.ing.sw.ui.gui;
 import it.polimi.ing.sw.client.UiUpdate;
 import it.polimi.ing.sw.client.View;
 import it.polimi.ing.sw.model.Match;
-import it.polimi.ing.sw.model.Player;
 import it.polimi.ing.sw.model.Scheme;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.ui.cli.*;
@@ -18,9 +17,8 @@ public class GUI implements UiUpdate {
 	public Scanner scanner = new Scanner( System.in );
 	public String inText;
 
-
+	private TableFrame tableFrame;
 	private View controller;
-
 
 	public GUI( View controller ) {
 		this.controller = controller;
@@ -32,19 +30,9 @@ public class GUI implements UiUpdate {
 		return controller;
 	}
 
-	/**
-	 * Login del Client sul Server.
-	 */
-	public void login( String message ) {
-		System.out.println( message );
-		inText = scanner.nextLine();
-		controller.login( inText );
-	}
-
-
 	public void chooseNetwork( String message ) throws RemoteException {
-		NewPlayerFrom newPlayerFrom = new NewPlayerFrom( getController() );
-		newPlayerFrom.setVisible( true );
+		NewPlayerForm newPlayerForm = new NewPlayerForm( getController() );
+		newPlayerForm.setVisible( true );
 	}
 
 	public void chooseScheme( Match match, String nickname, String message ) throws RemoteException {
@@ -52,12 +40,10 @@ public class GUI implements UiUpdate {
 		showSchemesToChoose( schemes );
 	}
 
-
 	public void showSchemesToChoose( ArrayList<Scheme> schemes ) throws RemoteException {
 		ChooseSchemeForm chooseSchemeForm = new ChooseSchemeForm( schemes, getController() );
 		chooseSchemeForm.setVisible( true );
 	}
-
 
 	/**
 	 * Scelta dell'azione da parte del giocatore
@@ -71,8 +57,7 @@ public class GUI implements UiUpdate {
 			inText = scanner.nextLine();
 
 			switch (inText.toLowerCase()) {
-
-				case "q": {
+				case "q":
 					System.out.println( "Sei sicuro che vuoi uscire dalla partita? Digita S per sì o N per no." );
 					if ( scanner.nextLine().toLowerCase().equalsIgnoreCase( "s" ) ) {
 						// TODO: gestire terminazione corretta del programma!
@@ -80,33 +65,20 @@ public class GUI implements UiUpdate {
 						System.exit( 0 );
 					}
 					break;
-				}
-
-				case "d": {
+				case "d":
 					handleUseDice( match, false );
 					break;
-				}
-
-				case "t": {
+				case "t":
 					handleUseToolCard( match );   //TODO: metodi per le carte utensili
 					break;
-				}
 
-				case "i": {
-					printOtherPlayersInfo( match, nickname );
-					break;
-				}
-
-				case "e": {
+				case "e":
 					endTurn();
 					break;
-				}
-
-				default: {
+				default:
 					System.out.println( "Scelta non valida" );
 					ok = false;
 					break;
-				}
 			}
 		} while (!ok);
 	}
@@ -302,7 +274,6 @@ public class GUI implements UiUpdate {
 		controller.useToolCard( 10, dice - 1, -1, -1, -1, -1, -1 );
 	}
 
-
 	public void useToolCard11( Match match ) {
 		int dice;
 		do {
@@ -311,7 +282,6 @@ public class GUI implements UiUpdate {
 		} while (dice < 1 || dice > match.getDraftPool().getSize());
 		controller.useToolCard( 11, dice - 1, -1, -1, -1, -1, -1 );
 	}
-
 
 	public void useToolCard12( Match match ) {
 		boolean roundTrackIsFull = controller.checkIfRoundTrackIsFull();
@@ -323,49 +293,27 @@ public class GUI implements UiUpdate {
 		}
 	}
 
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	// Scelta I: visualizzare le informazioni degli altri giocatori (nome, schema, segnalini favore)
-	/////////////////////////////////////////////////////////////////////////////////////////
-
-	public void printOtherPlayersInfo( Match match, String nickname ) {
-		ArrayList<Player> otherPlayers = match.getOtherPlayers( nickname );
-		for (Player player : otherPlayers) {
-			System.out.println( player.getNickname() );
-			System.out.println( player.getNumOfToken() );
-			ShowScheme scheme = new ShowScheme( player.getScheme() );
-			System.out.println( "" );
-			chooseAction( match, nickname );
-
-		}
-
-	}
-
-
 	/////////////////////////////////////////////////////////////////////////////////////////
 	// Scelta E: terminare il turno
 	/////////////////////////////////////////////////////////////////////////////////////////
-
 
 	public void endTurn() {
 		controller.endTurn();
 	}
 
-
 	/////////////////////////////////////////////////////////////////////////////////////////
 	// Metodi che invoca PlayerController su UiUpdate
 	/////////////////////////////////////////////////////////////////////////////////////////
 
-
 	@Override
 	public void onLogin( String message ) {
-		//do nothing
+		//managed by gui
 	}
 
 	@Override
 	public void onActionNotValid( String errorCode ) {
 		System.out.println( errorCode );
-
+		//TODO popup not valid action
 	}
 
 	@Override
@@ -386,17 +334,22 @@ public class GUI implements UiUpdate {
 
 	@Override
 	public void onGameUpdate( Match match, String nickname ) {
-		ShowRoundTrack roundTrack = new ShowRoundTrack( match.getRoundTrack() );
-		ShowPublicObjectives pub = new ShowPublicObjectives( match.getPublicObjectives() );
-		ShowPrivateObjectiveCard priv = new ShowPrivateObjectiveCard( match.getPlayer( nickname ).getPrivateObjective() );
-		ShowToolCards tool = new ShowToolCards( match.getToolCards() );
-		System.out.println( "Hai " + match.getPlayer( nickname ).getNumOfToken() + " segnalini favore" );
-		ShowDraftPool draft = new ShowDraftPool( match.getDraftPool() );
-		ShowScheme scheme = new ShowScheme( match.getPlayer( nickname ).getScheme() );
+		if ( tableFrame == null ) {
+			tableFrame = new TableFrame( match );
+		}
+
+		TableFrame.updateMatch( match );
+
+		/*
+
+
+		*/
 	}
 
 	@Override
 	public void onGameEnd( Match match ) {
+		//TODO fare tabellone di fine gioco
+
 		ShowRoundTrack roundTrack = new ShowRoundTrack( match.getRoundTrack() );   //TODO: mettere pedine su roundtrack
 		for (int i = 0; i < match.getNumPlayers(); i++) {
 			System.out.print( i + 1 + ") " + match.getRanking().get( i ).getNickname() + " con " );
@@ -427,7 +380,6 @@ public class GUI implements UiUpdate {
 				break;
 		}
 	}
-
 
 	@Override
 	public void onOtherInfoToolCard( int id, Match match ) {
@@ -471,13 +423,12 @@ public class GUI implements UiUpdate {
 					useToolCard23412( 12 );
 			}
 		}
-
 	}
-
 
 	@Override
 	public void onSuccess( String message ) {
 		System.out.println( message );
+		// todo popup successo?
 	}
 
 }

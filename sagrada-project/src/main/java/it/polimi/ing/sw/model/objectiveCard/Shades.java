@@ -33,5 +33,4 @@ public class Shades extends ObjectiveCard {
 
         return score;
     }
-
 }

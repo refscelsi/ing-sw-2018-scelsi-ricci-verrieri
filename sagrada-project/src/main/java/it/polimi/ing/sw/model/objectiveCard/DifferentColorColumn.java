@@ -33,6 +33,4 @@ public class DifferentColorColumn extends ObjectiveCard {
         }
         return score;
     }
-
-
 }

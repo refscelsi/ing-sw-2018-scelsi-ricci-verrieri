@@ -51,22 +51,17 @@ public class Match implements Serializable {
     //hashmap con la corrispondenza player-remoteplayer
     private HashMap<Player,RemotePlayer> playerMap;
 
-
-
-
     public Match() {
-        this.playerMap=new HashMap<Player,RemotePlayer>();
-        this.players=new ArrayList<Player>();
-        this.remotePlayer = new ArrayList<RemotePlayer>();
+        this.playerMap=new HashMap<>();
+        this.players=new ArrayList<>();
+        this.remotePlayer = new ArrayList<>();
     }
-
-
 
     // metodi GETTERS
 
     //ritorna un giocatore con un certo nickname
     public Player getPlayer(String nickname){
-        if(players.size()!=0){
+        if(!players.isEmpty()){
             for(Player player: players){
                 if(player.getNickname().equals(nickname)){
                     return player;
@@ -84,7 +79,7 @@ public class Match implements Serializable {
         return draftPool;
     }
 
-    public ArrayList<ObjectiveCard> getPublicObjectives() {
+    public List<ObjectiveCard> getPublicObjectives() {
         return publicObjectives;
     }
 
@@ -92,7 +87,7 @@ public class Match implements Serializable {
         return roundTrack;
     }
 
-    public ArrayList<Player> getRanking() {
+    public List<Player> getRanking() {
         return ranking;
     }
 
@@ -110,9 +105,7 @@ public class Match implements Serializable {
 
     public ArrayList<Player> getPlayers(){return this.players;}
 
-
     // metodi SETTERS
-
 
     public void setColorOfPawns() {
         Color[] colorOfPawns = new Color[4];
@@ -123,7 +116,6 @@ public class Match implements Serializable {
         for (int i=0; i<numPlayers; i++)
             players.get(i).setColor(colorOfPawns[i]);
     }
-
 
     //metodi per gestire il LOGIN
 
@@ -157,7 +149,6 @@ public class Match implements Serializable {
         }
         return check;
     }
-
 
     // metodi VARI per gestire la PARTITA (non il singolo turno)
 
@@ -295,7 +286,6 @@ public class Match implements Serializable {
             }
             first++;
         }
-
     }
 
     public void changePlayer () throws RemoteException {

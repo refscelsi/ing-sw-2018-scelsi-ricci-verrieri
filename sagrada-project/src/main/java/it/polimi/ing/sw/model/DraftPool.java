@@ -8,49 +8,37 @@ public class DraftPool implements Serializable{
 
     private ArrayList<Dice> draftPool;
 
-
     public DraftPool(){
-        draftPool=new ArrayList<Dice>();
+        draftPool=new ArrayList<>();
     }
 
-
     // aggiunge un dado alla draftPool
-
     public void addDice(Dice dice){
         draftPool.add(dice);
     }
 
-
     // aggiunge un set di dadi ad una draftPool
-
     public void addDraftPool(DraftPool draft){
         for(Dice dice : draft.getDraftPool()){
             addDice(dice);
         }
     }
 
-
     // rimuove un dado dalla draftPool
-
     public void removeDice(Dice dice){
         draftPool.remove(dice);
     }
 
-
     // ritorna tutta la draftPool
-
     public ArrayList<Dice> getDraftPool() {
         return draftPool;
     }
-
 
     public int getSize(){
         return draftPool.size();
     }
 
-
     // cerca un dado nella draftPool
-
     public boolean diceInDraftpool(Dice diceToFind){
         for(Dice dice: draftPool){
             if(diceToFind.equals(dice)){
@@ -60,9 +48,7 @@ public class DraftPool implements Serializable{
         return false;
     }
 
-
     // ritorna il dado che si trova in una determinata posizione
-
     public Dice getDice(int index) {
         return draftPool.get(index);
     }
@@ -74,15 +60,12 @@ public class DraftPool implements Serializable{
         draftPool.get(position).setDice(dice.getNumFacciaUp(), dice.getDiceColor());
     }
 
-
     // ritorna tutti i colori dei dadi presenti nella draftpool
-
     public ArrayList<Color> getColorsInDraftPool() {
         ArrayList<Color> colors = new ArrayList<Color>();
         for (Dice dice: draftPool)
             colors.add(dice.getDiceColor());
         return colors;
     }
-
 }
 
