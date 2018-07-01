@@ -10,10 +10,9 @@ import java.awt.event.MouseEvent;
 
 import static it.polimi.ing.sw.model.Color.*;
 import static it.polimi.ing.sw.ui.gui.TableFrame.NOT_A_DICE;
+import static it.polimi.ing.sw.util.Constants.IMAGE_PATH;
 
 public class DiceGUI extends javax.swing.JPanel {
-
-	private static final String IMAGE_PATH = "/img/dices/";
 
 	private Box box;
 

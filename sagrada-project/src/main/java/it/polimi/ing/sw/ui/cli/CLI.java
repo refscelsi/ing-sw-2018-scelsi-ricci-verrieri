@@ -12,6 +12,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static it.polimi.ing.sw.util.Constants.RMI_CODE;
+import static it.polimi.ing.sw.util.Constants.SOCKET_CODE;
+
 
 public class CLI implements UiUpdate {
 
@@ -191,7 +194,7 @@ public class CLI implements UiUpdate {
         do {
             System.out.println(message);
             inText = scanner.nextLine();
-        } while (!inText.toLowerCase().equals("s") && !inText.toLowerCase().equals("r"));
+        } while (!SOCKET_CODE.equals( inText.toLowerCase() ) && !RMI_CODE.equals( inText.toLowerCase() ));
         controller.chooseNetwork(inText);
     }
 

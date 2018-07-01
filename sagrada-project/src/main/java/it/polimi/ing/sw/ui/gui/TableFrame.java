@@ -9,6 +9,8 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static it.polimi.ing.sw.util.Constants.SAGRADA_ICO;
+
 public class TableFrame extends javax.swing.JFrame {
 
 	private static Match match;
@@ -153,7 +155,7 @@ public class TableFrame extends javax.swing.JFrame {
 	}
 
 	private void setIcons() {
-		setIconImage( Toolkit.getDefaultToolkit().getImage( getClass().getResource( "/img/sagrada.png" ) ) );
+		setIconImage( Toolkit.getDefaultToolkit().getImage( getClass().getResource( SAGRADA_ICO ) ) );
 		this.setTitle( "Sagrada Boardgame" );
 	}
 
