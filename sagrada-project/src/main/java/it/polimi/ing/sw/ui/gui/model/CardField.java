@@ -1,4 +1,4 @@
-package it.polimi.ing.sw.ui.gui;
+package it.polimi.ing.sw.ui.gui.model;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -12,19 +12,22 @@ public class CardField extends javax.swing.JPanel {
     private int token;
     private int dimXcard;
     private int dimYcard;
+    private Boolean isToolCard;
+    private String id;
 
-    public CardField(int dimXcard, int dimYcard) {
-        this.dimXcard=dimXcard;
-        this.dimYcard=dimYcard;
-        initComponents();
-        FINAL_IMAGE_PATH = IMAGE_PATH.concat("po/");
-        setIcons(FINAL_IMAGE_PATH.concat("1.png"));//default icon
-        used = true;
-        token=0;
-    }
+//    public CardField(int dimXcard, int dimYcard) {
+//        this.dimXcard=dimXcard;
+//        this.dimYcard=dimYcard;
+//        initComponents();
+//        FINAL_IMAGE_PATH = IMAGE_PATH.concat("po/");
+//        setIcons(FINAL_IMAGE_PATH.concat("1.png"));//default icon
+//        used = true;
+//        token=0;
+//    }
 
     //cardType should be defined as "po/" or "tc/"
     public CardField(String cardName, String cardType,int dimXcard, int dimYcard) {
+        this.id=cardName;
         this.dimXcard=dimXcard;
         this.dimYcard=dimYcard;
         initComponents();
@@ -33,6 +36,24 @@ public class CardField extends javax.swing.JPanel {
         used = true;
     }
 
+    public void setUsed (boolean used){
+        this.used=used;
+        if(!used){
+            cardFieldLabel.setBorder(null);
+        }
+    }
+
+    public void setIsToolCard (boolean isToolCard){
+        this.isToolCard=isToolCard;
+    }
+
+    public Boolean getUsed(){
+        return used;
+    }
+
+    public String getId(){
+        return id;
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -45,14 +66,17 @@ public class CardField extends javax.swing.JPanel {
 
         tokenLabel.setFont(new java.awt.Font("Elephant", 3, 14)); // NOI18N
         tokenLabel.setForeground(new java.awt.Color(51, 51, 0));
-        cardFieldLabel.add(tokenLabel);
+        add(tokenLabel);
         tokenLabel.setBounds(150, 220, 20, 20);
 
         cardFieldLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/po/1.png"))); // NOI18N
         cardFieldLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cardFieldLabel.setMinimumSize(new java.awt.Dimension(dimXcard, dimYcard));
-        cardFieldLabel.setPreferredSize(new java.awt.Dimension(dimXcard, dimYcard));
+        cardFieldLabel.setMinimumSize(new java.awt.Dimension(173, 245));
+        cardFieldLabel.setPreferredSize(new java.awt.Dimension(173, 245));
         cardFieldLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cardFieldLabelMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 cardFieldLabelMouseEntered(evt);
             }
@@ -61,7 +85,7 @@ public class CardField extends javax.swing.JPanel {
             }
         });
         add(cardFieldLabel);
-        cardFieldLabel.setBounds(0, 0, dimXcard, dimYcard);
+        cardFieldLabel.setBounds(0, 0, 173, 245);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cardFieldLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cardFieldLabelMouseEntered
@@ -71,6 +95,17 @@ public class CardField extends javax.swing.JPanel {
     private void cardFieldLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cardFieldLabelMouseExited
         cardFieldLabel.setBorder(null);
     }//GEN-LAST:event_cardFieldLabelMouseExited
+
+    private void cardFieldLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cardFieldLabelMouseClicked
+        if (isToolCard){
+            if(!used){
+                setUsed(true);
+                cardFieldLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 51, 51)));
+            }else {
+                setUsed(false);
+            }
+        }
+    }//GEN-LAST:event_cardFieldLabelMouseClicked
 
     private void setIcons(String name) {
         System.out.println(FINAL_IMAGE_PATH);
@@ -106,7 +141,6 @@ public class CardField extends javax.swing.JPanel {
         }
         tokenLabel.setText(String.valueOf(token));
     }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel cardFieldLabel;

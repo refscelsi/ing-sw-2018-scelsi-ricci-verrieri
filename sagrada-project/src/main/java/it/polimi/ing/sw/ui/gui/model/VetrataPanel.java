@@ -1,4 +1,4 @@
-package it.polimi.ing.sw.ui.gui;
+package it.polimi.ing.sw.ui.gui.model;
 
 import it.polimi.ing.sw.client.View;
 import it.polimi.ing.sw.model.Dice;
@@ -62,7 +62,7 @@ public class VetrataPanel extends javax.swing.JPanel {
 		add( playerNameLabel );
 		playerNameLabel.setBounds( 60, 12, 110, 20 );
 
-		imageLabel.setIcon( new javax.swing.ImageIcon( getClass().getResource( "/img/texture.jpg" ) ) ); // NOI18N
+		imageLabel.setIcon( new javax.swing.ImageIcon( getClass().getResource("/img/texture.jpg") ) ); // NOI18N
 		imageLabel.setAlignmentY( 0.0F );
 		imageLabel.setMaximumSize( new java.awt.Dimension( 230, 290 ) );
 		imageLabel.setMinimumSize( new java.awt.Dimension( 230, 290 ) );

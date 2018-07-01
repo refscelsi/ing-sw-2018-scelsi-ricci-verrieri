@@ -1,4 +1,4 @@
-package it.polimi.ing.sw.ui.gui;
+package it.polimi.ing.sw.ui.gui.advanced;
 
 import javax.swing.*;
 import java.awt.*;

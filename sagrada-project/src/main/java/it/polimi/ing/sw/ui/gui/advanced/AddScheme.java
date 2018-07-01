@@ -1,7 +1,8 @@
-package it.polimi.ing.sw.ui.gui;
+package it.polimi.ing.sw.ui.gui.advanced;
 
 import it.polimi.ing.sw.App;
 import it.polimi.ing.sw.model.Scheme;
+import it.polimi.ing.sw.ui.gui.SchemeListFileConverter;
 
 import javax.swing.*;
 import java.awt.*;

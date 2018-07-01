@@ -5,6 +5,7 @@ import it.polimi.ing.sw.client.View;
 import it.polimi.ing.sw.model.Dice;
 import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.model.Player;
+import it.polimi.ing.sw.ui.gui.model.*;
 
 import java.awt.*;
 import java.rmi.RemoteException;
@@ -66,7 +67,6 @@ public class TableFrame extends javax.swing.JFrame {
             roundTrack.setDraftPool(match.getRoundTrack().getRoundTrack());
         }
 
-
         if (!match.getPublicObjectives().isEmpty()) {
             List<String> ids = new ArrayList<>();
             ids.add(String.valueOf(match.getPublicObjectives().get(0).getId()));
@@ -81,7 +81,6 @@ public class TableFrame extends javax.swing.JFrame {
             ids.add(String.valueOf(match.getToolCards().get(2).getId()));
             setToolCards(ids);
         }
-
 
         int counter = 0;
         for (Player player : match.getPlayers()) {
@@ -101,7 +100,6 @@ public class TableFrame extends javax.swing.JFrame {
             }
             counter++;
         }
-
         diceFieldPanel.setDices(match.getDraftPool().getDraftPool());
     }
 
@@ -159,7 +157,8 @@ public class TableFrame extends javax.swing.JFrame {
                 if (sumPlayer4.getPlayerName().equals(nickname)) {
                     return true;
                 }
-            default:return false;
+            default:
+                return false;
         }
     }
 
@@ -296,7 +295,8 @@ public class TableFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void endTurnButtonActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_endTurnButtonActionPerformed
-        controller.endTurn();        // TODO add your handling code here:
+        if (controller.isPlaying())
+            controller.endTurn();
     }//GEN-LAST:event_endTurnButtonActionPerformed
 
     public void tornaMenu() {
@@ -310,6 +310,7 @@ public class TableFrame extends javax.swing.JFrame {
             CardField schemeCard = new CardField(id.get(i), "tc/", dimXcard, dimYcard);
             toolCardPanel.add(schemeCard);
             toolCardList.add(schemeCard);
+            schemeCard.setIsToolCard(true);
             schemeCard.setBounds(i * (173), 0, 173, 245);
         }
     }
@@ -353,7 +354,7 @@ public class TableFrame extends javax.swing.JFrame {
         });
     }
 
-    static void updateDice(int idPlayer, Dice dice, int i, int j) {
+    public static void updateDice(int idPlayer, Dice dice, int i, int j) {
         switch (idPlayer) {
             case 1:
                 player1.setDice(i, j, dice);
@@ -370,12 +371,12 @@ public class TableFrame extends javax.swing.JFrame {
         }
     }
 
-    static void setCurrentComponentName(String nameComponentEntered, Boolean isAdiceGui) {
+    public static void setCurrentComponentName(String nameComponentEntered, Boolean isAdiceGui) {
         currentComponentName = nameComponentEntered;
         TableFrame.isAdiceGui = isAdiceGui;
     }
 
-    static String getCurrentComponentName() {
+    public static String getCurrentComponentName() {
         if (isAdiceGui) {
             return currentComponentName;
 
@@ -384,8 +385,16 @@ public class TableFrame extends javax.swing.JFrame {
         }
     }
 
-    static void setIsAdiceGui(Boolean isAdiceGui) {
+    public static void setIsAdiceGui(Boolean isAdiceGui) {
         TableFrame.isAdiceGui = isAdiceGui;
+    }
+
+    public static Boolean aToolCardIsUsed(){
+        for (CardField card: toolCardList ) {
+            if(card.getUsed())
+                return true;
+        }
+        return false;
     }
 
     private static Boolean isAdiceGui;

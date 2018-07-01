@@ -136,6 +136,10 @@ public class GUI implements UiUpdate {
 
     public void handleUseToolCard(Match match) throws RemoteException {
         //TODO add tool card handling
+
+        //gestito da gui
+
+
         int num;
         do {
             System.out.println("Digita il numero della carta utensile che vuoi utilizzare, tra 1 e 3");

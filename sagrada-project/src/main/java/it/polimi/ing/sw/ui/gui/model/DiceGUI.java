@@ -1,8 +1,9 @@
-package it.polimi.ing.sw.ui.gui;
+package it.polimi.ing.sw.ui.gui.model;
 
 import it.polimi.ing.sw.client.View;
 import it.polimi.ing.sw.model.Box;
 import it.polimi.ing.sw.model.Dice;
+import it.polimi.ing.sw.ui.gui.TableFrame;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -170,9 +171,13 @@ public class DiceGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_diceLabelMouseExited
 
     private void diceLabelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_diceLabelMousePressed
-        if (box.isFull()) {
-            wasPressed = true;
-            floatingDiceFrame = new FloatingDiceFrame(box.getDice(), DIM_X_FLOATING_DICE, DIM_Y_FLOATING_DICE);
+        if(TableFrame.aToolCardIsUsed()){
+
+        }else{
+            if (box.isFull()) {
+                wasPressed = true;
+                floatingDiceFrame = new FloatingDiceFrame(box.getDice(), DIM_X_FLOATING_DICE, DIM_Y_FLOATING_DICE);
+            }
         }
     }//GEN-LAST:event_diceLabelMousePressed
 

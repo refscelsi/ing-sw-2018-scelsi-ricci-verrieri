@@ -1,4 +1,4 @@
-package it.polimi.ing.sw.ui.gui;
+package it.polimi.ing.sw.ui.gui.model;
 
 import it.polimi.ing.sw.model.Dice;
 import it.polimi.ing.sw.model.DraftPool;
