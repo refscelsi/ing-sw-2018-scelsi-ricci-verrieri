@@ -130,13 +130,13 @@ public class PlayerControllerInterfaceSocket implements PlayerControllerInterfac
 		}
 	}
 
-	public void sendUseDiceRequest( int indexOfDiceInDraftPool, int row, int col ) throws NetworkException, NotValidException, NotValidPlayException {
-		Gson gson = new Gson();
-		ArrayList<String> par = new ArrayList<>( Arrays.asList( "" + indexOfDiceInDraftPool + row + col ) );
-		String json = gson.toJson( new Data( Constants.USEDICEREQUEST, par ) );
+	public void sendUseDiceRequest(int indexOfDiceInDraftPool, int row, int col) throws NetworkException, NotValidException, NotValidPlayException {
+		Gson gson= new Gson();
+		ArrayList<String> par=new ArrayList<>(Arrays.asList("" + indexOfDiceInDraftPool+row+col));
+		String json=gson.toJson(new Data(Constants.USEDICEREQUEST, par));
 		try {
-			out.writeObject( json );
-		} catch ( IOException e ) {
+			out.writeObject(json);
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -150,17 +150,18 @@ public class PlayerControllerInterfaceSocket implements PlayerControllerInterfac
 			e.printStackTrace();
 		}
 	}
-
-    public void sendUseDiceRequest(int indexOfDiceInDraftPool, int row, int col) throws NetworkException, NotValidException, NotValidPlayException {
-        Gson gson= new Gson();
-        ArrayList<String> par=new ArrayList<>(Arrays.asList("" + indexOfDiceInDraftPool+row+col));
-        String json=gson.toJson(new Data(Constants.USEDICEREQUEST, par));
-        try {
-            out.writeObject(json);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+	
+/*
+	public void sendUseDiceRequest( int indexOfDiceInDraftPool, int row, int col ) throws NetworkException, NotValidException, NotValidPlayException {
+		Gson gson = new Gson();
+		ArrayList<String> par = new ArrayList<>( Arrays.asList( "" + indexOfDiceInDraftPool + row + col ) );
+		String json = gson.toJson( new Data( Constants.USEDICEREQUEST, par ) );
+		try {
+			out.writeObject( json );
+		} catch ( IOException e ) {
+			e.printStackTrace();
+		}
+	}
 
     public void endTurn() throws NetworkException, NotValidPlayException {
         Gson gson= new Gson();
@@ -170,7 +171,7 @@ public class PlayerControllerInterfaceSocket implements PlayerControllerInterfac
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     @Override
     public void useToolCard(int id, int dice, int operation, int sourceRow, int sourceCol, int destRow, int destCol) throws NetworkException, NotValidException, NotValidPlayException, RemoteException {
