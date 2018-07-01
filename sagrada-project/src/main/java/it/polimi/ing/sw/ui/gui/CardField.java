@@ -97,8 +97,8 @@ public class CardField extends javax.swing.JPanel {
             case 0:
                 if (numberOfTokens == 1) {
                     token = 1;
-                    break;
-                }//TODO add exc
+
+                }break;//TODO add exc
             default:
                 if (numberOfTokens == 2) {
                     token += numberOfTokens;
