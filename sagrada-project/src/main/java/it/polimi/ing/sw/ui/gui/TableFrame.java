@@ -31,6 +31,7 @@ public class TableFrame extends javax.swing.JFrame {
     private static SumPlayerPanel sumPlayer4;
     private static int dimXcard;
     private static int dimYcard;
+    public static String idSelectedTc;
 
     private static View controller;
 
@@ -53,7 +54,6 @@ public class TableFrame extends javax.swing.JFrame {
         addSumsPlayer();
         addRoundTrack();
         addDiceFieldPAnel();
-
     }
 
     public static Match getMatch() {
@@ -388,9 +388,9 @@ public class TableFrame extends javax.swing.JFrame {
         TableFrame.isAdiceGui = isAdiceGui;
     }
 
-    public static Boolean aToolCardIsUsed(){
-        for (CardField card: toolCardList ) {
-            if(card.getUsed())
+    public static Boolean aToolCardIsUsed() {
+        for (CardField card : toolCardList) {
+            if (card.getUsed())
                 return true;
         }
         return false;

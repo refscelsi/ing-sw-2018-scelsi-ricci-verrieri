@@ -26,34 +26,35 @@ public class CardField extends javax.swing.JPanel {
 //    }
 
     //cardType should be defined as "po/" or "tc/"
-    public CardField(String cardName, String cardType,int dimXcard, int dimYcard) {
-        this.id=cardName;
-        this.dimXcard=dimXcard;
-        this.dimYcard=dimYcard;
+    public CardField(String cardName, String cardType, int dimXcard, int dimYcard) {
+        this.id = cardName;
+        this.dimXcard = dimXcard;
+        this.dimYcard = dimYcard;
         initComponents();
         FINAL_IMAGE_PATH = IMAGE_PATH.concat(cardType);
         setIcons(FINAL_IMAGE_PATH.concat(cardName).concat(".png"));
         used = true;
     }
 
-    public void setUsed (boolean used){
-        this.used=used;
-        if(!used){
+    public void setUsed(boolean used) {
+        this.used = used;
+        if (!used) {
             cardFieldLabel.setBorder(null);
         }
     }
 
-    public void setIsToolCard (boolean isToolCard){
-        this.isToolCard=isToolCard;
+    public void setIsToolCard(boolean isToolCard) {
+        this.isToolCard = isToolCard;
     }
 
-    public Boolean getUsed(){
+    public Boolean getUsed() {
         return used;
     }
 
-    public String getId(){
+    public String getId() {
         return id;
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -77,9 +78,11 @@ public class CardField extends javax.swing.JPanel {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 cardFieldLabelMouseClicked(evt);
             }
+
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 cardFieldLabelMouseEntered(evt);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 cardFieldLabelMouseExited(evt);
             }
@@ -97,12 +100,14 @@ public class CardField extends javax.swing.JPanel {
     }//GEN-LAST:event_cardFieldLabelMouseExited
 
     private void cardFieldLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cardFieldLabelMouseClicked
-        if (isToolCard){
-            if(!used){
+        if (isToolCard) {
+            if (!used) {
                 setUsed(true);
                 cardFieldLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 51, 51)));
-            }else {
+                TableFrame.idSelectedTc = id;
+            } else {
                 setUsed(false);
+                TableFrame.idSelectedTc = null;
             }
         }
     }//GEN-LAST:event_cardFieldLabelMouseClicked
@@ -111,7 +116,7 @@ public class CardField extends javax.swing.JPanel {
         System.out.println(FINAL_IMAGE_PATH);
         System.out.println(name);
         ImageIcon icon = new ImageIcon(getClass().getResource(name));
-        Image scaledImage = icon.getImage().getScaledInstance(dimXcard, dimYcard , Image.SCALE_DEFAULT);
+        Image scaledImage = icon.getImage().getScaledInstance(dimXcard, dimYcard, Image.SCALE_DEFAULT);
         icon.setImage(scaledImage);
         cardFieldLabel.setIcon(icon);
         cardFieldLabel.repaint();
@@ -133,7 +138,8 @@ public class CardField extends javax.swing.JPanel {
                 if (numberOfTokens == 1) {
                     token = 1;
 
-                }break;//TODO add exc
+                }
+                break;//TODO add exc
             default:
                 if (numberOfTokens == 2) {
                     token += numberOfTokens;

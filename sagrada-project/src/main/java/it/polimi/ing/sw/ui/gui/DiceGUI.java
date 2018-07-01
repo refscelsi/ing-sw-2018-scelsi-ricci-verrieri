@@ -3,6 +3,7 @@ package it.polimi.ing.sw.ui.gui;
 import it.polimi.ing.sw.client.View;
 import it.polimi.ing.sw.model.Box;
 import it.polimi.ing.sw.model.Dice;
+import it.polimi.ing.sw.ui.gui.toolCardsActrionFrames.ToolCard1ActionForm;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -170,9 +171,15 @@ public class DiceGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_diceLabelMouseExited
 
     private void diceLabelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_diceLabelMousePressed
-        if(TableFrame.aToolCardIsUsed()){
-
-        }else{
+        if (TableFrame.aToolCardIsUsed()) {
+            switch (TableFrame.idSelectedTc){
+                case "1":
+                    ToolCard1ActionForm toolCard1ActionForm = new ToolCard1ActionForm(box.getDice(), controller);
+                    toolCard1ActionForm.setVisible(true);
+                    break;
+                case "2": break;
+            }
+        } else {
             if (box.isFull()) {
                 wasPressed = true;
                 floatingDiceFrame = new FloatingDiceFrame(box.getDice(), DIM_X_FLOATING_DICE, DIM_Y_FLOATING_DICE);
@@ -205,7 +212,7 @@ public class DiceGUI extends javax.swing.JPanel {
     private void injectDice(MouseEvent evt) throws RemoteException {
         String nameComponent = TableFrame.getCurrentComponentName();
         char id = nameComponent.charAt(0);
-        if (!NOT_A_DICE.equals(nameComponent) && TableFrame.isPlayerTurn(controller.getNickname(),id)) {
+        if (!NOT_A_DICE.equals(nameComponent) && TableFrame.isPlayerTurn(controller.getNickname(), id)) {
             switch (id) {
                 case '1':
                     TableFrame.updateDice(1, floatingDiceFrame.getDice(), (int) nameComponent.charAt(1) - 48, (int) nameComponent.charAt(2) - 48);
