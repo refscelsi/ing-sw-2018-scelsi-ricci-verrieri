@@ -24,19 +24,8 @@ public interface UiUpdate {
 
     void onSchemeToChoose(Match match, String nickname, String message);
 
-    void onUseToolCard1NotValid(Match match, NotValidException e);
+    void onUseToolCardNotValid(int id, Match match, String e);
 
-    void onUseToolCard234NotValid(int id, Match match, NotValidException e);
+    void onOtherInfoToolCard(int id, Match match);
 
-    void onOtherInfoToolCard4(Match match);
-
-    void onToolCard6(Match match);
-
-    void onUseToolCard9NotValid(Match match, NotValidException e);
-
-    void onOtherInfoToolCard11(Match match);
-
-    void onUseToolCard11bNotValid(Match match, NotValidException e);
-
-    void onUseToolCard12NotValid(Match match, String e);
 }

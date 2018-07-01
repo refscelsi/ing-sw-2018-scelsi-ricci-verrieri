@@ -8,6 +8,7 @@ import it.polimi.ing.sw.model.Scheme;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.util.Constants;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -577,65 +578,70 @@ public class CLI implements UiUpdate {
     }
 
     @Override
-    public void onUseToolCard1NotValid(Match match, NotValidException e) {
-        System.err.println(e);
-        useToolCard1(match);
-    }
-
-    @Override
-    public void onUseToolCard234NotValid(int id, Match match, NotValidException e) {
-        System.err.println(e);
-        useToolCard23412(id);
-    }
-
-    @Override
-    public void onOtherInfoToolCard4(Match match) {
-        System.out.println("Primo dado mosso correttamente, ora muovi il secondo");
-        useToolCard23412(4);
-    }
-
-    @Override
-    public void onToolCard6(Match match) {
-        System.out.println("Ora digita la casella dove posizionare il dado");
-        useToolCard6(match);
-    }
-
-    @Override
-    public void onUseToolCard9NotValid(Match match, NotValidException e) {
-        System.err.println(e);
-        useToolCard9(match);
-    }
-
-    @Override
-    public void onOtherInfoToolCard11(Match match) {
-        int dice, row, col;
-        do {
-            System.out.println("Digita il valore del nuovo dado, tra 1 e 6");
-            dice = scanner.nextInt();
-        } while (dice < 1 || dice > 6);
-        do {
-            System.out.println("Digita il numero della riga dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_ROWS);
-            row = scanner.nextInt();
-        } while (row < 1 || row > Constants.NUM_ROWS);
-        do {
-            System.out.println("Digita il numero della colonna dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_COLS);
-            col = scanner.nextInt();
-        } while (col < 1 || col > Constants.NUM_COLS);
-
-        //controller.useToolCard11(match);
-    }
-
-    @Override
-    public void onUseToolCard11bNotValid(Match match, NotValidException e) {
-        System.err.println(e);
-        onOtherInfoToolCard11(match);
-    }
-
-    @Override
-    public void onUseToolCard12NotValid(Match match, String e) {
+    public void onUseToolCardNotValid(int id, Match match, String e) {
         System.out.println(e);
-        useToolCard12(match);
+        switch (id) {
+            case 6:
+                onOtherInfoToolCard(6, match);    // perché tanto la 6 può lanciare una notValidException solo nel secondo step
+                break;
+            case 11:
+                onOtherInfoToolCard(11, match);   // perché tanto la 11 può lanciare una notValidException solo nel secondo step
+                break;
+            case 12:
+                onOtherInfoToolCard(12, match);   //TODO: distingui eccezione se ti trovi nel primo step o nel secondo
+                break;
+            default:
+                useToolCard(id, match);
+                break;
+        }
     }
+
+
+    @Override
+    public void onOtherInfoToolCard(int id, Match match) {
+        switch (id) {
+            case 4: {
+                System.out.println("Primo dado mosso correttamente, ora muovi il secondo");
+                useToolCard23412(4);
+            }
+            break;
+            case 6: {
+                System.out.println("Ora digita la casella dove posizionare il dado");
+                retryPlaceDice();
+            }
+            break;
+            case 11: {
+                int dice, row, col;
+                do {
+                    System.out.println("Digita il valore del nuovo dado, tra 1 e 6");
+                    dice = scanner.nextInt();
+                } while (dice < 1 || dice > 6);
+                do {
+                    System.out.println("Digita il numero della riga dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_ROWS);
+                    row = scanner.nextInt();
+                } while (row < 1 || row > Constants.NUM_ROWS);
+                do {
+                    System.out.println("Digita il numero della colonna dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_COLS);
+                    col = scanner.nextInt();
+                } while (col < 1 || col > Constants.NUM_COLS);
+                controller.useToolCard(11, -1, dice, row-1, col-1, -1, -1);
+            }
+            break;
+            case 12: {
+                int choice;
+                do {
+                    System.out.println("Primo dado mosso correttamente, digita 0 se non vuoi spostare più dadi o 1 se vuoi spostarne un altro");
+                    choice = scanner.nextInt();
+                } while (choice!=0 && choice!=1);
+                if (choice==0)
+                    controller.useToolCard(12, -1, -1, -1, -1, -1, -1);
+                else
+                    useToolCard23412(12);
+            }
+        }
+
+    }
+
 
     @Override
     public void onSuccess(String message) {

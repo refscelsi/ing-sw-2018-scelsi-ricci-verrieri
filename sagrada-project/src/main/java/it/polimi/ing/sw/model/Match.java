@@ -138,8 +138,8 @@ public class Match implements Serializable {
                 this.remotePlayer.add(remotePlayer);
                 numPlayers++;
                 System.out.println(numPlayers);
-                notifyChangement();
-                //notifyLogin(player);
+                //notifyChangement();
+                notifyLogin(player);
                 return;
             }
             else
@@ -463,31 +463,38 @@ public class Match implements Serializable {
         return null;
     }
 
-    public void setState(int id, Player player){
-        switch (id) {
-            case 1:
-            case 2:
-            case 3:
-            case 5:
-            case 10:
-                player.setState(PlayerState.USEDTOOLCARD);
-                break;
+    public void setPlaying(Player player) throws RemoteException {
+        playerMap.get(player).onSetPlaying();
+    }
 
+    public Boolean getIfFirstTurn(Player player) {
+        for (int i=0; i<playersRoundIndex; i++) {
+            if (playersRound[i]==player)
+                return false;
         }
+        return true;
     }
 
 
     //metodi delle carte
 
 
-    public void useToolCard (Player player, int id, int dice, int operation, int sourceRow, int sourceCol, int destRow, int destCol, boolean finish) throws RemoteException, NotValidException, NotValidPlayException {
+    public void useToolCard (Player player, int id, int dice, int operation, int sourceRow, int sourceCol, int destRow, int destCol) throws RemoteException, NotValidException, NotValidPlayException {
         if(checkToken(player,id)) {
-            findToolCard(id).execute(getDraftPool(), getRoundTrack(), player.getScheme(), playersRound, bag, dice, operation, sourceRow, sourceCol, destRow, destCol);
+            findToolCard(id).execute(draftPool, roundTrack, player.getScheme(), playersRound, bag, dice, operation, sourceRow, sourceCol, destRow, destCol);
             player.setNumOfToken(player.getNumOfToken()-findToolCard(id).getNumOfTokens());
             findToolCard(id).incrementNumOfTokens();
-            setState(id, player);
             notifyChangement();
-            playerMap.get(player).onSetPlaying();
+            switch (id) {
+                case 4:
+                case 6:
+                case 11:
+                case 12:
+                    playerMap.get(player).onOtherInfoToolCard(id);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 

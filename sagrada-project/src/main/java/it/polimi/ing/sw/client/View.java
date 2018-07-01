@@ -151,44 +151,23 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
 
     @Override
     public void onSetPlaying() {
-        this.match = match;
         isPlaying = true;
-        Runnable task1 = () -> {
+        /*Runnable task1 = () -> {*/
             ui.onTurnStart(match, nickname);
-        };
+        /*};
         Thread thread1 = new Thread(task1);
-        thread1.start();
+        thread1.start();*/
     }
 
     @Override
-    public void onOtherInfoToolCard4(Match match) {
-        ui.onGameUpdate(match, nickname);
-        Runnable task3 = () -> {
-            ui.onOtherInfoToolCard4(match);
-        };
+    public void onOtherInfoToolCard(int id) {
+        /*Runnable task3 = () -> {*/
+            ui.onOtherInfoToolCard(id, match);
+        /*};
         Thread thread3 = new Thread(task3);
-        thread3.start();
+        thread3.start();*/
     }
 
-    @Override
-    public void onOtherInfoToolCard11(Match match) throws RemoteException {
-        ui.onGameUpdate(match, nickname);
-        Runnable task4 = () -> {
-            ui.onOtherInfoToolCard11(match);
-        };
-        Thread thread4 = new Thread(task4);
-        thread4.start();
-    }
-
-    @Override
-    public void onOtherInfoToolCard12(Match match) throws RemoteException {
-        ui.onGameUpdate(match, nickname);
-        Runnable task5 = () -> {
-            ui.onUseToolCard12NotValid(match, "Primo spostamento corretto, ora esegui il secondo");
-        };
-        Thread thread5 = new Thread(task5);
-        thread5.start();
-    }
 
 
     public void onNotValidPlay(String e) {
@@ -340,12 +319,16 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
 
 
     public void useToolCard(int id, int dice, int operation, int sourceRow, int sourceCol, int destRow, int destCol) {
+        if (id==6)
+            this.dice = dice;
+        if (dice==-1)
+            dice = this.dice;
         try {
             controller.useToolCard(id, dice, operation, sourceRow, sourceCol, destRow, destCol);
         } catch (NetworkException e) {
             System.err.println(e.getMessage());
         } catch (NotValidException e) {
-            ui.onUseToolCard1NotValid(match, e);
+            ui.onUseToolCardNotValid(id, match, e.getMessage());
         } catch (NotValidPlayException e) {
             onNotValidPlay(e.getMessage());
         } catch (RemoteException e) {

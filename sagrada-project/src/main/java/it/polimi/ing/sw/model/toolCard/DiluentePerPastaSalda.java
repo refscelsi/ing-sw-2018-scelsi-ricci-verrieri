@@ -7,7 +7,7 @@ import it.polimi.ing.sw.model.exceptions.NotValidException;
 public class DiluentePerPastaSalda extends ToolCard {
 
     private final int id = 11;
-    private Dice dice;
+    private int indexInDraftPool;
     private boolean firstExecutionDone;
 
 
@@ -28,10 +28,12 @@ public class DiluentePerPastaSalda extends ToolCard {
         if (!firstExecutionDone) {
             bag.addDice(draftPool.getDice(indexInDraftPool));
             draftPool.setDice(bag.drawDice(), indexInDraftPool);
+            this.indexInDraftPool = indexInDraftPool;
             firstExecutionDone = true;
         }
         else {
-            dice.setNumFacciaUp(numFacciaUp);
+            draftPool.getDice(this.indexInDraftPool).setNumFacciaUp(numFacciaUp);
+            Dice dice = draftPool.getDice(this.indexInDraftPool);
             Box destBox = scheme.getBox(row, col);
             if (destBox.isFull())
                 throw new NotValidException("Non puoi posizionare un dado in una casella già piena!");
