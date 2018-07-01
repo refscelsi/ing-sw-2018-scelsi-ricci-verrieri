@@ -211,7 +211,9 @@ public class CLI implements UiUpdate {
             num = scanner.nextInt();
 
         } while (num < 1 || num > 4);
+        //System.out.println("Ho scelto schema nella cli");
         controller.setChosenScheme(schemes.get(num - 1).getId());   //se per esempio qui c'è un errore, se lo gestisce il PlayerController*/
+        //System.out.println("Ho scelto schema nella cli, torno subitooo");
     }
 
 
@@ -228,16 +230,16 @@ public class CLI implements UiUpdate {
      * Scelta dell'azione da parte del giocatore
      */
     public void chooseAction(Match match, String nickname) {
-        boolean ok;
-        System.out.print("Digita: \n- D se vuoi posizionare un dado sul tuo schema; \n- T se vuoi utilizzare una carta utensile; \n- I se vuoi visualizzare le informazioni degli altri giocatori; \n- E se vuoi terminare il tuo turno; \n- Q se vuoi uscire dalla partita.\n");
+        int choice;
+        Boolean ok = true;
+        System.out.println("Digita: \n- 1 se vuoi posizionare un dado sul tuo schema; \n- 2 se vuoi utilizzare una carta utensile; \n- 3 se vuoi visualizzare le informazioni degli altri giocatori; \n- 4 se vuoi terminare il tuo turno; \n- 5 se vuoi uscire dalla partita.");
 
         do {
-            ok = true;
-            inText = scanner.nextLine();
+            choice = scanner.nextInt();
 
-            switch (inText.toLowerCase()) {
+            switch (choice) {
 
-                case "q": {
+                case 5: {
                     System.out.println("Sei sicuro che vuoi uscire dalla partita? Digita S per sì o N per no.");
                     if (scanner.nextLine().toLowerCase().equalsIgnoreCase("s")) {
                         // TODO: gestire terminazione corretta del programma!
@@ -247,33 +249,34 @@ public class CLI implements UiUpdate {
                     break;
                 }
 
-                case "d": {
+                case 1: {
                     handleUseDice(match, false);
                     break;
                 }
 
-                case "t": {
+                case 2: {
                     handleUseToolCard(match);   //TODO: metodi per le carte utensili
                     break;
                 }
 
-                case "i": {
+                case 3: {
                     printOtherPlayersInfo(match, nickname);
                     break;
                 }
 
-                case "e": {
+                case 4: {
                     endTurn();
                     break;
                 }
 
                 default: {
-                    System.out.println("Scelta non valida");
                     ok = false;
+                    System.out.println("Scelta non valida");
                     break;
                 }
             }
         } while (!ok);
+        //System.out.println("Ho scelto la lettera nella cli, torno subitooo");
     }
 
 
@@ -315,6 +318,7 @@ public class CLI implements UiUpdate {
             controller.useToolCard(9, dice - 1, -1,row - 1, col - 1, -1, -1);
         else
             controller.useDice(dice - 1, row - 1, col - 1);
+        //System.out.println("Ho scelto il dado nella cli, torno subitooo");
 
     }
 
@@ -649,6 +653,7 @@ public class CLI implements UiUpdate {
 
     @Override
     public void onSuccess(String message) {
+        System.out.println("Arriva notifica schema alla cli");
         System.out.println(message);
     }
 

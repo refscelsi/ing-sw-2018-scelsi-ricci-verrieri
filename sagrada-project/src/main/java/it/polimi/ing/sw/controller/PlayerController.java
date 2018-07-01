@@ -71,6 +71,7 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
 
     @Override
     public void setChosenScheme(int id) throws NetworkException, RemoteException, NotValidPlayException {
+        System.out.println("Ho scelto schema nel controller");
         if (player.getState().equals(PlayerState.SCHEMETOCHOOSE)) {
             match.chooseScheme(this.player, id);
         } else throw new NotValidPlayException("non puoi fare questa mossa ora!" + player.getState().toString());
@@ -79,17 +80,25 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
     @Override
     public void sendUseDiceRequest(int indexOfDiceInDraftPool, int row, int col) throws NetworkException, NotValidException, NotValidPlayException, RemoteException {
         //System.out.println("giocatore: "+ nickname+ "\n stato:"+ player.getState().toString());
+        System.out.println("uso dado da controller");
         switch (player.getState()) {
             case USEDDICE:
                 throw new NotValidPlayException("hai già usato un dado in questo turno!");
             case FINISHTURN:
                 throw new NotValidPlayException("non puoi più fare mosse, passa il turno");
-            case USEDTOOLCARD:
-                match.useDice(player, indexOfDiceInDraftPool, row, col, true);
+            case USEDTOOLCARD: {
+                System.out.println("giocatore: "+ nickname+ "\n stato:"+ player.getState().toString());
+                match.useDice(player, indexOfDiceInDraftPool, row, col);
+                endTurn();
                 break;
-            case TURNSTARTED:
-                match.useDice(player, indexOfDiceInDraftPool, row, col, false);
+            }
+            case TURNSTARTED: {
+                System.out.println("giocatore: "+ nickname+ "\n stato:"+ player.getState().toString());
+                match.useDice(player, indexOfDiceInDraftPool, row, col);
+                player.setState(PlayerState.USEDDICE);
+                match.usedToolCard(player, 0);
                 break;
+            }
             case ENDEDTURN:
                 throw new NotValidPlayException("non è il tuo turno!");
             default:
@@ -102,10 +111,11 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
     //i metodi. Oppure facciamo un altro stato per essere più sicuri e quando vieni notificato isPlaying passi allo stato READYTOPLAY???
     @Override
     public void endTurn() throws NetworkException, RemoteException, NotValidPlayException {
-        //System.out.println("giocatore: "+ nickname+ "\n stato:"+ player.getState().toString());
+        System.out.println("giocatore: "+ nickname+ "\n stato:"+ player.getState().toString());
         if (player.getState().equals(PlayerState.READYTOPLAY) || player.getState().equals(PlayerState.INIZIALIZED) || player.getState().equals(PlayerState.OFFLINE)) {
             throw new NotValidPlayException("finisci il turno caro!");
         } else {
+            match.notifyChangement();
             match.changePlayer();
             System.out.println("turno finito");
         }
@@ -125,12 +135,17 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
                     System.out.println("giocatore: " + nickname + "\n stato:" + player.getState().toString());
                     match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol);
                     player.setState(PlayerState.USEDTOOLCARD);
-                    match.setPlaying(player);
-                } else if (player.getState().equals(PlayerState.USEDDICE)) {
-                    System.out.println("giocatore: " + nickname + "\n stato:" + player.getState().toString());
-                    match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol);
-                    endTurn();
-                } else throw new NotValidPlayException("Non puoi usare questa carta");
+                    match.usedToolCard(player, id);
+                    break;
+                } else {
+                    if (player.getState().equals(PlayerState.USEDDICE)) {
+                        System.out.println("giocatore: " + nickname + "\n stato:" + player.getState().toString());
+                        match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol);
+                        endTurn();
+                        break;
+                    } else
+                        throw new NotValidPlayException("Non puoi usare questa carta");
+                }
             }
 
             // carte che si possono utilizzare in qualsiasi momento ma si eseguono in 2 step
@@ -140,25 +155,31 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
                     System.out.println("giocatore: " + nickname + "\n stato:" + player.getState().toString());
                     match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol);
                     player.setState(PlayerState.FIRSTSTEPTOOLCARD);
+                    match.usedToolCard(player, id);
+                    break;
                 }
                 else {
                     if (player.getState().equals(PlayerState.FIRSTSTEPTOOLCARD)) {
                         System.out.println("giocatore: " + nickname + "\n stato:" + player.getState().toString());
                         match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol);
                         player.setState(PlayerState.USEDTOOLCARD);
-                        match.setPlaying(player);
+                        match.usedToolCard(player, id);
+                        break;
                     }
                     else {
                         if (player.getState().equals(PlayerState.USEDDICE)) {
                             System.out.println("giocatore: " + nickname + "\n stato:" + player.getState().toString());
                             match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol);
                             player.setState(PlayerState.USEDDICETOOLCARD);
+                            match.usedToolCard(player, id);
+                            break;
                         }
                         else {
                             if (player.getState().equals(PlayerState.USEDDICETOOLCARD)) {
                                 System.out.println("giocatore: " + nickname + "\n stato:" + player.getState().toString());
                                 match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol);
                                 endTurn();
+                                break;
                             } else
                                 throw new NotValidPlayException("Non puoi usare questa carta");
                         }
@@ -173,12 +194,16 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
                     System.out.println("giocatore: " + nickname + "\n stato:" + player.getState().toString());
                     match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol);
                     player.setState(PlayerState.USEDDICETOOLCARD);
+                    System.out.println("giocatore: " + nickname + "\n stato:" + player.getState().toString());
+                    match.usedToolCard(player, id);
+                    break;
                 }
                 else {
                     if (player.getState().equals(PlayerState.USEDDICETOOLCARD)) {
                         System.out.println("giocatore: " + nickname + "\n stato:" + player.getState().toString());
                         match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol);
                         endTurn();
+                        break;
                     }
                     else
                         throw new NotValidPlayException("Non puoi usare questa carta");
@@ -191,8 +216,10 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
                     System.out.println("giocatore: " + nickname + "\n stato:" + player.getState().toString());
                     match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol);
                     player.setState(PlayerState.USEDTOOLCARD);
-                    match.setPlaying(player);
-                } else throw new NotValidPlayException("Non puoi usare questa carta");
+                    match.usedToolCard(player, id);
+                    break;
+                } else
+                    throw new NotValidPlayException("Non puoi usare questa carta");
             }
 
             // carta che può essere utilizzata solo durante il primo turno
@@ -201,13 +228,18 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
                     System.out.println("giocatore: " + nickname + "\n stato:" + player.getState().toString());
                     match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol);
                     player.setState(PlayerState.USEDTOOLCARD);
-                    match.setPlaying(player);
+                    match.usedToolCard(player, id);
+                    break;
 
-                } else if (player.getState().equals(PlayerState.USEDDICE)&&match.getIfFirstTurn(player)) {
-                    System.out.println("giocatore: " + nickname + "\n stato:" + player.getState().toString());
-                    match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol);
-                    endTurn();
-                } else throw new NotValidPlayException("Non puoi usare questa carta");
+                } else {
+                    if (player.getState().equals(PlayerState.USEDDICE)&&match.getIfFirstTurn(player)) {
+                        System.out.println("giocatore: " + nickname + "\n stato:" + player.getState().toString());
+                        match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol);
+                        endTurn();
+                        break;
+                    } else
+                        throw new NotValidPlayException("Non puoi usare questa carta");
+                }
             }
 
             // carta che può essere utilizzata solo se non si è già piazzato un dado
@@ -216,8 +248,12 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
                     System.out.println("giocatore: " + nickname + "\n stato:" + player.getState().toString());
                     match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol);
                     endTurn();
-                } else throw new NotValidPlayException("Non puoi usare questa carta");
+                    break;
+                } else
+                    throw new NotValidPlayException("Non puoi usare questa carta");
             }
+            default:
+                break;
         }
     }
 
