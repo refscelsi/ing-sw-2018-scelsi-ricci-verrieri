@@ -4,6 +4,7 @@ import it.polimi.ing.sw.client.View;
 import it.polimi.ing.sw.model.Scheme;
 
 import java.awt.*;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -134,7 +135,11 @@ public class ChooseSchemeForm extends javax.swing.JFrame {
 		buttonA.setText( "button A" );
 		buttonA.addActionListener( new java.awt.event.ActionListener() {
 			public void actionPerformed( java.awt.event.ActionEvent evt ) {
-				buttonAActionPerformed( evt );
+				try {
+					buttonAActionPerformed( evt );
+				} catch (RemoteException e) {
+					e.printStackTrace();
+				}
 			}
 		} );
 		schemeCardPanel1.add( buttonA );
@@ -144,7 +149,11 @@ public class ChooseSchemeForm extends javax.swing.JFrame {
 		buttonB.setText( "button B" );
 		buttonB.addActionListener( new java.awt.event.ActionListener() {
 			public void actionPerformed( java.awt.event.ActionEvent evt ) {
-				buttonBActionPerformed( evt );
+				try {
+					buttonBActionPerformed( evt );
+				} catch (RemoteException e) {
+					e.printStackTrace();
+				}
 			}
 		} );
 		schemeCardPanel1.add( buttonB );
@@ -191,7 +200,11 @@ public class ChooseSchemeForm extends javax.swing.JFrame {
 		buttonC.setText( "button C" );
 		buttonC.addActionListener( new java.awt.event.ActionListener() {
 			public void actionPerformed( java.awt.event.ActionEvent evt ) {
-				buttonCActionPerformed( evt );
+				try {
+					buttonCActionPerformed( evt );
+				} catch (RemoteException e) {
+					e.printStackTrace();
+				}
 			}
 		} );
 		schemeCardPanel2.add( buttonC );
@@ -201,7 +214,11 @@ public class ChooseSchemeForm extends javax.swing.JFrame {
 		buttonD.setText( "button D" );
 		buttonD.addActionListener( new java.awt.event.ActionListener() {
 			public void actionPerformed( java.awt.event.ActionEvent evt ) {
-				buttonDActionPerformed( evt );
+				try {
+					buttonDActionPerformed( evt );
+				} catch (RemoteException e) {
+					e.printStackTrace();
+				}
 			}
 		} );
 		schemeCardPanel2.add( buttonD );
@@ -225,24 +242,25 @@ public class ChooseSchemeForm extends javax.swing.JFrame {
 		pack();
 	}// </editor-fold>//GEN-END:initComponents
 
-	private void buttonBActionPerformed( java.awt.event.ActionEvent evt ) {//GEN-FIRST:event_buttonBActionPerformed
+	private void buttonBActionPerformed( java.awt.event.ActionEvent evt ) throws RemoteException {//GEN-FIRST:event_buttonBActionPerformed
 		schemeSelected(schemeList.get( 1 ));
 	}//GEN-LAST:event_buttonBActionPerformed
 
-	private void buttonDActionPerformed( java.awt.event.ActionEvent evt ) {//GEN-FIRST:event_buttonDActionPerformed
+	private void buttonDActionPerformed( java.awt.event.ActionEvent evt ) throws RemoteException {//GEN-FIRST:event_buttonDActionPerformed
 		schemeSelected(schemeList.get( 3 ));
 	}//GEN-LAST:event_buttonDActionPerformed
 
-	private void buttonCActionPerformed( java.awt.event.ActionEvent evt ) {//GEN-FIRST:event_buttonCActionPerformed
+	private void buttonCActionPerformed( java.awt.event.ActionEvent evt ) throws RemoteException {//GEN-FIRST:event_buttonCActionPerformed
 		schemeSelected(schemeList.get( 2 ));
 	}//GEN-LAST:event_buttonCActionPerformed
 
-	private void buttonAActionPerformed( java.awt.event.ActionEvent evt ) {//GEN-FIRST:event_buttonAActionPerformed
+	private void buttonAActionPerformed( java.awt.event.ActionEvent evt ) throws RemoteException {//GEN-FIRST:event_buttonAActionPerformed
 		schemeSelected(schemeList.get( 0 ));
 	}//GEN-LAST:event_buttonAActionPerformed
 
-	private void schemeSelected(Scheme scheme){
+	private void schemeSelected(Scheme scheme) throws RemoteException {
 		controller.setChosenScheme( scheme.getId() );   //se per esempio qui c'è un errore, se lo gestisce il PlayerController*/
+        setVisible(false);
 	}
 	private void setIcons() {
 		setIconImage( Toolkit.getDefaultToolkit().getImage( getClass().getResource( SAGRADA_ICO ) ) );

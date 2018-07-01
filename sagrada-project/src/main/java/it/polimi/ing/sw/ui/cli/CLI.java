@@ -9,6 +9,7 @@ import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.util.Constants;
 
 import java.awt.*;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -202,7 +203,7 @@ public class CLI implements UiUpdate {
     /**
      * Scelta dello schema tra i 4 schemi disponibili da parte di un giocatore
      */
-    public void chooseScheme(Match match, String nickname, String message) {
+    public void chooseScheme(Match match, String nickname, String message) throws RemoteException {
         ArrayList<Scheme> schemes = match.getPlayer(nickname).getSchemesToChoose();
         showSchemesToChoose(schemes);
         int num;
@@ -229,7 +230,7 @@ public class CLI implements UiUpdate {
     /**
      * Scelta dell'azione da parte del giocatore
      */
-    public void chooseAction(Match match, String nickname) {
+    public void chooseAction(Match match, String nickname) throws RemoteException {
         int choice;
         Boolean ok = true;
         System.out.println("Digita: \n- 1 se vuoi posizionare un dado sul tuo schema; \n- 2 se vuoi utilizzare una carta utensile; \n- 3 se vuoi visualizzare le informazioni degli altri giocatori; \n- 4 se vuoi terminare il tuo turno; \n- 5 se vuoi uscire dalla partita.");
@@ -299,7 +300,7 @@ public class CLI implements UiUpdate {
     // Scelta D: posizionare un dado sullo schema
     /////////////////////////////////////////////////////////////////////////////////////////
 
-    public void handleUseDice(Match match, boolean toolCard9) {
+    public void handleUseDice(Match match, boolean toolCard9) throws RemoteException {
         int dice, row, col;
         do {
             System.out.println("Digita l'indice del dado che vuoi posizionare, tra 1 e " + match.getDraftPool().getSize());
@@ -323,7 +324,7 @@ public class CLI implements UiUpdate {
     }
 
 
-    public void retryPlaceDice() {
+    public void retryPlaceDice() throws RemoteException {
         int row, col;
         do {
             System.out.println("Digita il numero della riga dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_ROWS);
@@ -343,7 +344,7 @@ public class CLI implements UiUpdate {
     /////////////////////////////////////////////////////////////////////////////////////////
 
 
-    public void handleUseToolCard(Match match) {
+    public void handleUseToolCard(Match match) throws RemoteException {
         int num;
         do {
             System.out.println("Digita il numero della carta utensile che vuoi utilizzare, tra 1 e 3");
@@ -354,7 +355,7 @@ public class CLI implements UiUpdate {
     }
 
 
-    public void useToolCard(int id, Match match) {
+    public void useToolCard(int id, Match match) throws RemoteException {
         switch (id) {
             case 1:
                 useToolCard1(match);
@@ -392,7 +393,7 @@ public class CLI implements UiUpdate {
     }
 
 
-    public void useToolCard1(Match match) {
+    public void useToolCard1(Match match) throws RemoteException {
         int dice, operation;
         do {
             System.out.println("Digita l'indice del dado che vuoi cambiare, tra 1 e " + match.getDraftPool().getSize());
@@ -406,7 +407,7 @@ public class CLI implements UiUpdate {
     }
 
 
-    public void useToolCard23412(int id) {
+    public void useToolCard23412(int id) throws RemoteException {
         int sourceRow, sourceCol, destRow, destCol;
         do {
             System.out.println("Digita il numero della riga dello schema del dado che vuoi spostare, tra 1 e " + Constants.NUM_ROWS);
@@ -428,7 +429,7 @@ public class CLI implements UiUpdate {
     }
 
 
-    public void useToolCard5(Match match) {
+    public void useToolCard5(Match match) throws RemoteException {
         int dice, round, indexInRound;
         boolean roundTrackIsFull = controller.checkIfRoundTrackIsFull();
         if (!roundTrackIsFull) {
@@ -453,7 +454,7 @@ public class CLI implements UiUpdate {
     }
 
 
-    public void useToolCard6(Match match) {
+    public void useToolCard6(Match match) throws RemoteException {
         int dice;
         do {
             System.out.println("Digita l'indice del dado che vuoi tirare, tra 1 e " + match.getDraftPool().getSize());
@@ -463,12 +464,12 @@ public class CLI implements UiUpdate {
     }
 
 
-    public void useToolCard9(Match match) {
+    public void useToolCard9(Match match) throws RemoteException {
         handleUseDice(match, true);
     }
 
 
-    public void useToolCard10(Match match) {
+    public void useToolCard10(Match match) throws RemoteException {
         int dice;
         do {
             System.out.println("Digita l'indice del dado che vuoi cambiare, tra 1 e " + match.getDraftPool().getSize());
@@ -478,7 +479,7 @@ public class CLI implements UiUpdate {
     }
 
 
-    public void useToolCard11(Match match) {
+    public void useToolCard11(Match match) throws RemoteException {
         int dice;
         do {
             System.out.println("Digita l'indice del dado che vuoi riporre nel sacchetto, tra 1 e " + match.getDraftPool().getSize());
@@ -488,7 +489,7 @@ public class CLI implements UiUpdate {
     }
 
 
-    public void useToolCard12(Match match) {
+    public void useToolCard12(Match match) throws RemoteException {
         boolean roundTrackIsFull = controller.checkIfRoundTrackIsFull();
         if (!roundTrackIsFull) {
             System.out.println("Non puoi utilizzare questa carta perché ancora non ci sono dadi sul tracciato dei round");
@@ -504,7 +505,7 @@ public class CLI implements UiUpdate {
     // Scelta I: visualizzare le informazioni degli altri giocatori (nome, schema, segnalini favore)
     /////////////////////////////////////////////////////////////////////////////////////////
 
-    public void printOtherPlayersInfo(Match match, String nickname) {
+    public void printOtherPlayersInfo(Match match, String nickname) throws RemoteException {
         ArrayList<Player> otherPlayers = match.getOtherPlayers(nickname);
         for (Player player : otherPlayers) {
             System.out.println(player.getNickname());
@@ -523,7 +524,7 @@ public class CLI implements UiUpdate {
     /////////////////////////////////////////////////////////////////////////////////////////
 
 
-    public void endTurn() {
+    public void endTurn() throws RemoteException {
         controller.endTurn();
     }
 
@@ -550,12 +551,12 @@ public class CLI implements UiUpdate {
     }
 
     @Override
-    public void onTurnStart(Match match, String nickname) {
+    public void onTurnStart(Match match, String nickname) throws RemoteException {
         chooseAction(match, nickname);
     }
 
     @Override
-    public void onPlaceDiceNotValid(NotValidException e) {
+    public void onPlaceDiceNotValid(NotValidException e) throws RemoteException {
         System.out.println(e);
         retryPlaceDice();
     }
@@ -581,12 +582,12 @@ public class CLI implements UiUpdate {
     }
 
     @Override
-    public void onSchemeToChoose(Match match, String nickname, String message) {
+    public void onSchemeToChoose(Match match, String nickname, String message) throws RemoteException {
         chooseScheme(match, nickname, message);
     }
 
     @Override
-    public void onUseToolCardNotValid(int id, Match match, String e) {
+    public void onUseToolCardNotValid(int id, Match match, String e) throws RemoteException {
         System.out.println(e);
         switch (id) {
             case 6:
@@ -606,7 +607,7 @@ public class CLI implements UiUpdate {
 
 
     @Override
-    public void onOtherInfoToolCard(int id, Match match) {
+    public void onOtherInfoToolCard(int id, Match match) throws RemoteException {
         switch (id) {
             case 4: {
                 System.out.println("Primo dado mosso correttamente, ora muovi il secondo");

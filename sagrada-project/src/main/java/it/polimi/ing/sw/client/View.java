@@ -156,7 +156,11 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
 		System.out.println( "Notifico inizio turno nella view" );
 		Runnable task1 = () -> {
 			System.out.println( "Inizio turno nel thread" );
-			ui.onTurnStart( match, nickname );
+			try {
+				ui.onTurnStart( match, nickname );
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
 			System.out.println( "Fine thread" );
 		};
 		Thread thread1 = new Thread( task1 );
@@ -166,13 +170,17 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
 	@Override
 	public void onOtherInfoToolCard( int id ) {
 		Runnable task3 = () -> {
-			ui.onOtherInfoToolCard( id, match );
+			try {
+				ui.onOtherInfoToolCard( id, match );
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
 		};
 		Thread thread3 = new Thread( task3 );
 		thread3.start();
 	}
 
-	public void onNotValidPlay( String e ) {
+	public void onNotValidPlay( String e ) throws RemoteException {
 		ui.onActionNotValid( e );
 		ui.onTurnStart( match, nickname );
 	}
@@ -263,7 +271,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
 		}
 	}
 
-	public void setChosenScheme( int id ) {
+	public void setChosenScheme( int id ) throws RemoteException {
 		System.out.println( "Ho scelto schema nella view" );
 		try {
 			controller.setChosenScheme( id );
@@ -284,7 +292,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
 		}
 	}
 
-	public void useDice( int indexOfDiceInDraftPool, int row, int col ) {
+	public void useDice( int indexOfDiceInDraftPool, int row, int col ) throws RemoteException {
 		if ( indexOfDiceInDraftPool == -1 )
 			indexOfDiceInDraftPool = dice;
 		else
@@ -304,7 +312,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
 		}
 	}
 
-	public void endTurn() {
+	public void endTurn() throws RemoteException {
 		try {
 			controller.endTurn();
 		} catch ( NetworkException e ) {
@@ -317,7 +325,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
 	}
 
 	// SENDERS ToolCards
-	public void useToolCard( int id, int dice, int operation, int sourceRow, int sourceCol, int destRow, int destCol ) {
+	public void useToolCard( int id, int dice, int operation, int sourceRow, int sourceCol, int destRow, int destCol ) throws RemoteException {
 		if ( id == 6 )
 			this.dice = dice;
 		if ( dice == -1 )

@@ -16,7 +16,7 @@ public interface UiUpdate {
 
     void onChooseNetwork (String message) throws RemoteException;
 
-    void onTurnStart(Match match, String nickname);
+    void onTurnStart(Match match, String nickname) throws RemoteException;
 
     void onPlaceDiceNotValid(NotValidException e) throws RemoteException;
 

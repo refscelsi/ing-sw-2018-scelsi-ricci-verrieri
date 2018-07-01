@@ -8,6 +8,7 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.rmi.RemoteException;
 
 import static it.polimi.ing.sw.model.Color.*;
 import static it.polimi.ing.sw.util.Constants.IMAGE_PATH;
@@ -136,7 +137,11 @@ public class DiceGUI extends javax.swing.JPanel {
 			}
 
 			public void mouseReleased( java.awt.event.MouseEvent evt ) {
-				diceLabelMouseReleased( evt );
+				try {
+					diceLabelMouseReleased( evt );
+				} catch (RemoteException e) {
+					e.printStackTrace();
+				}
 			}
 		} );
 
@@ -171,7 +176,7 @@ public class DiceGUI extends javax.swing.JPanel {
 		}
 	}//GEN-LAST:event_diceLabelMousePressed
 
-	private void diceLabelMouseReleased( java.awt.event.MouseEvent evt ) {//GEN-FIRST:event_diceLabelMouseReleased
+	private void diceLabelMouseReleased( java.awt.event.MouseEvent evt ) throws RemoteException {//GEN-FIRST:event_diceLabelMouseReleased
 		wasPressed = false;
 		if ( this != evt.getComponent() ) {
 			floatingDiceFrame.setVisible( false );
@@ -188,7 +193,7 @@ public class DiceGUI extends javax.swing.JPanel {
 		}
 	}//GEN-LAST:event_diceLabelMouseDragged
 
-	private void injectDice( MouseEvent evt ) {
+	private void injectDice( MouseEvent evt ) throws RemoteException {
 		String nameComponent = TableFrame.getCurrentComponentName();
 
 		if ( !NOT_A_DICE.equals( nameComponent ) ) {

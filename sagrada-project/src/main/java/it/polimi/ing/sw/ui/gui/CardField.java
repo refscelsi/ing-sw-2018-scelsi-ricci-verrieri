@@ -18,7 +18,7 @@ public class CardField extends javax.swing.JPanel {
         this.dimYcard=dimYcard;
         initComponents();
         FINAL_IMAGE_PATH = IMAGE_PATH.concat("po/");
-        setIcons(FINAL_IMAGE_PATH.concat("po01.png"));//default icon
+        setIcons(FINAL_IMAGE_PATH.concat("1.png"));//default icon
         used = true;
         token=0;
     }
@@ -29,7 +29,7 @@ public class CardField extends javax.swing.JPanel {
         this.dimYcard=dimYcard;
         initComponents();
         FINAL_IMAGE_PATH = IMAGE_PATH.concat(cardType);
-        setIcons(FINAL_IMAGE_PATH.concat(cardName));
+        setIcons(FINAL_IMAGE_PATH.concat(cardName).concat(".png"));
         used = true;
     }
 
@@ -48,7 +48,7 @@ public class CardField extends javax.swing.JPanel {
         cardFieldLabel.add(tokenLabel);
         tokenLabel.setBounds(150, 220, 20, 20);
 
-        cardFieldLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/po/po01.png"))); // NOI18N
+        cardFieldLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/po/1.png"))); // NOI18N
         cardFieldLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cardFieldLabel.setMinimumSize(new java.awt.Dimension(dimXcard, dimYcard));
         cardFieldLabel.setPreferredSize(new java.awt.Dimension(dimXcard, dimYcard));
@@ -76,7 +76,7 @@ public class CardField extends javax.swing.JPanel {
         System.out.println(FINAL_IMAGE_PATH);
 
         ImageIcon icon = new ImageIcon(getClass().getResource(name));
-        Image scaledImage = icon.getImage().getScaledInstance(dimXcard, dimYcard /*242*/, Image.SCALE_DEFAULT);
+        Image scaledImage = icon.getImage().getScaledInstance(dimXcard, dimYcard , Image.SCALE_DEFAULT);
         icon.setImage(scaledImage);
         cardFieldLabel.setIcon(icon);
         cardFieldLabel.repaint();
