@@ -25,17 +25,15 @@ public class Constants {
 	public static final String ENDTURN = "endTurn";
 	public static final String TOOLCARD = "useToolCard";
 
-	//metodi PlayerController
-	public static final String ONSCHEMETOCHOOSE = "onSchemeToChoose";
-	public static final String ONSUCCES = "onSuccess";
-	public static final String ONGAMEUPDATE = "onGameUpdate";
-	public static final String ONTURNEND = "onTurnEnd";
-	public static final String ONPLAYERLOGGED = "onPlayerLogged";
-	public static final String ONSETPLAYING = "onSetPlaying";
-	public static final String ONOTHERINFOTOOLCARD4 = "onOtherInfoToolCard4";
-	public static final String ONOTHERINFOTOOLCARD11 = "onOtherInfoToolCard11";
-	public static final String ONOTHERINFOTOOLCARD12 = "onOtherInfoToolCard12";
-	public static final String ONGAMEEND = "onGameEnd";
+    //metodi PlayerController
+    public static final String ONSCHEMETOCHOOSE="onSchemeToChoose";
+    public static final String ONSUCCES= "onSuccess";
+    public static final String ONGAMEUPDATE= "onGameUpdate";
+    public static final String ONTURNEND= "onTurnEnd";
+    public static final String ONPLAYERLOGGED= "onPlayerLogged";
+    public static final String ONSETPLAYING= "onSetPlaying";
+    public static final String ONOTHERINFOTOOLCARD="onOtherInfoToolCard";
+    public static final String ONGAMEEND= "onGameEnd";
 
 	//GUI
 	public static final String PLAYER_STANDARD_NAME = "Player";

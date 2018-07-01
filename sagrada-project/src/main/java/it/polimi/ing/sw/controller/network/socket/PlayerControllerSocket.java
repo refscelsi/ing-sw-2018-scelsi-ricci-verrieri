@@ -17,21 +17,21 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.Type;
 import java.net.Socket;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import static java.lang.String.format;
 import static java.lang.String.valueOf;
-
+import com.google.gson.*;
 public class PlayerControllerSocket implements RemotePlayer {
     private ObjectOutputStream out;
     private Socket clientSocket;
-    private JSONParser parser= new JSONParser();
-    private JSONObject jsonObject;
     private PlayerController controller;
     private LoginController loginController;
 
@@ -52,17 +52,16 @@ public class PlayerControllerSocket implements RemotePlayer {
             Boolean condition=true;
             while (condition) {
                 String input = (String) in.readObject();
-                jsonObject = (JSONObject) parser.parse(input);
-                String method= (String) jsonObject.get("method");
-                ArrayList<String > params= (ArrayList<String>) jsonObject.get("params");
+                Gson gson = new Gson();
+                Data data=gson.fromJson(input, Data.class);
+                String method=data.getMethod();
+                ArrayList<String > params= data.getParams();
                 handleInput(method, params);
                 condition=false;
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
         } catch (ToolCardException e) {
             e.printStackTrace();
@@ -92,6 +91,7 @@ public class PlayerControllerSocket implements RemotePlayer {
                 break;
 
             case Constants.CHECKREADY: controller.checkAllReady();
+                System.out.println("t'appo");
                 break;
 
             case Constants.SETCHOSENSCHEME: controller.setChosenScheme(Integer.valueOf(params.get(0)));
@@ -110,9 +110,11 @@ public class PlayerControllerSocket implements RemotePlayer {
 
     @Override
     public void onSchemeToChoose(Match match) throws RemoteException, NotValidPlayException {
-        MatchToSend matchToSend=new MatchToSend(Constants.ONSCHEMETOCHOOSE,match);
+        MatchToSend matchToSend=new MatchToSend(Constants.ONSCHEMETOCHOOSE);
+        matchToSend.setMatch(match);
         try {
             out.writeObject(matchToSend);
+            out.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -120,9 +122,11 @@ public class PlayerControllerSocket implements RemotePlayer {
 
     @Override
     public void onSuccess(String message) throws RemoteException {
-        MatchToSend matchToSend=new MatchToSend(Constants.ONSUCCES, message);
+        MatchToSend matchToSend=new MatchToSend(Constants.ONSCHEMETOCHOOSE);
+        matchToSend.setMessage(message);
         try {
             out.writeObject(matchToSend);
+            out.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -130,9 +134,11 @@ public class PlayerControllerSocket implements RemotePlayer {
 
     @Override
     public void onGameUpdate(Match match) throws RemoteException {
-        MatchToSend matchToSend=new MatchToSend(Constants.ONGAMEUPDATE, match);
+        MatchToSend matchToSend=new MatchToSend(Constants.ONGAMEUPDATE);
+        matchToSend.setMatch(match);
         try {
             out.writeObject(matchToSend);
+            out.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -143,6 +149,7 @@ public class PlayerControllerSocket implements RemotePlayer {
         MatchToSend matchToSend=new MatchToSend(Constants.ONTURNEND);
         try {
             out.writeObject(matchToSend);
+            out.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -150,36 +157,38 @@ public class PlayerControllerSocket implements RemotePlayer {
 
     @Override
     public void onGameEnd(Match match) throws RemoteException {
-        MatchToSend matchToSend=new MatchToSend(Constants.ONGAMEEND, match);
+        MatchToSend matchToSend=new MatchToSend(Constants.ONGAMEEND);
+        matchToSend.setMatch(match);
         try {
             out.writeObject(matchToSend);
+            out.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    @Override
-    public void onPlayerLogged() throws RemoteException {
-        MatchToSend matchToSend=new MatchToSend(Constants.ONPLAYERLOGGED);
-        try {
-            out.writeObject(matchToSend);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public void onSetPlaying() throws RemoteException {
         MatchToSend matchToSend=new MatchToSend(Constants.ONSETPLAYING);
         try {
             out.writeObject(matchToSend);
+            out.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void onOtherInfoToolCard( int id ) throws RemoteException {
-
+    public void onOtherInfoToolCard(int id) throws RemoteException {
+        MatchToSend matchToSend=new MatchToSend(Constants.ONOTHERINFOTOOLCARD);
+        matchToSend.setId(id);
+        try {
+            out.writeObject(matchToSend);
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
 }

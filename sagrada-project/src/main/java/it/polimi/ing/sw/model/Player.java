@@ -1,15 +1,17 @@
 package it.polimi.ing.sw.model;
+import com.google.gson.annotations.JsonAdapter;
 import it.polimi.ing.sw.controller.PlayerState;
 import it.polimi.ing.sw.model.objectiveCard.*;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
+import org.json.*;
 
 import java.io.Serializable;
+import java.lang.management.BufferPoolMXBean;
 import java.util.ArrayList;
 
 
 public class Player implements Serializable{
     private String nickname;
-    private int orderInRound;    // ordine che viene assegnato al giocatore nel primo round. Questo numero identifica il giocatore ed è molto più comodo gestire tutta la parte di passaggio da un giocatore all'altro utilizzando questo
     private int numOfToken;
     private int score;
     private boolean isLogged;
@@ -18,7 +20,7 @@ public class Player implements Serializable{
     private PrivateObjectiveCard privateObjective;
     private Color color;
     private ArrayList<Scheme> schemesToChoose;
-    private PlayerState state;
+    private transient PlayerState state;
 
 
     public Player (String nickname){
@@ -39,10 +41,6 @@ public class Player implements Serializable{
         return this.state;
     }
 
-    public int getOrderInRound() {
-        return orderInRound;
-    }
-
     public String getNickname() {
         return nickname;
     }
@@ -57,10 +55,6 @@ public class Player implements Serializable{
 
     public ArrayList<Scheme> getSchemesToChoose() {
         return schemesToChoose;
-    }
-
-    public void setOrderInRound(int i){
-        orderInRound=i;
     }
 
     public PrivateObjectiveCard getPrivateObjective() {

@@ -1,5 +1,6 @@
 package it.polimi.ing.sw.client;
 
+import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 import it.polimi.ing.sw.controller.LoginInterface;
 import it.polimi.ing.sw.controller.PlayerControllerInterface;
 import it.polimi.ing.sw.controller.RemotePlayer;
@@ -116,14 +117,13 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         System.out.println("Devo scegliere lo schema (prima di lancio thread");
         Runnable task2 = () -> {
             System.out.println("Devo scegliere lo schema (dopo di lancio thread");
-			try {
-				ui.onSchemeToChoose(match, nickname, "Scegli il numero del tuo schema");
-			} catch ( RemoteException e ) {
-				e.printStackTrace();
-			}
-		};
-        Thread thread2 = new Thread(task2);
-        thread2.start();
+            if(match==null){
+                System.out.println("sbatti");
+            }
+            ui.onSchemeToChoose(match, nickname, "Scegli il numero del tuo schema");
+        };
+        new Thread(task2).start();
+
     }
 
     @Override
@@ -151,10 +151,6 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         ui.onGameEnd(match);
     }
 
-    @Override
-    public void onPlayerLogged() {
-
-    }
 
     @Override
     public void onSetPlaying() {
@@ -248,10 +244,14 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         PlayerControllerInterfaceSocket playerInterfaceSocket = null;
         try {
             playerInterfaceSocket = new PlayerControllerInterfaceSocket(nickname, this );
+
         } catch (IOException e) {
             e.printStackTrace();
         }
         this.controller = playerInterfaceSocket;
+        this.isLogged = true;
+        ui.onSuccess("Complimenti, ti sei loggato come " + nickname);
+        this.nickname = nickname;
         try {
             controller.joinMatch();
         } catch (IOException e) {

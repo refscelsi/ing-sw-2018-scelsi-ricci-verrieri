@@ -4,13 +4,14 @@ import com.google.gson.Gson;
 import it.polimi.ing.sw.client.View;
 import it.polimi.ing.sw.controller.PlayerControllerInterface;
 import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
+import it.polimi.ing.sw.model.DraftPool;
 import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.model.exceptions.NetworkException;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.util.Constants;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import com.google.gson.*;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -25,21 +26,20 @@ import static java.lang.String.valueOf;
 //classe che viene istanziata come controller in caso di socket e chiama i metodi di PlayerControllerSocket a cui passa
 //i dati impacchettati in file json
 public class PlayerControllerInterfaceSocket implements PlayerControllerInterface {
-	private MatchToSend matchToSend;
-	private View view;
-	private final Socket clientSocket;
-	private final ObjectOutputStream out;
-	private JSONParser parser = new JSONParser();
-	private JSONObject jsonObject;
+    private MatchToSend match;
+    private View view;
+    private final Socket clientSocket;
+    private final ObjectOutputStream out;
 
 
-	public PlayerControllerInterfaceSocket( String nickname, View view ) throws IOException {
-		this.clientSocket = new Socket( "localhost", Constants.SOCKET_PORT );
-		this.out = new ObjectOutputStream( clientSocket.getOutputStream() );
-		this.view = view;
-		new Thread( () -> {
-			serverUpdateHandler();
-		} ).start();
+
+    public PlayerControllerInterfaceSocket(String nickname, View view) throws IOException {
+        this.clientSocket= new Socket("localhost", Constants.SOCKET_PORT);
+        this.out= new ObjectOutputStream(clientSocket.getOutputStream());
+        this.view=view;
+        new Thread(()->{
+            serverUpdateHandler();
+        }).start();
 
 		Gson gson = new Gson();
 		String json = gson.toJson( new Data( "connectSocket", new ArrayList<>( Collections.singletonList( nickname ) ) ) );
@@ -50,58 +50,52 @@ public class PlayerControllerInterfaceSocket implements PlayerControllerInterfac
 		}
 	}
 
-	private void serverUpdateHandler() {
-		try {
-			ObjectInputStream in = new ObjectInputStream( clientSocket.getInputStream() );
-			Boolean condition = true;
-			while (condition) {
-				matchToSend = (MatchToSend) in.readObject();
-				String method = matchToSend.getMethod();
-				handleUpdate( method );
-			}
-		} catch ( IOException e ) {
-			e.printStackTrace();
-		} catch ( ClassNotFoundException e ) {
-			e.printStackTrace();
-		}
-	}
+    private void serverUpdateHandler() {
+        try {
+            ObjectInputStream in= new ObjectInputStream(clientSocket.getInputStream());
+            while (true){
+                this.match=(MatchToSend) in.readObject();
+                String method= match.getMethod();
+                handleUpdate(method);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
-	private void handleUpdate( String method ) throws RemoteException {
-		switch (method) {
-			case Constants.ONTURNEND: {
-				view.onTurnEnd();
-				break;
-			}
-			case Constants.ONSUCCES: {
-				String message = (String) matchToSend.getMessage();
-				try {
-					view.onSuccess( message );
-				} catch ( RemoteException e ) {
-					e.printStackTrace();
-				}
-				break;
-			}
-			case Constants.ONSETPLAYING: {
-				view.onSetPlaying();
-				break;
-			}
-			case Constants.ONSCHEMETOCHOOSE: {
-				Match match = (Match) matchToSend.getMatch();
-				view.onSchemeToChoose( match );
-				break;
-			}
-			case Constants.ONGAMEUPDATE: {
-				Match match = (Match) matchToSend.getMatch();
-				view.onGameUpdate( match );
-				break;
-			}
-			case Constants.ONGAMEEND: {
-				Match match = (Match) matchToSend.getMatch();
-				view.onGameEnd( match );
-				break;
-			}
-		}
-	}
+    private void handleUpdate(String method) {
+        switch(method){
+            case Constants.ONTURNEND: {
+                view.onTurnEnd();
+                break;
+            }
+            case Constants.ONSUCCES: {
+                try {
+                    view.onSuccess(match.getMessage());
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+                break;
+            }
+            case Constants.ONSETPLAYING: {
+                view.onSetPlaying();
+                break;
+            }
+            case Constants.ONSCHEMETOCHOOSE: {
+                view.onSchemeToChoose(match.getMatch());
+                break;
+            }
+            case Constants.ONGAMEUPDATE: {
+                view.onGameUpdate(match.getMatch());
+                break;
+            }
+            case Constants.ONGAMEEND:{
+                view.onGameEnd(match.getMatch());
+                break;
+            }
+        }
 
 
 	public void joinMatch() throws IOException {
@@ -156,17 +150,41 @@ public class PlayerControllerInterfaceSocket implements PlayerControllerInterfac
 		}
 	}
 
-	@Override
-	public void useToolCard( int id, int dice, int operation, int sourceRow, int sourceCol, int destRow, int destCol ) throws NetworkException, NotValidException, NotValidPlayException, RemoteException {
-	}
+    public void sendUseDiceRequest(int indexOfDiceInDraftPool, int row, int col) throws NetworkException, NotValidException, NotValidPlayException {
+        Gson gson= new Gson();
+        ArrayList<String> par=new ArrayList<>(Arrays.asList("" + indexOfDiceInDraftPool+row+col));
+        String json=gson.toJson(new Data(Constants.USEDICEREQUEST, par));
+        try {
+            out.writeObject(json);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void endTurn() throws NetworkException, NotValidPlayException {
+        Gson gson= new Gson();
+        String json=gson.toJson(new Data(Constants.ENDTURN, null));
+        try {
+            out.writeObject(json);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void useToolCard(int id, int dice, int operation, int sourceRow, int sourceCol, int destRow, int destCol) throws NetworkException, NotValidException, NotValidPlayException, RemoteException {
+        Gson gson= new Gson();
+        String json=gson.toJson(new Data(Constants.TOOLCARD, null));
+        try {
+            out.writeObject(json);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
 
-class Data {
-	String method;
-	ArrayList<String> params;
 
-	Data( String method, ArrayList<String> params ) {
-		this.method = method;
-		this.params = params;
-	}
-}
+
+
+

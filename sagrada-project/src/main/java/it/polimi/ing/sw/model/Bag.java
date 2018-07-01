@@ -5,7 +5,7 @@ import java.util.*;
 import java.util.Random;
 
 
-public class Bag implements Serializable{
+public class Bag{
 
     private ArrayList<Dice> dices = new ArrayList<Dice>();;
 
