@@ -53,7 +53,8 @@ public class PlayerControllerInterfaceSocket implements PlayerControllerInterfac
     private void serverUpdateHandler() {
         try {
             ObjectInputStream in= new ObjectInputStream(clientSocket.getInputStream());
-            while (true){
+            Boolean condition = true;
+            while (condition){
                 this.match=(MatchToSend) in.readObject();
                 String method= match.getMethod();
                 handleUpdate(method);
@@ -65,38 +66,38 @@ public class PlayerControllerInterfaceSocket implements PlayerControllerInterfac
         }
     }
 
-    private void handleUpdate(String method) {
-        switch(method){
-            case Constants.ONTURNEND: {
-                view.onTurnEnd();
-                break;
-            }
-            case Constants.ONSUCCES: {
-                try {
-                    view.onSuccess(match.getMessage());
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
-                break;
-            }
-            case Constants.ONSETPLAYING: {
-                view.onSetPlaying();
-                break;
-            }
-            case Constants.ONSCHEMETOCHOOSE: {
-                view.onSchemeToChoose(match.getMatch());
-                break;
-            }
-            case Constants.ONGAMEUPDATE: {
-                view.onGameUpdate(match.getMatch());
-                break;
-            }
-            case Constants.ONGAMEEND:{
-                view.onGameEnd(match.getMatch());
-                break;
-            }
-        }
-
+    private void handleUpdate(String method) throws RemoteException {
+		switch (method) {
+			case Constants.ONTURNEND: {
+				view.onTurnEnd();
+				break;
+			}
+			case Constants.ONSUCCES: {
+				try {
+					view.onSuccess( match.getMessage() );
+				} catch ( RemoteException e ) {
+					e.printStackTrace();
+				}
+				break;
+			}
+			case Constants.ONSETPLAYING: {
+				view.onSetPlaying();
+				break;
+			}
+			case Constants.ONSCHEMETOCHOOSE: {
+				view.onSchemeToChoose( match.getMatch() );
+				break;
+			}
+			case Constants.ONGAMEUPDATE: {
+				view.onGameUpdate( match.getMatch() );
+				break;
+			}
+			case Constants.ONGAMEEND: {
+				view.onGameEnd( match.getMatch() );
+				break;
+			}
+		}
+	}
 
 	public void joinMatch() throws IOException {
 		Gson gson = new Gson();
