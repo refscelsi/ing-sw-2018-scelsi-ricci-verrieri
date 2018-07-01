@@ -7,6 +7,7 @@ import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.model.Player;
 
 import java.awt.*;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -140,6 +141,28 @@ public class TableFrame extends javax.swing.JFrame {
         player4.fillScheme(player.getScheme());
     }
 
+    public static Boolean isPlayerTurn(String nickname, char id) {
+        switch (id) {
+            case '1':
+                if (sumPlayer1.getPlayerName().equals(nickname)) {
+                    return true;
+                }
+            case '2':
+                if (sumPlayer2.getPlayerName().equals(nickname)) {
+                    return true;
+                }
+            case '3':
+                if (sumPlayer3.getPlayerName().equals(nickname)) {
+                    return true;
+                }
+            case '4':
+                if (sumPlayer4.getPlayerName().equals(nickname)) {
+                    return true;
+                }
+            default:return false;
+        }
+    }
+
     private static void addSumsPlayer() {
         sumPlayer1 = new SumPlayerPanel();
         backgroundTableFRameLabel.add(sumPlayer1);
@@ -200,6 +223,7 @@ public class TableFrame extends javax.swing.JFrame {
         tableFramePanel = new javax.swing.JPanel();
         objCardPanel = new javax.swing.JPanel();
         toolCardPanel = new javax.swing.JPanel();
+        endTurnButton = new javax.swing.JButton();
         backgroundTableFRameLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -237,6 +261,19 @@ public class TableFrame extends javax.swing.JFrame {
         tableFramePanel.add(toolCardPanel);
         toolCardPanel.setBounds(250, 250, 519, 245);
 
+        endTurnButton.setText("End Turn");
+        endTurnButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    endTurnButtonActionPerformed(evt);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        tableFramePanel.add(endTurnButton);
+        endTurnButton.setBounds(820, 730, 150, 25);
+
         backgroundTableFRameLabel.setBackground(new java.awt.Color(153, 153, 153));
         backgroundTableFRameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         backgroundTableFRameLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/sagrada.png"))); // NOI18N
@@ -257,6 +294,10 @@ public class TableFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void endTurnButtonActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_endTurnButtonActionPerformed
+        controller.endTurn();        // TODO add your handling code here:
+    }//GEN-LAST:event_endTurnButtonActionPerformed
 
     public void tornaMenu() {
         this.setVisible(false);
@@ -352,8 +393,9 @@ public class TableFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private static javax.swing.JLabel backgroundTableFRameLabel;
+    private javax.swing.JButton endTurnButton;
     private static javax.swing.JPanel objCardPanel;
-    private static javax.swing.JPanel tableFramePanel;
+    private javax.swing.JPanel tableFramePanel;
     private static javax.swing.JPanel toolCardPanel;
     // End of variables declaration//GEN-END:variables
 }

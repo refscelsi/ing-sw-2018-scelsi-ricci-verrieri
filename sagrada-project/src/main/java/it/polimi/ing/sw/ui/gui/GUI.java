@@ -51,9 +51,13 @@ public class GUI implements UiUpdate {
      */
     public void chooseAction(Match match, String nickname) throws RemoteException {
         //TODO add action handling
-        boolean ok;
-        System.out.print("Digita: \n- D se vuoi posizionare un dado sul tuo schema; \n- T se vuoi utilizzare una carta utensile; \n- I se vuoi visualizzare le informazioni degli altri giocatori; \n- E se vuoi terminare il tuo turno; \n- Q se vuoi uscire dalla partita.\n");
 
+        onGameUpdate(match, nickname);
+
+        boolean ok;
+        //System.out.print("Digita: \n- D se vuoi posizionare un dado sul tuo schema; \n- T se vuoi utilizzare una carta utensile; \n- I se vuoi visualizzare le informazioni degli altri giocatori; \n- E se vuoi terminare il tuo turno; \n- Q se vuoi uscire dalla partita.\n");
+
+        /*
         do {
             ok = true;
             inText = scanner.nextLine();
@@ -82,7 +86,7 @@ public class GUI implements UiUpdate {
                     ok = false;
                     break;
             }
-        } while (!ok);
+        } while (!ok);*/
     }
 
 

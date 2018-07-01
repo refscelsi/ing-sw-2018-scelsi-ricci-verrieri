@@ -120,5 +120,9 @@ public class SumPlayerPanel extends javax.swing.JPanel {
 	private javax.swing.JLabel privateObjButtonLabel;
 	private javax.swing.JLabel schemeNameLabel;
 
+	public String getPlayerName() {
+		return playerName;
+	}
+
 	// End of variables declaration//GEN-END:variables
 }

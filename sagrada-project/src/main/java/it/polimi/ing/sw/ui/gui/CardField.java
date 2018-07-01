@@ -74,7 +74,7 @@ public class CardField extends javax.swing.JPanel {
 
     private void setIcons(String name) {
         System.out.println(FINAL_IMAGE_PATH);
-
+        System.out.println(name);
         ImageIcon icon = new ImageIcon(getClass().getResource(name));
         Image scaledImage = icon.getImage().getScaledInstance(dimXcard, dimYcard , Image.SCALE_DEFAULT);
         icon.setImage(scaledImage);
