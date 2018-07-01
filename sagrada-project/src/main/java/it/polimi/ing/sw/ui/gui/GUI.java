@@ -8,6 +8,7 @@ import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.ui.cli.*;
 import it.polimi.ing.sw.util.Constants;
 
+import javax.swing.*;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -49,6 +50,7 @@ public class GUI implements UiUpdate {
 	 * Scelta dell'azione da parte del giocatore
 	 */
 	public void chooseAction( Match match, String nickname ) {
+		//TODO add action handling
 		boolean ok;
 		System.out.print( "Digita: \n- D se vuoi posizionare un dado sul tuo schema; \n- T se vuoi utilizzare una carta utensile; \n- I se vuoi visualizzare le informazioni degli altri giocatori; \n- E se vuoi terminare il tuo turno; \n- Q se vuoi uscire dalla partita.\n" );
 
@@ -104,21 +106,9 @@ public class GUI implements UiUpdate {
 
 	public void handleUseDice( Match match, boolean toolCard9 ) {
 
-		/*
-		int dice, row, col;
-		do {
-			System.out.println( "Digita l'indice del dado che vuoi posizionare, tra 1 e " + match.getDraftPool().getSize() );
-			dice = scanner.nextInt();
-		} while (dice < 1 || dice > match.getDraftPool().getSize());
-		do {
-			System.out.println( "Digita il numero della riga dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_ROWS );
-			row = scanner.nextInt();
-		} while (row < 1 || row > Constants.NUM_ROWS);
-		do {
-			System.out.println( "Digita il numero della colonna dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_COLS );
-			col = scanner.nextInt();
-		} while (col < 1 || col > Constants.NUM_COLS);
-//*/
+		//Normal use handled by GUI
+
+		//TODO check for toolcard9 use
 //		if ( toolCard9 )
 //			controller.useToolCard( 9, dice - 1, -1, row - 1, col - 1, -1, -1 );
 //		else
@@ -127,20 +117,13 @@ public class GUI implements UiUpdate {
 	}
 
 
-	public void retryPlaceDice() {
-		//TODO popup di errore
+	public void retryPlaceDice() throws RemoteException {
+		JOptionPane.showMessageDialog(null,
+				"Invalid placing dice action, retry or do something different.",
+				"Placing dice error",
+				JOptionPane.ERROR_MESSAGE);
 
-		//TODO reset prec status
-		int row, col;
-		do {
-			System.out.println( "Digita il numero della riga dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_ROWS );
-			row = scanner.nextInt();
-		} while (row < 1 || row > Constants.NUM_ROWS);
-		do {
-			System.out.println( "Digita il numero della colonna dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_COLS );
-			col = scanner.nextInt();
-		} while (col < 1 || col > Constants.NUM_COLS);
-		controller.useDice( -1, row - 1, col - 1 );
+		onGameUpdate( controller.getMatch(), controller.getNickname() );
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
@@ -148,6 +131,7 @@ public class GUI implements UiUpdate {
 	/////////////////////////////////////////////////////////////////////////////////////////
 
 	public void handleUseToolCard( Match match ) {
+		//TODO add tool card handling
 		int num;
 		do {
 			System.out.println( "Digita il numero della carta utensile che vuoi utilizzare, tra 1 e 3" );
@@ -319,6 +303,10 @@ public class GUI implements UiUpdate {
 	public void onActionNotValid( String errorCode ) {
 		System.out.println( errorCode );
 		//TODO popup not valid action
+		JOptionPane.showMessageDialog(null,
+				errorCode,
+				"Not valid Action",
+				JOptionPane.ERROR_MESSAGE);
 	}
 
 	@Override
@@ -332,7 +320,7 @@ public class GUI implements UiUpdate {
 	}
 
 	@Override
-	public void onPlaceDiceNotValid( NotValidException e ) {
+	public void onPlaceDiceNotValid( NotValidException e ) throws RemoteException {
 		System.out.println( e );
 		retryPlaceDice();
 	}
@@ -363,7 +351,7 @@ public class GUI implements UiUpdate {
 	}
 
 	@Override
-	public void onUseToolCardNotValid( int id, Match match, String e ) {
+	public void onUseToolCardNotValid( int id, Match match, String e ) throws RemoteException {
 		System.out.println( e );
 		switch (id) {
 			case 6:
@@ -382,7 +370,7 @@ public class GUI implements UiUpdate {
 	}
 
 	@Override
-	public void onOtherInfoToolCard( int id, Match match ) {
+	public void onOtherInfoToolCard( int id, Match match ) throws RemoteException {
 		switch (id) {
 			case 4: {
 				System.out.println( "Primo dado mosso correttamente, ora muovi il secondo" );

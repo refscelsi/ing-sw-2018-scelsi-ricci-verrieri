@@ -150,7 +150,7 @@ public class PlayerControllerInterfaceSocket implements PlayerControllerInterfac
 			e.printStackTrace();
 		}
 	}
-	
+
 /*
 	public void sendUseDiceRequest( int indexOfDiceInDraftPool, int row, int col ) throws NetworkException, NotValidException, NotValidPlayException {
 		Gson gson = new Gson();

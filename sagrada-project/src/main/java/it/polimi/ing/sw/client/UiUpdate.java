@@ -18,7 +18,7 @@ public interface UiUpdate {
 
     void onTurnStart(Match match, String nickname);
 
-    void onPlaceDiceNotValid(NotValidException e);
+    void onPlaceDiceNotValid(NotValidException e) throws RemoteException;
 
     void onGameUpdate(Match match, String nickname) throws RemoteException;
 
@@ -26,8 +26,8 @@ public interface UiUpdate {
 
     void onSchemeToChoose(Match match, String nickname, String message) throws RemoteException;
 
-    void onUseToolCardNotValid(int id, Match match, String e);
+    void onUseToolCardNotValid(int id, Match match, String e) throws RemoteException;
 
-    void onOtherInfoToolCard(int id, Match match);
+    void onOtherInfoToolCard(int id, Match match) throws RemoteException;
 
 }
