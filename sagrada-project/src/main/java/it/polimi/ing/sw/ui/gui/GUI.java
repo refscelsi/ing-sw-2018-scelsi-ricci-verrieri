@@ -103,6 +103,8 @@ public class GUI implements UiUpdate {
 	/////////////////////////////////////////////////////////////////////////////////////////
 
 	public void handleUseDice( Match match, boolean toolCard9 ) {
+
+		/*
 		int dice, row, col;
 		do {
 			System.out.println( "Digita l'indice del dado che vuoi posizionare, tra 1 e " + match.getDraftPool().getSize() );
@@ -116,16 +118,19 @@ public class GUI implements UiUpdate {
 			System.out.println( "Digita il numero della colonna dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_COLS );
 			col = scanner.nextInt();
 		} while (col < 1 || col > Constants.NUM_COLS);
-
-		if ( toolCard9 )
-			controller.useToolCard( 9, dice - 1, -1, row - 1, col - 1, -1, -1 );
-		else
-			controller.useDice( dice - 1, row - 1, col - 1 );
+//*/
+//		if ( toolCard9 )
+//			controller.useToolCard( 9, dice - 1, -1, row - 1, col - 1, -1, -1 );
+//		else
+//			controller.useDice( dice - 1, row - 1, col - 1 );
 
 	}
 
 
 	public void retryPlaceDice() {
+		//TODO popup di errore
+
+		//TODO reset prec status
 		int row, col;
 		do {
 			System.out.println( "Digita il numero della riga dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_ROWS );
@@ -333,17 +338,12 @@ public class GUI implements UiUpdate {
 	}
 
 	@Override
-	public void onGameUpdate( Match match, String nickname ) {
+	public void onGameUpdate( Match match, String nickname ) throws RemoteException {
 		if ( tableFrame == null ) {
-			tableFrame = new TableFrame( match );
+			tableFrame = new TableFrame( match, getController() );
 		}
 
 		TableFrame.updateMatch( match );
-
-		/*
-
-
-		*/
 	}
 
 	@Override

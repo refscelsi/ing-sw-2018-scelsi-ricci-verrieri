@@ -32,22 +32,22 @@ public class ChooseSchemeForm extends javax.swing.JFrame {
 	}
 
 	private void setVetrataPanel() {
-		vetrataPanelA = new VetrataPanel( 1 );
+		vetrataPanelA = new VetrataPanel( 1, null );
 		vetrataPanelA.fillScheme( schemeList.get( 0 ) );
 		schemeCardPanel1.add( vetrataPanelA );
 		vetrataPanelA.setBounds( 13, 49, 203, 287 );
 
-		vetrataPanelB = new VetrataPanel( 2 );
+		vetrataPanelB = new VetrataPanel( 2, null );
 		vetrataPanelB.fillScheme( schemeList.get( 1 ) );
 		schemeCardPanel1.add( vetrataPanelB );
 		vetrataPanelB.setBounds( 228, 49, 203, 287 );
 
-		vetrataPanelC = new VetrataPanel( 3 );
+		vetrataPanelC = new VetrataPanel( 3, null );
 		vetrataPanelC.fillScheme( schemeList.get( 2 ) );
 		schemeCardPanel2.add( vetrataPanelC );
 		vetrataPanelC.setBounds( 13, 49, 203, 287 );
 
-		vetrataPanelD = new VetrataPanel( 4 );
+		vetrataPanelD = new VetrataPanel( 4, null );
 		vetrataPanelD.fillScheme( schemeList.get( 3 ) );
 		schemeCardPanel2.add( vetrataPanelD );
 		vetrataPanelD.setBounds( 228, 49, 203, 287 );

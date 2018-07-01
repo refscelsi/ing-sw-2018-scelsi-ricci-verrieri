@@ -1,35 +1,41 @@
 package it.polimi.ing.sw.ui.gui;
 
 import it.polimi.ing.sw.App;
+import it.polimi.ing.sw.client.View;
 import it.polimi.ing.sw.model.Dice;
 import it.polimi.ing.sw.model.Match;
-import it.polimi.ing.sw.model.Scheme;
+import it.polimi.ing.sw.model.Player;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static it.polimi.ing.sw.util.Constants.NOT_A_DICE;
 import static it.polimi.ing.sw.util.Constants.SAGRADA_ICO;
 
 public class TableFrame extends javax.swing.JFrame {
 
 	private static Match match;
-	private static List<CardField> toolCardList, objCardList;
+	private static List<CardField> toolCardList;
+	private static List<CardField> objCardList;
 	private static RoundTrack roundTrack;
 	private static VetrataPanel player1;
 	private static VetrataPanel player2;
 	private static VetrataPanel player3;
 	private static VetrataPanel player4;
-	private DiceFieldPanel diceFieldPanel;
-	private SumPlayerPanel sumPlayer1;
-	private SumPlayerPanel sumPlayer2;
-	private SumPlayerPanel sumPlayer3;
-	private SumPlayerPanel sumPlayer4;
+	private static DiceFieldPanel diceFieldPanel;
+	private static SumPlayerPanel sumPlayer1;
+	private static SumPlayerPanel sumPlayer2;
+	private static SumPlayerPanel sumPlayer3;
+	private static SumPlayerPanel sumPlayer4;
 	private static int dimXcard;
 	private static int dimYcard;
 
-	public TableFrame( Match match ) {
-		this.match = match;
+	private static View controller;
+
+	TableFrame( Match match, View controller ) {
+		TableFrame.match = match;
+		TableFrame.controller = controller;
 
 		toolCardList = new ArrayList<>();
 		objCardList = new ArrayList<>();
@@ -47,96 +53,86 @@ public class TableFrame extends javax.swing.JFrame {
 		addRoundTrack();
 		addDiceFieldPAnel();
 
-		//TODO WORKS
-		//TEST addDICES al dice panel
-		List<Dice> dices = new ArrayList<>();
-		Dice testDice = new Dice();
-		testDice.setNumFacciaUp( 5 );
-		testDice.setDiceColor( it.polimi.ing.sw.model.Color.RED );
-		dices.add( testDice );
-		dices.add( testDice );
-		dices.add( testDice );
-		dices.add( testDice );
-		dices.add( testDice );
-		dices.add( testDice );
-		dices.add( testDice );
-		dices.add( testDice );
-		dices.add( testDice );
-		dices.add( testDice );
-		dices.add( testDice );
-		diceFieldPanel.setDices( dices );
-
-        /*
-        //TODO WORKS
-        //TEST carta singola
-        CardField cf = new CardField();
-        tableFramePanel.add(cf);
-        cf.setBounds(0, 0, 173, 245);
-        */
-
-		/*//TODO WORKS
-		//TEST campi carte
-		String ids1[] = {"disabled.png", "tc02.png", "tc03.png"};
-		setToolCards( ids1 );
-		String ids2[] = {"po01.png", "po02.png", "po03.png"};
-		setOBJCards( ids2 );*/
-
-        /*//TODO WORKS
-        //TEST set dice
-        Dice testDice = new Dice();
-        testDice.setNumFacciaUp(5);
-        testDice.setDiceColor(it.polimi.ing.sw.model.Color.RED);
-        roundTrack.getDiceGUIList().get(4).setDice(testDice);*/
-
-        /*//TODO WORKS
-        //TEST disablecard
-        toolCardList.get(1).disableToolCard();*/
-
-		//TODO WORKS
-		//TEST fillScheme
-		SchemeListFileConverter schemeListFileConverter = new SchemeListFileConverter();
-		Scheme scheme = schemeListFileConverter.readFromFile().get( 0 );
-		player1.fillScheme( scheme );
-
-		//TODO WORKS
-		//TEST set nome player
-		//player1.setPlayerNameLabel("pisello");
-
-		//TODO WORKS
-		//TEST set tokens by code
-		toolCardList.get( 2 ).addToken( 1 );
-		toolCardList.get( 2 ).addToken( 2 );
 	}
 
 	public static Match getMatch() {
 		return match;
 	}
 
-	public static void updateMatch( Match match ) {
+	static void updateMatch( Match match ) {
 
 		roundTrack.setDraftPool( match.getRoundTrack().getRoundTrack() );
 
 		List<String> ids = new ArrayList<>();
-		ids.set( 0, match.getPublicObjectives().get( 0 ).getName() );
-		ids.set( 1, match.getPublicObjectives().get( 1 ).getName() );
-		ids.set( 2, match.getPublicObjectives().get( 2 ).getName() );
+		ids.set( 0, String.valueOf( match.getPublicObjectives().get( 0 ).getId() ) );
+		ids.set( 1, String.valueOf( match.getPublicObjectives().get( 1 ).getId() ) );
+		ids.set( 2, String.valueOf( match.getPublicObjectives().get( 2 ).getId() ) );
 		setOBJCards( ids );
-
-		//TODO setup set private obj card
 
 		ids.set( 0, String.valueOf( match.getToolCards().get( 0 ).getId() ) );
 		ids.set( 1, String.valueOf( match.getToolCards().get( 1 ).getId() ) );
 		ids.set( 2, String.valueOf( match.getToolCards().get( 2 ).getId() ) );
-		/*
-		ShowPrivateObjectiveCard priv = new ShowPrivateObjectiveCard( match.getPlayer( nickname ).getPrivateObjective() );
+		setToolCards( ids );
 
-		ShowToolCards tool = new ShowToolCards( match.getToolCards() );
-		System.out.println( "Hai " + match.getPlayer( nickname ).getNumOfToken() + " segnalini favore" );
-		ShowDraftPool draft = new ShowDraftPool( match.getDraftPool() );
-		ShowScheme scheme = new ShowScheme( match.getPlayer( nickname ).getScheme() );*/
+		int counter = 0;
+		for (Player player : match.getPlayers()) {
+			switch (counter) {
+				case 0:
+					updatePlayer1( player );
+					break;
+				case 1:
+					updatePlayer2( player );
+					break;
+				case 2:
+					updatePlayer3( player );
+					break;
+				case 3:
+					updatePlayer4( player );
+					break;
+			}
+			counter++;
+		}
+
+		diceFieldPanel.setDices( match.getDraftPool().getDraftPool() );
 	}
 
-	private void addSumsPlayer() {
+	private static void updatePlayer1( Player player ) {
+		sumPlayer1.setPlayerName( player.getNickname() );
+		sumPlayer1.setSchemeName( String.valueOf( player.getScheme().getId() ) );
+		sumPlayer1.setToken( player.getNumOfToken() );
+		sumPlayer1.setPrivateObjCard( player.getPrivateObjective() );
+
+		player1.fillScheme( player.getScheme() );
+	}
+
+	private static void updatePlayer2( Player player ) {
+		sumPlayer2.setPlayerName( player.getNickname() );
+		sumPlayer2.setSchemeName( String.valueOf( player.getScheme().getId() ) );
+		sumPlayer2.setToken( player.getNumOfToken() );
+		sumPlayer2.setPrivateObjCard( player.getPrivateObjective() );
+
+		player2.fillScheme( player.getScheme() );
+	}
+
+	private static void updatePlayer3( Player player ) {
+		sumPlayer3.setPlayerName( player.getNickname() );
+		sumPlayer3.setSchemeName( String.valueOf( player.getScheme().getId() ) );
+		sumPlayer3.setToken( player.getNumOfToken() );
+		sumPlayer3.setPrivateObjCard( player.getPrivateObjective() );
+
+		player3.fillScheme( player.getScheme() );
+	}
+
+	private static void updatePlayer4( Player player ) {
+		sumPlayer4.setPlayerName( player.getNickname() );
+		sumPlayer4.setSchemeName( String.valueOf( player.getScheme().getId() ) );
+		sumPlayer4.setToken( player.getNumOfToken() );
+		sumPlayer4.setPrivateObjCard( player.getPrivateObjective() );
+
+		player4.fillScheme( player.getScheme() );
+	}
+
+	private static void addSumsPlayer() {
 		sumPlayer1 = new SumPlayerPanel();
 		backgroundTableFRameLabel.add( sumPlayer1 );
 		sumPlayer1.setBounds( 10, 10, 85, 80 );
@@ -154,31 +150,31 @@ public class TableFrame extends javax.swing.JFrame {
 		sumPlayer4.setBounds( 925, 10, 85, 80 );
 	}
 
-	private void addVetratePlayers() {
-		player1 = new VetrataPanel( 1 );
+	private static void addVetratePlayers() {
+		player1 = new VetrataPanel( 1, controller );
 		backgroundTableFRameLabel.add( player1 );
 		player1.setBounds( 780, 430, 230, 290 );
 
-		player2 = new VetrataPanel( 2 );
+		player2 = new VetrataPanel( 2, controller );
 		backgroundTableFRameLabel.add( player2 );
 		player2.setBounds( 780, 100, 230, 290 );
 
-		player3 = new VetrataPanel( 3 );
+		player3 = new VetrataPanel( 3, controller );
 		backgroundTableFRameLabel.add( player3 );
 		player3.setBounds( 10, 100, 230, 290 );
 
-		player4 = new VetrataPanel( 4 );
+		player4 = new VetrataPanel( 4, controller );
 		backgroundTableFRameLabel.add( player4 );
 		player4.setBounds( 10, 430, 230, 290 );
 	}
 
-	private void addDiceFieldPAnel() {
+	private static void addDiceFieldPAnel() {
 		diceFieldPanel = new DiceFieldPanel();
 		backgroundTableFRameLabel.add( diceFieldPanel );
 		diceFieldPanel.setBounds( 250, 100, 520, 140 );
 	}
 
-	private void addRoundTrack() {
+	private static void addRoundTrack() {
 		roundTrack = new RoundTrack();
 		backgroundTableFRameLabel.add( roundTrack );
 		roundTrack.setBounds( 207, 20, 610, 70 );
@@ -259,10 +255,10 @@ public class TableFrame extends javax.swing.JFrame {
 		App.menu.setVisible( true );
 	}
 
-	private void setToolCards( String[] id ) {
+	private static void setToolCards( List<String> id ) {
 		toolCardPanel.setLayout( null );
 		for (int i = 0; i < 3; i++) {
-			CardField schemeCard = new CardField( id[i], "tc/", dimXcard, dimYcard );
+			CardField schemeCard = new CardField( id.get( i ), "tc/", dimXcard, dimYcard );
 			toolCardPanel.add( schemeCard );
 			toolCardList.add( schemeCard );
 			schemeCard.setBounds( i * (173), 0, 173, 245 );
@@ -303,12 +299,12 @@ public class TableFrame extends javax.swing.JFrame {
 		Match match = new Match();
 		java.awt.EventQueue.invokeLater( new Runnable() {
 			public void run() {
-				new TableFrame( match ).setVisible( true );
+				new TableFrame( match, controller ).setVisible( true );
 			}
 		} );
 	}
 
-	public static void updateDice( int idPlayer, Dice dice, int i, int j ) {
+	static void updateDice( int idPlayer, Dice dice, int i, int j ) {
 		switch (idPlayer) {
 			case 1:
 				player1.setDice( i, j, dice );
@@ -325,12 +321,12 @@ public class TableFrame extends javax.swing.JFrame {
 		}
 	}
 
-	public static void setCurrentComponentName( String nameComponentEntered, Boolean isAdiceGui ) {
+	static void setCurrentComponentName( String nameComponentEntered, Boolean isAdiceGui ) {
 		currentComponentName = nameComponentEntered;
 		TableFrame.isAdiceGui = isAdiceGui;
 	}
 
-	public static String getCurrentComponentName() {
+	static String getCurrentComponentName() {
 		if ( isAdiceGui ) {
 			return currentComponentName;
 
@@ -339,18 +335,17 @@ public class TableFrame extends javax.swing.JFrame {
 		}
 	}
 
-	public static void setIsAdiceGui( Boolean isAdiceGui ) {
+	static void setIsAdiceGui( Boolean isAdiceGui ) {
 		TableFrame.isAdiceGui = isAdiceGui;
 	}
 
-	public static final String NOT_A_DICE = "notADice";
 	private static Boolean isAdiceGui;
 	private static String currentComponentName;
 
 	// Variables declaration - do not modify//GEN-BEGIN:variables
-	private javax.swing.JLabel backgroundTableFRameLabel;
+	private static javax.swing.JLabel backgroundTableFRameLabel;
 	private static javax.swing.JPanel objCardPanel;
-	private javax.swing.JPanel tableFramePanel;
-	private javax.swing.JPanel toolCardPanel;
+	private static javax.swing.JPanel tableFramePanel;
+	private static javax.swing.JPanel toolCardPanel;
 	// End of variables declaration//GEN-END:variables
 }

@@ -91,6 +91,7 @@ public class RoundTrack extends javax.swing.JPanel {
 			if ( !draftPool.isEmpty() ) {
 				diceGUIList.get( counter ).setDice( draftPool.get( 0 ) );
 			}
+			counter++;
 		}
 	}
 

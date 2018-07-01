@@ -1,5 +1,7 @@
 package it.polimi.ing.sw.ui.gui;
 
+import it.polimi.ing.sw.model.objectiveCard.PrivateObjectiveCard;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
@@ -8,6 +10,7 @@ public class SumPlayerPanel extends javax.swing.JPanel {
     private int token;
     private String playerName;
     private String schemeName;
+    private PrivateObjectiveCard privateObjective;
 
     public SumPlayerPanel() {
         initComponents();
@@ -93,5 +96,9 @@ public class SumPlayerPanel extends javax.swing.JPanel {
     private javax.swing.JLabel numTokenRemainingLabel;
     private javax.swing.JLabel privateObjButtonLabel;
     private javax.swing.JLabel schemeNameLabel;
-    // End of variables declaration//GEN-END:variables
+
+    public void setPrivateObjCard( PrivateObjectiveCard privateObjective ) {
+        this.privateObjective=privateObjective;
+    }
+	// End of variables declaration//GEN-END:variables
 }

@@ -44,6 +44,6 @@ public class Constants {
 	public static final String SOCKET_CODE = "s";
 	public static final String RMI_CODE = "r";
 	public static final String DEFAULT_TITLE = "Sagrada Boardgame";
-
+	public static final String NOT_A_DICE = "notADice";
 
 }

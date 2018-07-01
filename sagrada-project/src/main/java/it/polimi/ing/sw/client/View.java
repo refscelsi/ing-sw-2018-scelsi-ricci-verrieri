@@ -116,8 +116,12 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         System.out.println("Devo scegliere lo schema (prima di lancio thread");
         Runnable task2 = () -> {
             System.out.println("Devo scegliere lo schema (dopo di lancio thread");
-            ui.onSchemeToChoose(match, nickname, "Scegli il numero del tuo schema");
-        };
+			try {
+				ui.onSchemeToChoose(match, nickname, "Scegli il numero del tuo schema");
+			} catch ( RemoteException e ) {
+				e.printStackTrace();
+			}
+		};
         Thread thread2 = new Thread(task2);
         thread2.start();
     }
@@ -130,7 +134,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
 
 
     @Override
-    public void onGameUpdate(Match match) {
+    public void onGameUpdate(Match match) throws RemoteException {
         this.match = match;
         ui.onGameUpdate(match, nickname);
     }

@@ -1,5 +1,6 @@
 package it.polimi.ing.sw.ui.gui;
 
+import it.polimi.ing.sw.client.View;
 import it.polimi.ing.sw.model.Box;
 import it.polimi.ing.sw.model.Dice;
 
@@ -9,16 +10,17 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 
 import static it.polimi.ing.sw.model.Color.*;
-import static it.polimi.ing.sw.ui.gui.TableFrame.NOT_A_DICE;
 import static it.polimi.ing.sw.util.Constants.IMAGE_PATH;
+import static it.polimi.ing.sw.util.Constants.NOT_A_DICE;
 
 public class DiceGUI extends javax.swing.JPanel {
 
 	private Box box;
+	private View controller;
 
 	private int dimXdice;
 	private int dimYdice;
-
+/*
 	public DiceGUI( int dimXdice, int dimYdice ) {
 		this.dimXdice = dimXdice;
 		this.dimYdice = dimYdice;
@@ -26,7 +28,7 @@ public class DiceGUI extends javax.swing.JPanel {
 		//updateIcon("1g");
 
 		box = new Box();
-	}
+	}*/
 
 	public DiceGUI( Boolean isVoid, int dimXdice, int dimYdice ) {
 		this.dimXdice = dimXdice;
@@ -35,6 +37,10 @@ public class DiceGUI extends javax.swing.JPanel {
 		box = new Box();
 		if ( !isVoid )
 			updateIcon( "1g", false );
+	}
+
+	public void setController(View controller){
+		this.controller=controller;
 	}
 
 	public void setDice( Dice dice ) {
@@ -111,7 +117,6 @@ public class DiceGUI extends javax.swing.JPanel {
 			}
 		}
 	}
-
 
 	// <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
 	private void initComponents() {
@@ -212,6 +217,7 @@ public class DiceGUI extends javax.swing.JPanel {
 					break;
 			}
 			//TODO updateServer
+			controller.useDice( box.getDice().getNumFacciaUp() - 1, box.getX() - 1, box.getY() - 1 );
 		}
 	}
 

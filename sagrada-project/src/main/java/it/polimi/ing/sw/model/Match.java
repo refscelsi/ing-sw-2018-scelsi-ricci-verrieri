@@ -79,7 +79,7 @@ public class Match implements Serializable {
         return draftPool;
     }
 
-    public List<ObjectiveCard> getPublicObjectives() {
+    public ArrayList<ObjectiveCard> getPublicObjectives() {
         return publicObjectives;
     }
 
@@ -491,8 +491,6 @@ public class Match implements Serializable {
         }
     }
 
-
-
     // aggiornamenti alle view
 
     public void notifyChangement() throws RemoteException {
@@ -530,7 +528,6 @@ public class Match implements Serializable {
             remotePlayer.onSuccess(message);
         }
     }
-
 }
 
 

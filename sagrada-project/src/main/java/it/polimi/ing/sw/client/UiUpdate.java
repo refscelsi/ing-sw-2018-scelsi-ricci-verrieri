@@ -20,7 +20,7 @@ public interface UiUpdate {
 
     void onPlaceDiceNotValid(NotValidException e);
 
-    void onGameUpdate(Match match, String nickname);
+    void onGameUpdate(Match match, String nickname) throws RemoteException;
 
     void onGameEnd(Match match);
 

@@ -1,5 +1,6 @@
 package it.polimi.ing.sw.ui.gui;
 
+import it.polimi.ing.sw.client.View;
 import it.polimi.ing.sw.model.Dice;
 import it.polimi.ing.sw.model.Scheme;
 
@@ -8,12 +9,14 @@ public class VetrataPanel extends javax.swing.JPanel {
 	private DiceGUI dices[][] = new DiceGUI[4][5];
 	private Scheme scheme;
 	private int idPlayer;
+	private View controller;
 
 	private static final int dimXdice = 45;
 	private static final int dimYdice = 45;
 
-	public VetrataPanel(int idPlayer) {
+	public VetrataPanel(int idPlayer, View controller) {
 		this.idPlayer=idPlayer;
+		this.controller=controller;
 		initComponents();
 
 		setUpSchemeField();
