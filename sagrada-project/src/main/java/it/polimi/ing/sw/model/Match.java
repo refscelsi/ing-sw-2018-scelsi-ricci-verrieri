@@ -227,6 +227,7 @@ public class Match implements Serializable {
     // chiama il metodo che costruisce l'array playersRound.
     //se è il primo round decido a caso i turni dei giocatori
     public void startRound() throws RemoteException {
+        System.out.println("Inizia round in match");
         if(numRound==0){
             draftPool=bag.draw(numPlayers);
             Collections.shuffle(players);
@@ -243,6 +244,7 @@ public class Match implements Serializable {
             }
             notifyChangement();
             notifyStartTurn(firstPlayer);
+            System.out.println("Ho notificato l'inizio del turno a un giocatore (da match)");
             System.out.println("i'm back bitch!");
         }
         else{
@@ -301,10 +303,13 @@ public class Match implements Serializable {
     public void changePlayer () throws RemoteException {
         if(playersRoundIndex<(numPlayers*2)-1) {
             playersRoundIndex++;
+            System.out.println("giocatore: "+ playerPlaying.getNickname()+ "\n stato:"+ playerPlaying.getState().toString());
             playerPlaying.setState(PlayerState.ENDEDTURN);
+            System.out.println("giocatore: "+ playerPlaying.getNickname()+ "\n stato:"+ playerPlaying.getState().toString());
             notifyEndTurn(playerPlaying);
             playerPlaying = playersRound[playersRoundIndex];
             playerPlaying.setState(PlayerState.TURNSTARTED);
+            System.out.println("giocatore: "+ playerPlaying.getNickname()+ "\n stato:"+ playerPlaying.getState().toString());
             notifyStartTurn(playerPlaying);
         }
         else if(playersRoundIndex==(numPlayers*2)-1){
@@ -421,17 +426,9 @@ public class Match implements Serializable {
     // metodi VARI per gestire il TURNO di un giocatore
 
 
-    public void useDice (Player player, int indexOfDiceInDraftpool, int row, int col, boolean finish) throws NotValidException, RemoteException {
+    public void useDice (Player player, int indexOfDiceInDraftpool, int row, int col) throws NotValidException {
         player.getScheme().placeDice(row,col,draftPool.getDice(indexOfDiceInDraftpool));
         draftPool.removeDice(draftPool.getDice(indexOfDiceInDraftpool));
-        if(finish){
-            player.setState(PlayerState.FINISHTURN);
-        }
-        else {
-            player.setState(PlayerState.USEDDICE);
-        }
-        notifyChangement();
-        playerMap.get(player).onSetPlaying();
     }
 
 
@@ -439,7 +436,9 @@ public class Match implements Serializable {
         player.setScheme(schemeCardDeck.getSchemeWithId(id));
         player.setNumOfToken(schemeCardDeck.getSchemeWithId(id).getDifficulty());
         player.setState(PlayerState.READYTOPLAY);
+        System.out.println("Ho scelto schema nel match");
         playerMap.get(player).onSuccess("ok hai scelto bene lo schema ");
+        System.out.println("Notifico schema dal match");
     }
 
     //toolCard
@@ -463,9 +462,6 @@ public class Match implements Serializable {
         return null;
     }
 
-    public void setPlaying(Player player) throws RemoteException {
-        playerMap.get(player).onSetPlaying();
-    }
 
     public Boolean getIfFirstTurn(Player player) {
         for (int i=0; i<playersRoundIndex; i++) {
@@ -479,21 +475,28 @@ public class Match implements Serializable {
     //metodi delle carte
 
 
-    public void useToolCard (Player player, int id, int dice, int operation, int sourceRow, int sourceCol, int destRow, int destCol) throws RemoteException, NotValidException, NotValidPlayException {
+    public void useToolCard (Player player, int id, int dice, int operation, int sourceRow, int sourceCol, int destRow, int destCol) throws NotValidException, NotValidPlayException {
         if(checkToken(player,id)) {
             findToolCard(id).execute(draftPool, roundTrack, player.getScheme(), playersRound, bag, dice, operation, sourceRow, sourceCol, destRow, destCol);
             player.setNumOfToken(player.getNumOfToken()-findToolCard(id).getNumOfTokens());
             findToolCard(id).incrementNumOfTokens();
-            notifyChangement();
-            switch (id) {
-                case 4:
-                case 6:
-                case 11:
-                case 12:
-                    playerMap.get(player).onOtherInfoToolCard(id);
-                    break;
-                default:
-                    break;
+        }
+    }
+
+
+    public void usedToolCard (Player player, int id) throws RemoteException {
+        notifyChangement();
+        switch (id) {
+            case 4:
+            case 6:
+            case 11:
+            case 12: {
+                playerMap.get(player).onOtherInfoToolCard(id);
+                break;
+            }
+            default: {
+                notifyStartTurn(player);
+                break;
             }
         }
     }

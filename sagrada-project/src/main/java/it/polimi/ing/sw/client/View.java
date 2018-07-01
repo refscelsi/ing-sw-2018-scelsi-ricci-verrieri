@@ -113,7 +113,9 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
     @Override
     public void onSchemeToChoose(Match match) {
         this.match = match;
+        System.out.println("Devo scegliere lo schema (prima di lancio thread");
         Runnable task2 = () -> {
+            System.out.println("Devo scegliere lo schema (dopo di lancio thread");
             ui.onSchemeToChoose(match, nickname, "Scegli il numero del tuo schema");
         };
         Thread thread2 = new Thread(task2);
@@ -122,6 +124,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
 
     @Override
     public void onSuccess(String message) throws RemoteException {
+        System.out.println("Arriva notifica schema alla view");
         ui.onSuccess(message);
     }
 
@@ -152,20 +155,23 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
     @Override
     public void onSetPlaying() {
         isPlaying = true;
-        /*Runnable task1 = () -> {*/
+        System.out.println("Notifico inizio turno nella view");
+        Runnable task1 = () -> {
+            System.out.println("Inizio turno nel thread");
             ui.onTurnStart(match, nickname);
-        /*};
+            System.out.println("Fine thread");
+        };
         Thread thread1 = new Thread(task1);
-        thread1.start();*/
+        thread1.start();
     }
 
     @Override
     public void onOtherInfoToolCard(int id) {
-        /*Runnable task3 = () -> {*/
+        Runnable task3 = () -> {
             ui.onOtherInfoToolCard(id, match);
-        /*};
+        };
         Thread thread3 = new Thread(task3);
-        thread3.start();*/
+        thread3.start();
     }
 
 
@@ -263,6 +269,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
     }
 
     public void setChosenScheme(int id) {
+        System.out.println("Ho scelto schema nella view");
         try {
             controller.setChosenScheme(id);
         } catch (NetworkException e) {
@@ -272,6 +279,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         } catch (NotValidPlayException e) {
             onNotValidPlay(e.getMessage());
         }
+        System.out.println("Controllo se sono tutti pronti");
         try {
             controller.checkAllReady();
         } catch (RemoteException e) {
@@ -289,7 +297,9 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         else
             dice = indexOfDiceInDraftPool;
         try {
+            System.out.println("Uso dado da view");
             controller.sendUseDiceRequest(indexOfDiceInDraftPool, row, col);
+            System.out.println("Dado usato da view");
         } catch (NetworkException e) {
             System.err.println(e.getMessage());
         } catch (NotValidException e) {
@@ -330,7 +340,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         } catch (NotValidException e) {
             ui.onUseToolCardNotValid(id, match, e.getMessage());
         } catch (NotValidPlayException e) {
-            onNotValidPlay(e.getMessage());
+                onNotValidPlay(e.getMessage());
         } catch (RemoteException e) {
             e.printStackTrace();
         }
