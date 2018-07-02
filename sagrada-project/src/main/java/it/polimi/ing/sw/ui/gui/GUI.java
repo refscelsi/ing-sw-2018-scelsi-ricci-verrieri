@@ -2,6 +2,7 @@ package it.polimi.ing.sw.ui.gui;
 
 import it.polimi.ing.sw.client.UiUpdate;
 import it.polimi.ing.sw.client.View;
+import it.polimi.ing.sw.model.Box;
 import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.model.Scheme;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
@@ -121,12 +122,86 @@ public class GUI implements UiUpdate {
             case 5:
                 useToolCard5(match);
                 break;
-            case 12:
-                useToolCard12(match);
-                break;
             default:
                 break;
         }
+    }
+
+    public void useToolCard1(DiceGUI dice) {
+        ToolCard1ActionForm toolCard1ActionForm = new ToolCard1ActionForm(dice, this);
+        toolCard1ActionForm.setVisible(true);
+        TableFrame.isNotToolCardAnymore(1 - 1);
+    }
+
+    public void performCallToolCard1(int name, int operation) throws RemoteException {
+        controller.useToolCard(1, name - 1, operation, -1, -1, -1, -1);
+    }
+
+    public void useToolCard6(int name) throws RemoteException {
+        if (0 <= name && 9 > name) {
+            //TODO handling empty cose
+            controller.useToolCard(6, name, -1, -1, -1, -1, -1);
+            TableFrame.isNotToolCardAnymore(6 - 1);
+        }
+    }
+
+    public void useToolCard10(int name) throws RemoteException {
+        if (0 <= name && 9 > name) {
+            //TODO handling empty cose
+            controller.useToolCard(10, name, -1, -1, -1, -1, -1);
+            TableFrame.isNotToolCardAnymore(10 - 1);
+        }
+    }
+
+    public void useToolCard11(int name) throws RemoteException {
+        if (0 <= name && 9 > name) {
+            //TODO handling empty cose
+            controller.useToolCard(11, name, -1, -1, -1, -1, -1);
+            TableFrame.isNotToolCardAnymore(11 - 1);
+        }
+    }
+
+    public void useToolCard2(FloatingDiceFrame floatingDiceFrame, int destX, int destY) throws RemoteException {
+        controller.useToolCard(2, -1, -1, floatingDiceFrame.getDiceX() - 1, floatingDiceFrame.getDiceY() - 1, destX - 1, destY - 1);
+        TableFrame.isNotToolCardAnymore(2 - 1);
+    }
+
+    public void useToolCard3(FloatingDiceFrame floatingDiceFrame, int destX, int destY) throws RemoteException {
+        controller.useToolCard(3, -1, -1, floatingDiceFrame.getDiceX() - 1, floatingDiceFrame.getDiceY() - 1, destX - 1, destY - 1);
+        TableFrame.isNotToolCardAnymore(3 - 1);
+    }
+
+    public void useToolCard4(FloatingDiceFrame floatingDiceFrame, int destX, int destY) throws RemoteException {
+        controller.useToolCard(4, -1, -1, floatingDiceFrame.getDiceX() - 1, floatingDiceFrame.getDiceY() - 1, destX - 1, destY - 1);
+        TableFrame.isNotToolCardAnymore(4 - 1);
+    }
+
+    public void useToolCard7() throws RemoteException {
+        controller.useToolCard(7, -1, -1, -1, -1, -1, -1);
+        TableFrame.isNotToolCardAnymore(7 - 1);
+    }
+
+    public void useToolCard8() throws RemoteException {
+        controller.useToolCard(8, -1, -1, -1, -1, -1, -1);
+        TableFrame.isNotToolCardAnymore(8 - 1);
+    }
+
+    public void useToolCard12(FloatingDiceFrame floatingDiceFrame, int destX, int destY) throws RemoteException {
+        controller.useToolCard(12, -1, -1, floatingDiceFrame.getDiceX() - 1, floatingDiceFrame.getDiceY() - 1, destX - 1, destY - 1);
+        TableFrame.isNotToolCardAnymore(12 - 1);
+    }
+
+    public void useToolCard9(int name, Box box) throws RemoteException {
+        if (0 <= name && 9 > name) {
+            TableFrame.isNotToolCardAnymore(9 - 1);
+            //TODO handling empty cose
+            controller.useToolCard(9, name, -1, box.getX() - 1, box.getY() - 1, -1, -1);
+        }
+    }
+
+    public void useDice(int name, Box box) throws RemoteException {
+        //TODO handling empty cose
+        controller.useDice(name, box.getX() - 1, box.getY() - 1);
     }
 
 
@@ -150,17 +225,6 @@ public class GUI implements UiUpdate {
                 indexInRound = scanner.nextInt();
             } while (indexInRound < 0 || indexInRound > match.getRoundTrack().getNumberOfDices(round) - 1);
             controller.useToolCard(5, dice - 1, -1, round, indexInRound, -1, -1);
-        }
-    }
-
-
-    public void useToolCard12(Match match) throws RemoteException {
-        boolean roundTrackIsFull = controller.checkIfRoundTrackIsFull();
-        if (!roundTrackIsFull) {
-            System.out.println("Non puoi utilizzare questa carta perché ancora non ci sono dadi sul tracciato dei round");
-            chooseAction(match, controller.getNickname());
-        } else {
-            //useToolCard23412( 12 );
         }
     }
 
@@ -210,7 +274,7 @@ public class GUI implements UiUpdate {
     @Override
     public void onGameUpdate(Match match, String nickname) throws RemoteException {
         if (tableFrame == null) {
-            tableFrame = new TableFrame(match, getController());
+            tableFrame = new TableFrame(match, this);
             tableFrame.setVisible(true);
         }
 
@@ -293,4 +357,15 @@ public class GUI implements UiUpdate {
                 message);
     }
 
+    public String getNickname() {
+        return controller.getNickname();
+    }
+
+    public boolean checkIfRoundTrackIsFull() {
+        return controller.checkIfRoundTrackIsFull();
+    }
+
+    public boolean isPlaying() {
+        return controller.isPlaying();
+    }
 }

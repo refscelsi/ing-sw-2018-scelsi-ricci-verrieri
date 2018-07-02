@@ -1,9 +1,7 @@
 package it.polimi.ing.sw.ui.gui;
 
-import it.polimi.ing.sw.client.View;
 import it.polimi.ing.sw.model.Box;
 import it.polimi.ing.sw.model.Dice;
-import it.polimi.ing.sw.ui.gui.toolCardsActrionFrames.ToolCard1ActionForm;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -18,7 +16,7 @@ import static it.polimi.ing.sw.util.Constants.NOT_A_DICE;
 public class DiceGUI extends javax.swing.JPanel {
 
     private Box box;
-    private View controller;
+    private GUI gui;
 
     private int dimXdice;
     private int dimYdice;
@@ -32,8 +30,8 @@ public class DiceGUI extends javax.swing.JPanel {
             updateIcon("1g", false);
     }
 
-    public void setController(View controller) {
-        this.controller = controller;
+    public void setController(GUI gui) {
+        this.gui = gui;
     }
 
     public void setDice(Dice dice) {
@@ -178,30 +176,16 @@ public class DiceGUI extends javax.swing.JPanel {
         if (TableFrame.aToolCardIsUsed()) {
             switch (TableFrame.idSelectedTc) {
                 case "1":
-                    ToolCard1ActionForm toolCard1ActionForm = new ToolCard1ActionForm(box.getDice(), controller);
-                    toolCard1ActionForm.setVisible(true);
-                    TableFrame.isNotToolCardAnymore(1 - 1);
+                    gui.useToolCard1(this);
                     break;
                 case "6":
-                    if (0 <= Integer.valueOf(getName()) && 9 > Integer.valueOf(getName())) {
-                        //TODO handling empty cose
-                        controller.useToolCard(6, Integer.valueOf(getName()), -1, -1, -1, -1, -1);
-                        TableFrame.isNotToolCardAnymore(6 - 1);
-                    }
+                    gui.useToolCard6(Integer.valueOf(getName()));
                     break;
                 case "10":
-                    if (0 <= Integer.valueOf(getName()) && 9 > Integer.valueOf(getName())) {
-                        //TODO handling empty cose
-                        controller.useToolCard(10, Integer.valueOf(getName()), -1, -1, -1, -1, -1);
-                        TableFrame.isNotToolCardAnymore(10 - 1);
-                    }
+                    gui.useToolCard10(Integer.valueOf(getName()));
                     break;
                 case "11":
-                    if (0 <= Integer.valueOf(getName()) && 9 > Integer.valueOf(getName())) {
-                        //TODO handling empty cose
-                        controller.useToolCard(11, Integer.valueOf(getName()), -1, -1, -1, -1, -1);
-                        TableFrame.isNotToolCardAnymore(11 - 1);
-                    }
+                    gui.useToolCard11(Integer.valueOf(getName()));
                     break;
             }
         } else {
@@ -238,7 +222,7 @@ public class DiceGUI extends javax.swing.JPanel {
         String nameComponent = TableFrame.getCurrentComponentName();
         char id = nameComponent.charAt(0);
 
-        if (!NOT_A_DICE.equals(nameComponent) && TableFrame.isPlayerTurn(controller.getNickname(), id)) {
+        if (!NOT_A_DICE.equals(nameComponent) && TableFrame.isPlayerTurn(gui.getNickname(), id)) {
             int destY = (int) nameComponent.charAt(2) - 48;
             int destX = (int) nameComponent.charAt(1) - 48;
             handleToolCards(id, destX, destY);
@@ -247,44 +231,38 @@ public class DiceGUI extends javax.swing.JPanel {
 
     private void handleToolCards(char id, int destX, int destY) throws RemoteException {
         if (TableFrame.isToolCard.get(2 - 1)) {
-            if (TableFrame.isPlayerScheme(controller.getNickname(), id)) {
-                controller.useToolCard(Integer.valueOf(TableFrame.idSelectedTc), -1, -1, floatingDiceFrame.getDiceX() - 1, floatingDiceFrame.getDiceY() - 1, destX - 1, destY - 1);
-                TableFrame.isNotToolCardAnymore(2 - 1);
+            if (TableFrame.isPlayerScheme(gui.getNickname(), id)) {
+                gui.useToolCard2(floatingDiceFrame, destX, destY);
                 reprindDices(id, destX, destY);
             }
         } else if (TableFrame.isToolCard.get(3 - 1)) {
-            if (TableFrame.isPlayerScheme(controller.getNickname(), id)) {
-                controller.useToolCard(Integer.valueOf(TableFrame.idSelectedTc), -1, -1, floatingDiceFrame.getDiceX() - 1, floatingDiceFrame.getDiceY() - 1, destX - 1, destY - 1);
-                TableFrame.isNotToolCardAnymore(3 - 1);
+            if (TableFrame.isPlayerScheme(gui.getNickname(), id)) {
+                gui.useToolCard3(floatingDiceFrame, destX, destY);
                 reprindDices(id, destX, destY);
             }
         } else if (TableFrame.isToolCard.get(4 - 1)) {
-            if (TableFrame.isPlayerScheme(controller.getNickname(), id)) {
-                controller.useToolCard(Integer.valueOf(TableFrame.idSelectedTc), -1, -1, floatingDiceFrame.getDiceX() - 1, floatingDiceFrame.getDiceY() - 1, destX - 1, destY - 1);
-                TableFrame.isNotToolCardAnymore(4 - 1);
+            if (TableFrame.isPlayerScheme(gui.getNickname(), id)) {
+                gui.useToolCard4(floatingDiceFrame, destX, destY);
                 reprindDices(id, destX, destY);
             }
         } else if (TableFrame.isToolCard.get(12 - 1)) {
-            boolean roundTrackIsFull = controller.checkIfRoundTrackIsFull();
+            boolean roundTrackIsFull = gui.checkIfRoundTrackIsFull();
             if (!roundTrackIsFull) {
                 JOptionPane.showMessageDialog(null,
                         "Non puoi utilizzare questa carta perché ancora non ci sono dadi sul tracciato dei round",
                         "Not valid Action",
                         JOptionPane.ERROR_MESSAGE);
             } else {
-                controller.useToolCard(Integer.valueOf(TableFrame.idSelectedTc), -1, -1, floatingDiceFrame.getDiceX() - 1, floatingDiceFrame.getDiceY() - 1, destX - 1, destY - 1);
-                TableFrame.isNotToolCardAnymore(12 - 1);
-                reprindDices(id, destX, destY);            }
+                gui.useToolCard12(floatingDiceFrame, destX, destY);
+                reprindDices(id, destX, destY);
+            }
         } else {
             if (!TableFrame.isToolCard.get(9 - 1)) {
                 if (0 <= Integer.valueOf(getName()) && 9 > Integer.valueOf(getName())) {
-                    controller.useDice(Integer.valueOf(getName()), box.getX() - 1, box.getY() - 1);
+                    gui.useDice(Integer.valueOf(getName()), box);
                 }
             } else {
-                if (0 <= Integer.valueOf(getName()) && 9 > Integer.valueOf(getName())) {
-                    TableFrame.isNotToolCardAnymore(9 - 1);
-                    controller.useToolCard(9, Integer.valueOf(getName()), -1, box.getX() - 1, box.getY() - 1, -1, -1);
-                }
+                gui.useToolCard9(Integer.valueOf(getName()), box);
             }
             reprindDices(id, destX, destY);
         }

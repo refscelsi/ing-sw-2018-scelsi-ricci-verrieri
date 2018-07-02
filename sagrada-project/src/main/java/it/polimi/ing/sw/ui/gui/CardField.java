@@ -17,7 +17,7 @@ public class CardField extends javax.swing.JPanel {
     private int dimYcard;
     private Boolean isToolCard;
     private String id;
-    private View controller;
+    private GUI gui;
 //    public CardField(int dimXcard, int dimYcard) {
 //        this.dimXcard=dimXcard;
 //        this.dimYcard=dimYcard;
@@ -39,8 +39,8 @@ public class CardField extends javax.swing.JPanel {
         used = true;
     }
 
-    public void setController(View controller) {
-        this.controller = controller;
+    public void setController(GUI gui) {
+        this.gui = gui;
     }
 
     public void setUsed(boolean used) {
@@ -103,13 +103,13 @@ public class CardField extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cardFieldLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cardFieldLabelMouseEntered
-        if(!used){
+        if (!used) {
             cardFieldLabel.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         }
     }//GEN-LAST:event_cardFieldLabelMouseEntered
 
     private void cardFieldLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cardFieldLabelMouseExited
-        if(!used){
+        if (!used) {
             cardFieldLabel.setBorder(null);
         }
     }//GEN-LAST:event_cardFieldLabelMouseExited
@@ -124,12 +124,11 @@ public class CardField extends javax.swing.JPanel {
                 if (TableFrame.aToolCardIsUsed()) {
                     switch (TableFrame.idSelectedTc) {
                         case "7":
-                            controller.useToolCard(7, -1, -1, -1, -1, -1, -1);
-                            TableFrame.isNotToolCardAnymore(7 - 1);
+                            gui.useToolCard7();
+                            break;
                         case "8":
-                            controller.useToolCard(8, -1, -1, -1, -1, -1, -1);
-                            TableFrame.isNotToolCardAnymore(8 - 1);
-                            break;//
+                            gui.useToolCard8();
+                            break;
                     }
                 }
             } else {

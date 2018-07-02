@@ -9,7 +9,7 @@ public class VetrataPanel extends javax.swing.JPanel {
     private DiceGUI dices[][] = new DiceGUI[4][5];
     private Scheme scheme;
     private int idPlayer;
-    private View controller;
+    private GUI gui;
 
     private static final int DIM_XDICE = 45;
     private static final int DIM_YDICE = 45;
@@ -19,11 +19,11 @@ public class VetrataPanel extends javax.swing.JPanel {
 
     private String playerName;
 
-    public VetrataPanel(int idPlayer, View controller, int dimX, int dimY) {
+    public VetrataPanel(int idPlayer, GUI gui, int dimX, int dimY) {
         this.dimX = dimX;
         this.dimY = dimY;
         this.idPlayer = idPlayer;
-        this.controller = controller;
+        this.gui = gui;
         if (230 == dimX) {
             deltaX = 17;
         } else {
@@ -46,7 +46,7 @@ public class VetrataPanel extends javax.swing.JPanel {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 5; j++) {
                 dices[i][j] = new DiceGUI(true, DIM_XDICE, DIM_YDICE);
-                dices[i][j].setController(controller);
+                dices[i][j].setController(gui);
                 imageLabel.add(dices[i][j]);
                 dices[i][j].setBounds(deltaX + i * (DIM_XDICE + 5), 30 + j * (DIM_YDICE + 5), DIM_XDICE, DIM_YDICE);
                 dices[i][j].setName(String.valueOf(idPlayer).concat(String.valueOf(i)).concat(String.valueOf(j)));

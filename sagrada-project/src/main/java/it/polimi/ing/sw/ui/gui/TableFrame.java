@@ -34,11 +34,11 @@ public class TableFrame extends javax.swing.JFrame {
     private static int dimYcard;
     public static String idSelectedTc;
 
-    private static View controller;
+    private static GUI gui;
 
-    TableFrame(Match match, View controller) {
+    TableFrame(Match match, GUI gui) {
         TableFrame.match = match;
-        TableFrame.controller = controller;
+        TableFrame.gui = gui;
 
         isToolCard = new ArrayList<>();
         setUpIsToolCard();
@@ -208,19 +208,19 @@ public class TableFrame extends javax.swing.JFrame {
     }
 
     private static void addVetratePlayers() {
-        player1 = new VetrataPanel(1, controller, 230, 290);
+        player1 = new VetrataPanel(1, gui, 230, 290);
         backgroundTableFRameLabel.add(player1);
         player1.setBounds(780, 430, 230, 290);
 
-        player2 = new VetrataPanel(2, controller, 230, 290);
+        player2 = new VetrataPanel(2, gui, 230, 290);
         backgroundTableFRameLabel.add(player2);
         player2.setBounds(780, 100, 230, 290);
 
-        player3 = new VetrataPanel(3, controller, 230, 290);
+        player3 = new VetrataPanel(3, gui, 230, 290);
         backgroundTableFRameLabel.add(player3);
         player3.setBounds(10, 100, 230, 290);
 
-        player4 = new VetrataPanel(4, controller, 230, 290);
+        player4 = new VetrataPanel(4, gui, 230, 290);
         backgroundTableFRameLabel.add(player4);
         player4.setBounds(10, 430, 230, 290);
     }
@@ -350,8 +350,8 @@ public class TableFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void endTurnButtonActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_endTurnButtonActionPerformed
-        if (controller.isPlaying())
-            controller.endTurn();
+        if (gui.isPlaying())
+            gui.endTurn();
     }//GEN-LAST:event_endTurnButtonActionPerformed
 
     public void tornaMenu() {
@@ -363,7 +363,7 @@ public class TableFrame extends javax.swing.JFrame {
         toolCardPanel.setLayout(null);
         for (int i = 0; i < 3; i++) {
             CardField schemeCard = new CardField(id.get(i), "tc/", dimXcard, dimYcard);
-            schemeCard.setController(controller);
+            schemeCard.setController(gui);
             toolCardPanel.add(schemeCard);
             toolCardList.add(schemeCard);
             schemeCard.setIsToolCard(true);
@@ -405,7 +405,7 @@ public class TableFrame extends javax.swing.JFrame {
         Match match = new Match();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TableFrame(match, controller).setVisible(true);
+                new TableFrame(match, gui).setVisible(true);
             }
         });
     }

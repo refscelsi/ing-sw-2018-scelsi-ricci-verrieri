@@ -1,7 +1,7 @@
 package it.polimi.ing.sw.ui.gui.toolCardsActrionFrames;
 
-import it.polimi.ing.sw.client.View;
-import it.polimi.ing.sw.model.Dice;
+import it.polimi.ing.sw.ui.gui.DiceGUI;
+import it.polimi.ing.sw.ui.gui.GUI;
 import it.polimi.ing.sw.util.ModelColorToAWTColor;
 
 import java.rmi.RemoteException;
@@ -9,19 +9,18 @@ import java.rmi.RemoteException;
 public class ToolCard1ActionForm extends javax.swing.JWindow {
 
     private int numFaceUp;
-    private Dice dice;
+    private DiceGUI dice;
     private int operation = -1;
-    private View controller;
+    private GUI gui;
 
-    public ToolCard1ActionForm(Dice dice, View controller) {
-        this.controller=controller;
+    public ToolCard1ActionForm(DiceGUI dice, GUI gui) {
+        this.gui = gui;
         initComponents();
-        this.numFaceUp = dice.getNumFacciaUp();
         this.dice = dice;
 
         diceLabel.setText(String.valueOf(numFaceUp));
 
-        diceLabel.setBackground(ModelColorToAWTColor.toColor(dice.getDiceColor()));
+        diceLabel.setBackground(ModelColorToAWTColor.toColor(dice.getBox().getColor()));
         setLocationRelativeTo(null);
     }
 
@@ -180,7 +179,7 @@ public class ToolCard1ActionForm extends javax.swing.JWindow {
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_okButtonActionPerformed
         if (-1 != operation) {
-            controller.useToolCard(1, dice.getNumFacciaUp() - 1, operation, -1, -1, -1, -1);
+            gui.performCallToolCard1(Integer.valueOf(dice.getName()), operation);
             setVisible(false);
         }
     }//GEN-LAST:event_okButtonActionPerformed
@@ -192,7 +191,7 @@ public class ToolCard1ActionForm extends javax.swing.JWindow {
     private void plusLabelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_plusLabelMousePressed
         plusLabel.setForeground(new java.awt.Color(255, 0, 0));
 
-        if (((dice.getNumFacciaUp() - 1) == numFaceUp || numFaceUp == dice.getNumFacciaUp()) && numFaceUp < 6) {
+        if (((dice.getBox().getDice().getNumFacciaUp() - 1) == numFaceUp || numFaceUp == dice.getBox().getDice().getNumFacciaUp()) && numFaceUp < 6) {
             operation = 1;
             numFaceUp++;
             diceLabel.setText(String.valueOf(numFaceUp));
@@ -207,7 +206,7 @@ public class ToolCard1ActionForm extends javax.swing.JWindow {
     private void minusLabelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minusLabelMousePressed
         minusLabel.setForeground(new java.awt.Color(255, 0, 0));
 
-        if (((dice.getNumFacciaUp() + 1) == numFaceUp || numFaceUp == dice.getNumFacciaUp()) && numFaceUp > 1) {
+        if (((dice.getBox().getDice().getNumFacciaUp() + 1) == numFaceUp || numFaceUp == dice.getBox().getDice().getNumFacciaUp()) && numFaceUp > 1) {
             operation = 0;
             numFaceUp--;
             diceLabel.setText(String.valueOf(numFaceUp));
