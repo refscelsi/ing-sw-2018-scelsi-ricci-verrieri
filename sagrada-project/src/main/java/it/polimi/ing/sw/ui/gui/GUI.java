@@ -355,6 +355,9 @@ public class GUI implements UiUpdate {
                 else{
                     //TODO GESTIRE?
                     //useToolCard23412( 12 );
+
+                    ///TODO ADD LISTENER TO TABLE FRAME THAT IGNORES INPUT WHN DIALOG WINDOWS ARE OPEN
+                    //TODO SET TOKENS ON TOOLCARD (NumOfTokens  ?)
                 }
 
             }
