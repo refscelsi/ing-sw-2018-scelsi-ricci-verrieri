@@ -28,18 +28,8 @@ public class Server {
                 try(ServerSocket serverSocket=new ServerSocket(SOCKET_PORT)){
                     while(true){
                         Socket clientSocket= serverSocket.accept();
-                        new Thread(()->{
-                            try {
-                                new PlayerControllerSocket(clientSocket, loginController );
-                            }
-                            finally {
-                                try {
-                                    clientSocket.close();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }).start();
+                        PlayerControllerSocket controllerSocket = new PlayerControllerSocket(clientSocket, loginController );
+                        new Thread(controllerSocket).start();
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

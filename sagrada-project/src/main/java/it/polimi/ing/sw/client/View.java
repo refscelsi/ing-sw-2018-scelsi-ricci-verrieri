@@ -7,6 +7,7 @@ import it.polimi.ing.sw.controller.RemotePlayer;
 import it.polimi.ing.sw.controller.exceptions.NotPossibleConnection;
 import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
 import it.polimi.ing.sw.controller.network.socket.PlayerControllerInterfaceSocket;
+import it.polimi.ing.sw.controller.network.socket.ServerUpdateHandler;
 import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.model.exceptions.NetworkException;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
@@ -17,6 +18,7 @@ import it.polimi.ing.sw.ui.cli.CLI;
 import it.polimi.ing.sw.util.Constants;
 
 import java.io.IOException;
+import java.net.Socket;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -246,10 +248,13 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
     }
 
 
+
     public void loginPlayerSocket(String nickname) {
         PlayerControllerInterfaceSocket playerInterfaceSocket = null;
         try {
-            playerInterfaceSocket = new PlayerControllerInterfaceSocket(nickname, this );
+            Socket socket = new Socket("localhost", Constants.SOCKET_PORT);
+            new Thread(new ServerUpdateHandler(this, socket )).start();
+            playerInterfaceSocket = new PlayerControllerInterfaceSocket(nickname, socket);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -260,6 +265,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         this.nickname = nickname;
         try {
             controller.joinMatch();
+            System.out.println("forza chievo");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ToolCardException e) {
@@ -270,7 +276,6 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
             e.printStackTrace();
         }
     }
-
     public void setChosenScheme(int id) {
         System.out.println("Ho scelto schema nella view");
         try {

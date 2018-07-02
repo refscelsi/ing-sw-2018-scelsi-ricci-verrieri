@@ -39,6 +39,14 @@ public class TamponeDiamantato extends ToolCard {
                 break;
         }
     }
-
+    @Override
+    public ToolCard toolCardClone(){
+        ToolCard toolCardClone=new TamponeDiamantato();
+        toolCardClone.setName(this.getName());
+        toolCardClone.setDescription(this.getDescription());
+        toolCardClone.setId(id);
+        toolCardClone.setNumOfTokens(this.getNumOfTokens());
+        return toolCardClone;
+    }
 
 }

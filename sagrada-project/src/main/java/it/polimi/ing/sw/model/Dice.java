@@ -46,8 +46,12 @@ public class Dice implements Serializable{
     }
 
 
-    @Override
-    public String toString() {
-        return "Colore:"+this.getDiceColor();
+    public Dice cloneDice(){
+        Dice diceClone=new Dice();
+        diceClone.setDice(this.numFacciaUp, this.diceColor);
+        return diceClone;
     }
+
+
+
 }

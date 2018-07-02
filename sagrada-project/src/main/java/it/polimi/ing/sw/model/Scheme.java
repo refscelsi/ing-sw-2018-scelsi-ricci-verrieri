@@ -12,6 +12,8 @@ public class Scheme implements Serializable {
     private boolean isEmpty;
 
 
+    public Scheme(){}
+
     public Scheme( int id, int difficulty, Box boxes[][] ) {
         this.id = id;
         this.difficulty = difficulty;
@@ -244,11 +246,11 @@ public class Scheme implements Serializable {
         return idRetro;
     }
 
-    public void setDifficulty( short difficulty ) {
+    public void setDifficulty( int difficulty ) {
         this.difficulty = difficulty;
     }
 
-    public void setId( short id ) {
+    public void setId( int id ) {
         this.id = id;
     }
 
@@ -267,6 +269,30 @@ public class Scheme implements Serializable {
 
     public Box getBox( int row, int col ) {
         return boxes[row][col];
+    }
+
+    public Scheme schemeClone(){
+        Scheme schemeClone=new Scheme();
+        schemeClone.setIdRetro(this.idRetro);
+        schemeClone.setId(this.id);
+        schemeClone.setDifficulty(this.difficulty);
+        Box[][] boxesClone=new Box[4][5];
+        for (int i = 0; i < Constants.NUM_ROWS; i++) {
+            for (int j = 0; j < Constants.NUM_COLS; j++) {
+                if (!boxes[i][j].isFull()) {
+                    Box boxClone=boxes[i][j].cloneBox();
+                    boxesClone[i][j]=boxClone;
+                }
+                else
+                { Box boxClone=boxes[i][j].cloneBox();
+                    Dice diceClone= boxes[i][j].getDice().cloneDice();
+                    boxClone.placeDice(diceClone);
+                    boxesClone[i][j]=boxClone;
+                }
+            }
+        }
+        schemeClone.setBoxes(boxesClone);
+        return schemeClone;
     }
 
 }

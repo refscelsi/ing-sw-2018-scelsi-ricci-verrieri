@@ -116,4 +116,17 @@ public class Player implements Serializable{
         this.isOnline=false;
     }
 
+    public Player playerClone(){
+        Player playerClone=new Player(this.nickname);
+        playerClone.setPrivateObjective(this.privateObjective);
+        playerClone.setNumOfToken(this.numOfToken);
+        playerClone.setLogged(this.isLogged);
+        playerClone.setState(this.state);
+        playerClone.setSchemesToChoose(this.schemesToChoose);
+        if(this.scheme!=null) {
+            playerClone.setScheme(this.scheme.schemeClone());
+        }
+        return playerClone;
+    }
+
 }

@@ -54,11 +54,23 @@ public abstract class ToolCard implements Serializable{
         this.name = name;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setNumOfTokens(int numOfTokens) {
+        this.numOfTokens = numOfTokens;
+    }
+
     public void setDescription (String description) {
         this.description = description;
     }
 
     public void execute(DraftPool draftPool, RoundTrack roundTrack, Scheme scheme, Player[] playersRound, Bag bag, int dice, int operation, int sourceRow, int sourceCol, int destRow, int destCol) throws NotValidException, NotValidPlayException {
         System.out.println("problemi toolcard");
+    }
+
+    public ToolCard toolCardClone(){
+        return null; //!!!!!!!!!!!!!!!!!!!!!
     }
 }

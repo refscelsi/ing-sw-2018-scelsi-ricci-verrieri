@@ -36,4 +36,14 @@ public class PinzaSgrossatrice extends ToolCard {
         }
     }
 
+    @Override
+    public ToolCard toolCardClone(){
+        ToolCard toolCardClone=new PinzaSgrossatrice();
+        toolCardClone.setName(this.getName());
+        toolCardClone.setDescription(this.getDescription());
+        toolCardClone.setId(id);
+        toolCardClone.setNumOfTokens(this.getNumOfTokens());
+        return toolCardClone;
+    }
+
 }

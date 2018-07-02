@@ -29,23 +29,14 @@ import static java.lang.String.valueOf;
 
 
 public class PlayerControllerInterfaceSocket implements PlayerControllerInterface {
-    private MatchToSend match;
-    private View view;
-    private final Socket clientSocket;
     private final ObjectOutputStream out;
 
 
 
-    public PlayerControllerInterfaceSocket(String nickname, View view) throws IOException {
-        this.clientSocket= new Socket("localhost", Constants.SOCKET_PORT);
-        this.out= new ObjectOutputStream(clientSocket.getOutputStream());
-        this.view=view;
-        new Thread(()->{
-            serverUpdateHandler();
-        }).start();
-
+    public PlayerControllerInterfaceSocket(String nickname, Socket socket) throws IOException {
+        this.out= new ObjectOutputStream(socket.getOutputStream());
         Gson gson= new Gson();
-        String json=gson.toJson(new Data("connectSocket", new ArrayList<>(Collections.singletonList(nickname))));
+        String json=gson.toJson(new Data(Constants.CONNECT, nickname));
         try {
             out.writeObject(json);
         } catch (IOException e) {
@@ -53,72 +44,27 @@ public class PlayerControllerInterfaceSocket implements PlayerControllerInterfac
         }
     }
 
-    private void serverUpdateHandler() {
-        try {
-            ObjectInputStream in= new ObjectInputStream(clientSocket.getInputStream());
-            while (true){
-                this.match=(MatchToSend) in.readObject();
-                String method= match.getMethod();
-                handleUpdate(method);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
 
-    private void handleUpdate(String method) {
-        switch(method){
-            case Constants.ONTURNEND: {
-                view.onTurnEnd();
-                break;
-            }
-            case Constants.ONSUCCES: {
-                try {
-                    view.onSuccess(match.getMessage());
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
-                break;
-            }
-            case Constants.ONSETPLAYING: {
-                view.onSetPlaying();
-                break;
-            }
-            case Constants.ONSCHEMETOCHOOSE: {
-                view.onSchemeToChoose(match.getMatch());
-                break;
-            }
-            case Constants.ONGAMEUPDATE: {
-                view.onGameUpdate(match.getMatch());
-                break;
-            }
-            case Constants.ONGAMEEND:{
-                view.onGameEnd(match.getMatch());
-                break;
-            }
-        }
-
-
-    }
-
-
+    @Override
     public void joinMatch() throws IOException {
         Gson gson= new Gson();
-        String json=gson.toJson(new Data("joinMatch", null));
+        String json=gson.toJson(new Data(Constants.JOINMATCH));
         try {
             out.writeObject(json);
+            out.flush();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void checkAllReady() {
+    @Override
+    public void checkAllReady() {System.out.println("lato client");
         Gson gson= new Gson();
-        String json=gson.toJson(new Data(valueOf(Constants.CHECKREADY), null));
+        String json=gson.toJson(new Data(Constants.CHECKREADY));
         try {
             out.writeObject(json);
+            out.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -126,10 +72,10 @@ public class PlayerControllerInterfaceSocket implements PlayerControllerInterfac
 
     public void setChosenScheme(int id) throws NetworkException, NotValidPlayException {
         Gson gson= new Gson();
-        ArrayList<String> par=new ArrayList<>(Arrays.asList("" + id));
-        String json=gson.toJson(new Data(valueOf(Constants.SETCHOSENSCHEME), par));
+        String json=gson.toJson(new Data(Constants.SETCHOSENSCHEME,id));
         try {
             out.writeObject(json);
+            out.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -137,10 +83,10 @@ public class PlayerControllerInterfaceSocket implements PlayerControllerInterfac
 
     public void sendUseDiceRequest(int indexOfDiceInDraftPool, int row, int col) throws NetworkException, NotValidException, NotValidPlayException {
         Gson gson= new Gson();
-        ArrayList<String> par=new ArrayList<>(Arrays.asList("" + indexOfDiceInDraftPool+row+col));
-        String json=gson.toJson(new Data(Constants.USEDICEREQUEST, par));
+        String json=gson.toJson(new Data(Constants.USEDICEREQUEST, indexOfDiceInDraftPool,row,col));
         try {
             out.writeObject(json);
+            out.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -148,9 +94,10 @@ public class PlayerControllerInterfaceSocket implements PlayerControllerInterfac
 
     public void endTurn() throws NetworkException, NotValidPlayException {
         Gson gson= new Gson();
-        String json=gson.toJson(new Data(Constants.ENDTURN, null));
+        String json=gson.toJson(new Data(Constants.ENDTURN));
         try {
             out.writeObject(json);
+            out.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -162,6 +109,7 @@ public class PlayerControllerInterfaceSocket implements PlayerControllerInterfac
         String json=gson.toJson(new Data(Constants.TOOLCARD, null));
         try {
             out.writeObject(json);
+            out.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }

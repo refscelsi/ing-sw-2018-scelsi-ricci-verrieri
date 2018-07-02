@@ -20,6 +20,9 @@ public class DraftPool implements Serializable{
         draftPool.add(dice);
     }
 
+    public void setDraftPool(ArrayList<Dice> draftPool) {
+        this.draftPool = draftPool;
+    }
 
     // aggiunge un set di dadi ad una draftPool
 
@@ -82,6 +85,16 @@ public class DraftPool implements Serializable{
         for (Dice dice: draftPool)
             colors.add(dice.getDiceColor());
         return colors;
+    }
+
+    public DraftPool cloneDraftPool(){
+        DraftPool draftPoolClone=new DraftPool();
+        ArrayList<Dice> dicesClone=new ArrayList<Dice>();
+        for(Dice dice: draftPool){
+            dicesClone.add(dice.cloneDice());
+        }
+        draftPoolClone.setDraftPool(dicesClone);
+        return draftPoolClone;
     }
 
 }

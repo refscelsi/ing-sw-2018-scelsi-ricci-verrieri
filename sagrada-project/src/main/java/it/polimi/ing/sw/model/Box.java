@@ -83,4 +83,7 @@ public class Box implements Serializable{
         this.color=color;
     }
 
+    public Box cloneBox(){
+        return new Box(this.x,this.y,this.color,this.shade);
+    }
 }

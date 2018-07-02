@@ -123,7 +123,29 @@ public class Match implements Serializable {
         for (int i=0; i<numPlayers; i++)
             players.get(i).setColor(colorOfPawns[i]);
     }
+    public void setRoundTrack(RoundTrack roundTrack) {
+        this.roundTrack = roundTrack;
+    }
 
+    public void setDraftPool(DraftPool draftPool) {
+        this.draftPool = draftPool;
+    }
+
+    public void setPlayers(ArrayList<Player> players) {
+        this.players = players;
+    }
+
+    public void setToolCards(ArrayList<ToolCard> toolCards) {
+        this.toolCards = toolCards;
+    }
+
+    public void setPublicObjectives(ArrayList<ObjectiveCard> publicObjectives) {
+        this.publicObjectives = publicObjectives;
+    }
+
+    public void setRanking(ArrayList<Player> ranking) {
+        this.ranking = ranking;
+    }
 
     //metodi per gestire il LOGIN
 
@@ -580,6 +602,28 @@ public class Match implements Serializable {
         for(RemotePlayer remotePlayer : this.remotePlayer){
             remotePlayer.onSuccess(message);
         }
+    }
+
+
+    //////////////////////////////////////////////////////////////////
+    public Match matchClone(){
+        Match matchClone=new Match();
+        matchClone.setDraftPool(draftPool.cloneDraftPool());
+        matchClone.setRoundTrack(roundTrack.cloneRoundTrack());
+        ArrayList<Player> playersClone=new ArrayList<Player>();
+        for(Player player:players){
+            playersClone.add(player.playerClone());
+        }
+        ArrayList<ToolCard> toolCardsClone=new ArrayList<ToolCard>();
+        for(int i=0; i<toolCards.size();i++){
+            ToolCard toolCardCopy=toolCards.get(i);
+            toolCardsClone.add(toolCardCopy);
+        }
+        matchClone.setToolCards(toolCardsClone);
+        matchClone.setPlayers(playersClone);
+        matchClone.setPublicObjectives(publicObjectives);
+        matchClone.setRanking(this.getRanking());
+        return matchClone;
     }
 
 }

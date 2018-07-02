@@ -26,11 +26,11 @@ public class Constants {
     public static final String TOOLCARD= "useToolCard";
 
     //metodi PlayerController
+    public static final String CONNECT="connectSocket";
     public static final String ONSCHEMETOCHOOSE="onSchemeToChoose";
     public static final String ONSUCCES= "onSuccess";
     public static final String ONGAMEUPDATE= "onGameUpdate";
     public static final String ONTURNEND= "onTurnEnd";
-    public static final String ONPLAYERLOGGED= "onPlayerLogged";
     public static final String ONSETPLAYING= "onSetPlaying";
     public static final String ONOTHERINFOTOOLCARD="onOtherInfoToolCard";
     public static final String ONGAMEEND= "onGameEnd";

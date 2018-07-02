@@ -37,4 +37,15 @@ public class AlesatorePerLaminaDiRame extends ToolCard {
         }
     }
 
+    @Override
+    public ToolCard toolCardClone(){
+        ToolCard toolCardClone=new AlesatorePerLaminaDiRame();
+        toolCardClone.setName(this.getName());
+        toolCardClone.setDescription(this.getDescription());
+        toolCardClone.setId(id);
+        toolCardClone.setNumOfTokens(this.getNumOfTokens());
+        return toolCardClone;
+    }
+
+
 }

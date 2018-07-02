@@ -82,5 +82,15 @@ public class TaglierinaManuale extends ToolCard {
         }
     }
 
+    @Override
+    public ToolCard toolCardClone(){
+        ToolCard toolCardClone=new TaglierinaManuale();
+        toolCardClone.setName(this.getName());
+        toolCardClone.setDescription(this.getDescription());
+        toolCardClone.setId(id);
+        toolCardClone.setNumOfTokens(this.getNumOfTokens());
+        return toolCardClone;
+    }
+
 
 }

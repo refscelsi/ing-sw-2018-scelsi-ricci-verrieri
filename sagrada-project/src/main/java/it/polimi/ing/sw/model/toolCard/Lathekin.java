@@ -82,5 +82,14 @@ public class Lathekin extends ToolCard {
         destBox.removeDice();
     }
 
+    @Override
+    public ToolCard toolCardClone(){
+        ToolCard toolCardClone=new Lathekin();
+        toolCardClone.setName(this.getName());
+        toolCardClone.setDescription(this.getDescription());
+        toolCardClone.setId(id);
+        toolCardClone.setNumOfTokens(this.getNumOfTokens());
+        return toolCardClone;
+    }
 
 }

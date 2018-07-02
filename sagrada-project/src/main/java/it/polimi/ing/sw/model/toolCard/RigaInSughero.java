@@ -26,4 +26,14 @@ public class RigaInSughero extends ToolCard {
         }
     }
 
+    @Override
+    public ToolCard toolCardClone(){
+        ToolCard toolCardClone=new RigaInSughero();
+        toolCardClone.setName(this.getName());
+        toolCardClone.setDescription(this.getDescription());
+        toolCardClone.setId(id);
+        toolCardClone.setNumOfTokens(this.getNumOfTokens());
+        return toolCardClone;
+    }
+
 }

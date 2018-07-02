@@ -26,6 +26,15 @@ public class RoundTrack implements Serializable{
     }
 
 
+    public void setRoundTrack(DraftPool[] roundTrack) {
+        this.roundTrack = roundTrack;
+    }
+
+    public void setRound(int round) {
+        this.round = round;
+    }
+
+
     // ritorna tutto il roundTrack
 
     public DraftPool[] getRoundTrack() {
@@ -77,5 +86,20 @@ public class RoundTrack implements Serializable{
         return colors;
     }
 
+
+    public RoundTrack cloneRoundTrack(){
+        RoundTrack roundTrackClone=new RoundTrack();
+        roundTrackClone.setRound(this.round);
+        DraftPool[] draftPoolsClone=new DraftPool[Constants.NUM_ROUNDS];
+        if(round>0){
+            for(int i=0;i<round;i++){
+                DraftPool draftPoolClone= getDicesRound(i+1).cloneDraftPool();
+                draftPoolsClone[i]=draftPoolClone;
+            }
+        }
+
+        roundTrackClone.setRoundTrack(draftPoolsClone);
+        return roundTrackClone;
+    }
 }
 

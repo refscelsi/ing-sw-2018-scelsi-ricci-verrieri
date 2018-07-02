@@ -68,8 +68,7 @@ public class LoginController extends UnicastRemoteObject implements Remote, Logi
             if (!checkReconnection(nickname)) {
                 try {
                     match.login(nickname,playerControllerSocket );
-                    PlayerController playerController= null;
-                    playerController = new PlayerController(match, playerControllerSocket, match.getPlayer(nickname));
+                    PlayerController playerController= new PlayerController(match, playerControllerSocket, match.getPlayer(nickname));
                     playerControllers.add(playerController);
                     return playerController;
                 } catch (RemoteException e) {
@@ -85,7 +84,6 @@ public class LoginController extends UnicastRemoteObject implements Remote, Logi
                 //sbatti
             }
         }
-
         throw new NotPossibleConnection("la partita è piena");
     }
 

@@ -18,4 +18,14 @@ public class PennelloPerPastaSalda extends ToolCard {
         draftPool.getDice(indexInDraftPool).throwDice();
     }
 
+    @Override
+    public ToolCard toolCardClone(){
+        ToolCard toolCardClone=new PennelloPerPastaSalda();
+        toolCardClone.setName(this.getName());
+        toolCardClone.setDescription(this.getDescription());
+        toolCardClone.setId(id);
+        toolCardClone.setNumOfTokens(this.getNumOfTokens());
+        return toolCardClone;
+    }
+
 }
