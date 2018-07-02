@@ -4,7 +4,7 @@ package it.polimi.ing.sw.client;
 import it.polimi.ing.sw.controller.LoginInterface;
 import it.polimi.ing.sw.controller.PlayerControllerInterface;
 import it.polimi.ing.sw.controller.RemotePlayer;
-import it.polimi.ing.sw.controller.exceptions.NotPossibleConnection;
+import it.polimi.ing.sw.controller.exceptions.NotPossibleConnectionException;
 import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
 import it.polimi.ing.sw.controller.network.socket.PlayerControllerInterfaceSocket;
 import it.polimi.ing.sw.controller.network.socket.ServerUpdateHandler;
@@ -232,25 +232,28 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
             e.printStackTrace();
         } catch (NotValidException e) {
             e.printStackTrace();
-        } catch (NotPossibleConnection notPossibleConnection) {
+        } catch (NotPossibleConnectionException notPossibleConnection) {
             notPossibleConnection.printStackTrace();
         } catch (NotBoundException e) {
             e.printStackTrace();
         }
-        try {
-            controller.joinMatch(); //TODO: il controller mi notifica l'indice del giocatore
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        } catch (ToolCardException e) {
-            e.printStackTrace();
-        } catch (NotValidException e) {
-            e.printStackTrace();
-        } catch (NotValidPlayException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        Runnable taskJoin=()-> {
+            try {
+                controller.joinMatch();
+                System.out.println("forza chievo");//TODO: il controller mi notifica l'indice del giocatore
+            } catch ( RemoteException e ) {
+                e.printStackTrace();
+            } catch ( ToolCardException e ) {
+                e.printStackTrace();
+            } catch ( NotValidException e ) {
+                e.printStackTrace();
+            } catch ( NotValidPlayException e ) {
+                e.printStackTrace();
+            } catch ( IOException e ) {
+                e.printStackTrace();
+            }
+        };
+        new Thread(taskJoin).start();
         // devo notificare anche il colore del giocatore
 
     }
@@ -296,6 +299,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
             onNotValidPlay(e.getMessage());
         }
         System.out.println("Controllo se sono tutti pronti");
+        Runnable taskScheme=()->{
         try {
             controller.checkAllReady();
         } catch (RemoteException e) {
@@ -303,7 +307,8 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         } catch (NotValidPlayException e) {
             onNotValidPlay(e.getMessage());
         }
-
+        };
+        new Thread(taskScheme).start();
     }
 
 

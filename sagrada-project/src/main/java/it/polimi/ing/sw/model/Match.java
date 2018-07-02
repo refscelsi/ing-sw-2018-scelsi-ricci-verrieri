@@ -3,6 +3,7 @@ package it.polimi.ing.sw.model;
 
 import it.polimi.ing.sw.controller.PlayerState;
 import it.polimi.ing.sw.controller.RemotePlayer;
+import it.polimi.ing.sw.controller.exceptions.NotPossibleConnectionException;
 import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.model.exceptions.NotValidNicknameException;
@@ -19,7 +20,7 @@ import java.util.*;
 import java.util.Collections;
 
 
-public class Match implements Serializable {
+public class Match implements Serializable{
 
     private transient int numPlayers=0, numRound=0;
     //array ordine players nel round
@@ -50,7 +51,10 @@ public class Match implements Serializable {
     private transient ArrayList<RemotePlayer> remotePlayer;
     //hashmap con la corrispondenza player-remoteplayer
     private transient HashMap<Player,RemotePlayer> playerMap;
+    //array di persone che si sono loggate ma sono in attesa
+    private transient ArrayList<Player> playersLogged;
 
+    private boolean ok=false;
 
 
 
@@ -58,13 +62,26 @@ public class Match implements Serializable {
         this.playerMap=new HashMap<Player,RemotePlayer>();
         this.players=new ArrayList<Player>();
         this.remotePlayer = new ArrayList<RemotePlayer>();
+        this.playersLogged=new ArrayList<Player>();
     }
 
 
 
     // metodi GETTERS
 
-    //ritorna un giocatore con un certo nickname
+    //ritorna un giocatore loggato con un certo nickname
+    public Player getPlayerLogged(String nickname){
+        if(playersLogged.size()!=0){
+            for(Player player: playersLogged){
+                if(player.getNickname().equals(nickname)){
+                    return player;
+                }
+            }
+        }
+        return null;
+    }
+
+    //ritorna un giocatore della partita con un certo nickname
     public Player getPlayer(String nickname){
         if(players.size()!=0){
             for(Player player: players){
@@ -150,7 +167,7 @@ public class Match implements Serializable {
     //metodi per gestire il LOGIN
 
     //quando si loggano in almeno 2 setta un boolean a true
-    public void login (String nickname, RemotePlayer remotePlayer) throws NotValidNicknameException, RemoteException, ToolCardException, NotValidException {
+    public void login (String nickname, RemotePlayer remotePlayer) throws NotValidNicknameException, RemoteException, ToolCardException, NotValidException, NotPossibleConnectionException {
         if(playerMap.size()<Constants.MAX_PLAYERS) {
             if(checkNickname(nickname)) {
                 Player player = new Player(nickname);
@@ -164,6 +181,14 @@ public class Match implements Serializable {
             }
             else
                 throw new NotValidNicknameException("il nickname scelto è già in uso, scegline un altro!");
+        }
+        else{
+            Player player=new Player(nickname);
+            player.setLogged(true);
+            player.setState(PlayerState.OFFLINE);
+            System.out.println(player.getNickname());
+            playersLogged.add(player);
+            throw new NotPossibleConnectionException("la partita è piena");
         }
     }
 
@@ -181,13 +206,29 @@ public class Match implements Serializable {
 
     // metodi VARI per gestire la PARTITA (non il singolo turno)
 
-    public void joinMatch() throws ToolCardException, RemoteException, NotValidException, NotValidPlayException {
-        if(players.size()==2){
-            //devo aggiungere timer e cazzi vari
+    public synchronized void joinMatch() throws ToolCardException, RemoteException, NotValidException, NotValidPlayException {
+        if(players.size()==Constants.MAX_PLAYERS){
             startMatch();
         }
-        else
-            return;
+        else if(players.size()>=2){
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    try {
+                        startMatch();
+                    } catch ( ToolCardException e ) {
+                        e.printStackTrace();
+                    } catch ( NotValidException e ) {
+                        e.printStackTrace();
+                    } catch ( RemoteException e ) {
+                        e.printStackTrace();
+                    } catch ( NotValidPlayException e ) {
+                        e.printStackTrace();
+                    }
+                }
+            }, 10000);
+        }
     }
 
     public void checkAllReady() throws RemoteException {

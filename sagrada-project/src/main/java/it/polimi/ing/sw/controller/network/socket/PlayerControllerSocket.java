@@ -5,11 +5,12 @@ package it.polimi.ing.sw.controller.network.socket;
 import it.polimi.ing.sw.controller.LoginController;
 import it.polimi.ing.sw.controller.PlayerController;
 import it.polimi.ing.sw.controller.RemotePlayer;
-import it.polimi.ing.sw.controller.exceptions.NotPossibleConnection;
+import it.polimi.ing.sw.controller.exceptions.NotPossibleConnectionException;
 import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
 import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.model.exceptions.NetworkException;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
+import it.polimi.ing.sw.model.exceptions.NotValidNicknameException;
 import it.polimi.ing.sw.model.exceptions.ToolCardException;
 import it.polimi.ing.sw.util.Constants;
 import org.json.simple.JSONObject;
@@ -62,8 +63,8 @@ public class PlayerControllerSocket implements RemotePlayer, Runnable {
                         String nickname = (String) jsonObject.get("nickname");
                         try {
                             this.controller = loginController.connectSocket(nickname, this);
-                        } catch (NotPossibleConnection notPossibleConnection) {
-                            notPossibleConnection.printStackTrace();
+                        } catch (NotValidNicknameException e) {
+                            e.printStackTrace();
                         }
                         break;
                     case Constants.JOINMATCH:
@@ -100,11 +101,10 @@ public class PlayerControllerSocket implements RemotePlayer, Runnable {
                         break;
                 }
             }
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException | NotValidPlayException e) {
         } catch (IOException e) {
         } catch (ToolCardException e) {
         } catch (NotValidException e) {
-        } catch (NotValidPlayException e) {
         } catch (NetworkException e) {
         }
 
