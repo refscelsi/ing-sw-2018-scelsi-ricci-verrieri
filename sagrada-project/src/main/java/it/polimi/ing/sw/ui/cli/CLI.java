@@ -557,7 +557,7 @@ public class CLI implements UiUpdate {
 
     @Override
     public void onGameUpdate(Match match, String nickname) {
-        if (controller.isPlaying()) {
+         {
             ShowRoundTrack roundTrack = new ShowRoundTrack(match.getRoundTrack());
             ShowPublicObjectives pub = new ShowPublicObjectives(match.getPublicObjectives());
             ShowPrivateObjectiveCard priv = new ShowPrivateObjectiveCard(match.getPlayer(nickname).getPrivateObjective());

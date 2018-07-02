@@ -220,6 +220,7 @@ public class Match implements Serializable {
         ToolCards tool = new ToolCards();
         toolCards = tool.getToolCards();
         roundTrack = new RoundTrack();
+        draftPool=new DraftPool();
     }
 
 
@@ -457,9 +458,7 @@ public class Match implements Serializable {
         player.setScheme(schemeCardDeck.getSchemeWithId(id));
         player.setNumOfToken(schemeCardDeck.getSchemeWithId(id).getDifficulty());
         player.setState(PlayerState.READYTOPLAY);
-        System.out.println("Ho scelto schema nel match " + player.getScheme().getId());
         playerMap.get(player).onSuccess("ok hai scelto bene lo schema ");
-        System.out.println("Notifico schema dal match");
     }
 
     //toolCard
@@ -567,7 +566,7 @@ public class Match implements Serializable {
 
     public void notifyChangement() throws RemoteException {
         for(RemotePlayer remotePlayer : remotePlayer){
-            remotePlayer.onGameUpdate(this);
+            remotePlayer.onGameUpdate(this.matchClone());
         }
     }
 
@@ -580,7 +579,7 @@ public class Match implements Serializable {
 
     private void notifyStartedMatch() throws RemoteException, NotValidPlayException {
         for(RemotePlayer remotePlayer : remotePlayer){
-            remotePlayer.onSchemeToChoose(this);
+            remotePlayer.onSchemeToChoose(this.matchClone());
         }
     }
 
@@ -594,7 +593,7 @@ public class Match implements Serializable {
 
     public void notifyGameEnd() throws RemoteException {
         for(RemotePlayer remotePlayer : remotePlayer){
-            remotePlayer.onGameEnd(this);
+            remotePlayer.onGameEnd(this.matchClone());
         }
     }
 
