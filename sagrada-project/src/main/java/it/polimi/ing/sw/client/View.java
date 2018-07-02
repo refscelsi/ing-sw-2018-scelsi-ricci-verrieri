@@ -154,7 +154,6 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
 
     @Override
     public void onSetPlaying() {
-        isPlaying = true;
         System.out.println("Notifico inizio turno nella view");
         Runnable task1 = () -> {
             System.out.println("Inizio turno nel thread");
