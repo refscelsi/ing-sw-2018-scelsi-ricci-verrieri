@@ -31,7 +31,6 @@ public class TenagliaARotelle extends ToolCard {
                 playersRound[j] = succ;
                 j = playersRound.length;
             }
-            //incrementNumOfTokens();
         }
     }
 

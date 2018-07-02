@@ -557,19 +557,21 @@ public class CLI implements UiUpdate {
 
     @Override
     public void onGameUpdate(Match match, String nickname) {
-        ShowRoundTrack roundTrack = new ShowRoundTrack(match.getRoundTrack());
-        ShowPublicObjectives pub = new ShowPublicObjectives(match.getPublicObjectives());
-        ShowPrivateObjectiveCard priv = new ShowPrivateObjectiveCard(match.getPlayer(nickname).getPrivateObjective());
-        ShowToolCards tool = new ShowToolCards(match.getToolCards());
-        System.out.println("Hai " + match.getPlayer(nickname).getNumOfToken() + " segnalini favore");
-        ShowDraftPool draft = new ShowDraftPool(match.getDraftPool());
-        ShowScheme scheme = new ShowScheme(match.getPlayer(nickname).getScheme());
+        if (controller.isPlaying()) {
+            ShowRoundTrack roundTrack = new ShowRoundTrack(match.getRoundTrack());
+            ShowPublicObjectives pub = new ShowPublicObjectives(match.getPublicObjectives());
+            ShowPrivateObjectiveCard priv = new ShowPrivateObjectiveCard(match.getPlayer(nickname).getPrivateObjective());
+            ShowToolCards tool = new ShowToolCards(match.getToolCards());
+            System.out.println("Hai " + match.getPlayer(nickname).getNumOfToken() + " segnalini favore");
+            ShowDraftPool draft = new ShowDraftPool(match.getDraftPool());
+            ShowScheme scheme = new ShowScheme(match.getPlayer(nickname).getScheme());
+        }
     }
 
     @Override
     public void onGameEnd(Match match) {
         ShowRoundTrack roundTrack = new ShowRoundTrack(match.getRoundTrack());   //TODO: mettere pedine su roundtrack
-        for (int i = 0; i < match.getNumPlayers(); i++) {
+        for (int i = 0; i < match.getPlayers().size(); i++) {
             System.out.print(i + 1 + ") " + match.getRanking().get(i).getNickname() + " con ");
             System.out.println(match.getRanking().get(i).getScore() + " punti");
         }
@@ -590,14 +592,17 @@ public class CLI implements UiUpdate {
             case 11:
                 onOtherInfoToolCard(11, match);   // perché tanto la 11 può lanciare una notValidException solo nel secondo step
                 break;
-            case 12:
-                onOtherInfoToolCard(12, match);   //TODO: distingui eccezione se ti trovi nel primo step o nel secondo
-                break;
             default:
                 useToolCard(id, match);
                 break;
         }
     }
+
+    /*@Override
+    public void onUseToolCard12IIStepNotValid(Match match, String e) {
+        System.out.println(e);
+        onOtherInfoToolCard(12, match);
+    }*/
 
 
     @Override
@@ -638,6 +643,7 @@ public class CLI implements UiUpdate {
                 } while (choice!=0 && choice!=1);
                 if (choice==0)
                     controller.useToolCard(12, -2, -1, -1, -1, -1, -1);
+                    //controller.useToolCard12IIStep(12, -2, -1, -1, -1, -1, -1);
                 else
                     useToolCard23412(12);
             }

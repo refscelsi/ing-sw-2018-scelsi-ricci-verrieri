@@ -38,11 +38,10 @@ public class DiluentePerPastaSalda extends ToolCard {
             if (destBox.isFull())
                 throw new NotValidException("Non puoi posizionare un dado in una casella già piena!");
             else {
-                if (scheme.checkBox(row, col, dice) && scheme.checkIfHasDiceAdjacent(row, col, dice, 1)) {
+                if (scheme.checkBox(row, col, dice) && scheme.checkIfHasDiceAdjacent(row, col, dice, 0)) {
                     destBox.placeDice(dice);
                     draftPool.removeDice(dice);
                     firstExecutionDone = false;
-                    //incrementNumOfTokens();
                 } else
                     throw new NotValidException("Non stai rispettando le condizioni di piazzamento!");
             }

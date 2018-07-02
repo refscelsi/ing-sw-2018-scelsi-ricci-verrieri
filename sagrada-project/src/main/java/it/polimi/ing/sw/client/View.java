@@ -167,11 +167,11 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
 
     @Override
     public void onOtherInfoToolCard(int id) {
-        Runnable task3 = () -> {
+        /*Runnable task3 = () -> {*/
             ui.onOtherInfoToolCard(id, match);
-        };
+        /*};
         Thread thread3 = new Thread(task3);
-        thread3.start();
+        thread3.start();*/
     }
 
 
@@ -344,10 +344,27 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         } catch (NotValidException e) {
             ui.onUseToolCardNotValid(id, match, e.getMessage());
         } catch (NotValidPlayException e) {
-                onNotValidPlay(e.getMessage());
+            onNotValidPlay(e.getMessage());
         } catch (RemoteException e) {
             e.printStackTrace();
         }
     }
 
+
+    // metodo che mi serve solo perché la carta utensile 12 può sollevare una notValidException sia al primo step
+    // che al secondo. Grazie a questo metodo riesco a gestire le due eccezioni in maniera differente.
+
+    /*public void useToolCard12IIStep(int id, int dice, int operation, int sourceRow, int sourceCol, int destRow, int destCol) {
+        try {
+            controller.useToolCard(id, dice, operation, sourceRow, sourceCol, destRow, destCol);
+        } catch (NetworkException e) {
+            System.err.println(e.getMessage());
+        } catch (NotValidException e) {
+            ui.onUseToolCardNotValid(id, match, e.getMessage());
+        } catch (NotValidPlayException e) {
+            onNotValidPlay(e.getMessage());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }*/
 }

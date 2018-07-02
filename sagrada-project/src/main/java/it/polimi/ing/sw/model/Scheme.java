@@ -194,7 +194,7 @@ public class Scheme implements Serializable {
     public void placeDice( int row, int col, Dice dice ) throws NotValidException {
         if ( isEmpty() ) {
             if ( !checkFirst( row,col,dice ) )
-                throw new NotValidException( "Devi inserire il primo dado in una casella del bordo dello schema!" );
+                throw new NotValidException( "Devi inserire il primo dado in una casella del bordo dello schema, rispettando le condizioni di piazzamento!" );
             else
                 setNotEmpty();
         } else {

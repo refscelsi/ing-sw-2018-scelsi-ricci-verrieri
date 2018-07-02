@@ -16,8 +16,6 @@ public class Martelletto extends ToolCard {
         for (Dice dice : draftPool.getDraftPool()) {
             dice.throwDice();
         }
-        //incrementNumOfTokens();
     }
-
 
 }

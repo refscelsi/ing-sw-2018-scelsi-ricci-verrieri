@@ -21,7 +21,6 @@ public class RigaInSughero extends ToolCard {
             if (scheme.checkBox(row, col, dice) && scheme.checkIfHasDiceAdjacent(row, col, dice, 2)) {
                 destBox.placeDice(dice);
                 draftPool.removeDice(dice);
-                //incrementNumOfTokens();
             } else
                 throw new NotValidException("Non stai rispettando le condizioni di piazzamento!");
         }

@@ -199,7 +199,7 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
                     break;
                 }
                 else
-                    throw new NotValidPlayException("Non puoi usare questa carta 6 11");
+                    throw new NotValidPlayException("Non puoi usare questa carta");
 
             }
 
@@ -221,7 +221,7 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
                         break;
                     }
                     else
-                        throw new NotValidPlayException("Non puoi usare questa carta 6 11");
+                        throw new NotValidPlayException("Non puoi usare questa carta");
                 }
             }
 

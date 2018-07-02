@@ -26,6 +26,8 @@ public interface UiUpdate {
 
     void onUseToolCardNotValid(int id, Match match, String e);
 
+    //void onUseToolCard12IIStepNotValid(Match match, String e);
+
     void onOtherInfoToolCard(int id, Match match);
 
 }

@@ -333,7 +333,7 @@ public class Match implements Serializable {
             //da qua dove vado?? quando notifico la classifica e l'ultimo round??
             System.out.println(ranking.get(0).getNickname() + ranking.get(0).getScore());
             System.out.println(ranking.get(1).getNickname() + ranking.get(1).getScore());
-            notifyChangement();
+            notifyGameEnd();
         }
     }
 
@@ -364,7 +364,7 @@ public class Match implements Serializable {
     public void calculateRanking() {   // ritorna un array di players ordinato dal punteggio massimo al minimo
         int scores[] = new int[numPlayers];
         ranking = new ArrayList<Player>();
-        ArrayList<Player> tempPlayers = players;
+        ArrayList<Player> tempPlayers = new ArrayList<Player>(players);
         int i, j, max, k=1;
         boolean found = false;
         for (i=0; i<numPlayers; i++) {
@@ -480,11 +480,16 @@ public class Match implements Serializable {
         if(checkToken(player,id)) {
             findToolCard(id).execute(draftPool, roundTrack, player.getScheme(), playersRound, bag, dice, operation, sourceRow, sourceCol, destRow, destCol);
             switch (id) {
-                case 4:
-                case 6:
+                case 4: {
+                    if (!findToolCard(id).getFirstExecutionDone()) {
+                        player.setNumOfToken(player.getNumOfToken()-findToolCard(id).getNumOfTokens());
+                        findToolCard(id).incrementNumOfTokens();
+                    }
+                    break;
+                }
                 case 11:
                 case 12: {
-                    if (!findToolCard(id).getFirstExecutionDone()) {
+                    if (findToolCard(id).getFirstExecutionDone()) {
                         player.setNumOfToken(player.getNumOfToken()-findToolCard(id).getNumOfTokens());
                         findToolCard(id).incrementNumOfTokens();
                     }
@@ -503,15 +508,27 @@ public class Match implements Serializable {
     public void usedToolCard (Player player, int id) throws RemoteException {
         switch (id) {
             case 4: {
-                playerMap.get(player).onOtherInfoToolCard(id);
+                System.out.println("hey");
+                if (findToolCard(id).getFirstExecutionDone())
+                    playerMap.get(player).onOtherInfoToolCard(id);
+                else
+                    notifyChangement();
+                    notifyStartTurn(player);
                 break;
             }
 
-            case 6:
+            case 6: {
+                notifyChangement();
+                playerMap.get(player).onOtherInfoToolCard(id);
+                break;
+            }
             case 11:
             case 12: {
                 notifyChangement();
-                playerMap.get(player).onOtherInfoToolCard(id);
+                if (findToolCard(id).getFirstExecutionDone())
+                    playerMap.get(player).onOtherInfoToolCard(id);
+                else
+                    notifyStartTurn(player);
                 break;
             }
             default: {

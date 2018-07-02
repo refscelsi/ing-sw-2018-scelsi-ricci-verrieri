@@ -3,6 +3,8 @@ package it.polimi.ing.sw.model.toolCard;
 import it.polimi.ing.sw.model.*;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 
+import java.util.concurrent.SynchronousQueue;
+
 
 public class TaglierinaManuale extends ToolCard {
 
@@ -25,27 +27,33 @@ public class TaglierinaManuale extends ToolCard {
 
     @Override
     public void execute(DraftPool neverUsed1, RoundTrack roundTrack, Scheme scheme, Player[] neverUsed2, Bag neverUsed3, int dice1, int neverUsed5, int sourceRow, int sourceCol, int destRow, int destCol) throws NotValidException {
+        System.out.println("Non entro");
         if (dice1!=-2) {
+            System.out.println("Entro");
             Box sourceBox = scheme.getBox(sourceRow, sourceCol);
             Box destBox = scheme.getBox(destRow, destCol);
+            Dice dice = sourceBox.getDice();
             if (!sourceBox.isFull()) {
                 throw new NotValidException("Hai scelto come origine una casella vuota!");
             } else {
+                sourceBox.removeDice();
                 if (destBox.isFull()) {
+                    sourceBox.placeDice(dice);
                     throw new NotValidException("Non puoi posizionare un dado in una casella già piena!");
                 } else {
-                    Dice dice = sourceBox.getDice();
-                    sourceBox.removeDice();
                     Color diceColor = dice.getDiceColor();
                     if (!firstExecutionDone) {
                         for (Color c : roundTrack.getColorsInRoundTrack()) {
                             if (c == diceColor)
                                 color = c;
                         }
-                        if (color == Color.WHITE)
+                        if (color == Color.WHITE) {
+                            sourceBox.placeDice(dice);
                             throw new NotValidException("Non esiste un dado di questo colore sul tracciato dei round!");
+                        }
                     } else {
                         if (diceColor != color) {
+                            sourceBox.placeDice(dice);
                             throw new NotValidException("Puoi spostare solo un dado dello stesso colore del precedente");
                         }
                     }
@@ -60,7 +68,6 @@ public class TaglierinaManuale extends ToolCard {
                         } else {
                             firstExecutionDone = false;
                             color = Color.WHITE;
-                            //incrementNumOfTokens();
                         }
                     } else {
                         sourceBox.placeDice(dice);
@@ -68,6 +75,10 @@ public class TaglierinaManuale extends ToolCard {
                     }
                 }
             }
+        }
+        else {
+            firstExecutionDone = false;
+            color = Color.WHITE;
         }
     }
 

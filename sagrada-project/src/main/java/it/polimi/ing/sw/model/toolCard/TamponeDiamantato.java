@@ -38,7 +38,6 @@ public class TamponeDiamantato extends ToolCard {
             default:
                 break;
         }
-        //incrementNumOfTokens();
     }
 
 

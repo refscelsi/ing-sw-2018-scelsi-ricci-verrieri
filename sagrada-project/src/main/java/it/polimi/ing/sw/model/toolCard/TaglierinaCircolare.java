@@ -24,7 +24,6 @@ public class TaglierinaCircolare extends ToolCard {
             Dice diceRT = new Dice(diceRoundTrack.getNumFacciaUp(), diceRoundTrack.getDiceColor());
             roundTrack.getDicesRound(round).getDice(indexInRound).setDice(diceDraftPool.getNumFacciaUp(), diceDraftPool.getDiceColor());
             draftPool.getDice(indexInDraftPool).setDice(diceRT.getNumFacciaUp(), diceRT.getDiceColor());
-            //incrementNumOfTokens();
         }
     }
 
