@@ -11,10 +11,11 @@ public class VetrataPanel extends javax.swing.JPanel {
 	private int idPlayer;
 	private View controller;
 
-	private static final int dimXdice = 45;
-	private static final int dimYdice = 45;
-	private int dimX, dimY, deltaX;
-
+	private static final int DIM_XDICE = 45;
+	private static final int DIM_YDICE = 45;
+	private int dimX;
+	private int dimY;
+	private int deltaX;
 
 	public VetrataPanel(int idPlayer, View controller, int dimX, int dimY) {
 		this.dimX=dimX;
@@ -36,17 +37,16 @@ public class VetrataPanel extends javax.swing.JPanel {
 	}
 
 	public DiceGUI[][] getDices() {
-
 		return dices;
 	}
 
 	private void setUpSchemeField() {
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 5; j++) {
-				dices[i][j] = new DiceGUI( true, dimXdice, dimYdice );
-
+				dices[i][j] = new DiceGUI( true, DIM_XDICE, DIM_YDICE );
+				dices[i][j].setController( controller );
 				imageLabel.add( dices[i][j] );
-				dices[i][j].setBounds( deltaX + i * (dimXdice + 5), 30 + j * (dimYdice + 5), dimXdice, dimYdice );
+				dices[i][j].setBounds( deltaX + i * (DIM_XDICE + 5), 30 + j * (DIM_YDICE + 5), DIM_XDICE, DIM_YDICE );
 				dices[i][j].setName( String.valueOf( idPlayer ).concat( String.valueOf( i ) ).concat( String.valueOf( j ) ) );
 			}
 		}
@@ -92,7 +92,6 @@ public class VetrataPanel extends javax.swing.JPanel {
 	public void setPlayerNameLabel( String name ) {
 		playerNameLabel.setText( name );
 	}
-
 
 	// Variables declaration - do not modify//GEN-BEGIN:variables
 	private javax.swing.JLabel imageLabel;
