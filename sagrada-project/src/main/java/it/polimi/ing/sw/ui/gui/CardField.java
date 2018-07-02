@@ -103,22 +103,27 @@ public class CardField extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cardFieldLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cardFieldLabelMouseEntered
-        cardFieldLabel.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        if(!used){
+            cardFieldLabel.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        }
     }//GEN-LAST:event_cardFieldLabelMouseEntered
 
     private void cardFieldLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cardFieldLabelMouseExited
-        cardFieldLabel.setBorder(null);
+        if(!used){
+            cardFieldLabel.setBorder(null);
+        }
     }//GEN-LAST:event_cardFieldLabelMouseExited
 
     private void cardFieldLabelMouseClicked(java.awt.event.MouseEvent evt) throws RemoteException {//GEN-FIRST:event_cardFieldLabelMouseClicked
         if (isToolCard) {
             if (!used) {
+                TableFrame.isNotToolCardAnymore(Integer.valueOf(TableFrame.idSelectedTc));
                 setUsed(true);
                 cardFieldLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 51, 51)));
                 TableFrame.idSelectedTc = id;
                 if (TableFrame.aToolCardIsUsed()) {
                     switch (TableFrame.idSelectedTc) {
-                        case "7"://TODO show popup funzionamento
+                        case "7":
                             controller.useToolCard(7, -1, -1, -1, -1, -1, -1);
                             TableFrame.isNotToolCardAnymore(7 - 1);
                         case "8":
@@ -128,9 +133,6 @@ public class CardField extends javax.swing.JPanel {
                     }
                 }
             } else {
-                if (TableFrame.isToolCard.get(7 - 1)) {
-
-                }
                 setUsed(false);
                 TableFrame.idSelectedTc = null;
             }
@@ -156,7 +158,7 @@ public class CardField extends javax.swing.JPanel {
         used = false;
         setIcons(IMAGE_PATH.concat("po/").concat("disabled.png"));
     }
-
+/*
     public void addToken(int numberOfTokens) {
         switch (token) {
             case 0:
@@ -171,7 +173,7 @@ public class CardField extends javax.swing.JPanel {
                 }//TODO add exc
         }
         tokenLabel.setText(String.valueOf(token));
-    }
+    }*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel cardFieldLabel;

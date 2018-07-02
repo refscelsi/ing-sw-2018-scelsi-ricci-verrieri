@@ -184,8 +184,23 @@ public class DiceGUI extends javax.swing.JPanel {
                     break;
                 case "6":
                     if (0 <= Integer.valueOf(getName()) && 9 > Integer.valueOf(getName())) {
+                        //TODO handling empty cose
                         controller.useToolCard(6, Integer.valueOf(getName()), -1, -1, -1, -1, -1);
                         TableFrame.isNotToolCardAnymore(6 - 1);
+                    }
+                    break;
+                case "10":
+                    if (0 <= Integer.valueOf(getName()) && 9 > Integer.valueOf(getName())) {
+                        //TODO handling empty cose
+                        controller.useToolCard(10, Integer.valueOf(getName()), -1, -1, -1, -1, -1);
+                        TableFrame.isNotToolCardAnymore(10 - 1);
+                    }
+                    break;
+                case "11":
+                    if (0 <= Integer.valueOf(getName()) && 9 > Integer.valueOf(getName())) {
+                        //TODO handling empty cose
+                        controller.useToolCard(11, Integer.valueOf(getName()), -1, -1, -1, -1, -1);
+                        TableFrame.isNotToolCardAnymore(11 - 1);
                     }
                     break;
             }
@@ -249,6 +264,17 @@ public class DiceGUI extends javax.swing.JPanel {
                 TableFrame.isNotToolCardAnymore(4 - 1);
                 reprindDices(id, destX, destY);
             }
+        } else if (TableFrame.isToolCard.get(12 - 1)) {
+            boolean roundTrackIsFull = controller.checkIfRoundTrackIsFull();
+            if (!roundTrackIsFull) {
+                JOptionPane.showMessageDialog(null,
+                        "Non puoi utilizzare questa carta perché ancora non ci sono dadi sul tracciato dei round",
+                        "Not valid Action",
+                        JOptionPane.ERROR_MESSAGE);
+            } else {
+                controller.useToolCard(Integer.valueOf(TableFrame.idSelectedTc), -1, -1, floatingDiceFrame.getDiceX() - 1, floatingDiceFrame.getDiceY() - 1, destX - 1, destY - 1);
+                TableFrame.isNotToolCardAnymore(12 - 1);
+                reprindDices(id, destX, destY);            }
         } else {
             if (!TableFrame.isToolCard.get(9 - 1)) {
                 if (0 <= Integer.valueOf(getName()) && 9 > Integer.valueOf(getName())) {
