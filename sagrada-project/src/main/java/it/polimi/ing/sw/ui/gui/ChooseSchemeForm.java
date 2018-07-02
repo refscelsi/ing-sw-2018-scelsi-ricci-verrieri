@@ -1,10 +1,12 @@
 package it.polimi.ing.sw.ui.gui;
 
 import it.polimi.ing.sw.client.View;
+import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.model.Scheme;
 
 import java.awt.*;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static it.polimi.ing.sw.util.Constants.DEFAULT_TITLE;
@@ -32,22 +34,22 @@ public class ChooseSchemeForm extends javax.swing.JFrame {
 	}
 
 	private void setVetrataPanel() {
-		vetrataPanelA = new VetrataPanel( 1, null );
+		vetrataPanelA = new VetrataPanel( 1, null, 203, 287 );
 		vetrataPanelA.fillScheme( schemeList.get( 0 ) );
 		schemeCardPanel1.add( vetrataPanelA );
 		vetrataPanelA.setBounds( 13, 49, 203, 287 );
 
-		vetrataPanelB = new VetrataPanel( 2, null );
+		vetrataPanelB = new VetrataPanel( 2, null, 203, 287 );
 		vetrataPanelB.fillScheme( schemeList.get( 1 ) );
 		schemeCardPanel1.add( vetrataPanelB );
 		vetrataPanelB.setBounds( 228, 49, 203, 287 );
 
-		vetrataPanelC = new VetrataPanel( 3, null );
+		vetrataPanelC = new VetrataPanel( 3, null, 203, 287 );
 		vetrataPanelC.fillScheme( schemeList.get( 2 ) );
 		schemeCardPanel2.add( vetrataPanelC );
 		vetrataPanelC.setBounds( 13, 49, 203, 287 );
 
-		vetrataPanelD = new VetrataPanel( 4, null );
+		vetrataPanelD = new VetrataPanel( 4, null, 203, 287 );
 		vetrataPanelD.fillScheme( schemeList.get( 3 ) );
 		schemeCardPanel2.add( vetrataPanelD );
 		vetrataPanelD.setBounds( 228, 49, 203, 287 );
@@ -264,6 +266,43 @@ public class ChooseSchemeForm extends javax.swing.JFrame {
 	private void setIcons() {
 		setIconImage( Toolkit.getDefaultToolkit().getImage( getClass().getResource( SAGRADA_ICO ) ) );
 		this.setTitle( DEFAULT_TITLE );
+	}
+
+	public static void main( String args[] ) {
+		/* Set the Nimbus look and feel */
+
+		try {
+			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+				if ( "Nimbus".equals( info.getName() ) ) {
+					javax.swing.UIManager.setLookAndFeel( info.getClassName() );
+					break;
+				}
+			}
+		} catch ( ClassNotFoundException ex ) {
+			//java.util.logging.Logger.getLogger(AddScheme.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+		} catch ( InstantiationException ex ) {
+			//java.util.logging.Logger.getLogger(AddScheme.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+		} catch ( IllegalAccessException ex ) {
+			//java.util.logging.Logger.getLogger(AddScheme.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+		} catch ( javax.swing.UnsupportedLookAndFeelException ex ) {
+			//java.util.logging.Logger.getLogger(AddScheme.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+		}
+		/* Create and display the form */
+
+		Match match = new Match();
+		java.awt.EventQueue.invokeLater( new Runnable() {
+			public void run() {
+				List<Scheme> schemes = new ArrayList<>(  );
+				SchemeListFileConverter schemeListFileConverter = new SchemeListFileConverter();
+				Scheme scheme =  schemeListFileConverter.readFromFile().get( 0 );
+				schemes.add( scheme );
+				schemes.add( scheme );
+				schemes.add( scheme );
+				schemes.add( scheme );
+
+				new ChooseSchemeForm( schemes, null ).setVisible( true );
+			}
+		} );
 	}
 
 	// Variables declaration - do not modify//GEN-BEGIN:variables

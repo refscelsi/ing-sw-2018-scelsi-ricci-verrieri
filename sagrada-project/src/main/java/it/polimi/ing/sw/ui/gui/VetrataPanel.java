@@ -13,10 +13,19 @@ public class VetrataPanel extends javax.swing.JPanel {
 
 	private static final int dimXdice = 45;
 	private static final int dimYdice = 45;
+	private int dimX, dimY, deltaX;
 
-	public VetrataPanel(int idPlayer, View controller) {
+
+	public VetrataPanel(int idPlayer, View controller, int dimX, int dimY) {
+		this.dimX=dimX;
+		this.dimY=dimY;
 		this.idPlayer=idPlayer;
 		this.controller=controller;
+		if ( 230==dimX ){
+			deltaX=17;
+		}else {
+			deltaX=4;
+		}
 		initComponents();
 
 		setUpSchemeField();
@@ -37,7 +46,7 @@ public class VetrataPanel extends javax.swing.JPanel {
 				dices[i][j] = new DiceGUI( true, dimXdice, dimYdice );
 
 				imageLabel.add( dices[i][j] );
-				dices[i][j].setBounds( 17 + i * (dimXdice + 5), 30 + j * (dimYdice + 5), dimXdice, dimYdice );
+				dices[i][j].setBounds( deltaX + i * (dimXdice + 5), 30 + j * (dimYdice + 5), dimXdice, dimYdice );
 				dices[i][j].setName( String.valueOf( idPlayer ).concat( String.valueOf( i ) ).concat( String.valueOf( j ) ) );
 			}
 		}
@@ -51,8 +60,6 @@ public class VetrataPanel extends javax.swing.JPanel {
 
 		setAlignmentX( 0.0F );
 		setAlignmentY( 0.0F );
-		setMaximumSize( new java.awt.Dimension( 230, 270 ) );
-		setMinimumSize( new java.awt.Dimension( 230, 270 ) );
 		setLayout( null );
 
 		playerNameLabel.setFont( new java.awt.Font( "Franklin Gothic Medium Cond", 1, 12 ) ); // NOI18N
@@ -64,11 +71,8 @@ public class VetrataPanel extends javax.swing.JPanel {
 
 		imageLabel.setIcon( new javax.swing.ImageIcon( getClass().getResource("/img/texture.jpg") ) ); // NOI18N
 		imageLabel.setAlignmentY( 0.0F );
-		imageLabel.setMaximumSize( new java.awt.Dimension( 230, 290 ) );
-		imageLabel.setMinimumSize( new java.awt.Dimension( 230, 290 ) );
-		imageLabel.setPreferredSize( new java.awt.Dimension( 230, 290 ) );
 		add( imageLabel );
-		imageLabel.setBounds( 0, 0, 230, 300 );
+		imageLabel.setBounds( 0, 0, dimX, 300 );
 	}// </editor-fold>//GEN-END:initComponents
 
 	public void fillScheme( Scheme scheme ) {
