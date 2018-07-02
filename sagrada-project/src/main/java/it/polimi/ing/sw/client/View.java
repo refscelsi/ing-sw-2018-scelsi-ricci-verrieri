@@ -25,6 +25,8 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
+import java.util.TimerTask;
+import java.util.Timer;
 
 public class View extends UnicastRemoteObject implements RemotePlayer {
     /**
@@ -116,14 +118,13 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
     @Override
     public void onSchemeToChoose(Match match) {
         this.match = match;
-        System.out.println("Devo scegliere lo schema (prima di lancio thread");
+        System.out.println("inizio thread fuori onSchemeToChose");
         Runnable task2 = () -> {
-            System.out.println("Devo scegliere lo schema (dopo di lancio thread");
-            if(match==null){
-                System.out.println("sbatti");
-            }
+            System.out.println("inizio thread dentro onSchemeToChose");
             ui.onSchemeToChoose(match, nickname, "Scegli il numero del tuo schema");
+            System.out.println("fine thread dentro onSchemeToChose");
         };
+        System.out.println("fine thread fuori onSetPlaying");
         new Thread(task2).start();
 
     }
@@ -156,12 +157,19 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
 
     @Override
     public void onSetPlaying() {
-        System.out.println("Notifico inizio turno nella view");
+        if (!isPlaying) {
+            isPlaying = true;
+            Timer timer = new Timer();
+            TimerTask turnTimer = new TurnTimer(this);
+            timer.schedule(turnTimer, 100000);
+        }
+        System.out.println("inizio thread fuori onSetPlaying");
         Runnable task1 = () -> {
-            System.out.println("Inizio turno nel thread");
+            System.out.println("inizio thread dentro onSetPlaying");
             ui.onTurnStart(match, nickname);
-            System.out.println("Fine thread");
+            System.out.println("fine thread dentro onSetPlaying");
         };
+        System.out.println("fine thread fuori onSetPlaying");
         Thread thread1 = new Thread(task1);
         thread1.start();
     }
