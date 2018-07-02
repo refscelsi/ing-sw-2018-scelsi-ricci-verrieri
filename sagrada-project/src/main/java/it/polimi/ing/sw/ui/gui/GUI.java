@@ -367,22 +367,13 @@ public class GUI implements UiUpdate {
 	}
 
 	@Override
-	public void onUseToolCardNotValid( int id, Match match, String e ) throws RemoteException {
-		System.out.println( e );
-		switch (id) {
-			case 6:
-				onOtherInfoToolCard( 6, match );    // perché tanto la 6 può lanciare una notValidException solo nel secondo step
-				break;
-			case 11:
-				onOtherInfoToolCard( 11, match );   // perché tanto la 11 può lanciare una notValidException solo nel secondo step
-				break;
-			case 12:
-				onOtherInfoToolCard( 12, match );   //TODO: distingui eccezione se ti trovi nel primo step o nel secondo
-				break;
-			default:
-				useToolCard( id, match );
-				break;
-		}
+	public void onUseToolCardNotValid( int id, Match match, String errorCode ) throws RemoteException {
+		System.out.println( errorCode );
+		onGameUpdate( match, controller.getNickname() );
+		JOptionPane.showMessageDialog( null,
+				errorCode,
+				"Not valid Action",
+				JOptionPane.ERROR_MESSAGE );
 	}
 
 	@Override
