@@ -101,11 +101,10 @@ public class GUI implements UiUpdate {
 
 
     public void retryPlaceDice() throws RemoteException {
-        JOptionPane.showMessageDialog(null,
-                "Invalid placing dice action, retry or do something different.",
-                "Placing dice error",
-                JOptionPane.ERROR_MESSAGE);
-
+//        JOptionPane.showMessageDialog(null,
+//                "Invalid placing dice action, retry or do something different.",
+//                "Placing dice error",
+//                JOptionPane.ERROR_MESSAGE);
         onGameUpdate(controller.getMatch(), controller.getNickname());
     }
 
@@ -285,11 +284,9 @@ public class GUI implements UiUpdate {
     public void onGameEnd(Match match) {
         //TODO fare tabellone di fine gioco
 
-        ShowRoundTrack roundTrack = new ShowRoundTrack(match.getRoundTrack());   //TODO: mettere pedine su roundtrack
-        for (int i = 0; i < match.getNumPlayers(); i++) {
-            System.out.print(i + 1 + ") " + match.getRanking().get(i).getNickname() + " con ");
-            System.out.println(match.getRanking().get(i).getScore() + " punti");
-        }
+        tableFrame.setVisible(false);
+        ScoreBoard scoreBoard = new ScoreBoard(match);
+        scoreBoard.setVisible(true);
     }
 
     @Override
@@ -311,16 +308,22 @@ public class GUI implements UiUpdate {
     public void onOtherInfoToolCard(int id, Match match) throws RemoteException {
         switch (id) {
             case 4: {
-                System.out.println("Primo dado mosso correttamente, ora muovi il secondo");
                 //useToolCard23412( 4 );
+                JOptionPane.showMessageDialog(null,
+                        "Primo dado mosso correttamente, ora muovi il secondo");
             }
             break;
             case 6: {
-                System.out.println("Ora digita la casella dove posizionare il dado");
+                JOptionPane.showMessageDialog(null,
+                        "Ora seleziona la casella dove posizionare il dado");
                 retryPlaceDice();
             }
             break;
             case 11: {
+                JOptionPane.showMessageDialog(null,
+                        "Select the new dice");
+
+                //TODO FINESTRA DI DIALOGO DOVE IMPOSTO
                 int dice, row, col;
                 do {
                     System.out.println("Digita il valore del nuovo dado, tra 1 e 6");
@@ -334,10 +337,14 @@ public class GUI implements UiUpdate {
                     System.out.println("Digita il numero della colonna dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_COLS);
                     col = scanner.nextInt();
                 } while (col < 1 || col > Constants.NUM_COLS);
+
+
                 controller.useToolCard(11, -1, dice, row - 1, col - 1, -1, -1);
             }
             break;
             case 12: {
+
+                //TODO FIMESTRA DI DIALOGO DOVE CHIEDO CHE FARE
                 int choice;
                 do {
                     System.out.println("Primo dado mosso correttamente, digita 0 se non vuoi spostare più dadi o 1 se vuoi spostarne un altro");
@@ -345,8 +352,11 @@ public class GUI implements UiUpdate {
                 } while (choice != 0 && choice != 1);
                 if (choice == 0)
                     controller.useToolCard(12, -1, -1, -1, -1, -1, -1);
-                //else
-                //useToolCard23412( 12 );
+                else{
+                    //TODO GESTIRE?
+                    //useToolCard23412( 12 );
+                }
+
             }
         }
     }
