@@ -13,17 +13,14 @@ public class SchemeCardDeck implements Serializable {
 
 
     public SchemeCardDeck() {
-        //cdeck = new ArrayList<>();
+        deck = new ArrayList<Scheme>();
         setDeck();
     }
 
 
     public void setDeck() {
-        System.out.println("prova 1");
         SchemeListFileConverter schemeListFileConverter = new SchemeListFileConverter();
-        System.out.println("prova 2");
         deck = new ArrayList<>(schemeListFileConverter.readFromFile());
-        System.out.println("ho letto da file" + deck.size());
         int size = deck.size();
         if (size % 2 == 0) {
             for (Scheme scheme : deck) {
@@ -40,8 +37,8 @@ public class SchemeCardDeck implements Serializable {
                     deck.get(i).setIdRetro(deck.get(i).getId() + 1);
             }
             Random rand = new Random();
-            int id = rand.nextInt(size) + 1;
-            deck.get(size - 1).setIdRetro(deck.get(id).getId());
+            int id = rand.nextInt(size-1);
+            deck.get(size-1).setIdRetro(deck.get(id).getId());
         }
     }
 
@@ -64,13 +61,12 @@ public class SchemeCardDeck implements Serializable {
 
     public ArrayList<Scheme> drawSchemeCard() {
         ArrayList<Scheme> drawnCards = new ArrayList<Scheme>();
-        Collections.shuffle(deck);
-        //da rimettere a 2
-        for (int i = 0; i < 2; i++) {
-            drawnCards.add(deck.get(i));
-            drawnCards.add(getSchemeWithId(deck.get(i).getIdRetro()));
-            deck.remove(i);
-            deck.remove(getSchemeWithId(deck.get(i).getIdRetro()));
+        for (int i=0; i<2; i++) {
+            Collections.shuffle(deck);
+            drawnCards.add(deck.get(0));
+            drawnCards.add(getSchemeWithId(deck.get(0).getIdRetro()));
+            deck.remove(getSchemeWithId(deck.get(0).getIdRetro()));
+            deck.remove(0);
         }
         return drawnCards;
     }

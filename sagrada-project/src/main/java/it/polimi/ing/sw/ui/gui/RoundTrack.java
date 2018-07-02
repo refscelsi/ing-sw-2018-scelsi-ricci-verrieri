@@ -1,6 +1,7 @@
 package it.polimi.ing.sw.ui.gui;
 
 import it.polimi.ing.sw.model.Dice;
+import it.polimi.ing.sw.model.DraftPool;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +14,7 @@ public class RoundTrack extends javax.swing.JPanel {
 
     private static final int dimXdice = 50;
     private static final int dimYdice = 50;
+    private DraftPool[] roundTrack;
 
     public RoundTrack() {
         initComponents();
@@ -75,6 +77,26 @@ public class RoundTrack extends javax.swing.JPanel {
 
     public DiceGUI getDiceGUI(int selected) {
         return diceGUIList.get(selected);
+    }
+
+    //set first element of draft pool as shown element on roundtrack
+    //TODO add number as remaining dices in draft pool
+    //TODO add on click open list of remaining dices
+    public void setDraftPool(DraftPool[] roundTrack) {
+        this.roundTrack = roundTrack;
+
+
+        int counter = 0;
+        for (DraftPool dices : roundTrack) {
+            if (!(null == dices)) {
+                List<Dice> draftPool = dices.getDraftPool();
+                if (!draftPool.isEmpty()) {
+                    diceGUIList.get(counter).setDice(draftPool.get(0));
+                }
+                counter++;
+            }
+
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

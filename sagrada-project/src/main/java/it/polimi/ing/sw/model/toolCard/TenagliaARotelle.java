@@ -1,6 +1,6 @@
 package it.polimi.ing.sw.model.toolCard;
 
-import it.polimi.ing.sw.model.Player;
+import it.polimi.ing.sw.model.*;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.model.exceptions.ToolCardException;
 
@@ -16,8 +16,9 @@ public class TenagliaARotelle extends ToolCard {
         super(8);
     }
 
+
     @Override
-    public void execute8(Player[] playersRound, int playersRoundIndex){
+    public void execute(DraftPool neverUsed1, RoundTrack neverUsed2, Scheme neverUsed3, Player[] playersRound, Bag neverUsed4, int playersRoundIndex, int neverUsed5, int neverUsed6, int neverUsed7, int neverUsed8, int neverUsed9){
         Player temp, succ;
         succ=playersRound[playersRoundIndex+1];
         playersRound[playersRoundIndex+1] = playersRound[playersRoundIndex];
@@ -30,7 +31,7 @@ public class TenagliaARotelle extends ToolCard {
                 playersRound[j] = succ;
                 j = playersRound.length;
             }
-            incrementNumOfTokens();
+            //incrementNumOfTokens();
         }
     }
 

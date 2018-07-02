@@ -3,10 +3,9 @@ package it.polimi.ing.sw.model.objectiveCard;
 import it.polimi.ing.sw.model.Box;
 import it.polimi.ing.sw.model.Scheme;
 
-
 public class ColoredDiagonals extends ObjectiveCard {
 
-    Box[][] boxes;
+    private Box[][] boxes;
 
     public ColoredDiagonals() {
         super();
@@ -40,6 +39,5 @@ public class ColoredDiagonals extends ObjectiveCard {
         score = score + numSameColor2(1, 0, 1) + numSameColor2(2, 0, 2) + numSameColor2(3, 0, 3) + numSameColor2(3, 1, 3) + numSameColor2(3, 2, 2) + numSameColor2(3, 3, 1);
         return score;
     }
-
 }
 

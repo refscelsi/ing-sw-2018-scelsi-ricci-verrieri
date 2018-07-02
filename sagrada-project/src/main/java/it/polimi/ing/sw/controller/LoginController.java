@@ -1,8 +1,8 @@
 package it.polimi.ing.sw.controller;
 
 import it.polimi.ing.sw.controller.exceptions.NotPossibleConnection;
-import it.polimi.ing.sw.controller.network.RMI.PlayerInterfaceRMI;
-import it.polimi.ing.sw.controller.network.RMI.RemotePlayerRMI;
+import it.polimi.ing.sw.controller.network.RMI.PlayerControllerInterfaceRMI;
+import it.polimi.ing.sw.controller.network.socket.PlayerControllerSocket;
 import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.model.exceptions.NotValidNicknameException;
@@ -18,27 +18,29 @@ public class LoginController extends UnicastRemoteObject implements Remote, Logi
 
     //riferimento alla partita
     private Match match;
-
-
-    //lista dei clients
-    private ArrayList<PlayerController> clients;
+    //lista clients
+    private ArrayList<PlayerControllerInterface> clients;
+    //lista dei PlayerController (x riconnessione)
+    private ArrayList<PlayerController> playerControllers;
 
     public LoginController(Match match) throws RemoteException {
         this.match = match;
-        this.clients = new ArrayList<PlayerController>();
+        this.playerControllers = new ArrayList<PlayerController>();
+        this.clients = new ArrayList<PlayerControllerInterface>();
     }
 
     //metodo che crea un controller per ogni view che si connette
     @Override
-    public synchronized PlayerInterfaceRMI connectRMI(String nickname, RemotePlayerRMI remotePlayerRMI) throws RemoteException, NotPossibleConnection, ToolCardException, NotValidException, NotValidNicknameException {
+    public synchronized PlayerControllerInterfaceRMI connectRMI(String nickname, it.polimi.ing.sw.controller.RemotePlayer remotePlayer) throws RemoteException, NotPossibleConnection, ToolCardException, NotValidException, NotValidNicknameException {
         if (clients.size() < Constants.MAX_PLAYERS) {
             if (!checkReconnection(nickname)) {
-                match.login(nickname, remotePlayerRMI);
-                PlayerController playerController = new PlayerController(this.match, remotePlayerRMI, match.getPlayer(nickname));
+                match.login(nickname, remotePlayer);
+                PlayerController playerController = new PlayerController(this.match, (RemotePlayer) remotePlayer, match.getPlayer(nickname));
+                playerControllers.add(playerController);
                 clients.add(playerController);
                 return playerController;
             } else if (checkReconnection(nickname)) {
-                for (PlayerController playerController : clients) {
+                for (PlayerController playerController : playerControllers) {
                     if (playerController.getNickname().equals(nickname)) {
                         return playerController;
                     }
@@ -48,21 +50,43 @@ public class LoginController extends UnicastRemoteObject implements Remote, Logi
         throw new NotPossibleConnection("la partita è piena");
     }
 
-    @Override
-    public void connectSocket() throws RemoteException {
-        return;
-    }
 
     public boolean checkReconnection(String nickname) {
-        if (clients.size() == 0) {
+        if (playerControllers.size() == 0) {
             return false;
         }
-        for (PlayerController playerController : clients) {
+        for (PlayerController playerController : playerControllers) {
             if (playerController.getNickname().equals(nickname) && playerController.getState().equals(PlayerState.OFFLINE)) {
                 return true;
             }
         }
         return false;
+    }
+
+    public  synchronized PlayerController connectSocket(String nickname, PlayerControllerSocket playerControllerSocket) throws NotPossibleConnection {
+        if (playerControllers.size() < Constants.MAX_PLAYERS) {
+            if (!checkReconnection(nickname)) {
+                try {
+                    match.login(nickname,playerControllerSocket );
+                    PlayerController playerController= null;
+                    playerController = new PlayerController(match, playerControllerSocket, match.getPlayer(nickname));
+                    playerControllers.add(playerController);
+                    return playerController;
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                } catch (NotValidNicknameException e) {
+                    e.printStackTrace();
+                } catch (ToolCardException e) {
+                    e.printStackTrace();
+                } catch (NotValidException e) {
+                    e.printStackTrace();
+                }
+            } else if (checkReconnection(nickname)) {
+                //sbatti
+            }
+        }
+
+        throw new NotPossibleConnection("la partita è piena");
     }
 
 }

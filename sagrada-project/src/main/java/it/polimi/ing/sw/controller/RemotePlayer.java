@@ -24,13 +24,9 @@ public interface RemotePlayer extends Remote {
     //notifica che la partita è finita
     void onGameEnd(Match match) throws RemoteException;
 
-    //notifica il successo del login --> settare logged a true
-    void onPlayerLogged() throws RemoteException;
-
     //notifica che è il turno del giocatore --> settare is Playing true
     void onSetPlaying() throws RemoteException;
 
-    void onOtherInfoToolCard4(Match match) throws RemoteException;
+    void onOtherInfoToolCard(int id) throws RemoteException;
 
-    void onOtherInfoToolCard11(Match match) throws RemoteException;
 }

@@ -1,8 +1,7 @@
 package it.polimi.ing.sw.server;
 
 import it.polimi.ing.sw.controller.LoginController;
-import it.polimi.ing.sw.controller.PlayerController;
-import it.polimi.ing.sw.controller.network.Socket.PlayerControllerSocket;
+import it.polimi.ing.sw.controller.network.socket.PlayerControllerSocket;
 import it.polimi.ing.sw.model.Match;
 
 import java.io.IOException;
@@ -23,25 +22,34 @@ public class Server {
         try {
             Registry reg = LocateRegistry.createRegistry(1099);
             Match match= new Match();
-            LoginController loginControllerController = new LoginController(match);
-            reg.rebind("LoginController", (Remote) loginControllerController);
+            LoginController loginController = new LoginController(match);
+            reg.rebind("LoginController", (Remote) loginController);
+            new Thread(()->{
+                try(ServerSocket serverSocket=new ServerSocket(SOCKET_PORT)){
+                    while(true){
+                        Socket clientSocket= serverSocket.accept();
+                        new Thread(()->{
+                            try {
+                                new PlayerControllerSocket(clientSocket, loginController );
+                            }
+                            finally {
+                                try {
+                                    clientSocket.close();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }).start();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }).start();
         } catch (RemoteException e) {
             e.printStackTrace();
         }
         System.out.println("Server on...");
 
-        new Thread(()->{
-            try(ServerSocket serverSocket=new ServerSocket(SOCKET_PORT)){
-                while(true){
-                    Socket clientSocket= serverSocket.accept();
-                    new Thread(()->{
-                        new PlayerControllerSocket(clientSocket);
-                    }).start();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }).start();
     }
 }
 

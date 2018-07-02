@@ -1,329 +1,466 @@
 package it.polimi.ing.sw.ui.gui;
 
 import it.polimi.ing.sw.App;
+import it.polimi.ing.sw.client.View;
 import it.polimi.ing.sw.model.Dice;
 import it.polimi.ing.sw.model.Match;
-import it.polimi.ing.sw.model.Scheme;
+import it.polimi.ing.sw.model.Player;
 
 import java.awt.*;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static it.polimi.ing.sw.util.Constants.NOT_A_DICE;
+import static it.polimi.ing.sw.util.Constants.SAGRADA_ICO;
+
 public class TableFrame extends javax.swing.JFrame {
 
-	private static Match match;
-	private static List<CardField> toolCardList, objCardList;
-	private RoundTrack roundTrack;
-	private static VetrataPanel player1, player2, player3, player4;
-	private DiceFieldPanel diceFieldPanel;
-	private SumPlayerPanel sumPlayer1, sumPlayer2, sumPlayer3, sumPlayer4;
-	private int dimXcard;
-	private int dimYcard;
+    public static List<Boolean> isToolCard;
+    private static Match match;
+    private static List<CardField> toolCardList;
+    private static List<CardField> objCardList;
+    private static RoundTrack roundTrack;
+    private static VetrataPanel player1;
+    private static VetrataPanel player2;
+    private static VetrataPanel player3;
+    private static VetrataPanel player4;
+    private static DiceFieldPanel diceFieldPanel;
+    private static SumPlayerPanel sumPlayer1;
+    private static SumPlayerPanel sumPlayer2;
+    private static SumPlayerPanel sumPlayer3;
+    private static SumPlayerPanel sumPlayer4;
+    private static int dimXcard;
+    private static int dimYcard;
+    public static String idSelectedTc;
 
-	public TableFrame(/*Match match*/ ) {
-		//this.match = match;
+    private static View controller;
 
-		toolCardList = new ArrayList<>();
-		objCardList = new ArrayList<>();
+    TableFrame(Match match, View controller) {
+        TableFrame.match = match;
+        TableFrame.controller = controller;
 
-		dimXcard = 173;
-		dimYcard = 245;
+        isToolCard = new ArrayList<>();
+        setUpIsToolCard();
 
-		initComponents();
-		setLocationRelativeTo( null );
-		setIcons();
-		setName( "tableFrame" );
+        toolCardList = new ArrayList<>();
+        objCardList = new ArrayList<>();
 
-		addVetratePlayers();
-		addSumsPlayer();
-		addRoundTrack();
-		addDiceFieldPAnel();
+        dimXcard = 173;
+        dimYcard = 245;
 
-		//TODO WORKS
-		//TEST addDICES al dice panel
-		List<Dice> dices = new ArrayList<>();
-		Dice testDice = new Dice();
-		testDice.setNumFacciaUp( 5 );
-		testDice.setDiceColor( it.polimi.ing.sw.model.Color.RED );
-		dices.add( testDice );
-		dices.add( testDice );
-		dices.add( testDice );
-		dices.add( testDice );
-		dices.add( testDice );
-		dices.add( testDice );
-		dices.add( testDice );
-		dices.add( testDice );
-		dices.add( testDice );
-		dices.add( testDice );
-		dices.add( testDice );
-		diceFieldPanel.setDices( dices );
+        initComponents();
+        setLocationRelativeTo(null);
+        setIcons();
+        setName("tableFrame");
 
-        /*
-        //TODO WORKS
-        //TEST carta singola
-        CardField cf = new CardField();
-        tableFramePanel.add(cf);
-        cf.setBounds(0, 0, 173, 245);
-        */
+        addVetratePlayers();
+        addSumsPlayer();
+        addRoundTrack();
+        addDiceFieldPAnel();
+    }
 
-		//TODO WORKS
-		//TEST campi carte
-		String ids1[] = {"disabled.png", "tc02.png", "tc03.png"};
-		setToolCards( ids1 );
-		String ids2[] = {"po01.png", "po02.png", "po03.png"};
-		setOBJCards( ids2 );
+    public static void isNotToolCardAnymore(int i) {
+        TableFrame.isToolCard.set(i, false);
+        for (int j=0;j<3;j++){
+            if (toolCardList.get(j).getId().equals(String.valueOf(i))){
+                toolCardList.get(j).setBorder(null);
+            }
+        }
+    }
 
-        /*//TODO WORKS
-        //TEST set dice
-        Dice testDice = new Dice();
-        testDice.setNumFacciaUp(5);
-        testDice.setDiceColor(it.polimi.ing.sw.model.Color.RED);
-        roundTrack.getDiceGUIList().get(4).setDice(testDice);*/
+    private void setUpIsToolCard() {
+        for (int i = 0; i < 12; i++) {
+            isToolCard.add(false);
+        }
+    }
 
-        /*//TODO WORKS
-        //TEST disablecard
-        toolCardList.get(1).disableToolCard();*/
+    public static Match getMatch() {
+        return match;
+    }
 
-		//TODO WORKS
-		//TEST fillScheme
-		SchemeListFileConverter schemeListFileConverter = new SchemeListFileConverter();
-		Scheme scheme = schemeListFileConverter.readFromFile().get( 0 );
-		player1.fillScheme( scheme );
+    static void updateMatch(Match match) {
 
-		//TODO WORKS
-		//TEST set nome player
-		//player1.setPlayerNameLabel("pisello");
+        if (!(null == match.getRoundTrack().getRoundTrack())) {
+            roundTrack.setDraftPool(match.getRoundTrack().getRoundTrack());
+        }
 
-		//TODO WORKS
-		//TEST set tokens by code
-		toolCardList.get( 2 ).addToken( 1 );
-		toolCardList.get( 2 ).addToken( 2 );
-	}
+        if (!match.getPublicObjectives().isEmpty()) {
+            List<String> ids = new ArrayList<>();
+            ids.add(String.valueOf(match.getPublicObjectives().get(0).getId()));
+            ids.add(String.valueOf(match.getPublicObjectives().get(1).getId()));
+            ids.add(String.valueOf(match.getPublicObjectives().get(2).getId()));
+            setOBJCards(ids);
+        }
+        if (!match.getToolCards().isEmpty()) {
+            List<String> ids = new ArrayList<>();
+            ids.add(String.valueOf(match.getToolCards().get(0).getId()));
+            ids.add(String.valueOf(match.getToolCards().get(1).getId()));
+            ids.add(String.valueOf(match.getToolCards().get(2).getId()));
+            setToolCards(ids);
+        }
 
-	public static Match getMatch() {
-		return match;
-	}
+        int counter = 0;
+        for (Player player : match.getPlayers()) {
+            switch (counter) {
+                case 0:
+                    updatePlayer1(player);
+                    break;
+                case 1:
+                    updatePlayer2(player);
+                    break;
+                case 2:
+                    updatePlayer3(player);
+                    break;
+                case 3:
+                    updatePlayer4(player);
+                    break;
+            }
+            counter++;
+        }
+        diceFieldPanel.setDices(match.getDraftPool().getDraftPool());
+    }
 
-	private void addSumsPlayer() {
-		sumPlayer1 = new SumPlayerPanel();
-		backgroundTableFRameLabel.add( sumPlayer1 );
-		sumPlayer1.setBounds( 10, 10, 85, 80 );
+    private static void updatePlayer1(Player player) {
+        sumPlayer1.setPlayerName(player.getNickname());
+        sumPlayer1.setSchemeName(String.valueOf(player.getScheme().getId()));
+        sumPlayer1.setToken(player.getNumOfToken());
+        sumPlayer1.setPrivateObjCard(player.getPrivateObjective());
 
-		sumPlayer2 = new SumPlayerPanel();
-		backgroundTableFRameLabel.add( sumPlayer2 );
-		sumPlayer2.setBounds( 105, 10, 85, 80 );
+        player1.fillScheme(player.getScheme());
+        player1.setPlayerName(player.getNickname());
+    }
 
-		sumPlayer3 = new SumPlayerPanel();
-		backgroundTableFRameLabel.add( sumPlayer3 );
-		sumPlayer3.setBounds( 830, 10, 85, 80 );
+    private static void updatePlayer2(Player player) {
+        sumPlayer2.setPlayerName(player.getNickname());
+        sumPlayer2.setSchemeName(String.valueOf(player.getScheme().getId()));
+        sumPlayer2.setToken(player.getNumOfToken());
+        sumPlayer2.setPrivateObjCard(player.getPrivateObjective());
 
-		sumPlayer4 = new SumPlayerPanel();
-		backgroundTableFRameLabel.add( sumPlayer4 );
-		sumPlayer4.setBounds( 925, 10, 85, 80 );
-	}
+        player2.fillScheme(player.getScheme());
+        player2.setPlayerName(player.getNickname());
+    }
 
-	private void addVetratePlayers() {
-		player1 = new VetrataPanel( 1 );
-		backgroundTableFRameLabel.add( player1 );
-		player1.setBounds( 780, 430, 230, 290 );
+    private static void updatePlayer3(Player player) {
+        sumPlayer3.setPlayerName(player.getNickname());
+        sumPlayer3.setSchemeName(String.valueOf(player.getScheme().getId()));
+        sumPlayer3.setToken(player.getNumOfToken());
+        sumPlayer3.setPrivateObjCard(player.getPrivateObjective());
 
-		player2 = new VetrataPanel( 2 );
-		backgroundTableFRameLabel.add( player2 );
-		player2.setBounds( 780, 100, 230, 290 );
+        player3.fillScheme(player.getScheme());
+        player3.setPlayerName(player.getNickname());
+    }
 
-		player3 = new VetrataPanel( 3 );
-		backgroundTableFRameLabel.add( player3 );
-		player3.setBounds( 10, 100, 230, 290 );
+    private static void updatePlayer4(Player player) {
+        sumPlayer4.setPlayerName(player.getNickname());
+        sumPlayer4.setSchemeName(String.valueOf(player.getScheme().getId()));
+        sumPlayer4.setToken(player.getNumOfToken());
+        sumPlayer4.setPrivateObjCard(player.getPrivateObjective());
 
-		player4 = new VetrataPanel( 4 );
-		backgroundTableFRameLabel.add( player4 );
-		player4.setBounds( 10, 430, 230, 290 );
-	}
+        player4.fillScheme(player.getScheme());
+        player4.setPlayerName(player.getNickname());
+    }
 
-	private void addDiceFieldPAnel() {
-		diceFieldPanel = new DiceFieldPanel();
-		backgroundTableFRameLabel.add( diceFieldPanel );
-		diceFieldPanel.setBounds( 250, 100, 520, 140 );
-	}
+    public static Boolean isPlayerTurn(String nickname, char id) {
+        switch (id) {
+            case '1':
+                if (sumPlayer1.getPlayerName().equals(nickname)) {
+                    return true;
+                }
+                break;
+            case '2':
+                if (sumPlayer2.getPlayerName().equals(nickname)) {
+                    return true;
+                }
+                break;
+            case '3':
+                if (sumPlayer3.getPlayerName().equals(nickname)) {
+                    return true;
+                }
+                break;
+            case '4':
+                if (sumPlayer4.getPlayerName().equals(nickname)) {
+                    return true;
+                }
+                break;
+            default:
+                return false;
+        }
+        return false;
+    }
 
-	private void addRoundTrack() {
-		roundTrack = new RoundTrack();
-		backgroundTableFRameLabel.add( roundTrack );
-		roundTrack.setBounds( 207, 20, 610, 70 );
-	}
+    private static void addSumsPlayer() {
+        sumPlayer1 = new SumPlayerPanel();
+        backgroundTableFRameLabel.add(sumPlayer1);
+        sumPlayer1.setBounds(10, 10, 85, 80);
 
-	private void setIcons() {
-		setIconImage( Toolkit.getDefaultToolkit().getImage( getClass().getResource( "/img/sagrada.png" ) ) );
-		this.setTitle( "Sagrada Boardgame" );
-	}
+        sumPlayer2 = new SumPlayerPanel();
+        backgroundTableFRameLabel.add(sumPlayer2);
+        sumPlayer2.setBounds(105, 10, 85, 80);
 
-	@SuppressWarnings ( "unchecked" )
-	// <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-	private void initComponents() {
+        sumPlayer3 = new SumPlayerPanel();
+        backgroundTableFRameLabel.add(sumPlayer3);
+        sumPlayer3.setBounds(830, 10, 85, 80);
 
-		tableFramePanel = new javax.swing.JPanel();
-		objCardPanel = new javax.swing.JPanel();
-		toolCardPanel = new javax.swing.JPanel();
-		backgroundTableFRameLabel = new javax.swing.JLabel();
+        sumPlayer4 = new SumPlayerPanel();
+        backgroundTableFRameLabel.add(sumPlayer4);
+        sumPlayer4.setBounds(925, 10, 85, 80);
+    }
 
-		setDefaultCloseOperation( javax.swing.WindowConstants.EXIT_ON_CLOSE );
-		setMinimumSize( new java.awt.Dimension( 1024, 768 ) );
-		setResizable( false );
+    private static void addVetratePlayers() {
+        player1 = new VetrataPanel(1, controller, 230, 290);
+        backgroundTableFRameLabel.add(player1);
+        player1.setBounds(780, 430, 230, 290);
 
-		tableFramePanel.setBackground( new java.awt.Color( 102, 102, 102 ) );
-		tableFramePanel.setLayout( null );
+        player2 = new VetrataPanel(2, controller, 230, 290);
+        backgroundTableFRameLabel.add(player2);
+        player2.setBounds(780, 100, 230, 290);
 
-		javax.swing.GroupLayout objCardPanelLayout = new javax.swing.GroupLayout( objCardPanel );
-		objCardPanel.setLayout( objCardPanelLayout );
-		objCardPanelLayout.setHorizontalGroup(
-				objCardPanelLayout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING )
-						.addGap( 0, 519, Short.MAX_VALUE )
-		);
-		objCardPanelLayout.setVerticalGroup(
-				objCardPanelLayout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING )
-						.addGap( 0, 245, Short.MAX_VALUE )
-		);
+        player3 = new VetrataPanel(3, controller, 230, 290);
+        backgroundTableFRameLabel.add(player3);
+        player3.setBounds(10, 100, 230, 290);
 
-		tableFramePanel.add( objCardPanel );
-		objCardPanel.setBounds( 250, 500, 519, 245 );
+        player4 = new VetrataPanel(4, controller, 230, 290);
+        backgroundTableFRameLabel.add(player4);
+        player4.setBounds(10, 430, 230, 290);
+    }
 
-		javax.swing.GroupLayout toolCardPanelLayout = new javax.swing.GroupLayout( toolCardPanel );
-		toolCardPanel.setLayout( toolCardPanelLayout );
-		toolCardPanelLayout.setHorizontalGroup(
-				toolCardPanelLayout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING )
-						.addGap( 0, 519, Short.MAX_VALUE )
-		);
-		toolCardPanelLayout.setVerticalGroup(
-				toolCardPanelLayout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING )
-						.addGap( 0, 245, Short.MAX_VALUE )
-		);
+    private static void addDiceFieldPAnel() {
+        diceFieldPanel = new DiceFieldPanel();
+        backgroundTableFRameLabel.add(diceFieldPanel);
+        diceFieldPanel.setBounds(250, 100, 520, 140);
+    }
 
-		tableFramePanel.add( toolCardPanel );
-		toolCardPanel.setBounds( 250, 250, 519, 245 );
+    private static void addRoundTrack() {
+        roundTrack = new RoundTrack();
+        backgroundTableFRameLabel.add(roundTrack);
+        roundTrack.setBounds(207, 20, 610, 70);
+    }
 
-		backgroundTableFRameLabel.setBackground( new java.awt.Color( 153, 153, 153 ) );
-		backgroundTableFRameLabel.setHorizontalAlignment( javax.swing.SwingConstants.CENTER );
-		backgroundTableFRameLabel.setIcon( new javax.swing.ImageIcon( getClass().getResource( "/img/sagrada.png" ) ) ); // NOI18N
-		backgroundTableFRameLabel.setAlignmentY( 0.0F );
-		tableFramePanel.add( backgroundTableFRameLabel );
-		backgroundTableFRameLabel.setBounds( 0, 0, 1024, 768 );
+    public static boolean isPlayerScheme(String nickname, char id) {
+        switch (id) {
+            case '1':
+                if (player1.getPlayerName().equals(nickname)) {
+                    return true;
+                }
+                break;
+            case '2':
+                if (player2.getPlayerName().equals(nickname)) {
+                    return true;
+                }
+                break;
+            case '3':
+                if (player3.getPlayerName().equals(nickname)) {
+                    return true;
+                }
+                break;
+            case '4':
+                if (player4.getPlayerName().equals(nickname)) {
+                    return true;
+                }
+                break;
+            default:
+                return false;
+        }
+        return false;
+    }
 
-		javax.swing.GroupLayout layout = new javax.swing.GroupLayout( getContentPane() );
-		getContentPane().setLayout( layout );
-		layout.setHorizontalGroup(
-				layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING )
-						.addComponent( tableFramePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1024, Short.MAX_VALUE )
-		);
-		layout.setVerticalGroup(
-				layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING )
-						.addComponent( tableFramePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE )
-		);
+    private void setIcons() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource(SAGRADA_ICO)));
+        this.setTitle("Sagrada Boardgame");
+    }
 
-		pack();
-	}// </editor-fold>//GEN-END:initComponents
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
 
-	public void tornaMenu() {
-		this.setVisible( false );
-		App.menu.setVisible( true );
-	}
+        tableFramePanel = new javax.swing.JPanel();
+        objCardPanel = new javax.swing.JPanel();
+        toolCardPanel = new javax.swing.JPanel();
+        endTurnButton = new javax.swing.JButton();
+        backgroundTableFRameLabel = new javax.swing.JLabel();
 
-	private void setToolCards( String[] id ) {
-		toolCardPanel.setLayout( null );
-		//toolCardPanel.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 2, true));
-		for (int i = 0; i < 3; i++) {
-			CardField schemeCard = new CardField( id[i], "tc/", dimXcard, dimYcard );
-			toolCardPanel.add( schemeCard );
-			toolCardList.add( schemeCard );
-			schemeCard.setBounds( i * (173), 0, 173, 245 );
-			//schemeCard.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 2, true));
-		}
-	}
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(1024, 768));
+        setResizable(false);
 
-	private void setOBJCards( String[] id ) {
-		objCardPanel.setLayout( null );
-		//objCardPanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
-		for (int i = 0; i < 3; i++) {
-			CardField schemeCard = new CardField( id[i], "po/", dimXcard, dimYcard );
-			objCardPanel.add( schemeCard );
-			objCardList.add( schemeCard );
-			schemeCard.setBounds( i * (173), 0, 173, 245 );
-			//schemeCard.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 2, true));
-		}
-	}
+        tableFramePanel.setBackground(new java.awt.Color(102, 102, 102));
+        tableFramePanel.setLayout(null);
 
-	public static void main( String args[] ) {
-		/* Set the Nimbus look and feel */
+        javax.swing.GroupLayout objCardPanelLayout = new javax.swing.GroupLayout(objCardPanel);
+        objCardPanel.setLayout(objCardPanelLayout);
+        objCardPanelLayout.setHorizontalGroup(
+                objCardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 519, Short.MAX_VALUE)
+        );
+        objCardPanelLayout.setVerticalGroup(
+                objCardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 245, Short.MAX_VALUE)
+        );
 
-		try {
-			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-				if ( "Nimbus".equals( info.getName() ) ) {
-					javax.swing.UIManager.setLookAndFeel( info.getClassName() );
-					break;
-				}
-			}
-		} catch ( ClassNotFoundException ex ) {
-			//java.util.logging.Logger.getLogger(AddScheme.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		} catch ( InstantiationException ex ) {
-			//java.util.logging.Logger.getLogger(AddScheme.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		} catch ( IllegalAccessException ex ) {
-			//java.util.logging.Logger.getLogger(AddScheme.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		} catch ( javax.swing.UnsupportedLookAndFeelException ex ) {
-			//java.util.logging.Logger.getLogger(AddScheme.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		}
-		/* Create and display the form */
+        tableFramePanel.add(objCardPanel);
+        objCardPanel.setBounds(250, 500, 519, 245);
 
-		//final Match match = new Match();
-		java.awt.EventQueue.invokeLater( new Runnable() {
-			public void run() {
-				new TableFrame(/*match*/ ).setVisible( true );
-			}
-		} );
-	}
+        javax.swing.GroupLayout toolCardPanelLayout = new javax.swing.GroupLayout(toolCardPanel);
+        toolCardPanel.setLayout(toolCardPanelLayout);
+        toolCardPanelLayout.setHorizontalGroup(
+                toolCardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 519, Short.MAX_VALUE)
+        );
+        toolCardPanelLayout.setVerticalGroup(
+                toolCardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 245, Short.MAX_VALUE)
+        );
 
-	public static void updateDice( int idPlayer, Dice dice, int i, int j ) {
-		switch (idPlayer) {
-			case 1:
-				player1.setDice( i, j, dice );
-				break;
-			case 2:
-				player2.setDice( i, j, dice );
-				break;
-			case 3:
-				player3.setDice( i, j, dice );
-				break;
-			case 4:
-				player4.setDice( i, j, dice );
-				break;
-		}
-	}
+        tableFramePanel.add(toolCardPanel);
+        toolCardPanel.setBounds(250, 250, 519, 245);
 
+        endTurnButton.setText("End Turn");
+        endTurnButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    endTurnButtonActionPerformed(evt);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        tableFramePanel.add(endTurnButton);
+        endTurnButton.setBounds(820, 730, 150, 25);
 
-	public static void setCurrentComponentName( String nameComponentEntered, Boolean isAdiceGui ) {
-		currentComponentName = nameComponentEntered;
-		TableFrame.isAdiceGui = isAdiceGui;
-	}
+        backgroundTableFRameLabel.setBackground(new java.awt.Color(153, 153, 153));
+        backgroundTableFRameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        backgroundTableFRameLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/sagrada.png"))); // NOI18N
+        backgroundTableFRameLabel.setAlignmentY(0.0F);
+        tableFramePanel.add(backgroundTableFRameLabel);
+        backgroundTableFRameLabel.setBounds(0, 0, 1024, 768);
 
-	public static String getCurrentComponentName() {
-		if ( isAdiceGui ) {
-			return currentComponentName;
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(tableFramePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1024, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(tableFramePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
+        );
 
-		} else {
-			return NOT_A_DICE;
-		}
-	}
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
 
-	public static void setIsAdiceGui( Boolean isAdiceGui ) {
-		TableFrame.isAdiceGui = isAdiceGui;
-	}
+    private void endTurnButtonActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_endTurnButtonActionPerformed
+        if (controller.isPlaying())
+            controller.endTurn();
+    }//GEN-LAST:event_endTurnButtonActionPerformed
 
-	public static final String NOT_A_DICE = "notADice";
-	private static Boolean isAdiceGui;
-	private static String currentComponentName;
+    public void tornaMenu() {
+        this.setVisible(false);
+        App.menu.setVisible(true);
+    }
 
-	// Variables declaration - do not modify//GEN-BEGIN:variables
-	private javax.swing.JLabel backgroundTableFRameLabel;
-	private javax.swing.JPanel objCardPanel;
-	private javax.swing.JPanel tableFramePanel;
-	private javax.swing.JPanel toolCardPanel;
-	// End of variables declaration//GEN-END:variables
+    private static void setToolCards(List<String> id) {
+        toolCardPanel.setLayout(null);
+        for (int i = 0; i < 3; i++) {
+            CardField schemeCard = new CardField(id.get(i), "tc/", dimXcard, dimYcard);
+            schemeCard.setController(controller);
+            toolCardPanel.add(schemeCard);
+            toolCardList.add(schemeCard);
+            schemeCard.setIsToolCard(true);
+            schemeCard.setBounds(i * (173), 0, 173, 245);
+        }
+    }
+
+    private static void setOBJCards(List<String> id) {
+        objCardPanel.setLayout(null);
+        for (int i = 0; i < 3; i++) {
+            CardField schemeCard = new CardField(id.get(i), "po/", dimXcard, dimYcard);
+            objCardPanel.add(schemeCard);
+            objCardList.add(schemeCard);
+            schemeCard.setBounds(i * (173), 0, 173, 245);
+        }
+    }
+
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            //java.util.logging.Logger.getLogger(AddScheme.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            //java.util.logging.Logger.getLogger(AddScheme.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            //java.util.logging.Logger.getLogger(AddScheme.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            //java.util.logging.Logger.getLogger(AddScheme.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        /* Create and display the form */
+
+        Match match = new Match();
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new TableFrame(match, controller).setVisible(true);
+            }
+        });
+    }
+
+    public static void updateDice(int idPlayer, Dice dice, int i, int j) {
+        switch (idPlayer) {
+            case 1:
+                player1.setDice(i, j, dice);
+                break;
+            case 2:
+                player2.setDice(i, j, dice);
+                break;
+            case 3:
+                player3.setDice(i, j, dice);
+                break;
+            case 4:
+                player4.setDice(i, j, dice);
+                break;
+        }
+    }
+
+    public static void setCurrentComponentName(String nameComponentEntered, Boolean isAdiceGui) {
+        currentComponentName = nameComponentEntered;
+        TableFrame.isAdiceGui = isAdiceGui;
+    }
+
+    public static String getCurrentComponentName() {
+        if (isAdiceGui) {
+            return currentComponentName;
+
+        } else {
+            return NOT_A_DICE;
+        }
+    }
+
+    public static void setIsAdiceGui(Boolean isAdiceGui) {
+        TableFrame.isAdiceGui = isAdiceGui;
+    }
+
+    public static Boolean aToolCardIsUsed() {
+        for (CardField card : toolCardList) {
+            if (card.getUsed())
+                return true;
+        }
+        return false;
+    }
+
+    private static Boolean isAdiceGui;
+    private static String currentComponentName;
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private static javax.swing.JLabel backgroundTableFRameLabel;
+    private javax.swing.JButton endTurnButton;
+    private static javax.swing.JPanel objCardPanel;
+    private javax.swing.JPanel tableFramePanel;
+    private static javax.swing.JPanel toolCardPanel;
+    // End of variables declaration//GEN-END:variables
 }

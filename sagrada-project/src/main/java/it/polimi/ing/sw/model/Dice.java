@@ -10,11 +10,16 @@ public class Dice implements Serializable{
 
     public Dice(){}
 
+    public Dice(int numFacciaUp, Color color) {
+        this.numFacciaUp = numFacciaUp;
+        diceColor = color;
+    }
+
     // lancia il dado
 
     public int throwDice() {
         Random random = new Random();
-        int indice = random.nextInt(5) + 1;//genero indice casuale
+        int indice = random.nextInt(6) + 1;//genero indice casuale
         setNumFacciaUp(indice);
         return indice; //ritorno valore dell'indice casuale
     }

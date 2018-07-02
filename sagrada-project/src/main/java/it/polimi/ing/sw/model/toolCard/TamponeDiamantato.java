@@ -1,6 +1,6 @@
 package it.polimi.ing.sw.model.toolCard;
 
-import it.polimi.ing.sw.model.Dice;
+import it.polimi.ing.sw.model.*;
 
 
 public class TamponeDiamantato extends ToolCard {
@@ -12,9 +12,10 @@ public class TamponeDiamantato extends ToolCard {
         super(10);
     }
 
-    @Override
-    public void execute10(Dice dice) {
 
+    @Override
+    public void execute(DraftPool draftPool, RoundTrack neverUsed1, Scheme neverUsed2, Player[] neverUsed3, Bag neverUsed4, int indexInDraftPool, int neverUsed5, int neverUsed6, int neverUsed7, int neverUsed8, int neverUsed9) {
+        Dice dice = draftPool.getDice(indexInDraftPool);
         switch (dice.getNumFacciaUp()) {
             case 1:
                 dice.setNumFacciaUp(6);
@@ -34,11 +35,10 @@ public class TamponeDiamantato extends ToolCard {
             case 6:
                 dice.setNumFacciaUp(1);
                 break;
-
-            //default:
-            //break;
+            default:
+                break;
         }
-        incrementNumOfTokens();
+        //incrementNumOfTokens();
     }
 
 

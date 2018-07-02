@@ -6,12 +6,12 @@ import it.polimi.ing.sw.model.Scheme;
 
 import java.io.Serializable;
 
-
 public class PrivateObjectiveCard implements Serializable {
 
     private Color color;
     private String name;
     private String description;
+    private int id;
 
     public PrivateObjectiveCard(Color color) {
         this.color = color;
@@ -46,4 +46,12 @@ public class PrivateObjectiveCard implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 }
