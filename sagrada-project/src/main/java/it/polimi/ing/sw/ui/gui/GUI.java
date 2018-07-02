@@ -71,40 +71,6 @@ public class GUI implements UiUpdate {
 		//TODO add action handling
 
 		onGameUpdate( match, nickname );
-
-		boolean ok;
-		//System.out.print("Digita: \n- D se vuoi posizionare un dado sul tuo schema; \n- T se vuoi utilizzare una carta utensile; \n- I se vuoi visualizzare le informazioni degli altri giocatori; \n- E se vuoi terminare il tuo turno; \n- Q se vuoi uscire dalla partita.\n");
-
-        /*
-        do {
-            ok = true;
-            inText = scanner.nextLine();
-
-            switch (inText.toLowerCase()) {
-                case "q":
-                    System.out.println("Sei sicuro che vuoi uscire dalla partita? Digita S per sì o N per no.");
-                    if (scanner.nextLine().toLowerCase().equalsIgnoreCase("s")) {
-                        // TODO: gestire terminazione corretta del programma!
-                        System.out.println("Uscendo dalla partita...");
-                        System.exit(0);
-                    }
-                    break;
-                case "d":
-                    handleUseDice(match, false);
-                    break;
-                case "t":
-                    handleUseToolCard(match);   //TODO: metodi per le carte utensili
-                    break;
-
-                case "e":
-                    endTurn();
-                    break;
-                default:
-                    System.out.println("Scelta non valida");
-                    ok = false;
-                    break;
-            }
-        } while (!ok);*/
 	}
 
 
@@ -128,13 +94,7 @@ public class GUI implements UiUpdate {
 
 	public void handleUseDice( Match match, boolean toolCard9 ) {
 
-		//Normal use handled by GUI
-
-		//TODO check for toolcard9 use
-//		if ( toolCard9 )
-//			controller.useToolCard( 9, dice - 1, -1, row - 1, col - 1, -1, -1 );
-//		else
-//			controller.useDice( dice - 1, row - 1, col - 1 );
+		//handled by GUI
 
 	}
 
@@ -158,23 +118,10 @@ public class GUI implements UiUpdate {
 
 	public void useToolCard( int id, Match match ) throws RemoteException {
 		switch (id) {
-			case 1:
-				useToolCard1( match );
-				break;
-			case 2:
-			case 3:
-			case 4:
-				useToolCard23412( id );
-				break;
 			case 5:
 				useToolCard5( match );
 				break;
-			case 6:
-				useToolCard6( match );
-				break;
 			case 7:
-			case 8:
-				controller.useToolCard( id, -1, -1, -1, -1, -1, -1 );
 				break;
 			case 9:
 				useToolCard9( match );
@@ -194,40 +141,6 @@ public class GUI implements UiUpdate {
 	}
 
 
-	public void useToolCard1( Match match ) throws RemoteException {
-		int dice, operation;
-		do {
-			System.out.println( "Digita l'indice del dado che vuoi cambiare, tra 1 e " + match.getDraftPool().getSize() );
-			dice = scanner.nextInt();
-		} while (dice < 1 || dice > match.getDraftPool().getSize());
-		do {
-			System.out.println( "Digita 0 se vuoi aumentare il numero del dado di 1, 1 se vuoi diminuirlo" );
-			operation = scanner.nextInt();
-		} while ((operation != 0) && (operation != 1));
-		controller.useToolCard( 1, dice - 1, operation, -1, -1, -1, -1 );
-	}
-
-
-	public void useToolCard23412( int id ) throws RemoteException {
-		int sourceRow, sourceCol, destRow, destCol;
-		do {
-			System.out.println( "Digita il numero della riga dello schema del dado che vuoi spostare, tra 1 e " + Constants.NUM_ROWS );
-			sourceRow = scanner.nextInt();
-		} while (sourceRow < 1 || sourceRow > Constants.NUM_ROWS);
-		do {
-			System.out.println( "Digita il numero della colonna dello schema del dado che vuoi spostare, tra 1 e " + Constants.NUM_COLS );
-			sourceCol = scanner.nextInt();
-		} while (sourceCol < 1 || sourceCol > Constants.NUM_COLS);
-		do {
-			System.out.println( "Digita il numero della riga dello schema in cui vuoi spostare il dado, tra 1 e " + Constants.NUM_ROWS );
-			destRow = scanner.nextInt();
-		} while (destRow < 1 || destRow > Constants.NUM_ROWS);
-		do {
-			System.out.println( "Digita il numero della colonna dello schema in cui vuoi spostare il dado, tra 1 e " + Constants.NUM_COLS );
-			destCol = scanner.nextInt();
-		} while (destCol < 1 || destCol > Constants.NUM_COLS);
-		controller.useToolCard( id, -1, -1, sourceRow - 1, sourceCol - 1, destRow - 1, destCol - 1 );
-	}
 
 
 	public void useToolCard5( Match match ) throws RemoteException {
@@ -254,14 +167,6 @@ public class GUI implements UiUpdate {
 	}
 
 
-	public void useToolCard6( Match match ) throws RemoteException {
-		int dice;
-		do {
-			System.out.println( "Digita l'indice del dado che vuoi tirare, tra 1 e " + match.getDraftPool().getSize() );
-			dice = scanner.nextInt();
-		} while (dice < 1 || dice > match.getDraftPool().getSize());
-		controller.useToolCard( 6, dice - 1, -1, -1, -1, -1, -1 );
-	}
 
 
 	public void useToolCard9( Match match ) {

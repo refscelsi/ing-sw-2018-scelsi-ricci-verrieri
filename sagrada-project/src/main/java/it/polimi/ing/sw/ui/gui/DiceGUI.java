@@ -134,7 +134,11 @@ public class DiceGUI extends javax.swing.JPanel {
             }
 
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                diceLabelMousePressed(evt);
+                try {
+                    diceLabelMousePressed(evt);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
             }
 
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -170,14 +174,19 @@ public class DiceGUI extends javax.swing.JPanel {
         TableFrame.setIsAdiceGui(false);
     }//GEN-LAST:event_diceLabelMouseExited
 
-    private void diceLabelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_diceLabelMousePressed
+    private void diceLabelMousePressed(java.awt.event.MouseEvent evt) throws RemoteException {//GEN-FIRST:event_diceLabelMousePressed
         if (TableFrame.aToolCardIsUsed()) {
             switch (TableFrame.idSelectedTc) {
                 case "1":
                     ToolCard1ActionForm toolCard1ActionForm = new ToolCard1ActionForm(box.getDice(), controller);
                     toolCard1ActionForm.setVisible(true);
+                    TableFrame.isNotToolCardAnymore(1 - 1);
                     break;
-                case "2":
+                case "6":
+                    if (0 <= Integer.valueOf(getName()) && 9 > Integer.valueOf(getName())) {
+                        controller.useToolCard(6, Integer.valueOf(getName()), -1, -1, -1, -1, -1);
+                        TableFrame.isNotToolCardAnymore(6 - 1);
+                    }
                     break;
             }
         } else {
@@ -213,22 +222,62 @@ public class DiceGUI extends javax.swing.JPanel {
     private void injectDice(MouseEvent evt) throws RemoteException {
         String nameComponent = TableFrame.getCurrentComponentName();
         char id = nameComponent.charAt(0);
+
         if (!NOT_A_DICE.equals(nameComponent) && TableFrame.isPlayerTurn(controller.getNickname(), id)) {
-            switch (id) {
-                case '1':
-                    TableFrame.updateDice(1, floatingDiceFrame.getDice(), (int) nameComponent.charAt(1) - 48, (int) nameComponent.charAt(2) - 48);
-                    break;
-                case '2':
-                    TableFrame.updateDice(2, floatingDiceFrame.getDice(), (int) nameComponent.charAt(1) - 48, (int) nameComponent.charAt(2) - 48);
-                    break;
-                case '3':
-                    TableFrame.updateDice(3, floatingDiceFrame.getDice(), (int) nameComponent.charAt(1) - 48, (int) nameComponent.charAt(2) - 48);
-                    break;
-                case '4':
-                    TableFrame.updateDice(4, floatingDiceFrame.getDice(), (int) nameComponent.charAt(1) - 48, (int) nameComponent.charAt(2) - 48);
-                    break;
+            int destY = (int) nameComponent.charAt(2) - 48;
+            int destX = (int) nameComponent.charAt(1) - 48;
+            handleToolCards(id, destX, destY);
+        }
+    }
+
+    private void handleToolCards(char id, int destX, int destY) throws RemoteException {
+        if (TableFrame.isToolCard.get(2 - 1)) {
+            if (TableFrame.isPlayerScheme(controller.getNickname(), id)) {
+                controller.useToolCard(Integer.valueOf(TableFrame.idSelectedTc), -1, -1, floatingDiceFrame.getDiceX() - 1, floatingDiceFrame.getDiceY() - 1, destX - 1, destY - 1);
+                TableFrame.isNotToolCardAnymore(2 - 1);
+                reprindDices(id, destX, destY);
             }
-            controller.useDice(box.getDice().getNumFacciaUp() - 1, box.getX() - 1, box.getY() - 1);
+        } else if (TableFrame.isToolCard.get(3 - 1)) {
+            if (TableFrame.isPlayerScheme(controller.getNickname(), id)) {
+                controller.useToolCard(Integer.valueOf(TableFrame.idSelectedTc), -1, -1, floatingDiceFrame.getDiceX() - 1, floatingDiceFrame.getDiceY() - 1, destX - 1, destY - 1);
+                TableFrame.isNotToolCardAnymore(3 - 1);
+                reprindDices(id, destX, destY);
+            }
+        } else if (TableFrame.isToolCard.get(4 - 1)) {
+            if (TableFrame.isPlayerScheme(controller.getNickname(), id)) {
+                controller.useToolCard(Integer.valueOf(TableFrame.idSelectedTc), -1, -1, floatingDiceFrame.getDiceX() - 1, floatingDiceFrame.getDiceY() - 1, destX - 1, destY - 1);
+                TableFrame.isNotToolCardAnymore(4 - 1);
+                reprindDices(id, destX, destY);
+            }
+        } else {
+            if (!TableFrame.isToolCard.get(9 - 1)) {
+                if (0 <= Integer.valueOf(getName()) && 9 > Integer.valueOf(getName())) {
+                    controller.useDice(Integer.valueOf(getName()), box.getX() - 1, box.getY() - 1);
+                }
+            } else {
+                if (0 <= Integer.valueOf(getName()) && 9 > Integer.valueOf(getName())) {
+                    TableFrame.isNotToolCardAnymore(9 - 1);
+                    controller.useToolCard(9, Integer.valueOf(getName()), -1, box.getX() - 1, box.getY() - 1, -1, -1);
+                }
+            }
+            reprindDices(id, destX, destY);
+        }
+    }
+
+    private void reprindDices(char id, int destX, int destY) {
+        switch (id) {
+            case '1':
+                TableFrame.updateDice(1, floatingDiceFrame.getDice(), destX, destY);
+                break;
+            case '2':
+                TableFrame.updateDice(2, floatingDiceFrame.getDice(), destX, destY);
+                break;
+            case '3':
+                TableFrame.updateDice(3, floatingDiceFrame.getDice(), destX, destY);
+                break;
+            case '4':
+                TableFrame.updateDice(4, floatingDiceFrame.getDice(), destX, destY);
+                break;
         }
     }
 

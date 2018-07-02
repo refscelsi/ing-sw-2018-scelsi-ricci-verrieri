@@ -84,6 +84,7 @@ public class DiceFieldPanel extends javax.swing.JPanel {
         for (int i = 0; i < dices.size(); i++) {
             diceGUIList.get(i).setDice(dices.get(i));
             diceGUIList.get(i).setVisible(true);
+            diceGUIList.get(i).setName(String.valueOf(i));
         }
     }
 

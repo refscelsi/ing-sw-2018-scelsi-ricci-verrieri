@@ -1,8 +1,11 @@
 package it.polimi.ing.sw.ui.gui;
 
+import it.polimi.ing.sw.client.View;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.rmi.RemoteException;
 
 public class CardField extends javax.swing.JPanel {
 
@@ -14,7 +17,7 @@ public class CardField extends javax.swing.JPanel {
     private int dimYcard;
     private Boolean isToolCard;
     private String id;
-
+    private View controller;
 //    public CardField(int dimXcard, int dimYcard) {
 //        this.dimXcard=dimXcard;
 //        this.dimYcard=dimYcard;
@@ -34,6 +37,10 @@ public class CardField extends javax.swing.JPanel {
         FINAL_IMAGE_PATH = IMAGE_PATH.concat(cardType);
         setIcons(FINAL_IMAGE_PATH.concat(cardName).concat(".png"));
         used = true;
+    }
+
+    public void setController(View controller) {
+        this.controller = controller;
     }
 
     public void setUsed(boolean used) {
@@ -76,7 +83,11 @@ public class CardField extends javax.swing.JPanel {
         cardFieldLabel.setPreferredSize(new java.awt.Dimension(173, 245));
         cardFieldLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                cardFieldLabelMouseClicked(evt);
+                try {
+                    cardFieldLabelMouseClicked(evt);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
             }
 
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -99,13 +110,27 @@ public class CardField extends javax.swing.JPanel {
         cardFieldLabel.setBorder(null);
     }//GEN-LAST:event_cardFieldLabelMouseExited
 
-    private void cardFieldLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cardFieldLabelMouseClicked
+    private void cardFieldLabelMouseClicked(java.awt.event.MouseEvent evt) throws RemoteException {//GEN-FIRST:event_cardFieldLabelMouseClicked
         if (isToolCard) {
             if (!used) {
                 setUsed(true);
                 cardFieldLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 51, 51)));
                 TableFrame.idSelectedTc = id;
+                if (TableFrame.aToolCardIsUsed()) {
+                    switch (TableFrame.idSelectedTc) {
+                        case "7"://TODO show popup funzionamento
+                            controller.useToolCard(7, -1, -1, -1, -1, -1, -1);
+                            TableFrame.isNotToolCardAnymore(7 - 1);
+                        case "8":
+                            controller.useToolCard(8, -1, -1, -1, -1, -1, -1);
+                            TableFrame.isNotToolCardAnymore(8 - 1);
+                            break;//
+                    }
+                }
             } else {
+                if (TableFrame.isToolCard.get(7 - 1)) {
+
+                }
                 setUsed(false);
                 TableFrame.idSelectedTc = null;
             }
