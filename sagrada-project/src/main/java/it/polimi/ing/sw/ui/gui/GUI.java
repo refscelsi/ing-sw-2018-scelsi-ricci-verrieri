@@ -5,8 +5,8 @@ import it.polimi.ing.sw.client.View;
 import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.model.Scheme;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
+import it.polimi.ing.sw.ui.gui.toolCardsActrionFrames.ToolCard11ActionForm;
 import it.polimi.ing.sw.ui.gui.toolCardsActrionFrames.ToolCard1ActionForm;
-import it.polimi.ing.sw.util.Constants;
 
 import javax.swing.*;
 import java.rmi.RemoteException;
@@ -145,6 +145,11 @@ public class GUI implements UiUpdate {
     public void useToolCard12(FloatingDiceFrame floatingDiceFrame, int destX, int destY) throws RemoteException {
         controller.useToolCard(12, -1, -1, floatingDiceFrame.getDiceX() - 1, floatingDiceFrame.getDiceY() - 1, destX - 1, destY - 1);
         TableFrame.isNotToolCardAnymore(12 - 1);
+    }
+
+    public void useToolCard11(int value, int destX, int destY) throws RemoteException {
+        controller.useToolCard(11, -1, value, destX, destY, -1, -1);
+        TableFrame.isNotToolCardAnymore(11 - 1);
     }
 
     public void useToolCard9(int name, int destX, int destY) throws RemoteException {
@@ -290,33 +295,9 @@ public class GUI implements UiUpdate {
             }
             break;
             case 11: {
-                JOptionPane.showMessageDialog(null,
-                        "Select the new dice");
-
-
-
-
-                //TODO FINESTRA DI DIALOGO DOVE IMPOSTO
-                int dice, row, col;
-                do {
-                    System.out.println("Digita il valore del nuovo dado, tra 1 e 6");
-                    dice = scanner.nextInt();
-                } while (dice < 1 || dice > 6);
-                do {
-                    System.out.println("Digita il numero della riga dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_ROWS);
-                    row = scanner.nextInt();
-                } while (row < 1 || row > Constants.NUM_ROWS);
-                do {
-                    System.out.println("Digita il numero della colonna dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_COLS);
-                    col = scanner.nextInt();
-                } while (col < 1 || col > Constants.NUM_COLS);
-
-
-
-
-
-
-                controller.useToolCard(11, -1, dice, row - 1, col - 1, -1, -1);
+                int value = 1;
+                ToolCard11ActionForm toolCard11ActionForm = new ToolCard11ActionForm(value, this);
+                toolCard11ActionForm.setVisible(true);
             }
             break;
             case 12: {

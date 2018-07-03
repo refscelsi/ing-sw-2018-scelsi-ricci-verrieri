@@ -1,13 +1,17 @@
 package it.polimi.ing.sw.ui.gui.toolCardsActrionFrames;
 
+import it.polimi.ing.sw.ui.gui.GUI;
+
 import java.rmi.RemoteException;
 
 public class ToolCard11ActionForm extends javax.swing.JFrame {
 
     private int numFaceUp;
     private int operation = -1;
+    private GUI gui;
 
-    public ToolCard11ActionForm(int numFaceUp) {
+    public ToolCard11ActionForm(int numFaceUp, GUI gui) {
+        this.gui=gui;
         initComponents();
         numberButton.setText(String.valueOf(numFaceUp));
     }
@@ -127,6 +131,7 @@ public class ToolCard11ActionForm extends javax.swing.JFrame {
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_okButtonActionPerformed
         setVisible(false);
+        gui.useToolCard11(numFaceUp);
     }//GEN-LAST:event_okButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
