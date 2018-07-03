@@ -73,16 +73,6 @@ public class GUI implements UiUpdate {
         onGameUpdate(resetMatch, controller.getNickname());
     }
 
-    public void useToolCard(int id, Match match) throws RemoteException {
-        switch (id) {
-            case 5:
-                useToolCard5(match);
-                break;
-            default:
-                break;
-        }
-    }
-
     public void useToolCard1(DiceGUI dice) {
         ToolCard1ActionForm toolCard1ActionForm = new ToolCard1ActionForm(dice, this);
         toolCard1ActionForm.setVisible(true);
@@ -172,26 +162,24 @@ public class GUI implements UiUpdate {
         //onGameUpdate(controller.getMatch(), getNickname());
     }
 
-    public void useToolCard5(Match match) throws RemoteException {
-        int dice, round, indexInRound;
+    public void useToolCard5(int value, int destX, int destY) throws RemoteException {
+        controller.useToolCard(11, -1, value, destX, destY, -1, -1);
+        TableFrame.isNotToolCardAnymore(11 - 1);
+    }
+
+    public void useToolCard5(int dice, int round) throws RemoteException {
+        resetMatch=controller.getMatch();
+
         boolean roundTrackIsFull = controller.checkIfRoundTrackIsFull();
         if (!roundTrackIsFull) {
-            System.out.println("Non puoi utilizzare questa carta perché ancora non ci sono dadi sul tracciato dei round");
-            //chooseAction(match, controller.getNickname());
-        } else {
-            do {
-                System.out.println("Digita l'indice del dado della riserva che vuoi scambiare, tra 1 e " + match.getDraftPool().getSize());
-                dice = scanner.nextInt();
-            } while (dice < 1 || dice > match.getDraftPool().getSize());
-            do {
-                System.out.println("Digita il numero di round a cui appartiene il dado con cui vuoi scambiarlo, tra 1 e " + match.getRoundTrack().getRoundTrackSize());
-                round = scanner.nextInt();
-            } while (round < 1 || round > match.getRoundTrack().getRoundTrackSize());
-            do {
-                System.out.println("Digita l'indice del dado nel round che hai scelto, tra 0 e " + (match.getRoundTrack().getNumberOfDices(round) - 1));
-                indexInRound = scanner.nextInt();
-            } while (indexInRound < 0 || indexInRound > match.getRoundTrack().getNumberOfDices(round) - 1);
-            controller.useToolCard(5, dice - 1, -1, round, indexInRound, -1, -1);
+            JOptionPane.showMessageDialog(null,
+                    "Non puoi utilizzare questa carta perché ancora non ci sono dadi sul tracciato dei round",
+                    "Not valid Action",
+                    JOptionPane.ERROR_MESSAGE);
+
+            onGameUpdate(resetMatch,getNickname());
+
+            controller.useToolCard(5, dice - 1, -1, round, /*indexInRound*/0, -1, -1);
         }
     }
 

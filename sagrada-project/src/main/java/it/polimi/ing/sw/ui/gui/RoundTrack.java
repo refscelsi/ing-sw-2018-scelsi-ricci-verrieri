@@ -15,8 +15,10 @@ public class RoundTrack extends javax.swing.JPanel {
     private static final int dimXdice = 50;
     private static final int dimYdice = 50;
     private DraftPool[] roundTrack;
+    private GUI gui;
 
-    public RoundTrack() {
+    public RoundTrack(GUI gui) {
+        this.gui=gui;
         initComponents();
         diceGUIList = new ArrayList<>();
 
@@ -59,7 +61,9 @@ public class RoundTrack extends javax.swing.JPanel {
             DiceGUI diceGUI = new DiceGUI(false, dimXdice, dimYdice);
             imageLabel.add(diceGUI);
             diceGUI.setBounds(10 + i * (50 + 10), 10, dimXdice, dimYdice);
+            diceGUI.setName(String.valueOf(11+i));
             diceGUIList.add(diceGUI);
+            diceGUI.setController(gui);
         }
     }
 
@@ -84,7 +88,6 @@ public class RoundTrack extends javax.swing.JPanel {
     //TODO add on click open list of remaining dices
     public void setDraftPool(DraftPool[] roundTrack) {
         this.roundTrack = roundTrack;
-
 
         int counter = 0;
         for (DraftPool dices : roundTrack) {

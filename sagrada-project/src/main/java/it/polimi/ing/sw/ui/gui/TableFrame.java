@@ -17,6 +17,7 @@ import static it.polimi.ing.sw.util.Constants.SAGRADA_ICO;
 public class TableFrame extends javax.swing.JFrame {
 
     public static List<Boolean> isToolCard;
+    public static DiceGUI toolCard5Dice;
     private static Match match;
     private static List<CardField> toolCardList;
     private static List<CardField> objCardList;
@@ -244,7 +245,7 @@ public class TableFrame extends javax.swing.JFrame {
     }
 
     private static void addRoundTrack() {
-        roundTrack = new RoundTrack();
+        roundTrack = new RoundTrack(gui);
         backgroundTableFRameLabel.add(roundTrack);
         roundTrack.setBounds(207, 20, 610, 70);
     }

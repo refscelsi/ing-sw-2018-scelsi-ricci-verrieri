@@ -11,7 +11,6 @@ import java.rmi.RemoteException;
 
 import static it.polimi.ing.sw.model.Color.*;
 import static it.polimi.ing.sw.util.Constants.IMAGE_PATH;
-import static it.polimi.ing.sw.util.Constants.NOT_A_DICE;
 
 public class DiceGUI extends javax.swing.JPanel {
 
@@ -46,9 +45,9 @@ public class DiceGUI extends javax.swing.JPanel {
 
     private void updateBox() {
         updateIcon(String.valueOf(box.getShade()), false);
-        if(box.isFull()){
+        if (box.isFull()) {
             updateDice();
-        }else {
+        } else {
             updateColor(box.getColor());
         }
 
@@ -180,11 +179,21 @@ public class DiceGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_diceLabelMouseExited
 
     private void diceLabelMousePressed(java.awt.event.MouseEvent evt) throws RemoteException {//GEN-FIRST:event_diceLabelMousePressed
-        if (gui.isPlaying()){
+        if (gui.isPlaying()) {
             if (TableFrame.aToolCardIsUsed()) {
                 switch (TableFrame.idSelectedTc) {
                     case "1":
                         gui.useToolCard1(this);
+                        break;
+                    case "5":
+                        if (20 > Integer.valueOf(evt.getComponent().getName()) && 9 < Integer.valueOf(evt.getComponent().getName())) {
+                            if (null == TableFrame.toolCard5Dice) {
+                                TableFrame.toolCard5Dice = this;
+                            } else if (Integer.valueOf(evt.getComponent().getName()) < 10) {
+                                gui.useToolCard5(Integer.valueOf(evt.getComponent().getName()),Integer.valueOf(TableFrame.toolCard5Dice.getName())-10);
+                            }
+                        }
+
                         break;
                     case "6":
                         gui.useToolCard6(Integer.valueOf(getName()));
@@ -249,7 +258,6 @@ public class DiceGUI extends javax.swing.JPanel {
             if (TableFrame.isPlayerScheme(gui.getNickname(), id)) {
                 reprindDices(id, destX, destY);
                 gui.useToolCard2(floatingDiceFrame, destX, destY);
-
             }
         } else if (TableFrame.isToolCard.get(3 - 1)) {
             if (TableFrame.isPlayerScheme(gui.getNickname(), id)) {
