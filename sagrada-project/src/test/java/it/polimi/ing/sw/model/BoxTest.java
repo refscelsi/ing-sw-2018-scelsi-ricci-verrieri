@@ -21,6 +21,27 @@ public class BoxTest{
     }
 
     @Test
+    public void cloneBox(){
+        Box box= new Box(1,2,Color.GREEN,0);
+        assertTrue(box.getX()==1);
+        assertTrue(box.getY()==2);
+        assertTrue(box.getColor()==Color.GREEN);
+        assertTrue(box.getShade()==0);
+        Box box1=new Box(2,3);
+        assertTrue(box1.getX()==2);
+        assertTrue(box1.getY()==3);
+        assertTrue(box1.getColor()==Color.WHITE);
+        assertTrue(box1.getShade()==0);
+        assertTrue(box1.isFull()==false);
+        box1=box.cloneBox();
+        assertTrue(box1.getX()==1);
+        assertTrue(box1.getY()==2);
+        assertTrue(box1.getColor()==Color.GREEN);
+        assertTrue(box1.getShade()==0);
+
+    }
+
+    @Test
     public void setX(){
         box.setX(1);
         box.setY(1);
