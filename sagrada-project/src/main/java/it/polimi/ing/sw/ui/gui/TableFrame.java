@@ -226,7 +226,7 @@ public class TableFrame extends javax.swing.JFrame {
     }
 
     private static void addDiceFieldPAnel() {
-        diceFieldPanel = new DiceFieldPanel();
+        diceFieldPanel = new DiceFieldPanel(gui);
         backgroundTableFRameLabel.add(diceFieldPanel);
         diceFieldPanel.setBounds(250, 100, 520, 140);
     }
@@ -350,8 +350,9 @@ public class TableFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void endTurnButtonActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_endTurnButtonActionPerformed
-        if (gui.isPlaying())
+        if (gui.isPlaying()){
             gui.endTurn();
+        }
     }//GEN-LAST:event_endTurnButtonActionPerformed
 
     public void tornaMenu() {
@@ -435,7 +436,6 @@ public class TableFrame extends javax.swing.JFrame {
     public static String getCurrentComponentName() {
         if (isAdiceGui) {
             return currentComponentName;
-
         } else {
             return NOT_A_DICE;
         }

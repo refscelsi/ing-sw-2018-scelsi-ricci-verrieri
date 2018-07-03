@@ -43,4 +43,8 @@ class FloatingDiceFrame extends javax.swing.JWindow {
     public int getDiceY() {
         return diceGUI.getBox().getY();
     }
+
+    public void setGUI(GUI gui) {
+        diceGUI.setController(gui);
+    }
 }

@@ -194,13 +194,13 @@ public class GUI implements UiUpdate {
         if (0 <= name && 9 > name) {
             TableFrame.isNotToolCardAnymore(9 - 1);
             //TODO handling empty cose
-            controller.useToolCard(9, name, -1, box.getX() - 1, box.getY() - 1, -1, -1);
+            controller.useToolCard(9, name, -1, box.getX() , box.getY() , -1, -1);
         }
     }
 
     public void useDice(int name, Box box) throws RemoteException {
         //TODO handling empty cose
-        controller.useDice(name, box.getX() - 1, box.getY() - 1);
+        controller.useDice(name, box.getX() , box.getY() );
     }
 
 
@@ -262,6 +262,7 @@ public class GUI implements UiUpdate {
     @Override
     public void onTurnStart(Match match, String nickname) throws RemoteException {
         chooseAction(match, nickname);
+        onGameUpdate(match,nickname);
     }
 
     @Override
@@ -366,8 +367,11 @@ public class GUI implements UiUpdate {
 
     @Override
     public void onSuccess(String message) {
-        JOptionPane.showMessageDialog(null,
-                message);
+        if(null!=message){
+            /*
+            JOptionPane.showMessageDialog(null,
+                    message);*/
+        }
     }
 
     public String getNickname() {

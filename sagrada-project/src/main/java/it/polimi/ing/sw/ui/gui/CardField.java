@@ -36,7 +36,7 @@ public class CardField extends javax.swing.JPanel {
         initComponents();
         FINAL_IMAGE_PATH = IMAGE_PATH.concat(cardType);
         setIcons(FINAL_IMAGE_PATH.concat(cardName).concat(".png"));
-        used = true;
+        used = false;
     }
 
     public void setController(GUI gui) {

@@ -36,6 +36,7 @@ public class VetrataPanel extends javax.swing.JPanel {
 
     public void setDice(int i, int j, Dice dice) {
         dices[i][j].setDice(dice);
+
     }
 
     public DiceGUI[][] getDices() {
@@ -83,6 +84,7 @@ public class VetrataPanel extends javax.swing.JPanel {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 5; j++) {
                 dices[i][j].setBox(scheme.getBox(i, j));
+                //dices[i][j]
             }
         }
     }

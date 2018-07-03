@@ -46,7 +46,12 @@ public class DiceGUI extends javax.swing.JPanel {
 
     private void updateBox() {
         updateIcon(String.valueOf(box.getShade()), false);
-        updateColor(box.getColor());
+        if(box.isFull()){
+            updateColor(box.getDice().getDiceColor());
+        }else {
+            updateColor(box.getColor());
+        }
+
         diceLabel.repaint();
     }
 
@@ -75,6 +80,7 @@ public class DiceGUI extends javax.swing.JPanel {
         if (WHITE == color) {
             diceLabel.setBackground(new java.awt.Color(255, 255, 255));
         }
+        diceLabel.repaint();
     }
 
     public Box getBox() {
@@ -164,6 +170,7 @@ public class DiceGUI extends javax.swing.JPanel {
         diceLabel.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         setCursor(new Cursor(Cursor.HAND_CURSOR));
         TableFrame.setCurrentComponentName(this.getName(), true);
+        System.out.println(getName());
     }//GEN-LAST:event_diceLabelMouseEntered
 
     private void diceLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_diceLabelMouseExited
@@ -190,8 +197,10 @@ public class DiceGUI extends javax.swing.JPanel {
             }
         } else {
             if (box.isFull()) {
-                wasPressed = true;
-                floatingDiceFrame = new FloatingDiceFrame(box.getDice(), DIM_X_FLOATING_DICE, DIM_Y_FLOATING_DICE);
+                //if(gui.getNickname()==TableFrame.getMatch().getPlayerPlaying()){
+                    wasPressed = true;
+                    floatingDiceFrame = new FloatingDiceFrame(box.getDice(), DIM_X_FLOATING_DICE, DIM_Y_FLOATING_DICE);
+                //}
             }
         }
     }//GEN-LAST:event_diceLabelMousePressed
@@ -200,29 +209,32 @@ public class DiceGUI extends javax.swing.JPanel {
         wasPressed = false;
         if (this != evt.getComponent() && floatingDiceFrame != null) {
             floatingDiceFrame.setVisible(false);
-            removeDice();
             injectDice(evt);
             floatingDiceFrame = null;
         }
     }//GEN-LAST:event_diceLabelMouseReleased
 
     private void removeDice() {
-        box.removeDice();
+        box.removeDice();/*
         diceLabel.setIcon(null);
+        box.setColor(WHITE);*/
+        this.setVisible(false);
     }
 
     private void diceLabelMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_diceLabelMouseDragged
         if (wasPressed) {
             floatingDiceFrame.setVisible(true);
             floatingDiceFrame.setLocation(evt.getXOnScreen() + 3, evt.getYOnScreen() - DIM_Y_FLOATING_DICE - 3);
+            floatingDiceFrame.setGUI(gui);
         }
     }//GEN-LAST:event_diceLabelMouseDragged
 
     private void injectDice(MouseEvent evt) throws RemoteException {
         String nameComponent = TableFrame.getCurrentComponentName();
         char id = nameComponent.charAt(0);
+        System.out.println(id);
 
-        if (!NOT_A_DICE.equals(nameComponent) && TableFrame.isPlayerTurn(gui.getNickname(), id)) {
+        if (/*!NOT_A_DICE.equals(nameComponent) &&*/ TableFrame.isPlayerTurn(gui.getNickname(), id)) {
             int destY = (int) nameComponent.charAt(2) - 48;
             int destX = (int) nameComponent.charAt(1) - 48;
             handleToolCards(id, destX, destY);
@@ -232,18 +244,19 @@ public class DiceGUI extends javax.swing.JPanel {
     private void handleToolCards(char id, int destX, int destY) throws RemoteException {
         if (TableFrame.isToolCard.get(2 - 1)) {
             if (TableFrame.isPlayerScheme(gui.getNickname(), id)) {
-                gui.useToolCard2(floatingDiceFrame, destX, destY);
                 reprindDices(id, destX, destY);
+                gui.useToolCard2(floatingDiceFrame, destX, destY);
+
             }
         } else if (TableFrame.isToolCard.get(3 - 1)) {
             if (TableFrame.isPlayerScheme(gui.getNickname(), id)) {
-                gui.useToolCard3(floatingDiceFrame, destX, destY);
                 reprindDices(id, destX, destY);
+                gui.useToolCard3(floatingDiceFrame, destX, destY);
             }
         } else if (TableFrame.isToolCard.get(4 - 1)) {
             if (TableFrame.isPlayerScheme(gui.getNickname(), id)) {
-                gui.useToolCard4(floatingDiceFrame, destX, destY);
                 reprindDices(id, destX, destY);
+                gui.useToolCard4(floatingDiceFrame, destX, destY);
             }
         } else if (TableFrame.isToolCard.get(12 - 1)) {
             boolean roundTrackIsFull = gui.checkIfRoundTrackIsFull();
@@ -253,22 +266,28 @@ public class DiceGUI extends javax.swing.JPanel {
                         "Not valid Action",
                         JOptionPane.ERROR_MESSAGE);
             } else {
-                gui.useToolCard12(floatingDiceFrame, destX, destY);
                 reprindDices(id, destX, destY);
+                gui.useToolCard12(floatingDiceFrame, destX, destY);
+
             }
         } else {
             if (!TableFrame.isToolCard.get(9 - 1)) {
                 if (0 <= Integer.valueOf(getName()) && 9 > Integer.valueOf(getName())) {
+                    reprindDices(id, destX, destY);
                     gui.useDice(Integer.valueOf(getName()), box);
+
                 }
             } else {
+                reprindDices(id, destX, destY);
                 gui.useToolCard9(Integer.valueOf(getName()), box);
+
             }
-            reprindDices(id, destX, destY);
+            //reprindDices(id, destX, destY);
         }
     }
 
     private void reprindDices(char id, int destX, int destY) {
+        removeDice();
         switch (id) {
             case '1':
                 TableFrame.updateDice(1, floatingDiceFrame.getDice(), destX, destY);
