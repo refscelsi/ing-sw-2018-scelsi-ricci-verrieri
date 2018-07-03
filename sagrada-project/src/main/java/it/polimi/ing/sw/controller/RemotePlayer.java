@@ -29,4 +29,13 @@ public interface RemotePlayer extends Remote {
 
     void onOtherInfoToolCard(int id) throws RemoteException;
 
+    void onNotValidUseDiceException(String message) throws RemoteException;
+
+    void onNotValidToolCardException(int id, String message) throws RemoteException;
+
+    void onNotValidPlayException(String message) throws RemoteException;
+
+    void onNotValidNicknameException(String message) throws RemoteException;
+
+    void onNotPossibleConnectionException(String message) throws RemoteException;
 }

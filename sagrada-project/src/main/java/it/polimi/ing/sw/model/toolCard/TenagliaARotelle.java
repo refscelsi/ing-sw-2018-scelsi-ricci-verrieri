@@ -1,10 +1,6 @@
 package it.polimi.ing.sw.model.toolCard;
 
 import it.polimi.ing.sw.model.*;
-import it.polimi.ing.sw.model.exceptions.NotValidException;
-import it.polimi.ing.sw.model.exceptions.ToolCardException;
-
-import java.util.ArrayList;
 
 
 public class TenagliaARotelle extends ToolCard {

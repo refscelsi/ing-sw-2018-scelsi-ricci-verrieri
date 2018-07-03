@@ -16,7 +16,7 @@ public interface UiUpdate {
 
     void onTurnStart(Match match, String nickname);
 
-    void onPlaceDiceNotValid(NotValidException e);
+    void onPlaceDiceNotValid(String message);
 
     void onGameUpdate(Match match, String nickname);
 
@@ -24,7 +24,7 @@ public interface UiUpdate {
 
     void onSchemeToChoose(Match match, String nickname, String message);
 
-    void onUseToolCardNotValid(int id, Match match, String e);
+    void onUseToolCardNotValid(int id, Match match, String message);
 
     //void onUseToolCard12IIStepNotValid(Match match, String e);
 

@@ -16,19 +16,16 @@ public class DifferentShadeRow extends ObjectiveCard {
         Box[][] boxes = scheme.getBoxes();
         ArrayList<Integer> shades = new ArrayList<>();
         for (i = 0; i < 4; i++) {
-            shades.add(1);
-            shades.add(2);
-            shades.add(3);
-            shades.add(4);
-            shades.add(5);
-            shades.add(6);
             for (j = 0; j < 5; j++) {
                 if (boxes[i][j].isFull()) {
-                    shades.remove(boxes[i][j].getDice().getNumFacciaUp());
+                    if (!shades.contains(boxes[i][j].getDice().getNumFacciaUp())) {
+                        shades.remove(boxes[i][j].getDice().getNumFacciaUp());
+                    }
                 }
             }
-            if (shades.size() == 1)
+            if (shades.size() == 5) {
                 score = score + 5;
+            }
             shades.clear();
         }
         return score;

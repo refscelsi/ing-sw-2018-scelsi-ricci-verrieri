@@ -9,10 +9,8 @@ import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
 import it.polimi.ing.sw.controller.network.socket.PlayerControllerInterfaceSocket;
 import it.polimi.ing.sw.controller.network.socket.ServerUpdateHandler;
 import it.polimi.ing.sw.model.Match;
-import it.polimi.ing.sw.model.exceptions.NetworkException;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.model.exceptions.NotValidNicknameException;
-import it.polimi.ing.sw.model.exceptions.ToolCardException;
 import it.polimi.ing.sw.ui.cli.CLI;
 //import it.polimi.ing.sw.ui.gui.GUI;
 import it.polimi.ing.sw.util.Constants;
@@ -27,6 +25,8 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
 import java.util.TimerTask;
 import java.util.Timer;
+
+import static java.lang.System.exit;
 
 public class View extends UnicastRemoteObject implements RemotePlayer {
     /**
@@ -126,7 +126,6 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         };
         System.out.println("fine thread fuori onSetPlaying");
         new Thread(task2).start();
-
     }
 
     @Override
@@ -183,11 +182,30 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         thread3.start();*/
     }
 
+    @Override
+    public void onNotValidUseDiceException(String message) {
+        ui.onPlaceDiceNotValid(message);
+    }
 
+    @Override
+    public void onNotValidToolCardException(int id, String message) {
+        ui.onUseToolCardNotValid(id, match, message);
+    }
 
-    public void onNotValidPlay(String e) {
-        ui.onActionNotValid(e);
+    @Override
+    public void onNotValidPlayException(String message) {
+        ui.onActionNotValid(message);
         ui.onTurnStart(match, nickname);
+    }
+
+    @Override
+    public void onNotValidNicknameException(String message) {
+        ui.onLogin(message + " Inserisci un nickname differente");
+    }
+
+    @Override
+    public void onNotPossibleConnectionException(String message) {
+        ui.onActionNotValid(message);
     }
 
 
@@ -224,16 +242,9 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
             this.isLogged = true;
             ui.onSuccess("Complimenti, ti sei loggato come " + nickname);
             this.nickname = nickname;
-        } catch (NotValidNicknameException e) {
-            ui.onLogin(e.getMessage() + " Inserisci un nickname differente");
         } catch (RemoteException e) {
-            e.printStackTrace();
-        } catch (ToolCardException e) {
-            e.printStackTrace();
-        } catch (NotValidException e) {
-            e.printStackTrace();
-        } catch (NotPossibleConnectionException notPossibleConnection) {
-            notPossibleConnection.printStackTrace();
+            ui.onActionNotValid(e.getMessage());
+            exit(0);
         } catch (NotBoundException e) {
             e.printStackTrace();
         }
@@ -242,13 +253,8 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
                 controller.joinMatch();
                 System.out.println("forza chievo");//TODO: il controller mi notifica l'indice del giocatore
             } catch ( RemoteException e ) {
-                e.printStackTrace();
-            } catch ( ToolCardException e ) {
-                e.printStackTrace();
-            } catch ( NotValidException e ) {
-                e.printStackTrace();
-            } catch ( NotValidPlayException e ) {
-                e.printStackTrace();
+                ui.onActionNotValid(e.getMessage());
+                exit(0);
             } catch ( IOException e ) {
                 e.printStackTrace();
             }
@@ -279,33 +285,23 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
             System.out.println("forza chievo");
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (ToolCardException e) {
-            e.printStackTrace();
-        } catch (NotValidException e) {
-            e.printStackTrace();
-        } catch (NotValidPlayException e) {
-            e.printStackTrace();
         }
     }
     public void setChosenScheme(int id) {
         System.out.println("Ho scelto schema nella view");
         try {
             controller.setChosenScheme(id);
-        } catch (NetworkException e) {
-            System.err.println(e.getMessage());
         } catch (RemoteException e) {
-            e.printStackTrace();
-        } catch (NotValidPlayException e) {
-            onNotValidPlay(e.getMessage());
+            ui.onActionNotValid(e.getMessage());
+            exit(0);
         }
         System.out.println("Controllo se sono tutti pronti");
         Runnable taskScheme=()->{
         try {
             controller.checkAllReady();
         } catch (RemoteException e) {
-            e.printStackTrace();
-        } catch (NotValidPlayException e) {
-            onNotValidPlay(e.getMessage());
+            ui.onActionNotValid(e.getMessage());
+            exit(0);
         }
         };
         new Thread(taskScheme).start();
@@ -318,17 +314,10 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         else
             dice = indexOfDiceInDraftPool;
         try {
-            System.out.println("Uso dado da view");
             controller.sendUseDiceRequest(indexOfDiceInDraftPool, row, col);
-            System.out.println("Dado usato da view");
-        } catch (NetworkException e) {
-            System.err.println(e.getMessage());
-        } catch (NotValidException e) {
-            ui.onPlaceDiceNotValid(e);
         } catch (RemoteException e) {
-            e.printStackTrace();
-        } catch (NotValidPlayException e) {
-            onNotValidPlay(e.getMessage());
+            ui.onActionNotValid(e.getMessage());
+            exit(0);
         }
     }
 
@@ -336,12 +325,9 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
     public void endTurn() {
         try {
             controller.endTurn();
-        } catch (NetworkException e) {
-            System.err.println(e.getMessage());
         } catch (RemoteException e) {
-            e.printStackTrace();
-        } catch (NotValidPlayException e) {
-            onNotValidPlay(e.getMessage());
+            ui.onActionNotValid(e.getMessage());
+            exit(0);
         }
     }
 
@@ -356,14 +342,9 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
             dice = this.dice;
         try {
             controller.useToolCard(id, dice, operation, sourceRow, sourceCol, destRow, destCol);
-        } catch (NetworkException e) {
-            System.err.println(e.getMessage());
-        } catch (NotValidException e) {
-            ui.onUseToolCardNotValid(id, match, e.getMessage());
-        } catch (NotValidPlayException e) {
-            onNotValidPlay(e.getMessage());
         } catch (RemoteException e) {
-            e.printStackTrace();
+            ui.onActionNotValid(e.getMessage());
+            exit(0);
         }
     }
 

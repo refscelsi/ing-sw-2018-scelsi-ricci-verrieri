@@ -2,9 +2,7 @@ package it.polimi.ing.sw.controller.network.RMI;
 
 import it.polimi.ing.sw.controller.PlayerControllerInterface;
 import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
-import it.polimi.ing.sw.model.exceptions.NetworkException;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
-import it.polimi.ing.sw.model.exceptions.ToolCardException;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -13,15 +11,15 @@ import java.rmi.RemoteException;
 
 public interface PlayerControllerInterfaceRMI extends Remote, PlayerControllerInterface {
 
-    void joinMatch() throws RemoteException, ToolCardException, NotValidException, NotValidPlayException;
+    void joinMatch() throws RemoteException;
 
-    void checkAllReady() throws RemoteException, NotValidPlayException;
+    void checkAllReady() throws RemoteException;
 
-    void setChosenScheme(int id) throws NetworkException, RemoteException, NotValidPlayException;
+    void setChosenScheme(int id) throws RemoteException;
 
-    void sendUseDiceRequest(int indexOfDiceInDraftPool, int row, int col) throws NetworkException, NotValidException, NotValidPlayException, RemoteException;
+    void sendUseDiceRequest(int indexOfDiceInDraftPool, int row, int col) throws RemoteException;
 
-    void endTurn() throws NetworkException, RemoteException, NotValidPlayException;
+    void endTurn() throws RemoteException;
 
-    void useToolCard(int id, int dice, int operation, int sourceRow, int sourceCol, int destRow, int destCol) throws NetworkException, NotValidException, NotValidPlayException, RemoteException;
+    void useToolCard(int id, int dice, int operation, int sourceRow, int sourceCol, int destRow, int destCol) throws RemoteException;
 }

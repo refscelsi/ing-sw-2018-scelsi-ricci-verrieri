@@ -5,13 +5,10 @@ package it.polimi.ing.sw.controller.network.socket;
 import it.polimi.ing.sw.controller.LoginController;
 import it.polimi.ing.sw.controller.PlayerController;
 import it.polimi.ing.sw.controller.RemotePlayer;
-import it.polimi.ing.sw.controller.exceptions.NotPossibleConnectionException;
 import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
 import it.polimi.ing.sw.model.Match;
-import it.polimi.ing.sw.model.exceptions.NetworkException;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.model.exceptions.NotValidNicknameException;
-import it.polimi.ing.sw.model.exceptions.ToolCardException;
 import it.polimi.ing.sw.util.Constants;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -61,11 +58,7 @@ public class PlayerControllerSocket implements RemotePlayer, Runnable {
                 switch (method) {
                     case Constants.CONNECT:
                         String nickname = (String) jsonObject.get("nickname");
-                        try {
-                            this.controller = loginController.connectSocket(nickname, this);
-                        } catch (NotValidNicknameException e) {
-                            e.printStackTrace();
-                        }
+                        this.controller = loginController.connectSocket(nickname, this);
                         break;
                     case Constants.JOINMATCH:
                         controller.joinMatch();
@@ -101,17 +94,14 @@ public class PlayerControllerSocket implements RemotePlayer, Runnable {
                         break;
                 }
             }
-        } catch (ClassNotFoundException | NotValidPlayException e) {
+        } catch (ClassNotFoundException e) {
         } catch (IOException e) {
-        } catch (ToolCardException e) {
-        } catch (NotValidException e) {
-        } catch (NetworkException e) {
         }
 
     }
 
     @Override
-    public void onSchemeToChoose(Match match) throws RemoteException, NotValidPlayException {
+    public void onSchemeToChoose(Match match) throws RemoteException {
         MatchToSend matchToSend=new MatchToSend(Constants.ONSCHEMETOCHOOSE, match);
         try {
             out.writeObject(matchToSend);
@@ -189,6 +179,31 @@ public class PlayerControllerSocket implements RemotePlayer, Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onNotValidUseDiceException(String message) throws RemoteException {
+
+    }
+
+    @Override
+    public void onNotValidToolCardException(int id, String message) throws RemoteException {
+
+    }
+
+    @Override
+    public void onNotValidPlayException(String message) throws RemoteException {
+
+    }
+
+    @Override
+    public void onNotValidNicknameException(String message) throws RemoteException {
+
+    }
+
+    @Override
+    public void onNotPossibleConnectionException(String message) throws RemoteException {
+
     }
 
 }

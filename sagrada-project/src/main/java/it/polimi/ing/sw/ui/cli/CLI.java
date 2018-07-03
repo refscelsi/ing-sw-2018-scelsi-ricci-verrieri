@@ -550,8 +550,8 @@ public class CLI implements UiUpdate {
     }
 
     @Override
-    public void onPlaceDiceNotValid(NotValidException e) {
-        System.out.println(e);
+    public void onPlaceDiceNotValid(String message) {
+        System.out.println(message);
         retryPlaceDice();
     }
 

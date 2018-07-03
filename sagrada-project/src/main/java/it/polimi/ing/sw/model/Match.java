@@ -7,7 +7,6 @@ import it.polimi.ing.sw.controller.exceptions.NotPossibleConnectionException;
 import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.model.exceptions.NotValidNicknameException;
-import it.polimi.ing.sw.model.exceptions.ToolCardException;
 import it.polimi.ing.sw.model.objectiveCard.ObjectiveCard;
 import it.polimi.ing.sw.model.objectiveCard.PrivateObjectiveCard;
 import it.polimi.ing.sw.model.toolCard.*;
@@ -18,6 +17,8 @@ import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.*;
 import java.util.Collections;
+
+import static java.lang.System.exit;
 
 
 public class Match implements Serializable{
@@ -167,7 +168,7 @@ public class Match implements Serializable{
     //metodi per gestire il LOGIN
 
     //quando si loggano in almeno 2 setta un boolean a true
-    public void login (String nickname, RemotePlayer remotePlayer) throws NotValidNicknameException, RemoteException, ToolCardException, NotValidException, NotPossibleConnectionException {
+    public void login (String nickname, RemotePlayer remotePlayer) throws NotValidNicknameException, NotPossibleConnectionException {
         if(playerMap.size()<Constants.MAX_PLAYERS) {
             if(checkNickname(nickname)) {
                 Player player = new Player(nickname);
@@ -206,7 +207,7 @@ public class Match implements Serializable{
 
     // metodi VARI per gestire la PARTITA (non il singolo turno)
 
-    public synchronized void joinMatch() throws ToolCardException, RemoteException, NotValidException, NotValidPlayException {
+    public synchronized void joinMatch() throws RemoteException, NotValidPlayException {
         if(players.size()==Constants.MAX_PLAYERS){
             startMatch();
         }
@@ -217,14 +218,14 @@ public class Match implements Serializable{
                 public void run() {
                     try {
                         startMatch();
-                    } catch ( ToolCardException e ) {
-                        e.printStackTrace();
-                    } catch ( NotValidException e ) {
-                        e.printStackTrace();
-                    } catch ( RemoteException e ) {
-                        e.printStackTrace();
-                    } catch ( NotValidPlayException e ) {
-                        e.printStackTrace();
+                    } catch (RemoteException e) {
+                        exit(0);
+                    } catch (NotValidPlayException e) {
+                        try {
+                            notifyNotValidPlayException(playerPlaying, e.getMessage());
+                        } catch (RemoteException e1) {
+                            exit(0);
+                        }
                     }
                 }
             }, 10000);
@@ -244,17 +245,16 @@ public class Match implements Serializable{
         }
     }
 
-    public void startMatch() throws ToolCardException, NotValidException, RemoteException, NotValidPlayException {
+    public void startMatch() throws RemoteException, NotValidPlayException {
         initializeTable();
         inizializePlayers();
         setColorOfPawns();
         notifyStartedMatch();
-        System.out.println("i'm back bitch!");
     }
 
     // inizializzo tutte le cose che riguardano il tavolo di gioco
 
-    public void initializeTable() throws ToolCardException, NotValidException {
+    public void initializeTable() {
         bag = new Bag();
         ObjectiveCardDeck objectiveCardDeck = new ObjectiveCardDeck();
         publicObjectives = objectiveCardDeck.drawObjectiveCard();
@@ -289,7 +289,6 @@ public class Match implements Serializable{
     // chiama il metodo che costruisce l'array playersRound.
     //se è il primo round decido a caso i turni dei giocatori
     public void startRound() throws RemoteException {
-        System.out.println("Inizia round in match");
         if(numRound==0){
             draftPool=bag.draw(numPlayers);
             Collections.shuffle(players);
@@ -306,8 +305,6 @@ public class Match implements Serializable{
             }
             notifyChangement();
             notifyStartTurn(firstPlayer);
-            System.out.println("Ho notificato l'inizio del turno a un giocatore (da match)");
-            System.out.println("i'm back bitch!");
         }
         else{
             draftPool=bag.draw(numPlayers);
@@ -391,12 +388,7 @@ public class Match implements Serializable{
             startRound();
         }
         else if(numRound==Constants.NUM_ROUNDS) {
-            //notifyChangement(); così vedono la roundtrack aggiornata e poi tutta la roundtrack
-            System.out.println("1");
             calculateRanking();
-            //da qua dove vado?? quando notifico la classifica e l'ultimo round??
-            System.out.println(ranking.get(0).getNickname() + ranking.get(0).getScore());
-            System.out.println(ranking.get(1).getNickname() + ranking.get(1).getScore());
             notifyGameEnd();
         }
     }
@@ -408,17 +400,11 @@ public class Match implements Serializable{
         int score = 0;
         for (int i=0; i<3; i++) {
             score = score + publicObjectives.get(i).calculateScore(player.getScheme());
-            System.out.println(score);
         }
         score = score + player.getPrivateObjective().calculateScore(player.getScheme());
-        System.out.println(score);
         score = score + player.getNumOfToken();
-        System.out.println(score);
         score = score - player.getScheme().countFreeBoxes();
-        System.out.println(score);
         player.setScore(score);
-        System.out.println(score);
-        System.out.println("2" + player.getScore());
         return score;
     }
 
@@ -439,31 +425,22 @@ public class Match implements Serializable{
             for(j=1; j<tempPlayers.size(); j++) {
                 if (scores[j] > scores[max]) {
                     max = j;
-                    System.out.println("2");
                 } else {
                     if (scores[j] == scores[max]) {
-                        System.out.println("3");
                         if (tempPlayers.get(j).getPrivateObjective().calculateScore(tempPlayers.get(j).getScheme()) > tempPlayers.get(max).getPrivateObjective().calculateScore(tempPlayers.get(max).getScheme())) {
                             max = j;
-                            System.out.println("4");
                         } else {
                             if (tempPlayers.get(j).getPrivateObjective().calculateScore(tempPlayers.get(j).getScheme()) == tempPlayers.get(max).getPrivateObjective().calculateScore(tempPlayers.get(max).getScheme())) {
-                                System.out.println("5");
                                 if (tempPlayers.get(j).getNumOfToken() > tempPlayers.get(max).getNumOfToken()) {
                                     max = j;
-                                    System.out.println("6");
                                 } else {
                                     if (tempPlayers.get(j).getNumOfToken() == tempPlayers.get(max).getNumOfToken()) {
                                         int num = 0;
-                                        System.out.println("7");
                                         while (num <= numPlayers && !found) {
-                                            System.out.println("8");
                                             if (playersRound[num] == tempPlayers.get(j)) {
-                                                System.out.println("9");
                                                 max = j;
                                                 found = true;
                                             } else {
-                                                System.out.println("10");
                                                 if (playersRound[num] == tempPlayers.get(max)) {
                                                     found = true;
                                                 }
@@ -480,7 +457,6 @@ public class Match implements Serializable{
 
             ranking.add(tempPlayers.get(max));
             tempPlayers.remove(max);
-            System.out.println("11");
         }
     }
 
@@ -489,9 +465,28 @@ public class Match implements Serializable{
     // metodi VARI per gestire il TURNO di un giocatore
 
 
-    public void useDice (Player player, int indexOfDiceInDraftpool, int row, int col) throws NotValidException {
+    public void useDice (Player player, int indexOfDiceInDraftpool, int row, int col) throws NotValidException, RemoteException {
         player.getScheme().placeDice(row,col,draftPool.getDice(indexOfDiceInDraftpool));
         draftPool.removeDice(draftPool.getDice(indexOfDiceInDraftpool));
+        changePlayerStateAfterUseDice(player);
+    }
+
+    public void changePlayerStateAfterUseDice (Player player) throws RemoteException {
+        switch (player.getState()) {
+            case USEDTOOLCARD: {
+                notifyChangement();
+                changePlayer();
+                break;
+            }
+            case TURNSTARTED: {
+                player.setState(PlayerState.USEDDICE);
+                notifyChangement();
+                notifyStartTurn(player);
+                break;
+            }
+            default:
+                break;
+        }
     }
 
 
@@ -499,7 +494,7 @@ public class Match implements Serializable{
         player.setScheme(schemeCardDeck.getSchemeWithId(id));
         player.setNumOfToken(schemeCardDeck.getSchemeWithId(id).getDifficulty());
         player.setState(PlayerState.READYTOPLAY);
-        playerMap.get(player).onSuccess("ok hai scelto bene lo schema ");
+        playerMap.get(player).onSuccess("Schema scelto correttamente. Attendi l'inizio del primo turno.");
     }
 
     //toolCard
@@ -513,7 +508,7 @@ public class Match implements Serializable{
             return true;
         }
         else
-            throw new NotValidPlayException("non hai il numero di segnalini favore necessari");
+            throw new NotValidPlayException("I tuoi segnalini favore non sono sufficienti.");
     }
 
     public ToolCard findToolCard(int id){
@@ -538,7 +533,7 @@ public class Match implements Serializable{
     //metodi delle carte
 
 
-    public void useToolCard (Player player, int id, int dice, int operation, int sourceRow, int sourceCol, int destRow, int destCol) throws NotValidException, NotValidPlayException {
+    public void useToolCard (Player player, int id, int dice, int operation, int sourceRow, int sourceCol, int destRow, int destCol) throws NotValidException, NotValidPlayException, RemoteException {
         if(checkToken(player,id)) {
             findToolCard(id).execute(draftPool, roundTrack, player.getScheme(), playersRound, bag, dice, operation, sourceRow, sourceCol, destRow, destCol);
             switch (id) {
@@ -564,13 +559,140 @@ public class Match implements Serializable{
                 }
             }
         }
+        changePlayerStateAfterToolCard(player, id);
     }
 
 
-    public void usedToolCard (Player player, int id) throws RemoteException {
+    public void changePlayerStateAfterToolCard(Player player, int id) throws NotValidPlayException, RemoteException {
+        switch(id) {
+
+            // carte che si possono utilizzare in qualsiasi momento
+            case 1:
+            case 2:
+            case 3:
+            case 5:
+            case 10: {
+                if (player.getState().equals(PlayerState.TURNSTARTED)) {
+                    player.setState(PlayerState.USEDTOOLCARD);
+                    notifyUsedToolCard(player, id);
+                    break;
+                } else {
+                    if (player.getState().equals(PlayerState.USEDDICE)) {
+                        notifyChangement();
+                        changePlayer();
+                        break;
+                    }
+                }
+                break;
+            }
+
+            // carte che si possono utilizzare in qualsiasi momento ma si eseguono in 2 step
+            case 4:
+            case 12: {
+                if (player.getState().equals(PlayerState.TURNSTARTED)) {
+                    player.setState(PlayerState.FIRSTSTEPTOOLCARD);
+                    notifyUsedToolCard(player, id);
+                    break;
+                }
+                else {
+                    if (player.getState().equals(PlayerState.FIRSTSTEPTOOLCARD)) {
+                        player.setState(PlayerState.USEDTOOLCARD);
+                        notifyUsedToolCard(player, id);
+                        break;
+                    }
+                    else {
+                        if (player.getState().equals(PlayerState.USEDDICE)) {
+                            player.setState(PlayerState.USEDDICETOOLCARD);
+                            notifyUsedToolCard(player, id);
+                            break;
+                        }
+                        else {
+                            if (player.getState().equals(PlayerState.USEDDICETOOLCARD)) {
+                                notifyChangement();
+                                changePlayer();
+                                break;
+                            }
+                        }
+                    }
+                }
+                break;
+            }
+
+
+            // carte utilizzabili solo se non si è già utilizzato un dado nel turno e che prevedono 2 step
+            case 6: {
+                if (player.getState().equals(PlayerState.TURNSTARTED)) {
+                    player.setState(PlayerState.USEDTOOLCARD);
+                    notifyUsedToolCard(player, id);
+                    break;
+                }
+                break;
+            }
+
+            // carte utilizzabili solo se non si è già utilizzato un dado nel turno e che prevedono 2 step
+            case 11: {
+                if (player.getState().equals(PlayerState.TURNSTARTED)) {
+                    player.setState(PlayerState.USEDDICETOOLCARD);
+                    notifyUsedToolCard(player, id);
+                    break;
+                }
+                else {
+                    if (player.getState().equals(PlayerState.USEDDICETOOLCARD)) {
+                        notifyChangement();
+                        changePlayer();
+                        break;
+                    }
+                }
+                break;
+            }
+
+
+            // carta che può essere utilizzata solo durante il secondo turno e prima di scegliere il secondo dado
+            case 7: {
+                if (player.getState().equals(PlayerState.TURNSTARTED)&&!getIfFirstTurn(player)) {
+                    player.setState(PlayerState.USEDTOOLCARD);
+                    notifyUsedToolCard(player, id);
+                    break;
+                }
+                break;
+            }
+
+            // carta che può essere utilizzata solo durante il primo turno
+            case 8: {
+                if (player.getState().equals(PlayerState.TURNSTARTED)&&getIfFirstTurn(player)) {
+                    player.setState(PlayerState.USEDTOOLCARD);
+                    notifyUsedToolCard(player, id);
+                    break;
+
+                } else {
+                    if (player.getState().equals(PlayerState.USEDDICE)&&getIfFirstTurn(player)) {
+                        notifyChangement();
+                        changePlayer();
+                        break;
+                    }
+                }
+                break;
+            }
+
+
+            // carta che può essere utilizzata solo se non si è già piazzato un dado
+            case 9: {
+                if (player.getState().equals(PlayerState.TURNSTARTED)) {
+                    notifyChangement();
+                    changePlayer();
+                    break;
+                }
+                break;
+            }
+            default:
+                break;
+        }
+    }
+
+
+    public void notifyUsedToolCard (Player player, int id) throws RemoteException {
         switch (id) {
             case 4: {
-                System.out.println("hey");
                 if (findToolCard(id).getFirstExecutionDone())
                     playerMap.get(player).onOtherInfoToolCard(id);
                 else
@@ -642,6 +764,26 @@ public class Match implements Serializable{
         for(RemotePlayer remotePlayer : this.remotePlayer){
             remotePlayer.onSuccess(message);
         }
+    }
+
+    public void notifyNotValidUseDiceException(Player player, String message) throws RemoteException{
+        playerMap.get(player).onNotValidUseDiceException(message);
+    }
+
+    public void notifyNotValidToolCardException(Player player, int id, String message) throws RemoteException{
+        playerMap.get(player).onNotValidToolCardException(id, message);
+    }
+
+    public void notifyNotValidPlayException(Player player, String message) throws RemoteException{
+        playerMap.get(player).onNotValidPlayException(message);
+    }
+
+    public void notifyNotValidNicknameException(Player player, String message) throws RemoteException{
+        playerMap.get(player).onNotValidNicknameException(message);
+    }
+
+    public void notifyNotPossibleConnectionException(Player player, String message) throws RemoteException{
+        playerMap.get(player).onNotPossibleConnectionException(message);
     }
 
 
