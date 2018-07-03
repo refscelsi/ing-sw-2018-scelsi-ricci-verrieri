@@ -22,10 +22,12 @@ public class Lathekin extends ToolCard {
 
 
     @Override
-    public void execute(DraftPool neverUsed1, RoundTrack neverUsed2, Scheme scheme, Player[] neverUsed3, Bag neverUsed4, int neverUsed5, int neverUsed6, int sourceRow, int sourceCol, int destRow, int destCol) throws NotValidException {
-        Box sourceBox = scheme.getBox(sourceRow, sourceCol);
-        Box destBox = scheme.getBox(destRow, destCol);
-        Dice dice = sourceBox.getDice();
+    public void execute(DraftPool neverUsed1, RoundTrack neverUsed2, Scheme scheme, Player[] neverUsed3, Bag neverUsed4, int neverUsed5, int firstExecution, int sourceRow, int sourceCol, int destRow, int destCol) throws NotValidException {
+
+        if (firstExecution==1)
+            firstExecutionDone = true;
+        else
+            firstExecutionDone = false;
 
         if (!firstExecutionDone) {
             sourceRow1 = sourceRow;
@@ -41,11 +43,15 @@ public class Lathekin extends ToolCard {
             sourceBox1.removeDice();
         }
 
+        Box sourceBox = scheme.getBox(sourceRow, sourceCol);
+        Box destBox = scheme.getBox(destRow, destCol);
+
         if (!sourceBox.isFull()) {
             if (firstExecutionDone)
                 replaceDice(scheme);
             throw new NotValidException("Hai scelto come origine una casella vuota!");
         } else {
+            Dice dice = sourceBox.getDice();
             sourceBox.removeDice();
             if (destBox.isFull()) {
                 if (firstExecutionDone)
@@ -56,8 +62,10 @@ public class Lathekin extends ToolCard {
 
                 if (scheme.checkBox(destRow, destCol, dice) && scheme.checkIfHasDiceAdjacent(destRow, destCol, dice, 1)) {
                     if (!firstExecutionDone) {
+                        System.out.println("prima esecuzione ok");
                         firstExecutionDone = true;
                         sourceBox.placeDice(dice);
+                        replaceDice(scheme);
                     }
                     else {
                         firstExecutionDone = false;
