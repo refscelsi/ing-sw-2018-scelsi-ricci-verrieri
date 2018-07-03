@@ -190,21 +190,25 @@ public class TableFrame extends javax.swing.JFrame {
     }
 
     private static void addSumsPlayer() {
-        sumPlayer1 = new SumPlayerPanel();
+        sumPlayer1 = new SumPlayerPanel(gui);
         backgroundTableFRameLabel.add(sumPlayer1);
         sumPlayer1.setBounds(10, 10, 85, 80);
+        sumPlayer1.setName("0");
 
-        sumPlayer2 = new SumPlayerPanel();
+        sumPlayer2 = new SumPlayerPanel(gui);
         backgroundTableFRameLabel.add(sumPlayer2);
         sumPlayer2.setBounds(105, 10, 85, 80);
+        sumPlayer2.setName("1");
 
-        sumPlayer3 = new SumPlayerPanel();
+        sumPlayer3 = new SumPlayerPanel(gui);
         backgroundTableFRameLabel.add(sumPlayer3);
         sumPlayer3.setBounds(830, 10, 85, 80);
+        sumPlayer3.setName("2");
 
-        sumPlayer4 = new SumPlayerPanel();
+        sumPlayer4 = new SumPlayerPanel(gui);
         backgroundTableFRameLabel.add(sumPlayer4);
         sumPlayer4.setBounds(925, 10, 85, 80);
+        sumPlayer4.setName("3");
     }
 
     private static void addVetratePlayers() {

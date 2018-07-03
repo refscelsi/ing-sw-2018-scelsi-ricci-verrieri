@@ -67,9 +67,9 @@ public class CardField extends javax.swing.JPanel {
         tokenLabel.setBounds(150, 220, 20, 20);
 
         cardFieldLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/po/1.png"))); // NOI18N
-        cardFieldLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cardFieldLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));/*
         cardFieldLabel.setMinimumSize(new java.awt.Dimension(173, 245));
-        cardFieldLabel.setPreferredSize(new java.awt.Dimension(173, 245));
+        cardFieldLabel.setPreferredSize(new java.awt.Dimension(173, 245));*/
         cardFieldLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 try {
@@ -88,7 +88,7 @@ public class CardField extends javax.swing.JPanel {
             }
         });
         add(cardFieldLabel);
-        cardFieldLabel.setBounds(0, 0, 173, 245);
+        cardFieldLabel.setBounds(0, 0, dimXcard, dimYcard);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cardFieldLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cardFieldLabelMouseEntered
