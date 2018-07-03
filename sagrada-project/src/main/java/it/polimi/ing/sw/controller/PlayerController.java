@@ -58,6 +58,7 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
         } catch ( NotPossibleConnectionException e ) {
             match.notifyNotPossibleConnectionException(this.remotePlayer,e.getMessage());
         }
+
     }
 
     @Override
@@ -232,7 +233,7 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
 
     @Override
     public void stopPlayer() throws RemoteException {
-
+        match.exitPlayer(player);
     }
 
 

@@ -18,6 +18,7 @@ import java.rmi.RemoteException;
 import java.util.*;
 import java.util.Collections;
 
+import static java.lang.System.clearProperty;
 import static java.lang.System.exit;
 
 
@@ -54,8 +55,11 @@ public class Match implements Serializable{
     private transient HashMap<Player,RemotePlayer> playerMap;
     //array di persone che si sono loggate ma sono in attesa
     private transient ArrayList<Player> playersLogged;
+    //controllo se la partita è in fase di avvio o meno
+    private boolean matchStarted=false;
+    //numero giocatori effettivamente giocanti
+    private int numPlayersPlaying=0;
 
-    private boolean ok=false;
 
 
 
@@ -128,6 +132,12 @@ public class Match implements Serializable{
 
     public ArrayList<Player> getPlayers(){return this.players;}
 
+    public ArrayList<Player> getOtherPlayers(String nickname){
+        ArrayList<Player> otherPlayers=players;
+        otherPlayers.remove(getPlayer(nickname));
+        return otherPlayers;
+    }
+
 
     // metodi SETTERS
 
@@ -169,29 +179,40 @@ public class Match implements Serializable{
 
     //quando si loggano in almeno 2 setta un boolean a true
     public void login (String nickname, RemotePlayer remotePlayer) throws NotValidNicknameException, NotPossibleConnectionException {
-        if(playerMap.size()<Constants.MAX_PLAYERS) {
-            if(checkNickname(nickname)) {
+        if(!checkReconnection(nickname) ) {
+            if(playerMap.size()<Constants.MAX_PLAYERS){
+                if(!matchStarted) {
+                    if (checkNickname(nickname)) {
+                        Player player = new Player(nickname);
+                        player.setLogged(true);
+                        playerMap.put(player, remotePlayer);
+                        players.add(player);
+                        this.remotePlayer.add(remotePlayer);
+                        numPlayers++;
+                        numPlayersPlaying++;
+                        System.out.println(numPlayers);
+                        return;
+                    } else
+                        throw new NotValidNicknameException("il nickname scelto è già in uso, scegline un altro!");
+                }else
+                    throw new NotPossibleConnectionException("la partita è già iniziata");
+            }
+            else {
                 Player player = new Player(nickname);
                 player.setLogged(true);
-                playerMap.put(player, remotePlayer);
-                players.add(player);
-                this.remotePlayer.add(remotePlayer);
-                numPlayers++;
-                System.out.println(numPlayers);
-                return;
+                player.setState(PlayerState.OFFLINE);
+                System.out.println(player.getNickname());
+                playersLogged.add(player);
+                throw new NotPossibleConnectionException("la partita è piena");
             }
-            else
-                throw new NotValidNicknameException("il nickname scelto è già in uso, scegline un altro!");
         }
-        else{
-            Player player=new Player(nickname);
-            player.setLogged(true);
-            player.setState(PlayerState.OFFLINE);
-            System.out.println(player.getNickname());
-            playersLogged.add(player);
-            throw new NotPossibleConnectionException("la partita è piena");
-        }
+        else
+            System.out.println("bentornato coglione");
+            numPlayersPlaying++;
+            getPlayer(nickname).setState(PlayerState.INIZIALIZED);
     }
+
+    ////////////////LOGIN
 
     //controllo sui nickname
     public boolean checkNickname(String nickname){
@@ -204,32 +225,50 @@ public class Match implements Serializable{
         return check;
     }
 
+    public boolean checkReconnection(String nickname){
+        for(Player player: players){
+            if(player.getNickname().equals(nickname) && player.getState().equals(PlayerState.OFFLINE)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
 
     // metodi VARI per gestire la PARTITA (non il singolo turno)
 
     public synchronized void joinMatch() throws RemoteException, NotValidPlayException {
-        if(players.size()==Constants.MAX_PLAYERS){
-            startMatch();
-        }
-        else if(players.size()>=2){
-            Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    try {
-                        startMatch();
-                    } catch (RemoteException e) {
-                        exit(0);
-                    } catch (NotValidPlayException e) {
-                        try {
-                            notifyNotValidPlayException(playerPlaying, e.getMessage());
-                        } catch (RemoteException e1) {
-                            exit(0);
+        if(!matchStarted){
+            if(players.size()==Constants.MAX_PLAYERS){
+                matchStarted=true;
+                startMatch();
+            }
+            else if(players.size()==2){
+                Timer timer = new Timer();
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        if (players.size() >= 2) {
+                            try {
+                                matchStarted=true;
+                                startMatch();
+                            } catch ( RemoteException e ) {
+                                exit(0);
+                            } catch ( NotValidPlayException e ) {
+                                try {
+                                    notifyNotValidPlayException(playerPlaying, e.getMessage());
+                                } catch ( RemoteException e1 ) {
+                                    exit(0);
+                                }
+                            }
                         }
                     }
-                }
-            }, 10000);
+                }, 10000);
+            }
         }
+
     }
 
     public void checkAllReady() throws RemoteException {
@@ -362,14 +401,22 @@ public class Match implements Serializable{
     public void changePlayer () throws RemoteException {
         if(playersRoundIndex<(numPlayers*2)-1) {
             playersRoundIndex++;
-            System.out.println("giocatore: "+ playerPlaying.getNickname()+ "\n stato:"+ playerPlaying.getState().toString());
             playerPlaying.setState(PlayerState.ENDEDTURN);
-            System.out.println("giocatore: "+ playerPlaying.getNickname()+ "\n stato:"+ playerPlaying.getState().toString());
             notifyEndTurn(playerPlaying);
-            playerPlaying = playersRound[playersRoundIndex];
-            playerPlaying.setState(PlayerState.TURNSTARTED);
-            System.out.println("giocatore: "+ playerPlaying.getNickname()+ "\n stato:"+ playerPlaying.getState().toString());
-            notifyStartTurn(playerPlaying);
+            if(playersRound[playersRoundIndex].getState().equals(PlayerState.OFFLINE)){
+                System.out.println("quaalcuno è off");
+                playersRoundIndex++;
+            }
+            else if(playersRound.length==8 && playersRound[playersRoundIndex+1].getState().equals(PlayerState.OFFLINE)){
+                playersRoundIndex= playersRoundIndex+2;
+            }
+            else {
+                playerPlaying = playersRound[playersRoundIndex];
+                playerPlaying.setState(PlayerState.TURNSTARTED);
+                System.out.println("giocatore: " + playerPlaying.getNickname() + "\n stato:" + playerPlaying.getState().toString());
+                notifyStartTurn(playerPlaying);
+            }
+
         }
         else if(playersRoundIndex==(numPlayers*2)-1){
             playersRoundIndex=0;
@@ -725,57 +772,122 @@ public class Match implements Serializable{
 
 
 
-    // aggiornamenti alle view
-
-    public void notifyChangement() throws RemoteException {
-        for(RemotePlayer remotePlayer : remotePlayer){
-            remotePlayer.onGameUpdate(this.matchClone());
+    public void exitPlayer(Player player) throws RemoteException {
+        player.setState(PlayerState.OFFLINE);
+        numPlayersPlaying=numPlayersPlaying-1;
+        System.out.println(players.size());
+        System.out.println(numPlayersPlaying);
+        if(numPlayersPlaying==1){
+            calculateRanking();
+            notifyGameEnd();
+            return;
+        }
+        else if(playerPlaying.equals(player)){
+            if(playersRoundIndex<numPlayers*2-1){
+                playersRoundIndex++;
+                if(!playersRound[playersRoundIndex].getState().equals(PlayerState.OFFLINE)) {
+                    playerPlaying = playersRound[playersRoundIndex];
+                    playerPlaying.setState(PlayerState.TURNSTARTED);
+                    System.out.println("giocatore: " + playerPlaying.getNickname() + "\n stato:" + playerPlaying.getState().toString());
+                    notifyStartTurn(playerPlaying);
+                }
+            }
+            else if(playersRoundIndex == ((numPlayers * 2) - 1)){
+                playersRoundIndex = 0;
+                endRound();
+            }
         }
     }
 
-    public ArrayList<Player> getOtherPlayers(String nickname){
-        ArrayList<Player> otherPlayers=players;
-        otherPlayers.remove(getPlayer(nickname));
-        return otherPlayers;
+    // aggiornamenti alle view
+
+    public void notifyChangement() throws RemoteException {
+        for(Player player: players){
+            try {
+                playerMap.get(player).onGameUpdate(this.matchClone());
+            }catch ( RemoteException e){
+                exitPlayer(player);
+            }
+
+        }
     }
 
 
     private void notifyStartedMatch() throws RemoteException, NotValidPlayException {
-        for(RemotePlayer remotePlayer : remotePlayer){
-            remotePlayer.onSchemeToChoose(this.matchClone());
+        for(Player player: players){
+            try {
+                playerMap.get(player).onSchemeToChoose(this.matchClone());
+            }catch ( RemoteException e){
+                exitPlayer(player);
+            }
+
         }
     }
 
     private void notifyStartTurn(Player player) throws RemoteException {
+        try{
         playerMap.get(player).onSetPlaying();
+        }
+        catch ( RemoteException e ){
+            exitPlayer(player);
+        }
     }
 
     public void notifyEndTurn(Player player) throws RemoteException {
-        playerMap.get(player).onTurnEnd();
+        try{
+            playerMap.get(player).onTurnEnd();
+        }
+        catch ( RemoteException e ){
+            exitPlayer(player);
+        }
     }
 
     public void notifyGameEnd() throws RemoteException {
-        for(RemotePlayer remotePlayer : remotePlayer){
-            remotePlayer.onGameEnd(this.matchClone());
+        for(Player player: players){
+            try {
+                playerMap.get(player).onGameEnd(this.matchClone());
+            }catch ( RemoteException e){
+                exitPlayer(player);
+            }
+
         }
     }
 
     public void notifySucces(String message) throws RemoteException{
-        for(RemotePlayer remotePlayer : this.remotePlayer){
-            remotePlayer.onSuccess(message);
+        for(Player player: players){
+            try {
+                playerMap.get(player).onSuccess(message);
+            }catch ( RemoteException e){
+                exitPlayer(player);
+            }
         }
     }
 
     public void notifyNotValidUseDiceException(Player player, String message) throws RemoteException{
-        playerMap.get(player).onNotValidUseDiceException(message);
+        try{
+            playerMap.get(player).onNotValidUseDiceException(message);
+        }
+        catch ( RemoteException e ){
+            exitPlayer(player);
+        }
     }
 
     public void notifyNotValidToolCardException(Player player, int id, String message) throws RemoteException{
-        playerMap.get(player).onNotValidToolCardException(id, message);
+        try{
+            playerMap.get(player).onNotValidToolCardException(id,message);
+        }
+        catch ( RemoteException e ){
+            exitPlayer(player);
+        }
     }
 
     public void notifyNotValidPlayException(Player player, String message) throws RemoteException{
-        playerMap.get(player).onNotValidPlayException(message);
+        try{
+            playerMap.get(player).onNotValidPlayException(message);
+        }
+        catch ( RemoteException e ){
+            exitPlayer(player);
+        }
     }
 
     public void notifyNotValidNicknameException(RemotePlayer player, String message) throws RemoteException{

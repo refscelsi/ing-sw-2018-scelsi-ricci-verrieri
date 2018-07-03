@@ -29,7 +29,7 @@ public class PlayerControllerInterfaceSocket implements PlayerControllerInterfac
         try {
             out.writeObject(json);
         } catch (IOException e) {
-            e.printStackTrace();
+            stopMatch();
         }
     }
 
@@ -43,7 +43,7 @@ public class PlayerControllerInterfaceSocket implements PlayerControllerInterfac
             out.flush();
 
         } catch (IOException e) {
-            e.printStackTrace();
+            stopMatch();
         }
     }
 
@@ -55,7 +55,7 @@ public class PlayerControllerInterfaceSocket implements PlayerControllerInterfac
             out.writeObject(json);
             out.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            stopMatch();
         }
     }
 
@@ -66,7 +66,7 @@ public class PlayerControllerInterfaceSocket implements PlayerControllerInterfac
             out.writeObject(json);
             out.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            stopMatch();
         }
     }
 
@@ -77,7 +77,7 @@ public class PlayerControllerInterfaceSocket implements PlayerControllerInterfac
             out.writeObject(json);
             out.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            stopMatch();
         }
     }
 
@@ -88,7 +88,7 @@ public class PlayerControllerInterfaceSocket implements PlayerControllerInterfac
             out.writeObject(json);
             out.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            stopMatch();
         }
     }
 
@@ -100,7 +100,7 @@ public class PlayerControllerInterfaceSocket implements PlayerControllerInterfac
             out.writeObject(json);
             out.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            stopMatch();
         }
     }
 
@@ -117,8 +117,13 @@ public class PlayerControllerInterfaceSocket implements PlayerControllerInterfac
             out.writeObject(json);
             out.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            stopMatch();
         }
+    }
+
+    public void stopMatch(){
+        System.out.println("Il server è caduto, la partita è finita");
+        System.exit(0);
     }
 
 }

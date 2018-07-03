@@ -17,7 +17,7 @@ public class LoginController extends UnicastRemoteObject implements Remote, Logi
 
     //riferimento alla partita
     private Match match;
-    //lista clients
+    //lista clients --> mi serve??
     private ArrayList<PlayerControllerInterface> clients;
     //lista dei PlayerController (x riconnessione)
     private ArrayList<PlayerController> playerControllers;
@@ -49,90 +49,5 @@ public class LoginController extends UnicastRemoteObject implements Remote, Logi
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-    //metodo che crea un controller per ogni view che si connette
-    @Override
-    public synchronized PlayerControllerInterfaceRMI connectRMI(String nickname, it.polimi.ing.sw.controller.RemotePlayer remotePlayer) throws RemoteException {
-        if (!checkReconnection(nickname)) {
-            try {
-                match.login(nickname, remotePlayer);
-            } catch (NotPossibleConnectionException e) {
-                PlayerController playerController = new PlayerController(this.match, (RemotePlayer) remotePlayer, match.getPlayerLogged(nickname));
-                playerControllers.add(playerController);
-                clients.add(playerController);
-                match.notifyNotPossibleConnectionException(match.getPlayerLogged(nickname), e.getMessage());
-            } catch (NotValidNicknameException e) {
-                match.notifyNotValidNicknameException(match.getPlayerLogged(nickname), e.getMessage());
-            }
-            PlayerController playerController = new PlayerController(this.match, (RemotePlayer) remotePlayer, match.getPlayer(nickname));
-            playerControllers.add(playerController);
-            clients.add(playerController);
-            return playerController;
-        } else if (checkReconnection(nickname)) {
-            for (PlayerController playerController : playerControllers) {
-                if (playerController.getNickname().equals(nickname)) {
-                    if (playerController.getState().equals(PlayerState.OFFLINE))
-                        return playerController;
-                }
-            }
-        }
-        throw new RemoteException();
-    }
-
-
-
-    public boolean checkReconnection(String nickname) {
-        if (playerControllers.size() == 0) {
-            return false;
-        }
-        for (PlayerController playerController : playerControllers) {
-            if (playerController.getNickname().equals(nickname) && playerController.getState().equals(PlayerState.OFFLINE)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public  synchronized PlayerController connectSocket(String nickname, PlayerControllerSocket playerControllerSocket) throws RemoteException {
-            if (!checkReconnection(nickname)) {
-                try {
-                    match.login(nickname,playerControllerSocket );
-                } catch (NotPossibleConnectionException e) {
-                    PlayerController playerController= new PlayerController(match, playerControllerSocket,  match.getPlayerLogged(nickname));
-                    playerControllers.add(playerController);
-                    match.notifyNotPossibleConnectionException(match.getPlayerLogged(nickname), e.getMessage());
-                } catch (NotValidNicknameException e) {
-                    PlayerController playerController= new PlayerController(match, playerControllerSocket,  match.getPlayerLogged(nickname));
-                    playerControllers.add(playerController);
-                    match.notifyNotValidNicknameException(match.getPlayerLogged(nickname), e.getMessage());
-                }
-                PlayerController playerController= new PlayerController(match, playerControllerSocket, match.getPlayer(nickname));
-                playerControllers.add(playerController);
-                return playerController;
-            } else if (checkReconnection(nickname)) {
-                for (PlayerController playerController : playerControllers) {
-                    if (playerController.getNickname().equals(nickname)) {
-                        if (playerController.getState().equals(PlayerState.OFFLINE))
-                            return playerController;
-                    }
-                }
-            }
-        throw new RemoteException();
-    }
-
-*/
 }
 
