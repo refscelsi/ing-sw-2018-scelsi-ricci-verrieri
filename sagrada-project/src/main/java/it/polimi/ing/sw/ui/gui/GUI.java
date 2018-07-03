@@ -65,48 +65,12 @@ public class GUI implements UiUpdate {
         chooseSchemeForm.setVisible(true);
     }
 
-    /**
-     * Scelta dell'azione da parte del giocatore
-     */
-
-    /////////////////////////////////////////////////////////////////////////////////////////
-    // Connessione e disconnessione del Client --> da fare probabilmente
-    /////////////////////////////////////////////////////////////////////////////////////////
-
-    /*public void clientConnection() {
-        PlayerController controller = getController();
-        controller.clientConnection();
-    }
-
-    public void clientDisconnection() {
-        PlayerController controller = getController();
-        controller.clientDisconnection();
-    }*/
-
-    /////////////////////////////////////////////////////////////////////////////////////////
-    // Scelta D: posizionare un dado sullo schema
-    /////////////////////////////////////////////////////////////////////////////////////////
-    public void handleUseDice(Match match, boolean toolCard9) {
-
-        //handled by GUI
-
-    }
-
-
     public void retryPlaceDice() throws RemoteException {
 //        JOptionPane.showMessageDialog(null,
 //                "Invalid placing dice action, retry or do something different.",
 //                "Placing dice error",
 //                JOptionPane.ERROR_MESSAGE);
         onGameUpdate(resetMatch, controller.getNickname());
-    }
-
-    /////////////////////////////////////////////////////////////////////////////////////////
-    // Scelta T: utilizzare una toolcard
-    /////////////////////////////////////////////////////////////////////////////////////////
-
-    public void handleUseToolCard(Match match) throws RemoteException {
-        //gestito da gui
     }
 
     public void useToolCard(int id, Match match) throws RemoteException {
@@ -202,7 +166,6 @@ public class GUI implements UiUpdate {
         controller.useDice(name, destX, destY);
         //onGameUpdate(controller.getMatch(), getNickname());
     }
-
 
     public void useToolCard5(Match match) throws RemoteException {
         int dice, round, indexInRound;
@@ -330,6 +293,9 @@ public class GUI implements UiUpdate {
                 JOptionPane.showMessageDialog(null,
                         "Select the new dice");
 
+
+
+
                 //TODO FINESTRA DI DIALOGO DOVE IMPOSTO
                 int dice, row, col;
                 do {
@@ -344,6 +310,10 @@ public class GUI implements UiUpdate {
                     System.out.println("Digita il numero della colonna dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_COLS);
                     col = scanner.nextInt();
                 } while (col < 1 || col > Constants.NUM_COLS);
+
+
+
+
 
 
                 controller.useToolCard(11, -1, dice, row - 1, col - 1, -1, -1);
