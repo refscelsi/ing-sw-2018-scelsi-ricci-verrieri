@@ -193,7 +193,6 @@ public class DiceGUI extends javax.swing.JPanel {
                                 gui.useToolCard5(Integer.valueOf(evt.getComponent().getName()),Integer.valueOf(TableFrame.toolCard5Dice.getName())-10);
                             }
                         }
-
                         break;
                     case "6":
                         gui.useToolCard6(Integer.valueOf(getName()));

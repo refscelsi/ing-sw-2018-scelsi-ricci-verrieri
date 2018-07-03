@@ -107,7 +107,9 @@ public class CardField extends javax.swing.JPanel {
         if (gui.isPlaying()) {
             if (isToolCard) {
                 if (!used) {//TODO next line
-                    TableFrame.isNotToolCardAnymore(Integer.valueOf(TableFrame.idSelectedTc));
+                    if(null!=TableFrame.idSelectedTc){
+                        TableFrame.isNotToolCardAnymore(Integer.valueOf(TableFrame.idSelectedTc));
+                    }
                     setUsed(true);
                     cardFieldLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 51, 51)));
                     TableFrame.idSelectedTc = id;
@@ -148,30 +150,14 @@ public class CardField extends javax.swing.JPanel {
         used = false;
         setIcons(IMAGE_PATH.concat("po/").concat("disabled.png"));
     }
-/*
-    public void addToken(int numberOfTokens) {
-        switch (token) {
-            case 0:
-                if (numberOfTokens == 1) {
-                    token = 1;
-
-                }
-                break;//TODO add exc
-            default:
-                if (numberOfTokens == 2) {
-                    token += numberOfTokens;
-                }//TODO add exc
-        }
-        tokenLabel.setText(String.valueOf(token));
-    }*/
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel cardFieldLabel;
-    private javax.swing.JLabel tokenLabel;
 
     public void setTokens(int numOfTokens) {
         token=numOfTokens;
         tokenLabel.setText(String.valueOf(token));
     }
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel cardFieldLabel;
+    private javax.swing.JLabel tokenLabel;
+
     // End of variables declaration//GEN-END:variables
 }
