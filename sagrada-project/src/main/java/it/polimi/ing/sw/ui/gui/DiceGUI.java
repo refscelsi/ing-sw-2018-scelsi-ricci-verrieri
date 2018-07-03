@@ -207,7 +207,7 @@ public class DiceGUI extends javax.swing.JPanel {
 
     private void diceLabelMouseReleased(java.awt.event.MouseEvent evt) throws RemoteException {//GEN-FIRST:event_diceLabelMouseReleased
         wasPressed = false;
-        if (this != evt.getComponent() && floatingDiceFrame != null) {
+        if (this != evt.getComponent() && floatingDiceFrame != null && gui.isPlaying()) {
             floatingDiceFrame.setVisible(false);
             injectDice(evt);
             floatingDiceFrame = null;
@@ -234,7 +234,7 @@ public class DiceGUI extends javax.swing.JPanel {
         char id = nameComponent.charAt(0);
         System.out.println(id);
 
-        if (/*!NOT_A_DICE.equals(nameComponent) &&*/ TableFrame.isPlayerTurn(gui.getNickname(), id)) {
+        if (TableFrame.isPlayerTurn(gui.getNickname(), id)) {
             int destY = (int) nameComponent.charAt(2) - 48;
             int destX = (int) nameComponent.charAt(1) - 48;
             handleToolCards(id, destX, destY);

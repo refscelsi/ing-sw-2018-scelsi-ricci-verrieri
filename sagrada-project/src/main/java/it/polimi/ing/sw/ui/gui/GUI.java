@@ -27,6 +27,8 @@ public class GUI implements UiUpdate {
         this.controller = controller;
     }
 
+    private Match resetMatch;
+
     public View getController() throws RemoteException {
         if (controller == null)
             controller = new View();
@@ -71,7 +73,7 @@ public class GUI implements UiUpdate {
     public void chooseAction(Match match, String nickname) throws RemoteException {
         //TODO add action handling
 
-        onGameUpdate(match, nickname);
+        onGameUpdate(controller.getMatch(), nickname);
     }
 
 
@@ -191,16 +193,23 @@ public class GUI implements UiUpdate {
     }
 
     public void useToolCard9(int name, Box box) throws RemoteException {
+
+        resetMatch = controller.getMatch();
+
         if (0 <= name && 9 > name) {
             TableFrame.isNotToolCardAnymore(9 - 1);
             //TODO handling empty cose
             controller.useToolCard(9, name, -1, box.getX() , box.getY() , -1, -1);
+        }else{
+            onActionNotValid("wrong action");
         }
     }
 
     public void useDice(int name, Box box) throws RemoteException {
+        resetMatch = controller.getMatch();
         //TODO handling empty cose
         controller.useDice(name, box.getX() , box.getY() );
+        onGameUpdate(controller.getMatch(), getNickname());
     }
 
 
@@ -252,6 +261,12 @@ public class GUI implements UiUpdate {
                 errorCode,
                 "Not valid Action",
                 JOptionPane.ERROR_MESSAGE);
+
+        try {
+            onGameUpdate(resetMatch,getNickname());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -261,8 +276,10 @@ public class GUI implements UiUpdate {
 
     @Override
     public void onTurnStart(Match match, String nickname) throws RemoteException {
+        JOptionPane.showMessageDialog(null,
+                "Turn Strted");
         chooseAction(match, nickname);
-        onGameUpdate(match,nickname);
+        onGameUpdate(controller.getMatch(),nickname);
     }
 
     @Override
@@ -283,8 +300,6 @@ public class GUI implements UiUpdate {
 
     @Override
     public void onGameEnd(Match match) {
-        //TODO fare tabellone di fine gioco
-
         tableFrame.setVisible(false);
         ScoreBoard scoreBoard = new ScoreBoard(match);
         scoreBoard.setVisible(true);
@@ -298,7 +313,7 @@ public class GUI implements UiUpdate {
     @Override
     public void onUseToolCardNotValid(int id, Match match, String errorCode) throws RemoteException {
         System.out.println(errorCode);
-        onGameUpdate(match, controller.getNickname());
+        onGameUpdate(controller.getMatch(), controller.getNickname());
         JOptionPane.showMessageDialog(null,
                 errorCode,
                 "Not valid Action",

@@ -116,7 +116,7 @@ public class CardField extends javax.swing.JPanel {
 
     private void cardFieldLabelMouseClicked(java.awt.event.MouseEvent evt) throws RemoteException {//GEN-FIRST:event_cardFieldLabelMouseClicked
         if (isToolCard) {
-            if (!used) {
+            if (!used) {//TODO next line
                 TableFrame.isNotToolCardAnymore(Integer.valueOf(TableFrame.idSelectedTc));
                 setUsed(true);
                 cardFieldLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 51, 51)));
