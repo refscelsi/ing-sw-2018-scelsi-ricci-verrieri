@@ -57,8 +57,11 @@ public class PlayerControllerSocket implements RemotePlayer, Runnable {
                 String method= (String) jsonObject.get("method");
                 switch (method) {
                     case Constants.CONNECT:
-                        String nickname = (String) jsonObject.get("nickname");
-                        this.controller = loginController.connectSocket(nickname, this);
+                        this.controller = loginController.connectSocket(this);
+                        break;
+                    case Constants.LOGIN:
+                        String nickname = (String ) jsonObject.get("nickname");
+                        controller.login(nickname);
                         break;
                     case Constants.JOINMATCH:
                         controller.joinMatch();
@@ -73,7 +76,6 @@ public class PlayerControllerSocket implements RemotePlayer, Runnable {
                     case Constants.ENDTURN:
                         controller.endTurn();
                         break;
-
                     case Constants.USEDICEREQUEST:
                         int indexDiceDraftPool= Integer.valueOf (((Long) jsonObject.get("indexDice")).intValue());
                         int row= ((Long) jsonObject.get("row")).intValue();
@@ -81,7 +83,6 @@ public class PlayerControllerSocket implements RemotePlayer, Runnable {
                         System.out.println("mando richiesta dado");
                         controller.sendUseDiceRequest(indexDiceDraftPool,row,col);
                         break;
-
                     case Constants.TOOLCARD:
                         int idCard =Integer.valueOf (((Long) jsonObject.get("id")).intValue());
                         int dice= ((Long) jsonObject.get("dice")).intValue();
@@ -92,6 +93,9 @@ public class PlayerControllerSocket implements RemotePlayer, Runnable {
                         int destCol=((Long) jsonObject.get("destCol")).intValue();
                         controller.useToolCard(idCard,dice,operation,sourceRow,sourceCol,destRow,destCol);
                         break;
+                    case Constants.STOPPLAYER:
+
+                     default: throw new IOException();
                 }
             }
         } catch (ClassNotFoundException e) {
@@ -99,6 +103,18 @@ public class PlayerControllerSocket implements RemotePlayer, Runnable {
         }
 
     }
+
+    @Override
+    public void onLogin(String nickname) throws RemoteException {
+        MatchToSend matchToSend=new MatchToSend("onLogin", nickname);
+        try {
+            out.writeObject(matchToSend);
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public void onSchemeToChoose(Match match) throws RemoteException {
@@ -148,7 +164,6 @@ public class PlayerControllerSocket implements RemotePlayer, Runnable {
     @Override
     public void onGameEnd(Match match) throws RemoteException {
         MatchToSend matchToSend=new MatchToSend(Constants.ONGAMEEND, match);
-        matchToSend.setMatch(match);
         try {
             out.writeObject(matchToSend);
             out.flush();
@@ -183,26 +198,57 @@ public class PlayerControllerSocket implements RemotePlayer, Runnable {
 
     @Override
     public void onNotValidUseDiceException(String message) throws RemoteException {
-
+        MatchToSend matchToSend=new MatchToSend(Constants.ONNOTVALIDUSEDICEEXCEPTION, message);
+        try {
+            out.writeObject(matchToSend);
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void onNotValidToolCardException(int id, String message) throws RemoteException {
-
+        MatchToSend matchToSend=new MatchToSend(Constants.ONNOTVALIDTOOLCARDEXCEPTION, message, id);
+        try {
+            out.writeObject(matchToSend);
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void onNotValidPlayException(String message) throws RemoteException {
-
+        MatchToSend matchToSend=new MatchToSend(Constants.ONNOTVALIDPLAYEXCEPTION, message);
+        try {
+            out.writeObject(matchToSend);
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void onNotValidNicknameException(String message) throws RemoteException {
-
+        MatchToSend matchToSend=new MatchToSend(Constants.ONNOTVALIDNICKNAMEEXCEPTION, message);
+        try {
+            out.writeObject(matchToSend);
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void onNotPossibleConnectionException(String message) throws RemoteException {
+        MatchToSend matchToSend=new MatchToSend(Constants.ONNOTPOSSIBLECONNECTIONEXCEPTION, message);
+        try {
+            out.writeObject(matchToSend);
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

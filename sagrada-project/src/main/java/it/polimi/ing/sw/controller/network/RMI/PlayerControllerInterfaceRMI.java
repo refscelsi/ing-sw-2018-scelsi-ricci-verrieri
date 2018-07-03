@@ -22,4 +22,8 @@ public interface PlayerControllerInterfaceRMI extends Remote, PlayerControllerIn
     void endTurn() throws RemoteException;
 
     void useToolCard(int id, int dice, int operation, int sourceRow, int sourceCol, int destRow, int destCol) throws RemoteException;
+
+    void stopPlayer() throws RemoteException;
+
+    void login(String nickname) throws RemoteException;
 }

@@ -2,6 +2,7 @@ package it.polimi.ing.sw.controller;
 
 import it.polimi.ing.sw.controller.exceptions.NotPossibleConnectionException;
 import it.polimi.ing.sw.controller.network.RMI.PlayerControllerInterfaceRMI;
+import it.polimi.ing.sw.controller.network.socket.PlayerControllerInterfaceSocket;
 import it.polimi.ing.sw.controller.network.socket.PlayerControllerSocket;
 import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
@@ -27,6 +28,41 @@ public class LoginController extends UnicastRemoteObject implements Remote, Logi
         this.clients = new ArrayList<PlayerControllerInterface>();
     }
 
+    @Override
+    public synchronized PlayerControllerInterfaceRMI connectRMI(String nickname, RemotePlayer remotePlayer) throws RemoteException {
+        PlayerController playerController = new PlayerController(this.match, (RemotePlayer) remotePlayer);
+        playerControllers.add(playerController);
+        clients.add(playerController);
+        return playerController;
+    }
+
+    public synchronized PlayerController connectSocket(PlayerControllerSocket playerControllerSocket){
+        PlayerController playerController= null;
+        try {
+            playerController = new PlayerController(match, playerControllerSocket);
+        } catch ( RemoteException e ) {
+            e.printStackTrace();
+        }
+        playerControllers.add(playerController);
+        return playerController;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
     //metodo che crea un controller per ogni view che si connette
     @Override
     public synchronized PlayerControllerInterfaceRMI connectRMI(String nickname, it.polimi.ing.sw.controller.RemotePlayer remotePlayer) throws RemoteException {
@@ -79,6 +115,8 @@ public class LoginController extends UnicastRemoteObject implements Remote, Logi
                     playerControllers.add(playerController);
                     match.notifyNotPossibleConnectionException(match.getPlayerLogged(nickname), e.getMessage());
                 } catch (NotValidNicknameException e) {
+                    PlayerController playerController= new PlayerController(match, playerControllerSocket,  match.getPlayerLogged(nickname));
+                    playerControllers.add(playerController);
                     match.notifyNotValidNicknameException(match.getPlayerLogged(nickname), e.getMessage());
                 }
                 PlayerController playerController= new PlayerController(match, playerControllerSocket, match.getPlayer(nickname));
@@ -95,6 +133,6 @@ public class LoginController extends UnicastRemoteObject implements Remote, Logi
         throw new RemoteException();
     }
 
-
+*/
 }
 

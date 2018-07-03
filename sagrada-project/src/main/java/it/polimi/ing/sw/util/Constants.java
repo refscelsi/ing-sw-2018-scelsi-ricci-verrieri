@@ -24,6 +24,8 @@ public class Constants {
     public static final String USEDICEREQUEST= "sendUseDiceRequest";
     public static final String ENDTURN= "endTurn";
     public static final String TOOLCARD= "useToolCard";
+    public static final String STOPPLAYER= "stopPlayer";
+    public static final String LOGIN="login";
 
     //metodi PlayerController
     public static final String CONNECT="connectSocket";
@@ -34,7 +36,10 @@ public class Constants {
     public static final String ONSETPLAYING= "onSetPlaying";
     public static final String ONOTHERINFOTOOLCARD="onOtherInfoToolCard";
     public static final String ONGAMEEND= "onGameEnd";
-
-
+    public static final String ONNOTVALIDUSEDICEEXCEPTION="onNotValidUseDiceException";
+    public static final String ONNOTVALIDTOOLCARDEXCEPTION ="onNotValidToolCardException";
+    public static final String ONNOTVALIDPLAYEXCEPTION= "onNotValidPlayException";
+    public static final String ONNOTVALIDNICKNAMEEXCEPTION ="onNotValidNicknameException";
+    public static final String ONNOTPOSSIBLECONNECTIONEXCEPTION ="onNotPossibleConnectionException";
 
 }

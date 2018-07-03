@@ -9,6 +9,8 @@ import java.rmi.RemoteException;
 //interfaccia che accomuna i due RemotePlayer e viene implementata dalla View
 public interface RemotePlayer extends Remote {
 
+    void onLogin(String nickname) throws RemoteException;
+
     //notifica gli schemi da scegliere
     void onSchemeToChoose(Match match) throws RemoteException, NotValidPlayException;
 

@@ -778,16 +778,15 @@ public class Match implements Serializable{
         playerMap.get(player).onNotValidPlayException(message);
     }
 
-    public void notifyNotValidNicknameException(Player player, String message) throws RemoteException{
-        playerMap.get(player).onNotValidNicknameException(message);
+    public void notifyNotValidNicknameException(RemotePlayer player, String message) throws RemoteException{
+        player.onNotValidNicknameException(message);
     }
 
-    public void notifyNotPossibleConnectionException(Player player, String message) throws RemoteException{
-        playerMap.get(player).onNotPossibleConnectionException(message);
+    public void notifyNotPossibleConnectionException(RemotePlayer player, String message) throws RemoteException{
+        player.onNotPossibleConnectionException(message);
     }
 
 
-    //////////////////////////////////////////////////////////////////
     public Match matchClone(){
         Match matchClone=new Match();
         matchClone.setDraftPool(draftPool.cloneDraftPool());

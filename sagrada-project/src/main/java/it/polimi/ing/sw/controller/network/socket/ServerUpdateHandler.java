@@ -55,6 +55,36 @@ public class ServerUpdateHandler implements Runnable {
                         view.onGameEnd(match);
                         break;
                     }
+                    case Constants.ONNOTPOSSIBLECONNECTIONEXCEPTION: {
+                        view.onNotPossibleConnectionException(matchToSend.getMessage());
+                        break;
+                    }
+
+                    case Constants.ONNOTVALIDNICKNAMEEXCEPTION:{
+                        view.setLogin(false);
+                        view.onNotValidNicknameException(matchToSend.getMessage());
+                        break;
+                    }
+
+                    case Constants.ONNOTVALIDPLAYEXCEPTION: {
+                        view.onNotValidPlayException(matchToSend.getMessage());
+                        break;
+                    }
+
+                    case Constants.ONNOTVALIDUSEDICEEXCEPTION: {
+                        view.onNotValidUseDiceException(matchToSend.getMessage());
+                        break;
+                    }
+
+                    case Constants.ONNOTVALIDTOOLCARDEXCEPTION: {
+                        view.onNotValidToolCardException(matchToSend.getId(),matchToSend.getMessage());
+                        break;
+                    }
+
+                    case "onLogin":
+                        view.setLogin(true);
+                        view.onLogin(matchToSend.getMessage());
+                        break;
                     default:
                         System.out.println("Ho ricevuto un oggetto che non sono stato in grado di interpretare");
                 }

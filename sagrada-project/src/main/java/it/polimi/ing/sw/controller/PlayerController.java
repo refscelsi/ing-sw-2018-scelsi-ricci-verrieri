@@ -1,10 +1,13 @@
 package it.polimi.ing.sw.controller;
 
+import it.polimi.ing.sw.controller.exceptions.NotPossibleConnectionException;
 import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
 import it.polimi.ing.sw.controller.network.RMI.PlayerControllerInterfaceRMI;
 import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.model.Player;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
+import it.polimi.ing.sw.model.exceptions.NotValidNicknameException;
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -24,18 +27,12 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
     //tengo traccia del nickname nel caso lo stronzo si riconnettesse
     private String nickname;
 
-    public PlayerController(Match match, RemotePlayer remotePlayer, Player player) throws RemoteException {
+    public PlayerController(Match match, RemotePlayer remotePlayer) throws RemoteException {
         super();
         this.match = match;
         this.remotePlayer = remotePlayer;
-        this.player = player;
-        this.nickname = player.getNickname();
-        //this.state=player.getState();
     }
 
-    /*public void setState(PlayerState state){
-        this.state=player.getState();
-    }*/
 
     public PlayerState getState() {
         return this.player.getState();
@@ -47,6 +44,20 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
 
     public String getNickname() {
         return this.nickname;
+    }
+
+    @Override
+    public void login(String nickname) throws RemoteException {
+        try {
+            match.login(nickname, remotePlayer);
+            this.player=match.getPlayer(nickname);
+            System.out.println("assegno il player");
+            remotePlayer.onLogin(player.getNickname());
+        } catch ( NotValidNicknameException e ) {
+            match.notifyNotValidNicknameException(this.remotePlayer ,e.getMessage());
+        } catch ( NotPossibleConnectionException e ) {
+            match.notifyNotPossibleConnectionException(this.remotePlayer,e.getMessage());
+        }
     }
 
     @Override
@@ -218,5 +229,12 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
             match.notifyNotValidToolCardException(player, id, e.getMessage());
         }
     }
+
+    @Override
+    public void stopPlayer() throws RemoteException {
+
+    }
+
+
 
 }

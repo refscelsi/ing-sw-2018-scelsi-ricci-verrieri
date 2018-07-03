@@ -22,10 +22,10 @@ public class PlayerControllerInterfaceSocket implements PlayerControllerInterfac
 
 
 
-    public PlayerControllerInterfaceSocket(String nickname, Socket socket) throws IOException {
+    public PlayerControllerInterfaceSocket(Socket socket) throws IOException {
         this.out= new ObjectOutputStream(socket.getOutputStream());
         Gson gson= new Gson();
-        String json=gson.toJson(new Data(Constants.CONNECT, nickname));
+        String json=gson.toJson(new Data(Constants.CONNECT));
         try {
             out.writeObject(json);
         } catch (IOException e) {
@@ -96,6 +96,23 @@ public class PlayerControllerInterfaceSocket implements PlayerControllerInterfac
     public void useToolCard(int id, int dice, int operation, int sourceRow, int sourceCol, int destRow, int destCol) {
         Gson gson= new Gson();
         String json=gson.toJson(new Data(Constants.TOOLCARD, null));
+        try {
+            out.writeObject(json);
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void stopPlayer() throws RemoteException {
+
+    }
+
+    @Override
+    public void login(String nickname) throws RemoteException {
+        Gson gson= new Gson();
+        String json=gson.toJson(new Data(Constants.LOGIN, nickname));
         try {
             out.writeObject(json);
             out.flush();

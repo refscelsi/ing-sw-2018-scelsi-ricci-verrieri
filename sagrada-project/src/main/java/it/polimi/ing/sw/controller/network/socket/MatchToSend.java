@@ -21,6 +21,16 @@ public class MatchToSend implements Serializable {
         this.method=method;
         this.match=match;
     }
+    public MatchToSend (String method, String message){
+        this.method=method;
+        this.message=message;
+    }
+
+    public MatchToSend (String method, String message, int id){
+        this.method=method;
+        this.message=message;
+        this.id=id;
+    }
 
     public void setMessage(String message) {
         this.message = message;
@@ -28,10 +38,6 @@ public class MatchToSend implements Serializable {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public void setMatch(Match match) {
-        this.match = match;
     }
 
     public Match getMatch() {

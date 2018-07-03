@@ -4,19 +4,16 @@ package it.polimi.ing.sw.client;
 import it.polimi.ing.sw.controller.LoginInterface;
 import it.polimi.ing.sw.controller.PlayerControllerInterface;
 import it.polimi.ing.sw.controller.RemotePlayer;
-import it.polimi.ing.sw.controller.exceptions.NotPossibleConnectionException;
-import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
 import it.polimi.ing.sw.controller.network.socket.PlayerControllerInterfaceSocket;
 import it.polimi.ing.sw.controller.network.socket.ServerUpdateHandler;
 import it.polimi.ing.sw.model.Match;
-import it.polimi.ing.sw.model.exceptions.NotValidException;
-import it.polimi.ing.sw.model.exceptions.NotValidNicknameException;
 import it.polimi.ing.sw.ui.cli.CLI;
 //import it.polimi.ing.sw.ui.gui.GUI;
 import it.polimi.ing.sw.util.Constants;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.rmi.AccessException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -110,10 +107,31 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         return match.getRoundTrack().getRoundTrackSize()!=0;
     }
 
+    public void setLogin(boolean isLogged){
+        this.isLogged=isLogged;
+    }
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Metodi con cui il model notifica la view in seguito ad un aggiornamento (vedi interfaccia RemotePlayerRMI)
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+    @Override
+    public void onLogin(String nickname) throws RemoteException {
+        this.nickname = nickname;
+        this.isLogged = true;
+        ui.onSuccess("Complimenti, ti sei loggato come " + nickname);
+        if(this.nickname==nickname){
+            Runnable taskJoin = ()->{
+                try {
+                    controller.joinMatch();
+                } catch ( IOException e ) {
+                    e.printStackTrace();
+                }
+            };
+            new Thread(taskJoin).start();
+        }
+    }
 
     @Override
     public void onSchemeToChoose(Match match) {
@@ -239,54 +257,36 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
             Registry reg = LocateRegistry.getRegistry();
             LoginInterface loginController = (LoginInterface) reg.lookup("LoginController");
             controller = loginController.connectRMI(nickname, this);
-            this.isLogged = true;
-            ui.onSuccess("Complimenti, ti sei loggato come " + nickname);
-            this.nickname = nickname;
-        } catch (RemoteException e) {
+            controller.login(nickname);
+            System.out.println("forza chievo");
+
+        } catch ( AccessException e ) {
+            e.printStackTrace();
+        } catch ( RemoteException e ) {
             ui.onActionNotValid(e.getMessage());
-            exit(0);
-        } catch (NotBoundException e) {
+        } catch ( NotBoundException e ) {
             e.printStackTrace();
         }
-        Runnable taskJoin=()-> {
-            try {
-                controller.joinMatch();
-                System.out.println("forza chievo");//TODO: il controller mi notifica l'indice del giocatore
-            } catch ( RemoteException e ) {
-                ui.onActionNotValid(e.getMessage());
-                exit(0);
-            } catch ( IOException e ) {
-                e.printStackTrace();
-            }
-        };
-        new Thread(taskJoin).start();
-        // devo notificare anche il colore del giocatore
-
     }
 
-
-
-    public void loginPlayerSocket(String nickname) {
+        public void loginPlayerSocket(String nickname) {
         PlayerControllerInterfaceSocket playerInterfaceSocket = null;
         try {
             Socket socket = new Socket("localhost", Constants.SOCKET_PORT);
             new Thread(new ServerUpdateHandler(this, socket )).start();
-            playerInterfaceSocket = new PlayerControllerInterfaceSocket(nickname, socket);
-
+            playerInterfaceSocket = new PlayerControllerInterfaceSocket(socket);
         } catch (IOException e) {
             e.printStackTrace();
         }
         this.controller = playerInterfaceSocket;
-        this.isLogged = true;
-        ui.onSuccess("Complimenti, ti sei loggato come " + nickname);
-        this.nickname = nickname;
         try {
-            controller.joinMatch();
+            controller.login(nickname);
             System.out.println("forza chievo");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
     public void setChosenScheme(int id) {
         System.out.println("Ho scelto schema nella view");
         try {
