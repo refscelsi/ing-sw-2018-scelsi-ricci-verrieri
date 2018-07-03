@@ -1,7 +1,5 @@
 package it.polimi.ing.sw.ui.gui;
 
-import it.polimi.ing.sw.client.View;
-
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
@@ -18,15 +16,6 @@ public class CardField extends javax.swing.JPanel {
     private Boolean isToolCard;
     private String id;
     private GUI gui;
-//    public CardField(int dimXcard, int dimYcard) {
-//        this.dimXcard=dimXcard;
-//        this.dimYcard=dimYcard;
-//        initComponents();
-//        FINAL_IMAGE_PATH = IMAGE_PATH.concat("po/");
-//        setIcons(FINAL_IMAGE_PATH.concat("1.png"));//default icon
-//        used = true;
-//        token=0;
-//    }
 
     //cardType should be defined as "po/" or "tc/"
     public CardField(String cardName, String cardType, int dimXcard, int dimYcard) {
@@ -115,25 +104,27 @@ public class CardField extends javax.swing.JPanel {
     }//GEN-LAST:event_cardFieldLabelMouseExited
 
     private void cardFieldLabelMouseClicked(java.awt.event.MouseEvent evt) throws RemoteException {//GEN-FIRST:event_cardFieldLabelMouseClicked
-        if (isToolCard) {
-            if (!used) {//TODO next line
-                TableFrame.isNotToolCardAnymore(Integer.valueOf(TableFrame.idSelectedTc));
-                setUsed(true);
-                cardFieldLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 51, 51)));
-                TableFrame.idSelectedTc = id;
-                if (TableFrame.aToolCardIsUsed()) {
-                    switch (TableFrame.idSelectedTc) {
-                        case "7":
-                            gui.useToolCard7();
-                            break;
-                        case "8":
-                            gui.useToolCard8();
-                            break;
+        if (gui.isPlaying()) {
+            if (isToolCard) {
+                if (!used) {//TODO next line
+                    TableFrame.isNotToolCardAnymore(Integer.valueOf(TableFrame.idSelectedTc));
+                    setUsed(true);
+                    cardFieldLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 51, 51)));
+                    TableFrame.idSelectedTc = id;
+                    if (TableFrame.aToolCardIsUsed()) {
+                        switch (TableFrame.idSelectedTc) {
+                            case "7":
+                                gui.useToolCard7();
+                                break;
+                            case "8":
+                                gui.useToolCard8();
+                                break;
+                        }
                     }
+                } else {
+                    setUsed(false);
+                    TableFrame.idSelectedTc = null;
                 }
-            } else {
-                setUsed(false);
-                TableFrame.idSelectedTc = null;
             }
         }
     }//GEN-LAST:event_cardFieldLabelMouseClicked

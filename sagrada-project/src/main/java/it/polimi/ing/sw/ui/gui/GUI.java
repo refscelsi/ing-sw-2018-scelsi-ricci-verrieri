@@ -2,11 +2,9 @@ package it.polimi.ing.sw.ui.gui;
 
 import it.polimi.ing.sw.client.UiUpdate;
 import it.polimi.ing.sw.client.View;
-import it.polimi.ing.sw.model.Box;
 import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.model.Scheme;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
-import it.polimi.ing.sw.ui.cli.ShowRoundTrack;
 import it.polimi.ing.sw.ui.gui.toolCardsActrionFrames.ToolCard1ActionForm;
 import it.polimi.ing.sw.util.Constants;
 
@@ -70,12 +68,6 @@ public class GUI implements UiUpdate {
     /**
      * Scelta dell'azione da parte del giocatore
      */
-    public void chooseAction(Match match, String nickname) throws RemoteException {
-        //TODO add action handling
-
-        onGameUpdate(controller.getMatch(), nickname);
-    }
-
 
     /////////////////////////////////////////////////////////////////////////////////////////
     // Connessione e disconnessione del Client --> da fare probabilmente
@@ -107,7 +99,7 @@ public class GUI implements UiUpdate {
 //                "Invalid placing dice action, retry or do something different.",
 //                "Placing dice error",
 //                JOptionPane.ERROR_MESSAGE);
-        onGameUpdate(controller.getMatch(), controller.getNickname());
+        onGameUpdate(resetMatch, controller.getNickname());
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////
@@ -192,24 +184,24 @@ public class GUI implements UiUpdate {
         TableFrame.isNotToolCardAnymore(12 - 1);
     }
 
-    public void useToolCard9(int name, Box box) throws RemoteException {
+    public void useToolCard9(int name, int destX, int destY) throws RemoteException {
 
         resetMatch = controller.getMatch();
 
         if (0 <= name && 9 > name) {
             TableFrame.isNotToolCardAnymore(9 - 1);
             //TODO handling empty cose
-            controller.useToolCard(9, name, -1, box.getX() , box.getY() , -1, -1);
-        }else{
+            controller.useToolCard(9, name, -1, destX, destY, -1, -1);
+        } else {
             onActionNotValid("wrong action");
         }
     }
 
-    public void useDice(int name, Box box) throws RemoteException {
+    public void useDice(int name, int destX, int destY) throws RemoteException {
         resetMatch = controller.getMatch();
         //TODO handling empty cose
-        controller.useDice(name, box.getX() , box.getY() );
-        onGameUpdate(controller.getMatch(), getNickname());
+        controller.useDice(name, destX, destY);
+        //onGameUpdate(controller.getMatch(), getNickname());
     }
 
 
@@ -218,7 +210,7 @@ public class GUI implements UiUpdate {
         boolean roundTrackIsFull = controller.checkIfRoundTrackIsFull();
         if (!roundTrackIsFull) {
             System.out.println("Non puoi utilizzare questa carta perché ancora non ci sono dadi sul tracciato dei round");
-            chooseAction(match, controller.getNickname());
+            //chooseAction(match, controller.getNickname());
         } else {
             do {
                 System.out.println("Digita l'indice del dado della riserva che vuoi scambiare, tra 1 e " + match.getDraftPool().getSize());
@@ -263,7 +255,7 @@ public class GUI implements UiUpdate {
                 JOptionPane.ERROR_MESSAGE);
 
         try {
-            onGameUpdate(resetMatch,getNickname());
+            onGameUpdate(resetMatch, getNickname());
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -278,12 +270,12 @@ public class GUI implements UiUpdate {
     public void onTurnStart(Match match, String nickname) throws RemoteException {
         JOptionPane.showMessageDialog(null,
                 "Turn Strted");
-        chooseAction(match, nickname);
-        onGameUpdate(controller.getMatch(),nickname);
+        onGameUpdate(controller.getMatch(), nickname);
     }
 
     @Override
     public void onPlaceDiceNotValid(NotValidException e) throws RemoteException {
+        //TODO retet match
         System.out.println(e);
         retryPlaceDice();
     }
@@ -313,7 +305,7 @@ public class GUI implements UiUpdate {
     @Override
     public void onUseToolCardNotValid(int id, Match match, String errorCode) throws RemoteException {
         System.out.println(errorCode);
-        onGameUpdate(controller.getMatch(), controller.getNickname());
+        onGameUpdate(resetMatch, controller.getNickname());
         JOptionPane.showMessageDialog(null,
                 errorCode,
                 "Not valid Action",
@@ -368,7 +360,7 @@ public class GUI implements UiUpdate {
                 } while (choice != 0 && choice != 1);
                 if (choice == 0)
                     controller.useToolCard(12, -1, -1, -1, -1, -1, -1);
-                else{
+                else {
                     //TODO GESTIRE?
                     //useToolCard23412( 12 );
 
@@ -382,7 +374,7 @@ public class GUI implements UiUpdate {
 
     @Override
     public void onSuccess(String message) {
-        if(null!=message){
+        if (null != message) {
             /*
             JOptionPane.showMessageDialog(null,
                     message);*/

@@ -51,6 +51,8 @@ public class VetrataPanel extends javax.swing.JPanel {
                 imageLabel.add(dices[i][j]);
                 dices[i][j].setBounds(deltaX + i * (DIM_XDICE + 5), 30 + j * (DIM_YDICE + 5), DIM_XDICE, DIM_YDICE);
                 dices[i][j].setName(String.valueOf(idPlayer).concat(String.valueOf(i)).concat(String.valueOf(j)));
+                dices[i][j].setX(i);
+                dices[i][j].setY(i);
             }
         }
     }

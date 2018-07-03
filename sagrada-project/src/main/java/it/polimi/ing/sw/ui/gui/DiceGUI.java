@@ -47,7 +47,7 @@ public class DiceGUI extends javax.swing.JPanel {
     private void updateBox() {
         updateIcon(String.valueOf(box.getShade()), false);
         if(box.isFull()){
-            updateColor(box.getDice().getDiceColor());
+            updateDice();
         }else {
             updateColor(box.getColor());
         }
@@ -180,34 +180,37 @@ public class DiceGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_diceLabelMouseExited
 
     private void diceLabelMousePressed(java.awt.event.MouseEvent evt) throws RemoteException {//GEN-FIRST:event_diceLabelMousePressed
-        if (TableFrame.aToolCardIsUsed()) {
-            switch (TableFrame.idSelectedTc) {
-                case "1":
-                    gui.useToolCard1(this);
-                    break;
-                case "6":
-                    gui.useToolCard6(Integer.valueOf(getName()));
-                    break;
-                case "10":
-                    gui.useToolCard10(Integer.valueOf(getName()));
-                    break;
-                case "11":
-                    gui.useToolCard11(Integer.valueOf(getName()));
-                    break;
-            }
-        } else {
-            if (box.isFull()) {
-                //if(gui.getNickname()==TableFrame.getMatch().getPlayerPlaying()){
+        if (gui.isPlaying()){
+            if (TableFrame.aToolCardIsUsed()) {
+                switch (TableFrame.idSelectedTc) {
+                    case "1":
+                        gui.useToolCard1(this);
+                        break;
+                    case "6":
+                        gui.useToolCard6(Integer.valueOf(getName()));
+                        break;
+                    case "10":
+                        gui.useToolCard10(Integer.valueOf(getName()));
+                        break;
+                    case "11":
+                        gui.useToolCard11(Integer.valueOf(getName()));
+                        break;
+                }
+            } else {
+                if (box.isFull()) {
+                    //if(gui.getNickname()==TableFrame.getMatch().getPlayerPlaying()){
                     wasPressed = true;
                     floatingDiceFrame = new FloatingDiceFrame(box.getDice(), DIM_X_FLOATING_DICE, DIM_Y_FLOATING_DICE);
-                //}
+                    //}
+                }
             }
         }
+
     }//GEN-LAST:event_diceLabelMousePressed
 
     private void diceLabelMouseReleased(java.awt.event.MouseEvent evt) throws RemoteException {//GEN-FIRST:event_diceLabelMouseReleased
         wasPressed = false;
-        if (this != evt.getComponent() && floatingDiceFrame != null && gui.isPlaying()) {
+        if (this != evt.getComponent() && floatingDiceFrame != null /*&& gui.isPlaying()*/) {
             floatingDiceFrame.setVisible(false);
             injectDice(evt);
             floatingDiceFrame = null;
@@ -274,12 +277,12 @@ public class DiceGUI extends javax.swing.JPanel {
             if (!TableFrame.isToolCard.get(9 - 1)) {
                 if (0 <= Integer.valueOf(getName()) && 9 > Integer.valueOf(getName())) {
                     reprindDices(id, destX, destY);
-                    gui.useDice(Integer.valueOf(getName()), box);
+                    gui.useDice(Integer.valueOf(getName()), destX, destY);
 
                 }
             } else {
                 reprindDices(id, destX, destY);
-                gui.useToolCard9(Integer.valueOf(getName()), box);
+                gui.useToolCard9(Integer.valueOf(getName()), destX, destY);
 
             }
             //reprindDices(id, destX, destY);
@@ -311,5 +314,13 @@ public class DiceGUI extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel diceLabel;
+
+    public void setX(int i) {
+        box.setX(i);
+    }
+
+    public void setY(int i) {
+        box.setY(i);
+    }
     // End of variables declaration//GEN-END:variables
 }

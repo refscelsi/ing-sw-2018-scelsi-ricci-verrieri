@@ -267,7 +267,7 @@ public class TableFrame extends javax.swing.JFrame {
 
     private void setIcons() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource(SAGRADA_ICO)));
-        this.setTitle("Sagrada Boardgame");
+        this.setTitle("Sagrada Boardgame - "+gui.getNickname());
     }
 
     @SuppressWarnings("unchecked")
