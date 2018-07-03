@@ -99,7 +99,7 @@ public class GUI implements UiUpdate {
         }
     }
 
-    public void useToolCard11(int name) throws RemoteException {
+    public void useToolCard1(int name) throws RemoteException {
         if (0 <= name && 9 > name) {
             //TODO handling empty cose
             controller.useToolCard(11, name, -1, -1, -1, -1, -1);

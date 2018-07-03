@@ -11,7 +11,7 @@ public class ToolCard11ActionForm extends javax.swing.JFrame {
     private GUI gui;
 
     public ToolCard11ActionForm(int numFaceUp, GUI gui) {
-        this.gui=gui;
+        this.gui = gui;
         initComponents();
         numberButton.setText(String.valueOf(numFaceUp));
     }
@@ -36,12 +36,46 @@ public class ToolCard11ActionForm extends javax.swing.JFrame {
         plusLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         plusLabel.setText("+");
         plusLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        plusLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                plusLabelMouseEntered(evt);
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                plusLabelMouseExited(evt);
+            }
+
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                plusLabelMousePressed(evt);
+            }
+
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                plusLabelMouseReleased(evt);
+            }
+        });
 
         minusLabel.setFont(new java.awt.Font("Elephant", 1, 24)); // NOI18N
         minusLabel.setForeground(new java.awt.Color(0, 0, 0));
         minusLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         minusLabel.setText("-");
         minusLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        minusLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                minusLabelMouseEntered(evt);
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                minusLabelMouseExited(evt);
+            }
+
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                minusLabelMousePressed(evt);
+            }
+
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                minusLabelMouseReleased(evt);
+            }
+        });
 
         numberButton.setFont(new java.awt.Font("Elephant", 1, 24)); // NOI18N
         numberButton.setForeground(new java.awt.Color(0, 0, 0));
@@ -131,7 +165,7 @@ public class ToolCard11ActionForm extends javax.swing.JFrame {
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_okButtonActionPerformed
         setVisible(false);
-        gui.useToolCard11(numFaceUp);
+        //gui.useToolCard11(numFaceUp);
     }//GEN-LAST:event_okButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed

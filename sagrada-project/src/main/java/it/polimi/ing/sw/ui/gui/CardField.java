@@ -107,7 +107,7 @@ public class CardField extends javax.swing.JPanel {
         if (gui.isPlaying()) {
             if (isToolCard) {
                 if (!used) {//TODO next line
-                    if(null!=TableFrame.idSelectedTc){
+                    if (null != TableFrame.idSelectedTc) {
                         TableFrame.isNotToolCardAnymore(Integer.valueOf(TableFrame.idSelectedTc));
                     }
                     setUsed(true);
@@ -152,9 +152,10 @@ public class CardField extends javax.swing.JPanel {
     }
 
     public void setTokens(int numOfTokens) {
-        token=numOfTokens;
+        token = numOfTokens;
         tokenLabel.setText(String.valueOf(token));
     }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel cardFieldLabel;
     private javax.swing.JLabel tokenLabel;
