@@ -100,6 +100,8 @@ public class TableFrame extends javax.swing.JFrame {
             setToolCards(ids);
         }
 
+        setTokens();
+
         int counter = 0;
         for (Player player : match.getPlayers()) {
             switch (counter) {
@@ -119,6 +121,12 @@ public class TableFrame extends javax.swing.JFrame {
             counter++;
         }
         diceFieldPanel.setDices(match.getDraftPool().getDraftPool());
+    }
+
+    private static void setTokens() {
+        toolCardList.get(0).setTokens(match.getToolCards().get(0).getNumOfTokens());
+        toolCardList.get(1).setTokens(match.getToolCards().get(1).getNumOfTokens());
+        toolCardList.get(2).setTokens(match.getToolCards().get(2).getNumOfTokens());
     }
 
     private static void updatePlayer1(Player player) {

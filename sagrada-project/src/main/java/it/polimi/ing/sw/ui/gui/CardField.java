@@ -168,5 +168,10 @@ public class CardField extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel cardFieldLabel;
     private javax.swing.JLabel tokenLabel;
+
+    public void setTokens(int numOfTokens) {
+        token=numOfTokens;
+        tokenLabel.setText(String.valueOf(token));
+    }
     // End of variables declaration//GEN-END:variables
 }

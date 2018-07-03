@@ -86,7 +86,6 @@ public class GUI implements UiUpdate {
     /////////////////////////////////////////////////////////////////////////////////////////
     // Scelta D: posizionare un dado sullo schema
     /////////////////////////////////////////////////////////////////////////////////////////
-
     public void handleUseDice(Match match, boolean toolCard9) {
 
         //handled by GUI
@@ -351,23 +350,12 @@ public class GUI implements UiUpdate {
             }
             break;
             case 12: {
-
-                //TODO FIMESTRA DI DIALOGO DOVE CHIEDO CHE FARE
-                int choice;
-                do {
-                    System.out.println("Primo dado mosso correttamente, digita 0 se non vuoi spostare più dadi o 1 se vuoi spostarne un altro");
-                    choice = scanner.nextInt();
-                } while (choice != 0 && choice != 1);
-                if (choice == 0)
+                int reply = JOptionPane.showConfirmDialog(null, "Primo dado mosso correttamente, clicca no se non vuoi spostare più dadi o sì se vuoi spostarne un altro", "ToolCard12", JOptionPane.YES_NO_OPTION);
+                if (reply == JOptionPane.YES_OPTION) {
+                    // sulla gui muove un dado
+                } else {
                     controller.useToolCard(12, -1, -1, -1, -1, -1, -1);
-                else {
-                    //TODO GESTIRE?
-                    //useToolCard23412( 12 );
-
-                    ///TODO ADD LISTENER TO TABLE FRAME THAT IGNORES INPUT WHN DIALOG WINDOWS ARE OPEN
-                    //TODO SET TOKENS ON TOOLCARD (NumOfTokens  ?)
                 }
-
             }
         }
     }
