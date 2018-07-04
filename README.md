@@ -1,7 +1,7 @@
 #**TEAM**
->Ricci Arianna MAT COD PERSONA
->Scelsi Riccardo MAT 845641 COD. PERSONA 10521406
->Ricci Arianna MAT COD PERSONA
+Ricci Arianna MAT 846769 COD PERSONA 10536266
+Scelsi Riccardo MAT 845641 COD. PERSONA 10521406
+Verrieri Ludovica MAT COD PERSONA
 
 #**COVERAGE TEST**
 [Coverage link](COVERAGE/)
