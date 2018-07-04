@@ -1,7 +1,5 @@
 package it.polimi.ing.sw.ui.gui;
 
-import it.polimi.ing.sw.App;
-import it.polimi.ing.sw.client.View;
 import it.polimi.ing.sw.model.Dice;
 import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.model.Player;
