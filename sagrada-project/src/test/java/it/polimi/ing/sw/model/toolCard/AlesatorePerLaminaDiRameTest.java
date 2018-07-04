@@ -17,6 +17,7 @@ public class AlesatorePerLaminaDiRameTest {
     private Dice dice1, dice2, dice3;
     private Scheme scheme;
     private SchemeCardDeck deck;
+    private ToolCard toolCardClone;
 
     @Before
     public void before() {
@@ -82,7 +83,17 @@ public class AlesatorePerLaminaDiRameTest {
             System.out.println(e.getMessage());
         }
 
+        toolCardClone = alesatorePerLaminaDiRame.toolCardClone();
+
         assertTrue(scheme.getBox(0,4).isFull()&&scheme.getBox(3,1).isFull()&&!scheme.getBox(1,1).isFull());
+    }
+
+    @Test
+    public void cloneTest() {
+
+        toolCardClone = alesatorePerLaminaDiRame.toolCardClone();
+
+        assertTrue(toolCardClone.getId()==3);
     }
 
 }

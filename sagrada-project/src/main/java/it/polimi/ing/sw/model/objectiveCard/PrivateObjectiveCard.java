@@ -26,8 +26,10 @@ public class PrivateObjectiveCard implements Serializable {
         Box boxes[][] = scheme.getBoxes();
         for (int i = 0; i < 4; i++)
             for (int j = 0; j < 5; j++)
-                if (boxes[i][j].getColor() == color)
-                    score = score + boxes[i][j].getShade();
+                if (boxes[i][j].isFull()) {
+                    if (boxes[i][j].getDice().getDiceColor() == color)
+                        score = score + boxes[i][j].getDice().getNumFacciaUp();
+                }
         return score;
     }
 

@@ -25,17 +25,23 @@ public class TaglierinaManuale extends ToolCard {
     }
 
 
+    // passo dice1 = -2 se non voglio piazzare il secondo dado
+
     @Override
-    public void execute(DraftPool neverUsed1, RoundTrack roundTrack, Scheme scheme, Player[] neverUsed2, Bag neverUsed3, int dice1, int neverUsed5, int sourceRow, int sourceCol, int destRow, int destCol) throws NotValidException {
-        System.out.println("Non entro");
+    public void execute(DraftPool neverUsed1, RoundTrack roundTrack, Scheme scheme, Player[] neverUsed2, Bag neverUsed3, int dice1, int firstExecution, int sourceRow, int sourceCol, int destRow, int destCol) throws NotValidException {
+
+        if (firstExecution==1)
+            firstExecutionDone = true;
+        else
+            firstExecutionDone = false;
+
         if (dice1!=-2) {
-            System.out.println("Entro");
             Box sourceBox = scheme.getBox(sourceRow, sourceCol);
             Box destBox = scheme.getBox(destRow, destCol);
-            Dice dice = sourceBox.getDice();
             if (!sourceBox.isFull()) {
                 throw new NotValidException("Hai scelto come origine una casella vuota!");
             } else {
+                Dice dice = sourceBox.getDice();
                 sourceBox.removeDice();
                 if (destBox.isFull()) {
                     sourceBox.placeDice(dice);

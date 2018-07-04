@@ -12,14 +12,14 @@ public class DifferentShadeRow extends ObjectiveCard {
     }
 
     public int calculateScore(Scheme scheme) {
-        int i, j, score = 0;
+        int i, j, index, score = 0;
         Box[][] boxes = scheme.getBoxes();
         ArrayList<Integer> shades = new ArrayList<>();
         for (i = 0; i < 4; i++) {
             for (j = 0; j < 5; j++) {
                 if (boxes[i][j].isFull()) {
                     if (!shades.contains(boxes[i][j].getDice().getNumFacciaUp())) {
-                        shades.remove(boxes[i][j].getDice().getNumFacciaUp());
+                        shades.add(boxes[i][j].getDice().getNumFacciaUp());
                     }
                 }
             }

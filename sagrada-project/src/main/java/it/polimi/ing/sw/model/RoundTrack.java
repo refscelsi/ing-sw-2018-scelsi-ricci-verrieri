@@ -9,11 +9,12 @@ import java.util.ArrayList;
 public class RoundTrack implements Serializable{
 
     private DraftPool[] roundTrack;
-    private int round = 0;
+    private int round;
 
 
     public RoundTrack(){
         roundTrack = new DraftPool[Constants.NUM_ROUNDS];
+        round = 0;
     }
 
 
@@ -45,19 +46,30 @@ public class RoundTrack implements Serializable{
     // ritorna i dadi avanzati alla fine di un determinato round
 
     public DraftPool getDicesRound(int round){
-        return roundTrack[round-1];
+        if (this.round+1>=round&&!isEmpty())
+            return roundTrack[round-1];
+        else
+            return null;
     }
 
 
     // ritorna il numero di dadi avanzati alla fine di un determinato round
 
     public int getNumberOfDices(int round) {
-        return roundTrack[round-1].getSize();
+        if (this.round+1>=round&&!isEmpty())
+            return roundTrack[round-1].getSize();
+        else
+            return 0;
     }
 
 
     public int getRoundTrackSize() {
         return round;
+    }
+
+
+    public boolean isEmpty() {
+        return round==0;
     }
 
 

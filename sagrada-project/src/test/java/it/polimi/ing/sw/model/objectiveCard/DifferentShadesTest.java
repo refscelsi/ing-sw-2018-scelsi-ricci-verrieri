@@ -11,17 +11,17 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class ColoredDiagonalsTest {
+public class DifferentShadesTest {
 
-    private ColoredDiagonals coloredDiagonals;
+    private DifferentShades differentShades;
     private Dice dice1, dice2, dice3, dice4, dice5, dice6, dice7, dice8, dice9, dice10, dice11, dice12, dice13;
     private Scheme scheme;
     private Box[][] boxes;
-    private int score, score1, score2;
+    private int score;
 
     @Before
     public void before() {
-        coloredDiagonals = new ColoredDiagonals();
+        differentShades = new DifferentShades();
         dice1 = new Dice(3, Color.RED);
         dice2 = new Dice(5, Color.RED);
         dice3 = new Dice(1, Color.RED);
@@ -112,11 +112,9 @@ public class ColoredDiagonalsTest {
     @Test
     public void executeTest() {
 
-        score = coloredDiagonals.calculateScore(scheme);
-        score1 = coloredDiagonals.numSameColor2(3, 1, 3);
-        score2 = coloredDiagonals.numSameColor2(3, 3, 3);
-        assertTrue(score == 13 && score1 == 4 && score2 == 3);
+        score = differentShades.calculateScore(scheme);
 
+        assertTrue(score == 10);
     }
 
 }
