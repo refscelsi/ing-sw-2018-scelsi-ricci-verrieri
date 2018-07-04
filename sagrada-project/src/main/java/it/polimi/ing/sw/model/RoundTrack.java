@@ -26,6 +26,7 @@ public class RoundTrack implements Serializable{
         round++;
     }
 
+    public int getRound(){return round;}
 
     public void setRoundTrack(DraftPool[] roundTrack) {
         this.roundTrack = roundTrack;

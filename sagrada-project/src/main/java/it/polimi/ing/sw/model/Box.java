@@ -15,7 +15,7 @@ public class Box implements Serializable{
         dice=null;
     }
 
-    public Box(int i, int y){
+    public Box(int x, int y){
         this.x=x;
         this.y=y;
         shade=0;

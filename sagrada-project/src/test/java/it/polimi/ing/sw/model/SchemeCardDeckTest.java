@@ -3,6 +3,8 @@ package it.polimi.ing.sw.model;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
 
 public class SchemeCardDeckTest {
@@ -11,13 +13,16 @@ public class SchemeCardDeckTest {
     @org.junit.Before
     public void setUp() throws Exception {
         deck=new SchemeCardDeck();
-        assertEquals(7,deck.getSize());
+        assertEquals(24,deck.getSize());
     }
 
     @org.junit.Test
     public void drawSchemeCard() {
-        deck.drawSchemeCard();
-        assertEquals(4,deck.getSize());
+        ArrayList<Scheme> drawn=new ArrayList<>();
+        drawn= deck.drawSchemeCard();
+        assertEquals(20,deck.getSize());
+        assertEquals(4,drawn.size());
+
     }
 
 }
