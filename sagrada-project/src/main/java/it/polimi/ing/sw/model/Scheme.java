@@ -12,7 +12,12 @@ public class Scheme implements Serializable {
     private boolean isEmpty;
 
 
+
+    // METODI COSTRUTTORI
+
+
     public Scheme(){}
+
 
     public Scheme( int id, int difficulty, Box boxes[][] ) {
         this.id = id;
@@ -22,11 +27,117 @@ public class Scheme implements Serializable {
     }
 
 
+
+    // METODI SETTERS
+
+
+    public void setDifficulty( int difficulty ) {
+        this.difficulty = difficulty;
+    }
+
+
+    public void setId( int id ) {
+        this.id = id;
+    }
+
+
+    public void setIdRetro(int idRetro) {
+        this.idRetro = idRetro;
+    }
+
+
+    public void setBoxes( Box[][] boxes ) {
+        this.boxes = boxes;
+    }
+
+
+    public void setNotEmpty() {
+        this.isEmpty = false;
+    }
+
+
+
+    // METODI GETTERS
+
+
     public Box[][] getBoxes() {
         return boxes;
     }
 
 
+    public int getDifficulty() {
+        return difficulty;
+    }
+
+
+    public int getId() {
+        return id;
+    }
+
+
+    public Box getBox( int row, int col ) {
+        return boxes[row][col];
+    }
+
+
+    public int getIdRetro() {
+        return idRetro;
+    }
+
+
+    public Boolean getIsEmpty() {
+        return isEmpty;
+
+    }
+
+
+    /**
+     *
+     * Conta il numero di caselle vuote dello schema
+     *
+     * @return    il numero delle caselle vuote
+     *
+     */
+    public int countFreeBoxes() {
+        int free = 0;
+        for (int i = 0; i < Constants.NUM_ROWS; i++)
+            for (int j = 0; j < Constants.NUM_COLS; j++)
+                if ( !boxes[i][j].isFull() )
+                    free++;
+        return free;
+    }
+
+
+    /**
+     *
+     * Controlla se lo schema è vuoto, cioè non contiene nessun dado
+     *
+     * @return    true se lo schema è vuoto
+     *
+     */
+    public boolean isEmpty() {
+        this.isEmpty = true;
+        for (int i = 0; i < Constants.NUM_ROWS; i++) {
+            for (int j = 0; j < Constants.NUM_COLS; j++) {
+                if ( boxes[i][j].isFull() ) {
+                    setNotEmpty();
+                }
+            }
+        }
+        return this.isEmpty;
+    }
+
+
+    /**
+     *
+     * Controlla se la casella in questione è una casella del bordo dello schema
+     *
+     * @param  row   la riga della casella
+     * @param  col   la colonna della casella
+     * @param  dice  il dado che si vuole piazzare nella casella
+     * @return       true se la casella appartiene al bordo dello schema
+     *
+     */
     public boolean checkFirst( int row, int col, Dice dice ) {
         if ( row == 0 || row == Constants.NUM_ROWS-1 || col == 0 || col == Constants.NUM_COLS-1 ) {
             return (checkBox( row, col, dice ));
@@ -35,42 +146,95 @@ public class Scheme implements Serializable {
     }
 
 
+    /**
+     *
+     * Controlla se due colori sono uguali
+     *
+     * @param  color1   uno dei due colori
+     * @param  color2   l'altro colore
+     * @return       true se i due colori sono uguali
+     *
+     */
     public boolean checkColor( Color color1, Color color2 ) {
         return (color1 == color2);
     }
 
 
+    /**
+     *
+     * Controlla se due sfumature sono uguali
+     *
+     * @param  shade1   una delle due sfumature
+     * @param  shade2   l'altra sfumatura
+     * @return       true se le due sfumature sono uguali
+     *
+     */
     public boolean checkShade( int shade1, int shade2 ) {
         return (shade1 == shade2);
     }
 
 
-    // controlla che la il dado venga piazzato su una casella che non richieda un dado di colore diverso
-
+    /**
+     *
+     * Controlla che la il dado venga piazzato su una casella che non richieda un dado di colore diverso
+     *
+     * @param  row   la riga della casella
+     * @param  col   la colonna della casella
+     * @param  dice  il dado che si vuole piazzare nella casella
+     * @return       true se il controllo va a buon fine
+     *
+     */
     public boolean checkBoxColor( int row, int col, Dice dice ) {
         return checkColor( boxes[row][col].getColor(), Color.WHITE ) || checkColor( boxes[row][col].getColor(), dice.getDiceColor() );
     }
 
 
-    // controlla che la il dado venga piazzato su una casella che non richieda un dado di sfumatura diversa
-
+    /**
+     *
+     * Controlla che la il dado venga piazzato su una casella che non richieda un dado di sfumatura diversa
+     *
+     * @param  row   la riga della casella
+     * @param  col   la colonna della casella
+     * @param  dice  il dado che si vuole piazzare nella casella
+     * @return       true se il controllo va a buon fine
+     *
+     */
     public boolean checkBoxShade( int row, int col, Dice dice ) {
         return checkShade( boxes[row][col].getShade(), 0 ) || checkShade( boxes[row][col].getShade(), dice.getNumFacciaUp() );
     }
 
 
-    // controlla che la il dado venga piazzato su una casella che non richieda un dado di colore o sfumatura diversi
-
+    /**
+     *
+     * Controlla che la il dado venga piazzato su una casella che non richieda un dado di colore o sfumatura diversi
+     *
+     * @param  row   la riga della casella
+     * @param  col   la colonna della casella
+     * @param  dice  il dado che si vuole piazzare nella casella
+     * @return       true se il controllo va a buon fine
+     *
+     */
     public boolean checkBox( int row , int col, Dice dice ) {
         return checkBoxColor( row, col, dice ) && checkBoxShade(row,col, dice );
     }
 
 
-    // fa i controlli sulle caselle adiacenti alla casella dove si vuole piazzare il dado
-    // op = 0: controllo di piazzamento di un dado
-    // op = 1: controllo di movimento di un dado
-    // op = 2: controllo per la toolcard 9
-
+    /**
+     *
+     * Fa i controlli sulle caselle adiacenti alla casella dove si vuole piazzare il dado:
+     * op = 0: controllo di piazzamento di un dado
+     * op = 1: controllo di movimento di un dado
+     * op = 2: controllo per la toolcard 9
+     *
+     * @param  row      la riga della casella
+     * @param  column   la colonna della casella
+     * @param  dice     il dado che si vuole piazzare nella casella
+     * @param  op       op = 0: controllo di piazzamento di un dado
+     *                  op = 1: controllo di movimento di un dado
+     *                  op = 2: controllo per la toolcard 9
+     * @return       true se il controllo va a buon fine
+     *
+     */
     public boolean checkIfHasDiceAdjacent( int row, int column, Dice dice, int op ) {
         Boolean right, left, up, down, upRight, upLeft, downRight, downLeft;
 
@@ -182,17 +346,34 @@ public class Scheme implements Serializable {
 
     }
 
-    // controlla che uno specifico dado che tocca ortogonalmente il dado che si vuole piazzare non abbia colore
-    // o sfumatura uguali
 
+    /**
+     *
+     * Controlla che uno specifico dado che tocca ortogonalmente il dado che si vuole piazzare non abbia colore
+     * o sfumatura uguali
+     *
+     * @param  i      la riga della casella dove è posizionato questo specifico dado
+     * @param  y      la colonna della casella dove è posizionato questo specifico dado
+     * @param  dice   il dado che si vuole piazzare
+     * @return        true se il controllo va a buon fine
+     *
+     */
     public Boolean checkOrthogonal( int i, int y, Dice dice ) {
         if ( checkColor( boxes[i][y].getDice().getDiceColor(), dice.getDiceColor() ) || checkShade( boxes[i][y].getDice().getNumFacciaUp(), dice.getNumFacciaUp() ) )
             return false;
         return true;
     }
 
-    // controlla tutte le restrizioni di piazzamento e se sono rispettate piazza il dado
 
+    /**
+     *
+     * Controlla tutte le restrizioni di piazzamento e se sono rispettate piazza il dado
+     *
+     * @param  row      la riga della casella dove è posizionato questo specifico dado
+     * @param  col      la colonna della casella dove è posizionato questo specifico dado
+     * @param  dice     il dado che si vuole piazzare
+     *
+     */
     public void placeDice( int row, int col, Dice dice ) throws NotValidException {
         if ( isEmpty() ) {
             if ( !checkFirst( row,col,dice ) )
@@ -214,63 +395,13 @@ public class Scheme implements Serializable {
         boxes[row][col].placeDice( dice );
     }
 
-    public void setBoxes( Box[][] boxes ) {
-        this.boxes = boxes;
-    }
-
-    public boolean isEmpty() {
-        this.isEmpty = true;
-        for (int i = 0; i < Constants.NUM_ROWS; i++) {
-            for (int j = 0; j < Constants.NUM_COLS; j++) {
-                if ( boxes[i][j].isFull() ) {
-                    setNotEmpty();
-                }
-            }
-        }
-        return this.isEmpty;
-    }
-
-    public void setNotEmpty() {
-        this.isEmpty = false;
-    }
-
-    public int getDifficulty() {
-        return difficulty;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public int getIdRetro() {
-        return idRetro;
-    }
-
-    public void setDifficulty( int difficulty ) {
-        this.difficulty = difficulty;
-    }
-
-    public void setId( int id ) {
-        this.id = id;
-    }
-
-    public void setIdRetro(int idRetro) {
-        this.idRetro = idRetro;
-    }
-
-    public int countFreeBoxes() {
-        int free = 0;
-        for (int i = 0; i < Constants.NUM_ROWS; i++)
-            for (int j = 0; j < Constants.NUM_COLS; j++)
-                if ( !boxes[i][j].isFull() )
-                    free++;
-        return free;
-    }
-
-    public Box getBox( int row, int col ) {
-        return boxes[row][col];
-    }
-
+    /**
+     *
+     * Crea una copia dello schema (per passarlo dal server al client attraverso Socket)
+     *
+     * @return    la copia dello schema
+     *
+     */
     public Scheme schemeClone(){
         Scheme schemeClone=new Scheme();
         schemeClone.setIdRetro(this.idRetro);

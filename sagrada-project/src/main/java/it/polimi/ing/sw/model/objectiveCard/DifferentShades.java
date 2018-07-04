@@ -19,7 +19,7 @@ public class DifferentShades extends ObjectiveCard {
                 if (boxes[i][j].isFull()) {
                     index = boxes[i][j].getDice().getNumFacciaUp();
                     if (index > 0 && index < 7)
-                        count[index + 1]++;
+                        count[index - 1]++;
                 }
             }
         }

@@ -114,7 +114,7 @@ public class ColoredDiagonalsTest {
 
         score = coloredDiagonals.calculateScore(scheme);
         score1 = coloredDiagonals.numSameColor2(3, 1, 3);
-        score2 = coloredDiagonals.numSameColor2(3, 3, 3);
+        score2 = coloredDiagonals.numSameColor1(3, 3, 3);
         assertTrue(score == 13 && score1 == 4 && score2 == 3);
 
     }
