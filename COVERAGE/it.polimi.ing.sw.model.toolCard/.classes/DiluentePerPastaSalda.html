@@ -1,0 +1,151 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: DiluentePerPastaSalda</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ing.sw.model.toolCard</a> ]
+</div>
+
+<h1>Coverage Summary for Class: DiluentePerPastaSalda (it.polimi.ing.sw.model.toolCard)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DiluentePerPastaSalda</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (3/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    90%
+  </span>
+  <span class="absValue">
+    (27/ 30)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ing.sw.model.toolCard;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ing.sw.model.*;
+<i>4</i>&nbsp;import it.polimi.ing.sw.model.exceptions.NotValidException;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;public class DiluentePerPastaSalda extends ToolCard {
+<i>8</i>&nbsp;
+<b class="fc"><i>9</i>&nbsp;    private final int id = 11;</b>
+<i>10</i>&nbsp;    private int indexInDraftPool;
+<i>11</i>&nbsp;    private boolean firstExecutionDone;
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;    public DiluentePerPastaSalda() {
+<b class="fc"><i>15</i>&nbsp;        super(11);</b>
+<b class="fc"><i>16</i>&nbsp;        firstExecutionDone = false;</b>
+<i>17</i>&nbsp;
+<b class="fc"><i>18</i>&nbsp;    }</b>
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    public boolean getFirstExecutionDone() {
+<b class="nc"><i>22</i>&nbsp;        return firstExecutionDone;</b>
+<i>23</i>&nbsp;    }
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;    @Override
+<i>27</i>&nbsp;    public void execute(DraftPool draftPool, RoundTrack neverUsed1, Scheme scheme, Player[] neverUsed2, Bag bag, int indexInDraftPool, int numFacciaUp, int row, int col, int firstExecution, int neverUsed4) throws NotValidException {
+<i>28</i>&nbsp;
+<b class="fc"><i>29</i>&nbsp;        if (firstExecution==1)</b>
+<b class="fc"><i>30</i>&nbsp;            firstExecutionDone = true;</b>
+<i>31</i>&nbsp;        else
+<b class="fc"><i>32</i>&nbsp;            firstExecutionDone = false;</b>
+<i>33</i>&nbsp;
+<b class="fc"><i>34</i>&nbsp;        if (!firstExecutionDone) {</b>
+<b class="fc"><i>35</i>&nbsp;            bag.addDice(draftPool.getDice(indexInDraftPool));</b>
+<b class="fc"><i>36</i>&nbsp;            draftPool.setDice(bag.drawDice(), indexInDraftPool);</b>
+<b class="fc"><i>37</i>&nbsp;            this.indexInDraftPool = indexInDraftPool;</b>
+<b class="fc"><i>38</i>&nbsp;            firstExecutionDone = true;</b>
+<i>39</i>&nbsp;        }
+<i>40</i>&nbsp;        else {
+<b class="fc"><i>41</i>&nbsp;            draftPool.getDice(this.indexInDraftPool).setNumFacciaUp(numFacciaUp);</b>
+<b class="fc"><i>42</i>&nbsp;            Dice dice = draftPool.getDice(this.indexInDraftPool);</b>
+<b class="fc"><i>43</i>&nbsp;            Box destBox = scheme.getBox(row, col);</b>
+<b class="fc"><i>44</i>&nbsp;            if (destBox.isFull())</b>
+<b class="nc"><i>45</i>&nbsp;                throw new NotValidException(&quot;Non puoi posizionare un dado in una casella già piena!&quot;);</b>
+<i>46</i>&nbsp;            else {
+<b class="fc"><i>47</i>&nbsp;                if (scheme.checkBox(row, col, dice) &amp;&amp; scheme.checkIfHasDiceAdjacent(row, col, dice, 0)) {</b>
+<b class="fc"><i>48</i>&nbsp;                    destBox.placeDice(dice);</b>
+<b class="fc"><i>49</i>&nbsp;                    draftPool.removeDice(dice);</b>
+<b class="fc"><i>50</i>&nbsp;                    firstExecutionDone = false;</b>
+<i>51</i>&nbsp;                } else
+<b class="nc"><i>52</i>&nbsp;                    throw new NotValidException(&quot;Non stai rispettando le condizioni di piazzamento!&quot;);</b>
+<i>53</i>&nbsp;            }
+<i>54</i>&nbsp;        }
+<b class="fc"><i>55</i>&nbsp;    }</b>
+<i>56</i>&nbsp;
+<i>57</i>&nbsp;    @Override
+<i>58</i>&nbsp;    public ToolCard toolCardClone(){
+<b class="fc"><i>59</i>&nbsp;        ToolCard toolCardClone=new DiluentePerPastaSalda();</b>
+<b class="fc"><i>60</i>&nbsp;        toolCardClone.setName(this.getName());</b>
+<b class="fc"><i>61</i>&nbsp;        toolCardClone.setDescription(this.getDescription());</b>
+<b class="fc"><i>62</i>&nbsp;        toolCardClone.setId(id);</b>
+<b class="fc"><i>63</i>&nbsp;        toolCardClone.setNumOfTokens(this.getNumOfTokens());</b>
+<b class="fc"><i>64</i>&nbsp;        return toolCardClone;</b>
+<i>65</i>&nbsp;    }
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;
+<i>68</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-07-04 21:00</div>
+</div>
+</body>
+</html>

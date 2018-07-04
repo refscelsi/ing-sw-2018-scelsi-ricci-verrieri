@@ -1,0 +1,471 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: NewPlayerForm</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ing.sw.ui.gui</a> ]
+</div>
+
+<h1>Coverage Summary for Class: NewPlayerForm (it.polimi.ing.sw.ui.gui)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">NewPlayerForm</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 13)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 123)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">NewPlayerForm$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">NewPlayerForm$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">NewPlayerForm$3</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">NewPlayerForm$4</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">NewPlayerForm$5</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">NewPlayerForm$6</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">NewPlayerForm$7</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 29)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 139)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ing.sw.ui.gui;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ing.sw.client.View;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import java.awt.*;
+<i>6</i>&nbsp;import java.rmi.RemoteException;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;import static it.polimi.ing.sw.util.Constants.*;
+<i>9</i>&nbsp;
+<b class="nc"><i>10</i>&nbsp;public class NewPlayerForm extends javax.swing.JFrame {</b>
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;    private Boolean serverModified;
+<i>13</i>&nbsp;    private Boolean nameModified;
+<i>14</i>&nbsp;    private View controller;
+<i>15</i>&nbsp;    private static String network;
+<i>16</i>&nbsp;
+<b class="nc"><i>17</i>&nbsp;    public NewPlayerForm(View controller) throws RemoteException {</b>
+<b class="nc"><i>18</i>&nbsp;        this.controller = controller;</b>
+<b class="nc"><i>19</i>&nbsp;        initComponents();</b>
+<b class="nc"><i>20</i>&nbsp;        serverModified = false;</b>
+<b class="nc"><i>21</i>&nbsp;        nameModified = false;</b>
+<b class="nc"><i>22</i>&nbsp;        setIcons();</b>
+<b class="nc"><i>23</i>&nbsp;        setLocationRelativeTo(null);</b>
+<b class="nc"><i>24</i>&nbsp;        rmiRadioButton.setSelected(true);</b>
+<i>25</i>&nbsp;    }
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;    @SuppressWarnings(&quot;unchecked&quot;)
+<i>28</i>&nbsp;    // &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Generated Code&quot;&gt;//GEN-BEGIN:initComponents
+<i>29</i>&nbsp;    private void initComponents() {
+<i>30</i>&nbsp;
+<b class="nc"><i>31</i>&nbsp;        panel = new javax.swing.JPanel();</b>
+<b class="nc"><i>32</i>&nbsp;        serverIpLabel = new javax.swing.JLabel();</b>
+<b class="nc"><i>33</i>&nbsp;        serverIpTextField = new javax.swing.JTextField();</b>
+<b class="nc"><i>34</i>&nbsp;        playerNameTextField = new javax.swing.JTextField();</b>
+<b class="nc"><i>35</i>&nbsp;        playerNameLabel = new javax.swing.JLabel();</b>
+<b class="nc"><i>36</i>&nbsp;        connectButton = new javax.swing.JButton();</b>
+<b class="nc"><i>37</i>&nbsp;        socketRadioButton = new javax.swing.JRadioButton();</b>
+<b class="nc"><i>38</i>&nbsp;        rmiRadioButton = new javax.swing.JRadioButton();</b>
+<b class="nc"><i>39</i>&nbsp;        jLabel1 = new javax.swing.JLabel();</b>
+<i>40</i>&nbsp;
+<b class="nc"><i>41</i>&nbsp;        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);</b>
+<i>42</i>&nbsp;
+<b class="nc"><i>43</i>&nbsp;        serverIpLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);</b>
+<b class="nc"><i>44</i>&nbsp;        serverIpLabel.setText(&quot;Server IP&quot;);</b>
+<i>45</i>&nbsp;
+<b class="nc"><i>46</i>&nbsp;        serverIpTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);</b>
+<b class="nc"><i>47</i>&nbsp;        serverIpTextField.setText(SERVER_ADDRESS);</b>
+<b class="nc"><i>48</i>&nbsp;        serverIpTextField.addMouseListener(new java.awt.event.MouseAdapter() {</b>
+<i>49</i>&nbsp;            public void mouseEntered(java.awt.event.MouseEvent evt) {
+<b class="nc"><i>50</i>&nbsp;                serverIpTextFieldMouseEntered(evt);</b>
+<i>51</i>&nbsp;            }
+<i>52</i>&nbsp;
+<i>53</i>&nbsp;            public void mouseExited(java.awt.event.MouseEvent evt) {
+<b class="nc"><i>54</i>&nbsp;                serverIpTextFieldMouseExited(evt);</b>
+<i>55</i>&nbsp;            }
+<i>56</i>&nbsp;        });
+<b class="nc"><i>57</i>&nbsp;        serverIpTextField.addKeyListener(new java.awt.event.KeyAdapter() {</b>
+<i>58</i>&nbsp;            public void keyTyped(java.awt.event.KeyEvent evt) {
+<b class="nc"><i>59</i>&nbsp;                serverIpTextFieldKeyTyped(evt);</b>
+<i>60</i>&nbsp;            }
+<i>61</i>&nbsp;        });
+<i>62</i>&nbsp;
+<b class="nc"><i>63</i>&nbsp;        playerNameTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);</b>
+<b class="nc"><i>64</i>&nbsp;        playerNameTextField.setText(&quot;Player&quot;);</b>
+<b class="nc"><i>65</i>&nbsp;        playerNameTextField.addMouseListener(new java.awt.event.MouseAdapter() {</b>
+<i>66</i>&nbsp;            public void mouseEntered(java.awt.event.MouseEvent evt) {
+<b class="nc"><i>67</i>&nbsp;                playerNameTextFieldMouseEntered(evt);</b>
+<i>68</i>&nbsp;            }
+<i>69</i>&nbsp;
+<i>70</i>&nbsp;            public void mouseExited(java.awt.event.MouseEvent evt) {
+<b class="nc"><i>71</i>&nbsp;                playerNameTextFieldMouseExited(evt);</b>
+<i>72</i>&nbsp;            }
+<i>73</i>&nbsp;        });
+<b class="nc"><i>74</i>&nbsp;        playerNameTextField.addKeyListener(new java.awt.event.KeyAdapter() {</b>
+<i>75</i>&nbsp;            public void keyTyped(java.awt.event.KeyEvent evt) {
+<b class="nc"><i>76</i>&nbsp;                playerNameTextFieldKeyTyped(evt);</b>
+<i>77</i>&nbsp;            }
+<i>78</i>&nbsp;        });
+<i>79</i>&nbsp;
+<b class="nc"><i>80</i>&nbsp;        playerNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);</b>
+<b class="nc"><i>81</i>&nbsp;        playerNameLabel.setText(&quot;Player Name&quot;);</b>
+<i>82</i>&nbsp;
+<b class="nc"><i>83</i>&nbsp;        connectButton.setText(&quot;Connect&quot;);</b>
+<b class="nc"><i>84</i>&nbsp;        connectButton.addActionListener(new java.awt.event.ActionListener() {</b>
+<i>85</i>&nbsp;            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<b class="nc"><i>86</i>&nbsp;                connectButtonActionPerformed(evt);</b>
+<i>87</i>&nbsp;            }
+<i>88</i>&nbsp;        });
+<i>89</i>&nbsp;
+<b class="nc"><i>90</i>&nbsp;        socketRadioButton.setText(&quot;Socket&quot;);</b>
+<b class="nc"><i>91</i>&nbsp;        socketRadioButton.addActionListener(new java.awt.event.ActionListener() {</b>
+<i>92</i>&nbsp;            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<b class="nc"><i>93</i>&nbsp;                socketRadioButtonActionPerformed(evt);</b>
+<i>94</i>&nbsp;            }
+<i>95</i>&nbsp;        });
+<i>96</i>&nbsp;
+<b class="nc"><i>97</i>&nbsp;        rmiRadioButton.setText(&quot;RMI&quot;);</b>
+<b class="nc"><i>98</i>&nbsp;        rmiRadioButton.addActionListener(new java.awt.event.ActionListener() {</b>
+<i>99</i>&nbsp;            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<b class="nc"><i>100</i>&nbsp;                rmiRadioButtonActionPerformed(evt);</b>
+<i>101</i>&nbsp;            }
+<i>102</i>&nbsp;        });
+<i>103</i>&nbsp;
+<b class="nc"><i>104</i>&nbsp;        jLabel1.setText(&quot;Connection type&quot;);</b>
+<i>105</i>&nbsp;
+<b class="nc"><i>106</i>&nbsp;        javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);</b>
+<b class="nc"><i>107</i>&nbsp;        panel.setLayout(panelLayout);</b>
+<b class="nc"><i>108</i>&nbsp;        panelLayout.setHorizontalGroup(</b>
+<b class="nc"><i>109</i>&nbsp;                panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</b>
+<b class="nc"><i>110</i>&nbsp;                        .addGroup(panelLayout.createSequentialGroup()</b>
+<b class="nc"><i>111</i>&nbsp;                                .addContainerGap()</b>
+<b class="nc"><i>112</i>&nbsp;                                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</b>
+<b class="nc"><i>113</i>&nbsp;                                        .addGroup(panelLayout.createSequentialGroup()</b>
+<b class="nc"><i>114</i>&nbsp;                                                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)</b>
+<b class="nc"><i>115</i>&nbsp;                                                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</b>
+<b class="nc"><i>116</i>&nbsp;                                                                .addComponent(playerNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)</b>
+<b class="nc"><i>117</i>&nbsp;                                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()</b>
+<b class="nc"><i>118</i>&nbsp;                                                                        .addComponent(playerNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)</b>
+<b class="nc"><i>119</i>&nbsp;                                                                        .addGap(60, 60, 60)))</b>
+<b class="nc"><i>120</i>&nbsp;                                                        .addComponent(serverIpTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)</b>
+<b class="nc"><i>121</i>&nbsp;                                                        .addGroup(panelLayout.createSequentialGroup()</b>
+<b class="nc"><i>122</i>&nbsp;                                                                .addComponent(serverIpLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)</b>
+<b class="nc"><i>123</i>&nbsp;                                                                .addGap(59, 59, 59)))</b>
+<b class="nc"><i>124</i>&nbsp;                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))</b>
+<b class="nc"><i>125</i>&nbsp;                                        .addGroup(panelLayout.createSequentialGroup()</b>
+<b class="nc"><i>126</i>&nbsp;                                                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)</b>
+<b class="nc"><i>127</i>&nbsp;                                                        .addComponent(connectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)</b>
+<b class="nc"><i>128</i>&nbsp;                                                        .addComponent(socketRadioButton))</b>
+<b class="nc"><i>129</i>&nbsp;                                                .addGap(0, 0, Short.MAX_VALUE))))</b>
+<b class="nc"><i>130</i>&nbsp;                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()</b>
+<b class="nc"><i>131</i>&nbsp;                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)</b>
+<b class="nc"><i>132</i>&nbsp;                                .addComponent(jLabel1)</b>
+<b class="nc"><i>133</i>&nbsp;                                .addGap(78, 78, 78))</b>
+<b class="nc"><i>134</i>&nbsp;                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</b>
+<b class="nc"><i>135</i>&nbsp;                                .addGroup(panelLayout.createSequentialGroup()</b>
+<b class="nc"><i>136</i>&nbsp;                                        .addGap(22, 22, 22)</b>
+<b class="nc"><i>137</i>&nbsp;                                        .addComponent(rmiRadioButton)</b>
+<b class="nc"><i>138</i>&nbsp;                                        .addContainerGap(123, Short.MAX_VALUE)))</b>
+<i>139</i>&nbsp;        );
+<b class="nc"><i>140</i>&nbsp;        panelLayout.setVerticalGroup(</b>
+<b class="nc"><i>141</i>&nbsp;                panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</b>
+<b class="nc"><i>142</i>&nbsp;                        .addGroup(panelLayout.createSequentialGroup()</b>
+<b class="nc"><i>143</i>&nbsp;                                .addContainerGap()</b>
+<b class="nc"><i>144</i>&nbsp;                                .addComponent(serverIpLabel)</b>
+<b class="nc"><i>145</i>&nbsp;                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)</b>
+<b class="nc"><i>146</i>&nbsp;                                .addComponent(serverIpTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)</b>
+<b class="nc"><i>147</i>&nbsp;                                .addGap(18, 18, 18)</b>
+<b class="nc"><i>148</i>&nbsp;                                .addComponent(playerNameLabel)</b>
+<b class="nc"><i>149</i>&nbsp;                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)</b>
+<b class="nc"><i>150</i>&nbsp;                                .addComponent(playerNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)</b>
+<b class="nc"><i>151</i>&nbsp;                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)</b>
+<b class="nc"><i>152</i>&nbsp;                                .addComponent(jLabel1)</b>
+<b class="nc"><i>153</i>&nbsp;                                .addGap(5, 5, 5)</b>
+<b class="nc"><i>154</i>&nbsp;                                .addComponent(socketRadioButton)</b>
+<b class="nc"><i>155</i>&nbsp;                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)</b>
+<b class="nc"><i>156</i>&nbsp;                                .addComponent(connectButton)</b>
+<b class="nc"><i>157</i>&nbsp;                                .addContainerGap())</b>
+<b class="nc"><i>158</i>&nbsp;                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</b>
+<b class="nc"><i>159</i>&nbsp;                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()</b>
+<b class="nc"><i>160</i>&nbsp;                                        .addContainerGap(169, Short.MAX_VALUE)</b>
+<b class="nc"><i>161</i>&nbsp;                                        .addComponent(rmiRadioButton)</b>
+<b class="nc"><i>162</i>&nbsp;                                        .addGap(44, 44, 44)))</b>
+<i>163</i>&nbsp;        );
+<i>164</i>&nbsp;
+<b class="nc"><i>165</i>&nbsp;        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());</b>
+<b class="nc"><i>166</i>&nbsp;        getContentPane().setLayout(layout);</b>
+<b class="nc"><i>167</i>&nbsp;        layout.setHorizontalGroup(</b>
+<b class="nc"><i>168</i>&nbsp;                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</b>
+<b class="nc"><i>169</i>&nbsp;                        .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)</b>
+<i>170</i>&nbsp;        );
+<b class="nc"><i>171</i>&nbsp;        layout.setVerticalGroup(</b>
+<b class="nc"><i>172</i>&nbsp;                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</b>
+<b class="nc"><i>173</i>&nbsp;                        .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)</b>
+<i>174</i>&nbsp;        );
+<i>175</i>&nbsp;
+<b class="nc"><i>176</i>&nbsp;        pack();</b>
+<i>177</i>&nbsp;    }// &lt;/editor-fold&gt;//GEN-END:initComponents
+<i>178</i>&nbsp;
+<i>179</i>&nbsp;
+<i>180</i>&nbsp;    private void serverIpTextFieldMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_serverIpTextFieldMouseEntered
+<b class="nc"><i>181</i>&nbsp;        if (!serverModified) {</b>
+<b class="nc"><i>182</i>&nbsp;            serverIpTextField.setText(null);</b>
+<i>183</i>&nbsp;        }
+<i>184</i>&nbsp;    }//GEN-LAST:event_serverIpTextFieldMouseEntered
+<i>185</i>&nbsp;
+<i>186</i>&nbsp;    private void serverIpTextFieldMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_serverIpTextFieldMouseExited
+<b class="nc"><i>187</i>&nbsp;        if (!serverModified) {</b>
+<b class="nc"><i>188</i>&nbsp;            serverIpTextField.setText(SERVER_ADDRESS);</b>
+<i>189</i>&nbsp;        }
+<i>190</i>&nbsp;    }//GEN-LAST:event_serverIpTextFieldMouseExited
+<i>191</i>&nbsp;
+<i>192</i>&nbsp;    private void playerNameTextFieldMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playerNameTextFieldMouseEntered
+<b class="nc"><i>193</i>&nbsp;        if (!nameModified) {</b>
+<b class="nc"><i>194</i>&nbsp;            playerNameTextField.setText(null);</b>
+<i>195</i>&nbsp;        }
+<i>196</i>&nbsp;    }//GEN-LAST:event_playerNameTextFieldMouseEntered
+<i>197</i>&nbsp;
+<i>198</i>&nbsp;    private void playerNameTextFieldMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playerNameTextFieldMouseExited
+<b class="nc"><i>199</i>&nbsp;        if (!nameModified) {</b>
+<b class="nc"><i>200</i>&nbsp;            playerNameTextField.setText(PLAYER_STANDARD_NAME);</b>
+<i>201</i>&nbsp;        }
+<i>202</i>&nbsp;    }//GEN-LAST:event_playerNameTextFieldMouseExited
+<i>203</i>&nbsp;
+<i>204</i>&nbsp;    private void connectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectButtonActionPerformed
+<b class="nc"><i>205</i>&nbsp;        if (socketRadioButton.isSelected()) {</b>
+<b class="nc"><i>206</i>&nbsp;            network = SOCKET_CODE;</b>
+<i>207</i>&nbsp;        } else {
+<b class="nc"><i>208</i>&nbsp;            network = RMI_CODE;</b>
+<i>209</i>&nbsp;        }
+<b class="nc"><i>210</i>&nbsp;        controller.chooseNetwork(network);</b>
+<i>211</i>&nbsp;
+<b class="nc"><i>212</i>&nbsp;        controller.login(playerNameTextField.getText());</b>
+<b class="nc"><i>213</i>&nbsp;        setVisible(false);</b>
+<i>214</i>&nbsp;    }//GEN-LAST:event_connectButtonActionPerformed
+<i>215</i>&nbsp;
+<i>216</i>&nbsp;    private void rmiRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rmiRadioButtonActionPerformed
+<b class="nc"><i>217</i>&nbsp;        socketRadioButton.setSelected(false);</b>
+<i>218</i>&nbsp;    }//GEN-LAST:event_rmiRadioButtonActionPerformed
+<i>219</i>&nbsp;
+<i>220</i>&nbsp;    private void socketRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_socketRadioButtonActionPerformed
+<b class="nc"><i>221</i>&nbsp;        rmiRadioButton.setSelected(false);</b>
+<i>222</i>&nbsp;    }//GEN-LAST:event_socketRadioButtonActionPerformed
+<i>223</i>&nbsp;
+<i>224</i>&nbsp;    private void playerNameTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_playerNameTextFieldKeyTyped
+<b class="nc"><i>225</i>&nbsp;        nameModified = true;</b>
+<i>226</i>&nbsp;    }//GEN-LAST:event_playerNameTextFieldKeyTyped
+<i>227</i>&nbsp;
+<i>228</i>&nbsp;    private void serverIpTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_serverIpTextFieldKeyTyped
+<b class="nc"><i>229</i>&nbsp;        serverModified = true;</b>
+<i>230</i>&nbsp;    }//GEN-LAST:event_serverIpTextFieldKeyTyped
+<i>231</i>&nbsp;
+<i>232</i>&nbsp;    private void setIcons() {
+<b class="nc"><i>233</i>&nbsp;        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource(SAGRADA_ICO)));</b>
+<b class="nc"><i>234</i>&nbsp;        this.setTitle(DEFAULT_TITLE);</b>
+<i>235</i>&nbsp;    }
+<i>236</i>&nbsp;
+<i>237</i>&nbsp;    // Variables declaration - do not modify//GEN-BEGIN:variables
+<i>238</i>&nbsp;    private javax.swing.JButton connectButton;
+<i>239</i>&nbsp;    private javax.swing.JLabel jLabel1;
+<i>240</i>&nbsp;    private javax.swing.JPanel panel;
+<i>241</i>&nbsp;    private javax.swing.JLabel playerNameLabel;
+<i>242</i>&nbsp;    private javax.swing.JTextField playerNameTextField;
+<i>243</i>&nbsp;    private javax.swing.JRadioButton rmiRadioButton;
+<i>244</i>&nbsp;    private javax.swing.JLabel serverIpLabel;
+<i>245</i>&nbsp;    private javax.swing.JTextField serverIpTextField;
+<i>246</i>&nbsp;    private javax.swing.JRadioButton socketRadioButton;
+<i>247</i>&nbsp;    // End of variables declaration//GEN-END:variables
+<i>248</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-07-04 21:00</div>
+</div>
+</body>
+</html>

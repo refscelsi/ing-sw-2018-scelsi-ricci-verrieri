@@ -1,0 +1,136 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: LoginController</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ing.sw.controller</a> ]
+</div>
+
+<h1>Coverage Summary for Class: LoginController (it.polimi.ing.sw.controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">LoginController</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 15)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ing.sw.controller;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ing.sw.controller.exceptions.NotPossibleConnectionException;
+<i>4</i>&nbsp;import it.polimi.ing.sw.controller.network.RMI.PlayerControllerInterfaceRMI;
+<i>5</i>&nbsp;import it.polimi.ing.sw.controller.network.socket.PlayerControllerInterfaceSocket;
+<i>6</i>&nbsp;import it.polimi.ing.sw.controller.network.socket.PlayerControllerSocket;
+<i>7</i>&nbsp;import it.polimi.ing.sw.model.Match;
+<i>8</i>&nbsp;import it.polimi.ing.sw.model.exceptions.NotValidException;
+<i>9</i>&nbsp;import it.polimi.ing.sw.model.exceptions.NotValidNicknameException;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;import java.rmi.Remote;
+<i>12</i>&nbsp;import java.rmi.RemoteException;
+<i>13</i>&nbsp;import java.rmi.server.UnicastRemoteObject;
+<i>14</i>&nbsp;import java.util.ArrayList;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;public class LoginController extends UnicastRemoteObject implements Remote, LoginInterface {
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;    //riferimento alla partita
+<i>19</i>&nbsp;    private Match match;
+<i>20</i>&nbsp;    //lista clients --&gt; mi serve??
+<i>21</i>&nbsp;    private ArrayList&lt;PlayerControllerInterface&gt; clients;
+<i>22</i>&nbsp;    //lista dei PlayerController (x riconnessione)
+<i>23</i>&nbsp;    private ArrayList&lt;PlayerController&gt; playerControllers;
+<i>24</i>&nbsp;
+<b class="nc"><i>25</i>&nbsp;    public LoginController(Match match) throws RemoteException {</b>
+<b class="nc"><i>26</i>&nbsp;        this.match = match;</b>
+<b class="nc"><i>27</i>&nbsp;        this.playerControllers = new ArrayList&lt;PlayerController&gt;();</b>
+<b class="nc"><i>28</i>&nbsp;        this.clients = new ArrayList&lt;PlayerControllerInterface&gt;();</b>
+<i>29</i>&nbsp;    }
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    @Override
+<i>32</i>&nbsp;    public synchronized PlayerControllerInterfaceRMI connectRMI(String nickname, RemotePlayer remotePlayer) throws RemoteException {
+<b class="nc"><i>33</i>&nbsp;        PlayerController playerController = new PlayerController(this.match, (RemotePlayer) remotePlayer);</b>
+<b class="nc"><i>34</i>&nbsp;        playerControllers.add(playerController);</b>
+<b class="nc"><i>35</i>&nbsp;        clients.add(playerController);</b>
+<b class="nc"><i>36</i>&nbsp;        return playerController;</b>
+<i>37</i>&nbsp;    }
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;    public synchronized PlayerController connectSocket(PlayerControllerSocket playerControllerSocket){
+<b class="nc"><i>40</i>&nbsp;        PlayerController playerController= null;</b>
+<i>41</i>&nbsp;        try {
+<b class="nc"><i>42</i>&nbsp;            playerController = new PlayerController(match, playerControllerSocket);</b>
+<b class="nc"><i>43</i>&nbsp;        } catch ( RemoteException e ) {</b>
+<b class="nc"><i>44</i>&nbsp;            e.printStackTrace();</b>
+<b class="nc"><i>45</i>&nbsp;        }</b>
+<b class="nc"><i>46</i>&nbsp;        playerControllers.add(playerController);</b>
+<b class="nc"><i>47</i>&nbsp;        return playerController;</b>
+<i>48</i>&nbsp;    }
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;
+<i>52</i>&nbsp;}
+<i>53</i>&nbsp;
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-07-04 21:00</div>
+</div>
+</body>
+</html>

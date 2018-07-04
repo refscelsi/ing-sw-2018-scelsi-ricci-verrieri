@@ -1,0 +1,189 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ShowScheme</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ing.sw.ui.cli</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ShowScheme (it.polimi.ing.sw.ui.cli)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ShowScheme</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 60)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ing.sw.ui.cli;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ing.sw.model.Box;
+<i>4</i>&nbsp;import it.polimi.ing.sw.model.Color;
+<i>5</i>&nbsp;import it.polimi.ing.sw.model.Scheme;
+<i>6</i>&nbsp;import it.polimi.ing.sw.util.ConsoleColors;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;public class ShowScheme {
+<i>9</i>&nbsp;    private Scheme scheme;
+<i>10</i>&nbsp;
+<b class="nc"><i>11</i>&nbsp;    public ShowScheme(Scheme scheme) {</b>
+<b class="nc"><i>12</i>&nbsp;        this.scheme = scheme;</b>
+<b class="nc"><i>13</i>&nbsp;        show();</b>
+<i>14</i>&nbsp;    }
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    public void show() {
+<i>17</i>&nbsp;        int i, j, k, h;
+<b class="nc"><i>18</i>&nbsp;        Box boxes[][] = scheme.getBoxes();</b>
+<i>19</i>&nbsp;
+<b class="nc"><i>20</i>&nbsp;        for (i = 0; i &lt; 4; i++) {</b>
+<i>21</i>&nbsp;            // seleziono la riga dello schema
+<i>22</i>&nbsp;
+<b class="nc"><i>23</i>&nbsp;            for (j = 0; j &lt; 5; j++) {</b>
+<i>24</i>&nbsp;                // seleziono la riga della console
+<i>25</i>&nbsp;
+<b class="nc"><i>26</i>&nbsp;                for (k = 0; k &lt; 5; k++) {</b>
+<i>27</i>&nbsp;                    // seleziono la casella dello schema
+<i>28</i>&nbsp;
+<b class="nc"><i>29</i>&nbsp;                    for (h = 0; h &lt; 9; h++) {</b>
+<i>30</i>&nbsp;                        // seleziono la casella della console
+<i>31</i>&nbsp;
+<b class="nc"><i>32</i>&nbsp;                        if (j == 0 || h == 0) {</b>
+<b class="nc"><i>33</i>&nbsp;                            getTextColor(boxes[i][k].getColor());</b>
+<b class="nc"><i>34</i>&nbsp;                            System.out.print(&quot;*&quot; + ConsoleColors.RESET);</b>
+<b class="nc"><i>35</i>&nbsp;                        } else if (j == 2 &amp;&amp; h == 4) {</b>
+<b class="nc"><i>36</i>&nbsp;                            boolean hasShadeRestriction = boxes[i][k].getShade() != 0;</b>
+<b class="nc"><i>37</i>&nbsp;                            boolean isFull = boxes[i][k].isFull();</b>
+<b class="nc"><i>38</i>&nbsp;                            if (isFull &amp;&amp; hasShadeRestriction) {</b>
+<b class="nc"><i>39</i>&nbsp;                                getBackgroundColor(boxes[i][k].getDice().getDiceColor());</b>
+<b class="nc"><i>40</i>&nbsp;                                System.out.print(ConsoleColors.BLACK_BOLD + boxes[i][k].getShade() + ConsoleColors.RESET);</b>
+<b class="nc"><i>41</i>&nbsp;                            } else if (isFull) {</b>
+<b class="nc"><i>42</i>&nbsp;                                getBackgroundColor(boxes[i][k].getDice().getDiceColor());</b>
+<b class="nc"><i>43</i>&nbsp;                                System.out.print(boxes[i][k].getDice().getNumFacciaUp() + ConsoleColors.RESET);</b>
+<b class="nc"><i>44</i>&nbsp;                            } else if (hasShadeRestriction)</b>
+<b class="nc"><i>45</i>&nbsp;                                System.out.print(ConsoleColors.BLACK_BOLD + boxes[i][k].getShade() + ConsoleColors.RESET);</b>
+<i>46</i>&nbsp;                            else
+<b class="nc"><i>47</i>&nbsp;                                System.out.print(&quot; &quot;);</b>
+<b class="nc"><i>48</i>&nbsp;                        } else {</b>
+<b class="nc"><i>49</i>&nbsp;                            if (boxes[i][k].isFull())</b>
+<b class="nc"><i>50</i>&nbsp;                                getBackgroundColor(boxes[i][k].getDice().getDiceColor());</b>
+<b class="nc"><i>51</i>&nbsp;                            System.out.print(&quot; &quot; + ConsoleColors.RESET);</b>
+<i>52</i>&nbsp;                        }
+<b class="nc"><i>53</i>&nbsp;                        if (/*(i == 3 &amp;&amp; j == 4) ||*/ (k == 4 &amp;&amp; h == 8)) {</b>
+<b class="nc"><i>54</i>&nbsp;                            getTextColor(boxes[i][k].getColor());</b>
+<b class="nc"><i>55</i>&nbsp;                            System.out.print(&quot;*&quot; + ConsoleColors.RESET);</b>
+<i>56</i>&nbsp;                        }
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;                    }
+<i>59</i>&nbsp;                }
+<b class="nc"><i>60</i>&nbsp;                System.out.print(&quot;\n&quot;);</b>
+<i>61</i>&nbsp;            }
+<i>62</i>&nbsp;        }
+<b class="nc"><i>63</i>&nbsp;        for (h = 0; h &lt; 9 * 5 + 1; h++)</b>
+<b class="nc"><i>64</i>&nbsp;            System.out.print(&quot;*&quot; + ConsoleColors.RESET);</b>
+<i>65</i>&nbsp;
+<b class="nc"><i>66</i>&nbsp;        System.out.print(&quot;\n&quot;);</b>
+<i>67</i>&nbsp;
+<i>68</i>&nbsp;    }
+<i>69</i>&nbsp;
+<i>70</i>&nbsp;
+<i>71</i>&nbsp;    public void getTextColor(Color color) {
+<b class="nc"><i>72</i>&nbsp;        if (color.equals(Color.RED))</b>
+<b class="nc"><i>73</i>&nbsp;            System.out.print(ConsoleColors.RED);</b>
+<b class="nc"><i>74</i>&nbsp;        else if (color.equals(Color.GREEN))</b>
+<b class="nc"><i>75</i>&nbsp;            System.out.print(ConsoleColors.GREEN);</b>
+<b class="nc"><i>76</i>&nbsp;        else if (color.equals(Color.YELLOW))</b>
+<b class="nc"><i>77</i>&nbsp;            System.out.print(ConsoleColors.YELLOW);</b>
+<b class="nc"><i>78</i>&nbsp;        else if (color.equals(Color.PURPLE))</b>
+<b class="nc"><i>79</i>&nbsp;            System.out.print(ConsoleColors.PURPLE);</b>
+<b class="nc"><i>80</i>&nbsp;        else if (color.equals(Color.GREEN))</b>
+<b class="nc"><i>81</i>&nbsp;            System.out.print(ConsoleColors.GREEN);</b>
+<b class="nc"><i>82</i>&nbsp;        else if (color.equals(Color.BLUE))</b>
+<b class="nc"><i>83</i>&nbsp;            System.out.print(ConsoleColors.BLUE);</b>
+<i>84</i>&nbsp;        else
+<b class="nc"><i>85</i>&nbsp;            System.out.print(ConsoleColors.RESET);</b>
+<i>86</i>&nbsp;    }
+<i>87</i>&nbsp;
+<i>88</i>&nbsp;    public void getBackgroundColor(Color color) {
+<b class="nc"><i>89</i>&nbsp;        if (color.equals(Color.RED))</b>
+<b class="nc"><i>90</i>&nbsp;            System.out.print(ConsoleColors.RED_BACKGROUND);</b>
+<b class="nc"><i>91</i>&nbsp;        else if (color.equals(Color.GREEN))</b>
+<b class="nc"><i>92</i>&nbsp;            System.out.print(ConsoleColors.GREEN_BACKGROUND);</b>
+<b class="nc"><i>93</i>&nbsp;        else if (color.equals(Color.YELLOW))</b>
+<b class="nc"><i>94</i>&nbsp;            System.out.print(ConsoleColors.YELLOW_BACKGROUND);</b>
+<b class="nc"><i>95</i>&nbsp;        else if (color.equals(Color.PURPLE))</b>
+<b class="nc"><i>96</i>&nbsp;            System.out.print(ConsoleColors.PURPLE_BACKGROUND);</b>
+<b class="nc"><i>97</i>&nbsp;        else if (color.equals(Color.GREEN))</b>
+<b class="nc"><i>98</i>&nbsp;            System.out.print(ConsoleColors.GREEN_BACKGROUND);</b>
+<b class="nc"><i>99</i>&nbsp;        else if (color.equals(Color.BLUE))</b>
+<b class="nc"><i>100</i>&nbsp;            System.out.print(ConsoleColors.BLUE_BACKGROUND);</b>
+<i>101</i>&nbsp;        else
+<b class="nc"><i>102</i>&nbsp;            System.out.print(ConsoleColors.WHITE_BACKGROUND);</b>
+<i>103</i>&nbsp;    }
+<i>104</i>&nbsp;
+<i>105</i>&nbsp;
+<i>106</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-07-04 21:00</div>
+</div>
+</body>
+</html>

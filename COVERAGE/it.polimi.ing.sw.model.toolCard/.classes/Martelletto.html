@@ -1,0 +1,114 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Martelletto</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ing.sw.model.toolCard</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Martelletto (it.polimi.ing.sw.model.toolCard)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Martelletto</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (13/ 13)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ing.sw.model.toolCard;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ing.sw.model.*;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;public class Martelletto extends ToolCard {
+<i>6</i>&nbsp;
+<b class="fc"><i>7</i>&nbsp;    private final int id = 7;</b>
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;    public Martelletto() {
+<b class="fc"><i>11</i>&nbsp;        super(7);</b>
+<b class="fc"><i>12</i>&nbsp;    }</b>
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;    @Override
+<i>15</i>&nbsp;    public void execute(DraftPool draftPool, RoundTrack neverUsed1, Scheme neverUsed2, Player[] neverUsed3, Bag neverUsed4, int neverUsed5, int neverUsed6, int neverUsed7, int neverUsed8, int neverUsed9, int neverUsed10) {
+<b class="fc"><i>16</i>&nbsp;        for (Dice dice : draftPool.getDraftPool()) {</b>
+<b class="fc"><i>17</i>&nbsp;            dice.throwDice();</b>
+<b class="fc"><i>18</i>&nbsp;        }</b>
+<b class="fc"><i>19</i>&nbsp;    }</b>
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    @Override
+<i>22</i>&nbsp;    public ToolCard toolCardClone(){
+<b class="fc"><i>23</i>&nbsp;        ToolCard toolCardClone=new Martelletto();</b>
+<b class="fc"><i>24</i>&nbsp;        toolCardClone.setName(this.getName());</b>
+<b class="fc"><i>25</i>&nbsp;        toolCardClone.setDescription(this.getDescription());</b>
+<b class="fc"><i>26</i>&nbsp;        toolCardClone.setId(id);</b>
+<b class="fc"><i>27</i>&nbsp;        toolCardClone.setNumOfTokens(this.getNumOfTokens());</b>
+<b class="fc"><i>28</i>&nbsp;        return toolCardClone;</b>
+<i>29</i>&nbsp;    }
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-07-04 21:00</div>
+</div>
+</body>
+</html>

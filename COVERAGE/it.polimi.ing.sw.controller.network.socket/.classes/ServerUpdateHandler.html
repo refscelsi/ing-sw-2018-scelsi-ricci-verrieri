@@ -1,0 +1,180 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ServerUpdateHandler</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ing.sw.controller.network.socket</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ServerUpdateHandler (it.polimi.ing.sw.controller.network.socket)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ServerUpdateHandler</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 42)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ing.sw.controller.network.socket;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ing.sw.client.View;
+<i>4</i>&nbsp;import it.polimi.ing.sw.model.Match;
+<i>5</i>&nbsp;import it.polimi.ing.sw.util.Constants;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import java.io.IOException;
+<i>8</i>&nbsp;import java.io.ObjectInputStream;
+<i>9</i>&nbsp;import java.net.Socket;
+<i>10</i>&nbsp;import java.rmi.RemoteException;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;public class ServerUpdateHandler implements Runnable {
+<i>13</i>&nbsp;    private View view;
+<i>14</i>&nbsp;    private Socket socket;
+<i>15</i>&nbsp;    private Match match;
+<i>16</i>&nbsp;
+<b class="nc"><i>17</i>&nbsp;    public ServerUpdateHandler(View view, Socket socket){</b>
+<b class="nc"><i>18</i>&nbsp;        this.view = view;</b>
+<b class="nc"><i>19</i>&nbsp;        this.socket = socket;</b>
+<i>20</i>&nbsp;    }
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;    @Override
+<i>23</i>&nbsp;    public void run() {
+<b class="nc"><i>24</i>&nbsp;        try (ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {</b>
+<i>25</i>&nbsp;            while (true) {
+<b class="nc"><i>26</i>&nbsp;                MatchToSend matchToSend = (MatchToSend) in.readObject();</b>
+<b class="nc"><i>27</i>&nbsp;                String method = matchToSend.getMethod();</b>
+<b class="nc"><i>28</i>&nbsp;                this.match=matchToSend.getMatch();</b>
+<b class="nc"><i>29</i>&nbsp;                switch (method) {</b>
+<i>30</i>&nbsp;                    case Constants.ONTURNEND: {
+<b class="nc"><i>31</i>&nbsp;                        view.onTurnEnd();</b>
+<b class="nc"><i>32</i>&nbsp;                        break;</b>
+<i>33</i>&nbsp;                    }
+<i>34</i>&nbsp;                    case Constants.ONSUCCES: {
+<i>35</i>&nbsp;                        try {
+<b class="nc"><i>36</i>&nbsp;                            view.onSuccess(matchToSend.getMessage());</b>
+<b class="nc"><i>37</i>&nbsp;                        } catch (RemoteException e) {</b>
+<b class="nc"><i>38</i>&nbsp;                            e.printStackTrace();</b>
+<b class="nc"><i>39</i>&nbsp;                        }</b>
+<b class="nc"><i>40</i>&nbsp;                        break;</b>
+<i>41</i>&nbsp;                    }
+<i>42</i>&nbsp;                    case Constants.ONSETPLAYING: {
+<b class="nc"><i>43</i>&nbsp;                        view.onSetPlaying();</b>
+<b class="nc"><i>44</i>&nbsp;                        break;</b>
+<i>45</i>&nbsp;                    }
+<i>46</i>&nbsp;                    case Constants.ONSCHEMETOCHOOSE: {
+<b class="nc"><i>47</i>&nbsp;                        view.onSchemeToChoose(match);</b>
+<b class="nc"><i>48</i>&nbsp;                        break;</b>
+<i>49</i>&nbsp;                    }
+<i>50</i>&nbsp;                    case Constants.ONGAMEUPDATE: {
+<b class="nc"><i>51</i>&nbsp;                        view.onGameUpdate(match);</b>
+<b class="nc"><i>52</i>&nbsp;                        break;</b>
+<i>53</i>&nbsp;                    }
+<i>54</i>&nbsp;                    case Constants.ONGAMEEND: {
+<b class="nc"><i>55</i>&nbsp;                        view.onGameEnd(match);</b>
+<b class="nc"><i>56</i>&nbsp;                        break;</b>
+<i>57</i>&nbsp;                    }
+<i>58</i>&nbsp;                    case Constants.ONNOTPOSSIBLECONNECTIONEXCEPTION: {
+<b class="nc"><i>59</i>&nbsp;                        view.onNotPossibleConnectionException(matchToSend.getMessage());</b>
+<b class="nc"><i>60</i>&nbsp;                        break;</b>
+<i>61</i>&nbsp;                    }
+<i>62</i>&nbsp;
+<i>63</i>&nbsp;                    case Constants.ONNOTVALIDNICKNAMEEXCEPTION:{
+<b class="nc"><i>64</i>&nbsp;                        view.setLogin(false);</b>
+<b class="nc"><i>65</i>&nbsp;                        view.onNotValidNicknameException(matchToSend.getMessage());</b>
+<b class="nc"><i>66</i>&nbsp;                        break;</b>
+<i>67</i>&nbsp;                    }
+<i>68</i>&nbsp;
+<i>69</i>&nbsp;                    case Constants.ONNOTVALIDPLAYEXCEPTION: {
+<b class="nc"><i>70</i>&nbsp;                        view.onNotValidPlayException(matchToSend.getMessage());</b>
+<b class="nc"><i>71</i>&nbsp;                        break;</b>
+<i>72</i>&nbsp;                    }
+<i>73</i>&nbsp;
+<i>74</i>&nbsp;                    case Constants.ONNOTVALIDUSEDICEEXCEPTION: {
+<b class="nc"><i>75</i>&nbsp;                        view.onNotValidUseDiceException(matchToSend.getMessage());</b>
+<b class="nc"><i>76</i>&nbsp;                        break;</b>
+<i>77</i>&nbsp;                    }
+<i>78</i>&nbsp;
+<i>79</i>&nbsp;                    case Constants.ONNOTVALIDTOOLCARDEXCEPTION: {
+<b class="nc"><i>80</i>&nbsp;                        view.onNotValidToolCardException(matchToSend.getId(),matchToSend.getMessage());</b>
+<b class="nc"><i>81</i>&nbsp;                        break;</b>
+<i>82</i>&nbsp;                    }
+<i>83</i>&nbsp;
+<i>84</i>&nbsp;                    case &quot;onLogin&quot;:
+<b class="nc"><i>85</i>&nbsp;                        view.setLogin(true);</b>
+<b class="nc"><i>86</i>&nbsp;                        view.onLogin(matchToSend.getMessage());</b>
+<b class="nc"><i>87</i>&nbsp;                        break;</b>
+<i>88</i>&nbsp;                    default:
+<b class="nc"><i>89</i>&nbsp;                        System.out.println(&quot;Ho ricevuto un oggetto che non sono stato in grado di interpretare&quot;);</b>
+<i>90</i>&nbsp;                }
+<b class="nc"><i>91</i>&nbsp;            }</b>
+<b class="nc"><i>92</i>&nbsp;            } catch(IOException e){</b>
+<b class="nc"><i>93</i>&nbsp;            } catch(ClassNotFoundException e){</b>
+<b class="nc"><i>94</i>&nbsp;            }</b>
+<i>95</i>&nbsp;        }
+<i>96</i>&nbsp;
+<i>97</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-07-04 21:00</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,201 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: RoundTrack</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ing.sw.model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: RoundTrack (it.polimi.ing.sw.model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RoundTrack</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    84,6%
+  </span>
+  <span class="absValue">
+    (11/ 13)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    59,5%
+  </span>
+  <span class="absValue">
+    (25/ 42)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ing.sw.model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;
+<i>4</i>&nbsp;import it.polimi.ing.sw.util.Constants;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import java.io.Serializable;
+<i>7</i>&nbsp;import java.util.ArrayList;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;public class RoundTrack implements Serializable{
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;    private DraftPool[] roundTrack;
+<i>12</i>&nbsp;    private int round;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;
+<b class="fc"><i>15</i>&nbsp;    public RoundTrack(){</b>
+<b class="fc"><i>16</i>&nbsp;        roundTrack = new DraftPool[Constants.NUM_ROUNDS];</b>
+<b class="fc"><i>17</i>&nbsp;        round = 0;</b>
+<b class="fc"><i>18</i>&nbsp;    }</b>
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    // aggiunge sul roundTrack tutti i dadi avanzati alla fine del round
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    public void addDicesRound(DraftPool draftPool){
+<b class="fc"><i>24</i>&nbsp;        roundTrack[round] = new DraftPool();</b>
+<b class="fc"><i>25</i>&nbsp;        roundTrack[round].addDraftPool(draftPool);</b>
+<b class="fc"><i>26</i>&nbsp;        round++;</b>
+<b class="fc"><i>27</i>&nbsp;    }</b>
+<i>28</i>&nbsp;
+<b class="fc"><i>29</i>&nbsp;    public int getRound(){return round;}</b>
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    public void setRoundTrack(DraftPool[] roundTrack) {
+<b class="fc"><i>32</i>&nbsp;        this.roundTrack = roundTrack;</b>
+<b class="fc"><i>33</i>&nbsp;    }</b>
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;    public void setRound(int round) {
+<b class="fc"><i>36</i>&nbsp;        this.round = round;</b>
+<b class="fc"><i>37</i>&nbsp;    }</b>
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;
+<i>40</i>&nbsp;    // ritorna tutto il roundTrack
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;    public DraftPool[] getRoundTrack() {
+<b class="fc"><i>43</i>&nbsp;        return roundTrack;</b>
+<i>44</i>&nbsp;    }
+<i>45</i>&nbsp;
+<i>46</i>&nbsp;
+<i>47</i>&nbsp;    // ritorna i dadi avanzati alla fine di un determinato round
+<i>48</i>&nbsp;
+<i>49</i>&nbsp;    public DraftPool getDicesRound(int round){
+<b class="fc"><i>50</i>&nbsp;        if (this.round+1&gt;=round&amp;&amp;!isEmpty())</b>
+<b class="fc"><i>51</i>&nbsp;            return roundTrack[round-1];</b>
+<i>52</i>&nbsp;        else
+<b class="nc"><i>53</i>&nbsp;            return null;</b>
+<i>54</i>&nbsp;    }
+<i>55</i>&nbsp;
+<i>56</i>&nbsp;
+<i>57</i>&nbsp;    // ritorna il numero di dadi avanzati alla fine di un determinato round
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;    public int getNumberOfDices(int round) {
+<b class="fc"><i>60</i>&nbsp;        if (this.round+1&gt;=round&amp;&amp;!isEmpty())</b>
+<b class="fc"><i>61</i>&nbsp;            return roundTrack[round-1].getSize();</b>
+<i>62</i>&nbsp;        else
+<b class="nc"><i>63</i>&nbsp;            return 0;</b>
+<i>64</i>&nbsp;    }
+<i>65</i>&nbsp;
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;    public int getRoundTrackSize() {
+<b class="fc"><i>68</i>&nbsp;        return round;</b>
+<i>69</i>&nbsp;    }
+<i>70</i>&nbsp;
+<i>71</i>&nbsp;
+<i>72</i>&nbsp;    public boolean isEmpty() {
+<b class="fc"><i>73</i>&nbsp;        return round==0;</b>
+<i>74</i>&nbsp;    }
+<i>75</i>&nbsp;
+<i>76</i>&nbsp;
+<i>77</i>&nbsp;    // ritorna il numero massimo di dadi avanzati in un round
+<i>78</i>&nbsp;
+<i>79</i>&nbsp;    public int getMaxNumberOfDices() {
+<b class="nc"><i>80</i>&nbsp;        int num, max = 0;</b>
+<b class="nc"><i>81</i>&nbsp;        for (int i=1; i&lt;=round; i++) {</b>
+<b class="nc"><i>82</i>&nbsp;            num = getNumberOfDices(i);</b>
+<b class="nc"><i>83</i>&nbsp;            if (num &gt; max)</b>
+<b class="nc"><i>84</i>&nbsp;                max = num;</b>
+<i>85</i>&nbsp;        }
+<i>86</i>&nbsp;
+<b class="nc"><i>87</i>&nbsp;        return max;</b>
+<i>88</i>&nbsp;
+<i>89</i>&nbsp;    }
+<i>90</i>&nbsp;
+<i>91</i>&nbsp;
+<i>92</i>&nbsp;    // ritorna tutti i colori dei dadi presenti sul roundtrack
+<i>93</i>&nbsp;
+<i>94</i>&nbsp;    public ArrayList&lt;Color&gt; getColorsInRoundTrack() {
+<b class="fc"><i>95</i>&nbsp;        ArrayList&lt;Color&gt; colors = new ArrayList&lt;Color&gt;();</b>
+<b class="fc"><i>96</i>&nbsp;        for (int i=0; i&lt;round; i++)</b>
+<b class="fc"><i>97</i>&nbsp;            for (Color color: roundTrack[i].getColorsInDraftPool())</b>
+<b class="fc"><i>98</i>&nbsp;                colors.add(color);</b>
+<b class="fc"><i>99</i>&nbsp;        return colors;</b>
+<i>100</i>&nbsp;    }
+<i>101</i>&nbsp;
+<i>102</i>&nbsp;
+<i>103</i>&nbsp;    public RoundTrack cloneRoundTrack(){
+<b class="nc"><i>104</i>&nbsp;        RoundTrack roundTrackClone=new RoundTrack();</b>
+<b class="nc"><i>105</i>&nbsp;        roundTrackClone.setRound(this.round);</b>
+<b class="nc"><i>106</i>&nbsp;        DraftPool[] draftPoolsClone=new DraftPool[Constants.NUM_ROUNDS];</b>
+<b class="nc"><i>107</i>&nbsp;        if(round&gt;0){</b>
+<b class="nc"><i>108</i>&nbsp;            for(int i=0;i&lt;round;i++){</b>
+<b class="nc"><i>109</i>&nbsp;                DraftPool draftPoolClone= getDicesRound(i+1).cloneDraftPool();</b>
+<b class="nc"><i>110</i>&nbsp;                draftPoolsClone[i]=draftPoolClone;</b>
+<i>111</i>&nbsp;            }
+<i>112</i>&nbsp;        }
+<i>113</i>&nbsp;
+<b class="nc"><i>114</i>&nbsp;        roundTrackClone.setRoundTrack(draftPoolsClone);</b>
+<b class="nc"><i>115</i>&nbsp;        return roundTrackClone;</b>
+<i>116</i>&nbsp;    }
+<i>117</i>&nbsp;}
+<i>118</i>&nbsp;
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-07-04 21:00</div>
+</div>
+</body>
+</html>

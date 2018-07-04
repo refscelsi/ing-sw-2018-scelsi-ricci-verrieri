@@ -1,0 +1,390 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Menu</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ing.sw.ui.gui.advanced</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Menu (it.polimi.ing.sw.ui.gui.advanced)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Menu</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 79)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">Menu$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">Menu$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">Menu$3</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">Menu$4</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">Menu$5</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">Menu$6</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 22)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 94)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ing.sw.ui.gui.advanced;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import javax.swing.*;
+<i>4</i>&nbsp;import java.awt.*;
+<i>5</i>&nbsp;import java.awt.event.WindowAdapter;
+<i>6</i>&nbsp;import java.awt.event.WindowEvent;
+<i>7</i>&nbsp;import java.awt.event.WindowListener;
+<i>8</i>&nbsp;
+<b class="nc"><i>9</i>&nbsp;public class Menu extends javax.swing.JFrame {</b>
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;    private AddScheme as;
+<i>12</i>&nbsp;    private static final String IMAGE_PATH = &quot;/img/&quot;;
+<i>13</i>&nbsp;
+<b class="nc"><i>14</i>&nbsp;    public Menu() {</b>
+<b class="nc"><i>15</i>&nbsp;        initComponents();</b>
+<b class="nc"><i>16</i>&nbsp;        setIcons();</b>
+<b class="nc"><i>17</i>&nbsp;        setLocationRelativeTo(null);</b>
+<i>18</i>&nbsp;    }
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;    @SuppressWarnings(&quot;unchecked&quot;)
+<i>21</i>&nbsp;    // &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Generated Code&quot;&gt;//GEN-BEGIN:initComponents
+<i>22</i>&nbsp;    private void initComponents() {
+<i>23</i>&nbsp;
+<b class="nc"><i>24</i>&nbsp;        menuLabel = new javax.swing.JPanel();</b>
+<b class="nc"><i>25</i>&nbsp;        addSchemeLabel = new javax.swing.JLabel();</b>
+<b class="nc"><i>26</i>&nbsp;        singleplayerLabel = new javax.swing.JLabel();</b>
+<b class="nc"><i>27</i>&nbsp;        loadMatchLabel = new javax.swing.JLabel();</b>
+<b class="nc"><i>28</i>&nbsp;        settingsLabel = new javax.swing.JLabel();</b>
+<b class="nc"><i>29</i>&nbsp;        newMatchLabel = new javax.swing.JLabel();</b>
+<b class="nc"><i>30</i>&nbsp;        backgroundLabel = new javax.swing.JLabel();</b>
+<i>31</i>&nbsp;
+<b class="nc"><i>32</i>&nbsp;        WindowListener exitListener = new WindowAdapter() {</b>
+<i>33</i>&nbsp;            @Override
+<i>34</i>&nbsp;            public void windowClosing(WindowEvent windowEvent) {
+<b class="nc"><i>35</i>&nbsp;                int confirm = JOptionPane.showOptionDialog(</b>
+<i>36</i>&nbsp;                        null,
+<i>37</i>&nbsp;                        &quot;Are you shure you want to leave the game?&quot;,
+<i>38</i>&nbsp;                        &quot;Exit Confirmation&quot;,
+<i>39</i>&nbsp;                        JOptionPane.YES_NO_OPTION,
+<i>40</i>&nbsp;                        JOptionPane.QUESTION_MESSAGE,
+<i>41</i>&nbsp;                        null /*new javax.swing.ImageIcon(getClass().getResource(&quot;/img/sagrada.png&quot;))*/,
+<i>42</i>&nbsp;                        null,
+<i>43</i>&nbsp;                        null);
+<b class="nc"><i>44</i>&nbsp;                if (confirm == 0) {</b>
+<b class="nc"><i>45</i>&nbsp;                    System.exit(0);</b>
+<i>46</i>&nbsp;                } else {
+<b class="nc"><i>47</i>&nbsp;                    setVisible(true);</b>
+<i>48</i>&nbsp;                }
+<i>49</i>&nbsp;            }
+<i>50</i>&nbsp;        };
+<b class="nc"><i>51</i>&nbsp;        addWindowListener(exitListener);</b>
+<b class="nc"><i>52</i>&nbsp;        setResizable(false);</b>
+<i>53</i>&nbsp;
+<b class="nc"><i>54</i>&nbsp;        menuLabel.setBackground(new java.awt.Color(102, 255, 51));</b>
+<b class="nc"><i>55</i>&nbsp;        menuLabel.setLayout(null);</b>
+<i>56</i>&nbsp;
+<b class="nc"><i>57</i>&nbsp;        addSchemeLabel.addMouseListener(new java.awt.event.MouseAdapter() {</b>
+<i>58</i>&nbsp;            public void mouseClicked(java.awt.event.MouseEvent evt) {
+<b class="nc"><i>59</i>&nbsp;                addSchemeLabelMouseClicked(evt);</b>
+<i>60</i>&nbsp;            }
+<i>61</i>&nbsp;        });
+<b class="nc"><i>62</i>&nbsp;        menuLabel.add(addSchemeLabel);</b>
+<b class="nc"><i>63</i>&nbsp;        addSchemeLabel.setBounds(215, 211, 53, 53);</b>
+<i>64</i>&nbsp;
+<b class="nc"><i>65</i>&nbsp;        singleplayerLabel.addMouseListener(new java.awt.event.MouseAdapter() {</b>
+<i>66</i>&nbsp;            public void mouseClicked(java.awt.event.MouseEvent evt) {
+<b class="nc"><i>67</i>&nbsp;                singleplayerLabelMouseClicked(evt);</b>
+<i>68</i>&nbsp;            }
+<i>69</i>&nbsp;        });
+<b class="nc"><i>70</i>&nbsp;        menuLabel.add(singleplayerLabel);</b>
+<b class="nc"><i>71</i>&nbsp;        singleplayerLabel.setBounds(370, 368, 53, 53);</b>
+<i>72</i>&nbsp;
+<b class="nc"><i>73</i>&nbsp;        loadMatchLabel.addMouseListener(new java.awt.event.MouseAdapter() {</b>
+<i>74</i>&nbsp;            public void mouseClicked(java.awt.event.MouseEvent evt) {
+<b class="nc"><i>75</i>&nbsp;                loadMatchLabelMouseClicked(evt);</b>
+<i>76</i>&nbsp;            }
+<i>77</i>&nbsp;        });
+<b class="nc"><i>78</i>&nbsp;        menuLabel.add(loadMatchLabel);</b>
+<b class="nc"><i>79</i>&nbsp;        loadMatchLabel.setBounds(50, 368, 53, 53);</b>
+<i>80</i>&nbsp;
+<b class="nc"><i>81</i>&nbsp;        settingsLabel.addMouseListener(new java.awt.event.MouseAdapter() {</b>
+<i>82</i>&nbsp;            public void mouseClicked(java.awt.event.MouseEvent evt) {
+<b class="nc"><i>83</i>&nbsp;                settingsLabelMouseClicked(evt);</b>
+<i>84</i>&nbsp;            }
+<i>85</i>&nbsp;        });
+<b class="nc"><i>86</i>&nbsp;        menuLabel.add(settingsLabel);</b>
+<b class="nc"><i>87</i>&nbsp;        settingsLabel.setBounds(215, 524, 53, 53);</b>
+<i>88</i>&nbsp;
+<b class="nc"><i>89</i>&nbsp;        newMatchLabel.addMouseListener(new java.awt.event.MouseAdapter() {</b>
+<i>90</i>&nbsp;            public void mouseClicked(java.awt.event.MouseEvent evt) {
+<b class="nc"><i>91</i>&nbsp;                newMatchLabelMouseClicked(evt);</b>
+<i>92</i>&nbsp;            }
+<i>93</i>&nbsp;        });
+<b class="nc"><i>94</i>&nbsp;        menuLabel.add(newMatchLabel);</b>
+<b class="nc"><i>95</i>&nbsp;        newMatchLabel.setBounds(190, 343, 102, 102);</b>
+<i>96</i>&nbsp;
+<b class="nc"><i>97</i>&nbsp;        backgroundLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource(&quot;/img/menu.jpg&quot;))); // NOI18N</b>
+<b class="nc"><i>98</i>&nbsp;        menuLabel.add(backgroundLabel);</b>
+<b class="nc"><i>99</i>&nbsp;        backgroundLabel.setBounds(0, 0, 480, 630);</b>
+<i>100</i>&nbsp;
+<b class="nc"><i>101</i>&nbsp;        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());</b>
+<b class="nc"><i>102</i>&nbsp;        getContentPane().setLayout(layout);</b>
+<b class="nc"><i>103</i>&nbsp;        layout.setHorizontalGroup(</b>
+<b class="nc"><i>104</i>&nbsp;                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</b>
+<b class="nc"><i>105</i>&nbsp;                        .addComponent(menuLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)</b>
+<i>106</i>&nbsp;        );
+<b class="nc"><i>107</i>&nbsp;        layout.setVerticalGroup(</b>
+<b class="nc"><i>108</i>&nbsp;                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</b>
+<b class="nc"><i>109</i>&nbsp;                        .addComponent(menuLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE)</b>
+<i>110</i>&nbsp;        );
+<i>111</i>&nbsp;
+<b class="nc"><i>112</i>&nbsp;        pack();</b>
+<i>113</i>&nbsp;    }// &lt;/editor-fold&gt;//GEN-END:initComponents
+<i>114</i>&nbsp;
+<i>115</i>&nbsp;    public void setIcons() {
+<b class="nc"><i>116</i>&nbsp;        ImageIcon icon = new javax.swing.ImageIcon(getClass().getResource(IMAGE_PATH + &quot;home.png&quot;));</b>
+<b class="nc"><i>117</i>&nbsp;        Image scaledImage = icon.getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT);</b>
+<b class="nc"><i>118</i>&nbsp;        icon.setImage(scaledImage);</b>
+<i>119</i>&nbsp;
+<b class="nc"><i>120</i>&nbsp;        newMatchLabel.setIcon(icon);</b>
+<b class="nc"><i>121</i>&nbsp;        newMatchLabel.repaint();</b>
+<i>122</i>&nbsp;
+<b class="nc"><i>123</i>&nbsp;        icon = new javax.swing.ImageIcon(getClass().getResource(IMAGE_PATH + &quot;settings.png&quot;));</b>
+<b class="nc"><i>124</i>&nbsp;        scaledImage = icon.getImage().getScaledInstance(53, 53, Image.SCALE_DEFAULT);</b>
+<b class="nc"><i>125</i>&nbsp;        icon.setImage(scaledImage);</b>
+<b class="nc"><i>126</i>&nbsp;        settingsLabel.setIcon(icon);</b>
+<b class="nc"><i>127</i>&nbsp;        settingsLabel.repaint();</b>
+<i>128</i>&nbsp;
+<b class="nc"><i>129</i>&nbsp;        icon = new javax.swing.ImageIcon(getClass().getResource(IMAGE_PATH + &quot;globe.png&quot;));</b>
+<b class="nc"><i>130</i>&nbsp;        scaledImage = icon.getImage().getScaledInstance(53, 53, Image.SCALE_DEFAULT);</b>
+<b class="nc"><i>131</i>&nbsp;        icon.setImage(scaledImage);</b>
+<b class="nc"><i>132</i>&nbsp;        singleplayerLabel.setIcon(icon);</b>
+<b class="nc"><i>133</i>&nbsp;        singleplayerLabel.repaint();</b>
+<i>134</i>&nbsp;
+<b class="nc"><i>135</i>&nbsp;        icon = new javax.swing.ImageIcon(getClass().getResource(IMAGE_PATH + &quot;find.png&quot;));</b>
+<b class="nc"><i>136</i>&nbsp;        scaledImage = icon.getImage().getScaledInstance(53, 53, Image.SCALE_DEFAULT);</b>
+<b class="nc"><i>137</i>&nbsp;        icon.setImage(scaledImage);</b>
+<b class="nc"><i>138</i>&nbsp;        loadMatchLabel.setIcon(icon);</b>
+<b class="nc"><i>139</i>&nbsp;        loadMatchLabel.repaint();</b>
+<i>140</i>&nbsp;
+<b class="nc"><i>141</i>&nbsp;        icon = new javax.swing.ImageIcon(getClass().getResource(IMAGE_PATH + &quot;add.png&quot;));</b>
+<b class="nc"><i>142</i>&nbsp;        scaledImage = icon.getImage().getScaledInstance(53, 53, Image.SCALE_DEFAULT);</b>
+<b class="nc"><i>143</i>&nbsp;        icon.setImage(scaledImage);</b>
+<b class="nc"><i>144</i>&nbsp;        addSchemeLabel.setIcon(icon);</b>
+<b class="nc"><i>145</i>&nbsp;        addSchemeLabel.repaint();</b>
+<i>146</i>&nbsp;
+<b class="nc"><i>147</i>&nbsp;        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource(IMAGE_PATH + &quot;sagrada.png&quot;)));</b>
+<b class="nc"><i>148</i>&nbsp;        this.setTitle(&quot;Sagrada Boardgame&quot;);</b>
+<i>149</i>&nbsp;    }
+<i>150</i>&nbsp;
+<i>151</i>&nbsp;    private void newMatchLabelMouseClicked(java.awt.event.MouseEvent evt) {
+<b class="nc"><i>152</i>&nbsp;        scompareMenu();</b>
+<i>153</i>&nbsp;    }
+<i>154</i>&nbsp;
+<i>155</i>&nbsp;    private void addSchemeLabelMouseClicked(java.awt.event.MouseEvent evt) {
+<b class="nc"><i>156</i>&nbsp;        scompareMenu();</b>
+<b class="nc"><i>157</i>&nbsp;        as = new AddScheme();</b>
+<b class="nc"><i>158</i>&nbsp;        as.setVisible(true);</b>
+<i>159</i>&nbsp;    }
+<i>160</i>&nbsp;
+<i>161</i>&nbsp;    private void loadMatchLabelMouseClicked(java.awt.event.MouseEvent evt) {
+<b class="nc"><i>162</i>&nbsp;        scompareMenu();</b>
+<i>163</i>&nbsp;    }
+<i>164</i>&nbsp;
+<i>165</i>&nbsp;    private void settingsLabelMouseClicked(java.awt.event.MouseEvent evt) {
+<b class="nc"><i>166</i>&nbsp;        scompareMenu();</b>
+<i>167</i>&nbsp;    }
+<i>168</i>&nbsp;
+<i>169</i>&nbsp;    private void singleplayerLabelMouseClicked(java.awt.event.MouseEvent evt) {
+<b class="nc"><i>170</i>&nbsp;        scompareMenu();</b>
+<i>171</i>&nbsp;    }
+<i>172</i>&nbsp;
+<i>173</i>&nbsp;    public void scompareMenu() {
+<b class="nc"><i>174</i>&nbsp;        this.setVisible(false);</b>
+<i>175</i>&nbsp;    }
+<i>176</i>&nbsp;
+<i>177</i>&nbsp;    // Variables declaration - do not modify//GEN-BEGIN:variables
+<i>178</i>&nbsp;    private javax.swing.JLabel addSchemeLabel;
+<i>179</i>&nbsp;    private javax.swing.JLabel backgroundLabel;
+<i>180</i>&nbsp;    private javax.swing.JLabel loadMatchLabel;
+<i>181</i>&nbsp;    private javax.swing.JPanel menuLabel;
+<i>182</i>&nbsp;    private javax.swing.JLabel newMatchLabel;
+<i>183</i>&nbsp;    private javax.swing.JLabel settingsLabel;
+<i>184</i>&nbsp;    private javax.swing.JLabel singleplayerLabel;
+<i>185</i>&nbsp;    // End of variables declaration//GEN-END:variables
+<i>186</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-07-04 21:00</div>
+</div>
+</body>
+</html>

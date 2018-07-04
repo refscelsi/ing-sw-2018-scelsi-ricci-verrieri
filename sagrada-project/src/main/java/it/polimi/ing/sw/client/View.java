@@ -9,6 +9,7 @@ import it.polimi.ing.sw.controller.network.socket.ServerUpdateHandler;
 import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.ui.cli.CLI;
 //import it.polimi.ing.sw.ui.gui.GUI;
+import it.polimi.ing.sw.ui.gui.GUI;
 import it.polimi.ing.sw.util.Constants;
 
 import java.io.IOException;
@@ -64,7 +65,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
             if (input.equals("c")) {
                 ui = new CLI(this);
             } else if (input.equals("g")) {
-                //ui = new GUI(this);
+                ui = new GUI(this);
             } else {
                 System.out.println("Inserisci una lettera valida");
             }
@@ -344,6 +345,10 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
             ui.onActionNotValid(e.getMessage());
             exit(0);
         }
+    }
+
+    public Match getMatch() {
+        return match;
     }
 
 

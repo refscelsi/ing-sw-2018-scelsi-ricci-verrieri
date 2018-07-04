@@ -10,6 +10,7 @@ public abstract class ObjectiveCard implements Serializable {
     private int score;
     private String name;
     private String description;
+    private int id;
 
     public ObjectiveCard() {
 
@@ -43,4 +44,11 @@ public abstract class ObjectiveCard implements Serializable {
         this.description = description;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }
