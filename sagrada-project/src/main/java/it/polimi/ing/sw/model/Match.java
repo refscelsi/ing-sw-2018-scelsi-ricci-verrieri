@@ -1,6 +1,7 @@
 
 package it.polimi.ing.sw.model;
 
+import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 import it.polimi.ing.sw.controller.PlayerState;
 import it.polimi.ing.sw.controller.RemotePlayer;
 import it.polimi.ing.sw.controller.exceptions.NotPossibleConnectionException;
@@ -50,7 +51,7 @@ public class Match implements Serializable{
     //array che contiente la classifica dei players
     private ArrayList<Player> ranking;
     //array di clientObserver che mi serve per notificare la ui dei cambiamenti avvenuti
-    private transient ArrayList<RemotePlayer> remotePlayer;
+    private transient ArrayList<RemotePlayer> remotePlayers;
     //hashmap con la corrispondenza player-remoteplayer
     private transient HashMap<Player,RemotePlayer> playerMap;
     //array di persone che si sono loggate ma sono in attesa
@@ -59,6 +60,8 @@ public class Match implements Serializable{
     private boolean matchStarted=false;
     //numero giocatori effettivamente giocanti
     private int numPlayersPlaying=0;
+    //lista dei clients e dei giocatori corrispondenti
+    private HashMap<RemotePlayer,Player> clients;
 
 
 
@@ -66,8 +69,9 @@ public class Match implements Serializable{
     public Match() {
         this.playerMap=new HashMap<Player,RemotePlayer>();
         this.players=new ArrayList<Player>();
-        this.remotePlayer = new ArrayList<RemotePlayer>();
+        this.remotePlayers = new ArrayList<RemotePlayer>();
         this.playersLogged=new ArrayList<Player>();
+        this.clients=new HashMap<RemotePlayer,Player>();
     }
 
 
@@ -186,8 +190,9 @@ public class Match implements Serializable{
                         Player player = new Player(nickname);
                         player.setLogged(true);
                         playerMap.put(player, remotePlayer);
+                        clients.put(remotePlayer,player);
                         players.add(player);
-                        this.remotePlayer.add(remotePlayer);
+                        this.remotePlayers.add(remotePlayer);
                         numPlayers++;
                         numPlayersPlaying++;
                         System.out.println(numPlayers);
@@ -208,8 +213,9 @@ public class Match implements Serializable{
         }
         else
             System.out.println("bentornato coglione");
-            numPlayersPlaying++;
+            playerMap.replace(getPlayer(nickname),remotePlayer);
             getPlayer(nickname).setState(PlayerState.INIZIALIZED);
+            numPlayersPlaying++;
     }
 
     ////////////////LOGIN
@@ -291,6 +297,19 @@ public class Match implements Serializable{
         notifyStartedMatch();
     }
 
+    public  void endMatch(){
+        matchStarted=false;
+        numPlayers=0;
+        playersRoundIndex=0;
+        numPlayersPlaying=0;
+        numRound=0;
+        this.playerMap=new HashMap<Player,RemotePlayer>();
+        this.players=new ArrayList<Player>();
+        this.remotePlayers = new ArrayList<RemotePlayer>();
+        this.playersLogged=new ArrayList<Player>();
+        this.clients=new HashMap<>();
+    }
+
     // inizializzo tutte le cose che riguardano il tavolo di gioco
 
     public void initializeTable() {
@@ -354,7 +373,9 @@ public class Match implements Serializable{
             System.out.println("sono il giocatore "+ playerPlaying.getNickname()+ "nello stato: " + playerPlaying.getState().toString());
             for(Player player:players){
                 if(!(player.equals(playerPlaying))){
-                    player.setState(PlayerState.ENDEDTURN);
+                    if(!player.getState().equals(PlayerState.OFFLINE)){
+                        player.setState(PlayerState.ENDEDTURN);
+                    }
                 }
             }
             notifyChangement();
@@ -368,15 +389,25 @@ public class Match implements Serializable{
 
     public void changePlayersRound (Player firstPlayer) {
         int first=players.indexOf(firstPlayer);
+
         //spasso il turno a destra
         if(first<numPlayers-1){
             firstPlayer=players.get(first+1);
-            createRoundPlayers(first+1);
+            if(firstPlayer.getState().equals(PlayerState.OFFLINE)){
+                createRoundPlayers(first+2);
+            }
+            else {
+                createRoundPlayers(first + 1);
+            }
         }
         //passo il turno a destra , ma sono l'ultimo --> riparto dall'inizio
         if(first==numPlayers-1){
-            firstPlayer=players.get(0);
-            createRoundPlayers(0);
+            if(firstPlayer.getState().equals(PlayerState.OFFLINE)){
+                createRoundPlayers(1);
+            }
+            else {
+                createRoundPlayers(0);
+            }
         }
     }
 
@@ -406,17 +437,17 @@ public class Match implements Serializable{
             if(playersRound[playersRoundIndex].getState().equals(PlayerState.OFFLINE)){
                 System.out.println("quaalcuno è off");
                 playersRoundIndex++;
-            }
-            else if(playersRound.length==8 && playersRound[playersRoundIndex+1].getState().equals(PlayerState.OFFLINE)){
-                playersRoundIndex= playersRoundIndex+2;
-            }
-            else {
-                playerPlaying = playersRound[playersRoundIndex];
-                playerPlaying.setState(PlayerState.TURNSTARTED);
                 System.out.println("giocatore: " + playerPlaying.getNickname() + "\n stato:" + playerPlaying.getState().toString());
-                notifyStartTurn(playerPlaying);
+                if(playersRoundIndex>=((numPlayers*2)-1)){
+                    playersRoundIndex=0;
+                    endRound();
+                }
             }
-
+            playerPlaying = playersRound[playersRoundIndex];
+            playerPlaying.setState(PlayerState.TURNSTARTED);
+            System.out.println("giocatore: " + playerPlaying.getNickname() + "\n stato:" + playerPlaying.getState().toString());
+            notifyStartTurn(playerPlaying);
+            System.out.println("notificato");
         }
         else if(playersRoundIndex==(numPlayers*2)-1){
             playersRoundIndex=0;
@@ -773,62 +804,63 @@ public class Match implements Serializable{
 
 
     public void exitPlayer(Player player) throws RemoteException {
-        player.setState(PlayerState.OFFLINE);
-        numPlayersPlaying=numPlayersPlaying-1;
-        System.out.println(players.size());
-        System.out.println(numPlayersPlaying);
-        if(numPlayersPlaying==1){
-            calculateRanking();
-            notifyGameEnd();
-            return;
-        }
-        else if(playerPlaying.equals(player)){
-            if(playersRoundIndex<numPlayers*2-1){
-                playersRoundIndex++;
-                if(!playersRound[playersRoundIndex].getState().equals(PlayerState.OFFLINE)) {
-                    playerPlaying = playersRound[playersRoundIndex];
-                    playerPlaying.setState(PlayerState.TURNSTARTED);
-                    System.out.println("giocatore: " + playerPlaying.getNickname() + "\n stato:" + playerPlaying.getState().toString());
-                    notifyStartTurn(playerPlaying);
+        if(!player.getState().equals(PlayerState.OFFLINE)) {
+            player.setState(PlayerState.OFFLINE);
+            numPlayersPlaying = numPlayersPlaying - 1;
+            System.out.println(players.size());
+            System.out.println(numPlayersPlaying);
+            if (numPlayersPlaying == 1) {
+                calculateRanking();
+                notifyGameEnd();
+                return;
+            } else if (playerPlaying.equals(player)) {
+                if (playersRoundIndex < numPlayers * 2 - 1) {
+                    playersRoundIndex++;
+                    if (!playersRound[playersRoundIndex].getState().equals(PlayerState.OFFLINE)) {
+                        playerPlaying = playersRound[playersRoundIndex];
+                        playerPlaying.setState(PlayerState.TURNSTARTED);
+                        System.out.println("giocatore: " + playerPlaying.getNickname() + "\n stato:" + playerPlaying.getState().toString());
+                        notifyStartTurn(playerPlaying);
+                    }
+                } else if (playersRoundIndex == ((numPlayers * 2) - 1)) {
+                    playersRoundIndex = 0;
+                    endRound();
                 }
-            }
-            else if(playersRoundIndex == ((numPlayers * 2) - 1)){
-                playersRoundIndex = 0;
-                endRound();
             }
         }
     }
 
     // aggiornamenti alle view
 
-    public void notifyChangement() throws RemoteException {
-        for(Player player: players){
+    public synchronized void notifyChangement() throws RemoteException {
+        for(Player player:players){
             try {
-                playerMap.get(player).onGameUpdate(this.matchClone());
+                if(!player.getState().equals(PlayerState.OFFLINE)) {
+                    playerMap.get(player).onGameUpdate(this.matchClone());
+                }
             }catch ( RemoteException e){
                 exitPlayer(player);
             }
-
         }
     }
 
 
     private void notifyStartedMatch() throws RemoteException, NotValidPlayException {
-        for(Player player: players){
+        for(Player player:players){
             try {
-                playerMap.get(player).onSchemeToChoose(this.matchClone());
+                if(!player.getState().equals(PlayerState.OFFLINE)) {
+                    playerMap.get(player).onSchemeToChoose(this.matchClone());
+                }
             }catch ( RemoteException e){
                 exitPlayer(player);
             }
-
         }
     }
 
     private void notifyStartTurn(Player player) throws RemoteException {
         try{
-        playerMap.get(player).onSetPlaying();
-        }
-        catch ( RemoteException e ){
+            playerMap.get(player).onSetPlaying();
+        } catch ( RemoteException e ){
             exitPlayer(player);
         }
     }
@@ -843,20 +875,23 @@ public class Match implements Serializable{
     }
 
     public void notifyGameEnd() throws RemoteException {
-        for(Player player: players){
+        for(Player player:players){
             try {
-                playerMap.get(player).onGameEnd(this.matchClone());
+                if(!player.getState().equals(PlayerState.OFFLINE)) {
+                    playerMap.get(player).onGameEnd(this.matchClone());
+                }
             }catch ( RemoteException e){
                 exitPlayer(player);
             }
-
         }
     }
 
     public void notifySucces(String message) throws RemoteException{
-        for(Player player: players){
+        for(Player player:players){
             try {
-                playerMap.get(player).onSuccess(message);
+                if(!player.getState().equals(PlayerState.OFFLINE)) {
+                    playerMap.get(player).onSuccess(message);
+                }
             }catch ( RemoteException e){
                 exitPlayer(player);
             }

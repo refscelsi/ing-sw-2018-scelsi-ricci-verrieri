@@ -104,11 +104,7 @@ public class PlayerControllerSocket implements RemotePlayer, Runnable {
             }
         } catch (ClassNotFoundException e) {
         } catch (IOException e) {
-            try {
-                controller.stopPlayer();
-            } catch ( RemoteException e1 ) {
-                System.out.println("ma che sbatti");
-            }
+            System.out.println("presa qui ");
         }
 
     }
@@ -156,6 +152,7 @@ public class PlayerControllerSocket implements RemotePlayer, Runnable {
             out.writeObject(matchToSend);
             out.flush();
         } catch (IOException e) {
+            System.out.println("presa anche qui ");
             controller.stopPlayer();
         }
     }
