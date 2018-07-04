@@ -1,0 +1,205 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ToolCards</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ing.sw.model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ToolCards (it.polimi.ing.sw.model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ToolCards</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (73/ 73)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ing.sw.model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ing.sw.model.toolCard.*;
+<i>4</i>&nbsp;import it.polimi.ing.sw.model.exceptions.*;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import java.io.Serializable;
+<i>7</i>&nbsp;import java.util.ArrayList;
+<i>8</i>&nbsp;import java.util.Collections;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;public class ToolCards implements Serializable{
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;    private ArrayList&lt;ToolCard&gt; toolCards;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;
+<b class="fc"><i>17</i>&nbsp;    public ToolCards() {</b>
+<b class="fc"><i>18</i>&nbsp;        toolCards= new ArrayList&lt;ToolCard&gt;();</b>
+<b class="fc"><i>19</i>&nbsp;        ArrayList&lt;Integer&gt; values= new ArrayList&lt;Integer&gt;();</b>
+<b class="fc"><i>20</i>&nbsp;        for(int i=1; i&lt;13;i++){</b>
+<b class="fc"><i>21</i>&nbsp;            values.add(i);</b>
+<i>22</i>&nbsp;        }
+<b class="fc"><i>23</i>&nbsp;        Collections.shuffle(values);</b>
+<b class="fc"><i>24</i>&nbsp;        for(int i=0;i&lt;3;i++){</b>
+<b class="fc"><i>25</i>&nbsp;            int id=values.get(i);</b>
+<b class="fc"><i>26</i>&nbsp;            addCard(id);</b>
+<i>27</i>&nbsp;        }
+<b class="fc"><i>28</i>&nbsp;    }</b>
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    public ArrayList&lt;ToolCard&gt; getToolCards() {
+<b class="fc"><i>32</i>&nbsp;        return toolCards;</b>
+<i>33</i>&nbsp;    }
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    // metodo che serve solo per il test
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;    public int getSize() {
+<b class="fc"><i>39</i>&nbsp;        return toolCards.size();</b>
+<i>40</i>&nbsp;    }
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    public void addCard(int id) {
+<b class="fc"><i>44</i>&nbsp;        switch (id){</b>
+<i>45</i>&nbsp;            case 1:
+<b class="fc"><i>46</i>&nbsp;                PinzaSgrossatrice pinzaSgrossatrice=new PinzaSgrossatrice();</b>
+<b class="fc"><i>47</i>&nbsp;                pinzaSgrossatrice.setName(&quot;Pinza Sgrossatrice&quot;);</b>
+<b class="fc"><i>48</i>&nbsp;                pinzaSgrossatrice.setDescription(&quot;Dopo aver scelto un dado, aumenta o dominuisci il valore del dado scelto di 1 (non puoi cambiare un 6 in 1 o un 1 in 6).&quot;);</b>
+<b class="fc"><i>49</i>&nbsp;                toolCards.add(pinzaSgrossatrice);</b>
+<b class="fc"><i>50</i>&nbsp;                break;</b>
+<i>51</i>&nbsp;            case 2:
+<b class="fc"><i>52</i>&nbsp;                PennelloPerEglomise pennelloPerEglomise= new PennelloPerEglomise();</b>
+<b class="fc"><i>53</i>&nbsp;                pennelloPerEglomise.setName(&quot;Pennello per Eglomise&quot;);</b>
+<b class="fc"><i>54</i>&nbsp;                pennelloPerEglomise.setDescription(&quot;Muovi un qualsiasi dado nella tua vetrata ignorando le restrizioni di colore. Devi rispettare tutte le altre restrizioni di piazzamento.&quot;);</b>
+<b class="fc"><i>55</i>&nbsp;                toolCards.add(pennelloPerEglomise);</b>
+<b class="fc"><i>56</i>&nbsp;                break;</b>
+<i>57</i>&nbsp;            case 3:
+<b class="fc"><i>58</i>&nbsp;                AlesatorePerLaminaDiRame alesatorePerLaminaDiRame= new AlesatorePerLaminaDiRame();</b>
+<b class="fc"><i>59</i>&nbsp;                alesatorePerLaminaDiRame.setName(&quot;Alesatore per lamina di rame&quot;);</b>
+<b class="fc"><i>60</i>&nbsp;                alesatorePerLaminaDiRame.setDescription(&quot;Muovi un qualsiasi dado nella tua vetrata ignorando le restrizioni di valore. Devi rispettare tutte le altre restrizioni di piazzamento.&quot;);</b>
+<b class="fc"><i>61</i>&nbsp;                toolCards.add(alesatorePerLaminaDiRame);</b>
+<b class="fc"><i>62</i>&nbsp;                break;</b>
+<i>63</i>&nbsp;            case 4:
+<b class="fc"><i>64</i>&nbsp;                Lathekin lathekin= new Lathekin();</b>
+<b class="fc"><i>65</i>&nbsp;                lathekin.setName(&quot;Lathekin&quot;);</b>
+<b class="fc"><i>66</i>&nbsp;                lathekin.setDescription(&quot;Muovi esattamente due dadi, rispettando tutte le restrizioni di piazzamento.&quot;);</b>
+<b class="fc"><i>67</i>&nbsp;                toolCards.add(lathekin);</b>
+<b class="fc"><i>68</i>&nbsp;                break;</b>
+<i>69</i>&nbsp;            case 5:
+<b class="fc"><i>70</i>&nbsp;                TaglierinaCircolare taglierinaCircolare=new TaglierinaCircolare();</b>
+<b class="fc"><i>71</i>&nbsp;                taglierinaCircolare.setName(&quot;Taglierina circolare&quot;);</b>
+<b class="fc"><i>72</i>&nbsp;                taglierinaCircolare.setDescription(&quot;Dopo aver scelto un dado, scambia quel dado con un dado sul Tracciato dei Round.&quot;);</b>
+<b class="fc"><i>73</i>&nbsp;                toolCards.add(taglierinaCircolare);</b>
+<b class="fc"><i>74</i>&nbsp;                break;</b>
+<i>75</i>&nbsp;            case 6:
+<b class="fc"><i>76</i>&nbsp;                PennelloPerPastaSalda pennelloPerPastaSalda= new PennelloPerPastaSalda();</b>
+<b class="fc"><i>77</i>&nbsp;                pennelloPerPastaSalda.setName(&quot;Pennello per Pasta Salda&quot;);</b>
+<b class="fc"><i>78</i>&nbsp;                pennelloPerPastaSalda.setDescription(&quot;Dopo aver scelto un dado, tira nuovamente quel dado. Se non puoi piazzarlo, riponilo nella Riserva.&quot;);</b>
+<b class="fc"><i>79</i>&nbsp;                toolCards.add(pennelloPerPastaSalda);</b>
+<b class="fc"><i>80</i>&nbsp;                break;</b>
+<i>81</i>&nbsp;            case 7:
+<b class="fc"><i>82</i>&nbsp;                Martelletto martelletto= new Martelletto();</b>
+<b class="fc"><i>83</i>&nbsp;                martelletto.setName(&quot;Martelletto&quot;);</b>
+<b class="fc"><i>84</i>&nbsp;                martelletto.setDescription(&quot;Tira nuovamente tutti i dadi della Riserva. Questa carta puo? essera usata solo durante il tuo secondo turno, prima di scegliere il secondo dado.&quot;);</b>
+<b class="fc"><i>85</i>&nbsp;                toolCards.add(martelletto);</b>
+<b class="fc"><i>86</i>&nbsp;                break;</b>
+<i>87</i>&nbsp;            case 8:
+<b class="fc"><i>88</i>&nbsp;                TenagliaARotelle tenagliaARotelle= new TenagliaARotelle();</b>
+<b class="fc"><i>89</i>&nbsp;                tenagliaARotelle.setName(&quot;Tenaglia a Rotelle&quot;);</b>
+<b class="fc"><i>90</i>&nbsp;                tenagliaARotelle.setDescription(&quot;Dopo il tuo primo turno scegli immediatamente un altro dado. Salta il tuo secondo turno in questo round.&quot;);</b>
+<b class="fc"><i>91</i>&nbsp;                toolCards.add(tenagliaARotelle);</b>
+<b class="fc"><i>92</i>&nbsp;                break;</b>
+<i>93</i>&nbsp;            case 9:
+<b class="fc"><i>94</i>&nbsp;                RigaInSughero rigaInSughero= new RigaInSughero();</b>
+<b class="fc"><i>95</i>&nbsp;                rigaInSughero.setName(&quot;Riga in Sughero&quot;);</b>
+<b class="fc"><i>96</i>&nbsp;                rigaInSughero.setDescription(&quot;Dopo aver scelto un dado, piazzalo in una casella che non sia adiacente a un altro dado. Devi rispettare tutte le restrizioni di piazzamento.&quot;);</b>
+<b class="fc"><i>97</i>&nbsp;                toolCards.add(rigaInSughero);</b>
+<b class="fc"><i>98</i>&nbsp;                break;</b>
+<i>99</i>&nbsp;            case 10:
+<b class="fc"><i>100</i>&nbsp;                TamponeDiamantato tamponeDiamantato= new TamponeDiamantato();</b>
+<b class="fc"><i>101</i>&nbsp;                tamponeDiamantato.setName(&quot;Tampone Diamantato&quot;);</b>
+<b class="fc"><i>102</i>&nbsp;                tamponeDiamantato.setDescription(&quot;Dopo aver scelto un dado, giralo sulla faccia opposta (6 diventa 1, 5 diventa 2, 4 diventa 3 ecc.).&quot;);</b>
+<b class="fc"><i>103</i>&nbsp;                toolCards.add(tamponeDiamantato);</b>
+<b class="fc"><i>104</i>&nbsp;                break;</b>
+<i>105</i>&nbsp;            case 11:
+<b class="fc"><i>106</i>&nbsp;                DiluentePerPastaSalda diluentePerPastaSalda= new DiluentePerPastaSalda();</b>
+<b class="fc"><i>107</i>&nbsp;                diluentePerPastaSalda.setName(&quot;Diluente per Pasta Salda&quot;);</b>
+<b class="fc"><i>108</i>&nbsp;                diluentePerPastaSalda.setDescription(&quot;Dopo aver scelto un dado, riponilo nel Sacchetto, poi pescane uno dal Sacchetto. Scegli il valore del nuovo dado e piazzalo, rispettando tutte le restrizioni di piazzamento.&quot;);</b>
+<b class="fc"><i>109</i>&nbsp;                toolCards.add(diluentePerPastaSalda);</b>
+<b class="fc"><i>110</i>&nbsp;                break;</b>
+<i>111</i>&nbsp;            case 12:
+<b class="fc"><i>112</i>&nbsp;                TaglierinaManuale taglierinaManuale= new TaglierinaManuale();</b>
+<b class="fc"><i>113</i>&nbsp;                taglierinaManuale.setName(&quot;Taglierina Manuale&quot;);</b>
+<b class="fc"><i>114</i>&nbsp;                taglierinaManuale.setDescription(&quot;Muovi fino a due dadi dello stesso colore di un solo dado sul Tracciato dei Round. Devi rispettare tutte le restrizioni di piazzamento.&quot;);</b>
+<b class="fc"><i>115</i>&nbsp;                toolCards.add(taglierinaManuale);</b>
+<i>116</i>&nbsp;                break;
+<i>117</i>&nbsp;        }
+<i>118</i>&nbsp;
+<b class="fc"><i>119</i>&nbsp;    }</b>
+<i>120</i>&nbsp;
+<i>121</i>&nbsp;
+<i>122</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-07-04 21:00</div>
+</div>
+</body>
+</html>

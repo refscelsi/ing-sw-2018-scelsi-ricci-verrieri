@@ -1,0 +1,455 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ChooseSchemeForm</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ing.sw.ui.gui</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ChooseSchemeForm (it.polimi.ing.sw.ui.gui)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ChooseSchemeForm</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 157)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">ChooseSchemeForm$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">ChooseSchemeForm$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">ChooseSchemeForm$3</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">ChooseSchemeForm$4</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 19)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 177)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ing.sw.ui.gui;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ing.sw.client.View;
+<i>4</i>&nbsp;import it.polimi.ing.sw.model.Match;
+<i>5</i>&nbsp;import it.polimi.ing.sw.model.Scheme;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import java.awt.*;
+<i>8</i>&nbsp;import java.rmi.RemoteException;
+<i>9</i>&nbsp;import java.util.ArrayList;
+<i>10</i>&nbsp;import java.util.List;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;import static it.polimi.ing.sw.util.Constants.DEFAULT_TITLE;
+<i>13</i>&nbsp;import static it.polimi.ing.sw.util.Constants.SAGRADA_ICO;
+<i>14</i>&nbsp;
+<b class="nc"><i>15</i>&nbsp;public class ChooseSchemeForm extends javax.swing.JFrame {</b>
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;	private List&lt;Scheme&gt; schemeList;
+<i>18</i>&nbsp;	private VetrataPanel vetrataPanelA;
+<i>19</i>&nbsp;	private VetrataPanel vetrataPanelB;
+<i>20</i>&nbsp;	private VetrataPanel vetrataPanelC;
+<i>21</i>&nbsp;	private VetrataPanel vetrataPanelD;
+<i>22</i>&nbsp;	private View controller;
+<i>23</i>&nbsp;
+<b class="nc"><i>24</i>&nbsp;	public ChooseSchemeForm( List&lt;Scheme&gt; schemeList, View controller ) {</b>
+<b class="nc"><i>25</i>&nbsp;		this.schemeList = schemeList;</b>
+<b class="nc"><i>26</i>&nbsp;		this.controller=controller;</b>
+<i>27</i>&nbsp;
+<b class="nc"><i>28</i>&nbsp;		initComponents();</b>
+<b class="nc"><i>29</i>&nbsp;		setLocationRelativeTo( null );</b>
+<b class="nc"><i>30</i>&nbsp;		setIcons();</b>
+<b class="nc"><i>31</i>&nbsp;		setTexts();</b>
+<i>32</i>&nbsp;
+<b class="nc"><i>33</i>&nbsp;		setVetrataPanel();</b>
+<i>34</i>&nbsp;	}
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;	private void setVetrataPanel() {
+<b class="nc"><i>37</i>&nbsp;		vetrataPanelA = new VetrataPanel( 1, null, 203, 287 );</b>
+<b class="nc"><i>38</i>&nbsp;		vetrataPanelA.fillScheme( schemeList.get( 0 ) );</b>
+<b class="nc"><i>39</i>&nbsp;		schemeCardPanel1.add( vetrataPanelA );</b>
+<b class="nc"><i>40</i>&nbsp;		vetrataPanelA.setBounds( 13, 49, 203, 287 );</b>
+<i>41</i>&nbsp;
+<b class="nc"><i>42</i>&nbsp;		vetrataPanelB = new VetrataPanel( 2, null, 203, 287 );</b>
+<b class="nc"><i>43</i>&nbsp;		vetrataPanelB.fillScheme( schemeList.get( 1 ) );</b>
+<b class="nc"><i>44</i>&nbsp;		schemeCardPanel1.add( vetrataPanelB );</b>
+<b class="nc"><i>45</i>&nbsp;		vetrataPanelB.setBounds( 228, 49, 203, 287 );</b>
+<i>46</i>&nbsp;
+<b class="nc"><i>47</i>&nbsp;		vetrataPanelC = new VetrataPanel( 3, null, 203, 287 );</b>
+<b class="nc"><i>48</i>&nbsp;		vetrataPanelC.fillScheme( schemeList.get( 2 ) );</b>
+<b class="nc"><i>49</i>&nbsp;		schemeCardPanel2.add( vetrataPanelC );</b>
+<b class="nc"><i>50</i>&nbsp;		vetrataPanelC.setBounds( 13, 49, 203, 287 );</b>
+<i>51</i>&nbsp;
+<b class="nc"><i>52</i>&nbsp;		vetrataPanelD = new VetrataPanel( 4, null, 203, 287 );</b>
+<b class="nc"><i>53</i>&nbsp;		vetrataPanelD.fillScheme( schemeList.get( 3 ) );</b>
+<b class="nc"><i>54</i>&nbsp;		schemeCardPanel2.add( vetrataPanelD );</b>
+<b class="nc"><i>55</i>&nbsp;		vetrataPanelD.setBounds( 228, 49, 203, 287 );</b>
+<i>56</i>&nbsp;	}
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;	private void setTexts() {
+<b class="nc"><i>59</i>&nbsp;		buttonA.setText( &quot;Select Scheme: &quot; + schemeList.get( 0 ).getId() );</b>
+<b class="nc"><i>60</i>&nbsp;		buttonB.setText( &quot;Select Scheme: &quot; + schemeList.get( 1 ).getId() );</b>
+<b class="nc"><i>61</i>&nbsp;		buttonC.setText( &quot;Select Scheme: &quot; + schemeList.get( 2 ).getId() );</b>
+<b class="nc"><i>62</i>&nbsp;		buttonD.setText( &quot;Select Scheme: &quot; + schemeList.get( 3 ).getId() );</b>
+<i>63</i>&nbsp;
+<b class="nc"><i>64</i>&nbsp;		nameSchemeLabel1.setText( String.valueOf( &quot;ID: &quot; + schemeList.get( 0 ).getId() ) );</b>
+<b class="nc"><i>65</i>&nbsp;		nameSchemeLabel2.setText( String.valueOf( &quot;ID: &quot; + schemeList.get( 1 ).getId() ) );</b>
+<b class="nc"><i>66</i>&nbsp;		nameSchemeLabel3.setText( String.valueOf( &quot;ID: &quot; + schemeList.get( 2 ).getId() ) );</b>
+<b class="nc"><i>67</i>&nbsp;		nameSchemeLabel4.setText( String.valueOf( &quot;ID: &quot; + schemeList.get( 3 ).getId() ) );</b>
+<i>68</i>&nbsp;
+<b class="nc"><i>69</i>&nbsp;		diffSchemeLabel1.setText( String.valueOf( &quot;Diff: &quot; + schemeList.get( 0 ).getDifficulty() ) );</b>
+<b class="nc"><i>70</i>&nbsp;		diffSchemeLabel2.setText( String.valueOf( &quot;Diff: &quot; + schemeList.get( 1 ).getDifficulty() ) );</b>
+<b class="nc"><i>71</i>&nbsp;		diffSchemeLabel3.setText( String.valueOf( &quot;Diff: &quot; + schemeList.get( 2 ).getDifficulty() ) );</b>
+<b class="nc"><i>72</i>&nbsp;		diffSchemeLabel4.setText( String.valueOf( &quot;Diff: &quot; + schemeList.get( 3 ).getDifficulty() ) );</b>
+<i>73</i>&nbsp;	}
+<i>74</i>&nbsp;
+<i>75</i>&nbsp;	@SuppressWarnings ( &quot;unchecked&quot; )
+<i>76</i>&nbsp;	// &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Generated Code&quot;&gt;//GEN-BEGIN:initComponents
+<i>77</i>&nbsp;	private void initComponents() {
+<i>78</i>&nbsp;
+<b class="nc"><i>79</i>&nbsp;		schemeCardPanel1 = new javax.swing.JPanel();</b>
+<b class="nc"><i>80</i>&nbsp;		nameSchemeLabel1 = new javax.swing.JLabel();</b>
+<b class="nc"><i>81</i>&nbsp;		diffSchemeLabel1 = new javax.swing.JLabel();</b>
+<b class="nc"><i>82</i>&nbsp;		nameSchemeLabel2 = new javax.swing.JLabel();</b>
+<b class="nc"><i>83</i>&nbsp;		diffSchemeLabel2 = new javax.swing.JLabel();</b>
+<b class="nc"><i>84</i>&nbsp;		nameSchemeCardLabel1 = new javax.swing.JLabel();</b>
+<b class="nc"><i>85</i>&nbsp;		buttonA = new javax.swing.JButton();</b>
+<b class="nc"><i>86</i>&nbsp;		buttonB = new javax.swing.JButton();</b>
+<b class="nc"><i>87</i>&nbsp;		schemeCardPanel2 = new javax.swing.JPanel();</b>
+<b class="nc"><i>88</i>&nbsp;		nameSchemeLabel3 = new javax.swing.JLabel();</b>
+<b class="nc"><i>89</i>&nbsp;		diffSchemeLabel3 = new javax.swing.JLabel();</b>
+<b class="nc"><i>90</i>&nbsp;		nameSchemeLabel4 = new javax.swing.JLabel();</b>
+<b class="nc"><i>91</i>&nbsp;		diffSchemeLabel4 = new javax.swing.JLabel();</b>
+<b class="nc"><i>92</i>&nbsp;		nameSchemeCardLabel2 = new javax.swing.JLabel();</b>
+<b class="nc"><i>93</i>&nbsp;		buttonC = new javax.swing.JButton();</b>
+<b class="nc"><i>94</i>&nbsp;		buttonD = new javax.swing.JButton();</b>
+<i>95</i>&nbsp;
+<b class="nc"><i>96</i>&nbsp;		setDefaultCloseOperation( javax.swing.WindowConstants.EXIT_ON_CLOSE );</b>
+<i>97</i>&nbsp;
+<b class="nc"><i>98</i>&nbsp;		schemeCardPanel1.setBackground( new java.awt.Color( 204, 204, 204 ) );</b>
+<b class="nc"><i>99</i>&nbsp;		schemeCardPanel1.setBorder( javax.swing.BorderFactory.createLineBorder( new java.awt.Color( 0, 0, 0 ) ) );</b>
+<b class="nc"><i>100</i>&nbsp;		schemeCardPanel1.setLayout( null );</b>
+<i>101</i>&nbsp;
+<b class="nc"><i>102</i>&nbsp;		nameSchemeLabel1.setFont( new java.awt.Font( &quot;Eras Demi ITC&quot;, 1, 12 ) ); // NOI18N</b>
+<b class="nc"><i>103</i>&nbsp;		nameSchemeLabel1.setForeground( new java.awt.Color( 51, 51, 51 ) );</b>
+<b class="nc"><i>104</i>&nbsp;		nameSchemeLabel1.setText( &quot;nameSchemeA&quot; );</b>
+<b class="nc"><i>105</i>&nbsp;		schemeCardPanel1.add( nameSchemeLabel1 );</b>
+<b class="nc"><i>106</i>&nbsp;		nameSchemeLabel1.setBounds( 13, 29, 96, 14 );</b>
+<i>107</i>&nbsp;
+<b class="nc"><i>108</i>&nbsp;		diffSchemeLabel1.setFont( new java.awt.Font( &quot;Eras Demi ITC&quot;, 1, 12 ) ); // NOI18N</b>
+<b class="nc"><i>109</i>&nbsp;		diffSchemeLabel1.setForeground( new java.awt.Color( 51, 51, 51 ) );</b>
+<b class="nc"><i>110</i>&nbsp;		diffSchemeLabel1.setHorizontalAlignment( javax.swing.SwingConstants.RIGHT );</b>
+<b class="nc"><i>111</i>&nbsp;		diffSchemeLabel1.setText( &quot;diff&quot; );</b>
+<b class="nc"><i>112</i>&nbsp;		schemeCardPanel1.add( diffSchemeLabel1 );</b>
+<b class="nc"><i>113</i>&nbsp;		diffSchemeLabel1.setBounds( 146, 29, 70, 14 );</b>
+<i>114</i>&nbsp;
+<b class="nc"><i>115</i>&nbsp;		nameSchemeLabel2.setFont( new java.awt.Font( &quot;Eras Demi ITC&quot;, 1, 12 ) ); // NOI18N</b>
+<b class="nc"><i>116</i>&nbsp;		nameSchemeLabel2.setForeground( new java.awt.Color( 51, 51, 51 ) );</b>
+<b class="nc"><i>117</i>&nbsp;		nameSchemeLabel2.setText( &quot;nameScemeB&quot; );</b>
+<b class="nc"><i>118</i>&nbsp;		schemeCardPanel1.add( nameSchemeLabel2 );</b>
+<b class="nc"><i>119</i>&nbsp;		nameSchemeLabel2.setBounds( 230, 30, 96, 14 );</b>
+<i>120</i>&nbsp;
+<b class="nc"><i>121</i>&nbsp;		diffSchemeLabel2.setFont( new java.awt.Font( &quot;Eras Demi ITC&quot;, 1, 12 ) ); // NOI18N</b>
+<b class="nc"><i>122</i>&nbsp;		diffSchemeLabel2.setForeground( new java.awt.Color( 51, 51, 51 ) );</b>
+<b class="nc"><i>123</i>&nbsp;		diffSchemeLabel2.setHorizontalAlignment( javax.swing.SwingConstants.RIGHT );</b>
+<b class="nc"><i>124</i>&nbsp;		diffSchemeLabel2.setText( &quot;diff&quot; );</b>
+<b class="nc"><i>125</i>&nbsp;		schemeCardPanel1.add( diffSchemeLabel2 );</b>
+<b class="nc"><i>126</i>&nbsp;		diffSchemeLabel2.setBounds( 361, 29, 70, 14 );</b>
+<i>127</i>&nbsp;
+<b class="nc"><i>128</i>&nbsp;		nameSchemeCardLabel1.setFont( new java.awt.Font( &quot;Eras Demi ITC&quot;, 1, 12 ) ); // NOI18N</b>
+<b class="nc"><i>129</i>&nbsp;		nameSchemeCardLabel1.setForeground( new java.awt.Color( 51, 51, 51 ) );</b>
+<b class="nc"><i>130</i>&nbsp;		nameSchemeCardLabel1.setHorizontalAlignment( javax.swing.SwingConstants.CENTER );</b>
+<b class="nc"><i>131</i>&nbsp;		nameSchemeCardLabel1.setText( &quot;Scheme Card A&quot; );</b>
+<b class="nc"><i>132</i>&nbsp;		schemeCardPanel1.add( nameSchemeCardLabel1 );</b>
+<b class="nc"><i>133</i>&nbsp;		nameSchemeCardLabel1.setBounds( 147, 13, 149, 14 );</b>
+<i>134</i>&nbsp;
+<b class="nc"><i>135</i>&nbsp;		buttonA.setFont( new java.awt.Font( &quot;Eras Demi ITC&quot;, 2, 12 ) ); // NOI18N</b>
+<b class="nc"><i>136</i>&nbsp;		buttonA.setText( &quot;button A&quot; );</b>
+<b class="nc"><i>137</i>&nbsp;		buttonA.addActionListener( new java.awt.event.ActionListener() {</b>
+<i>138</i>&nbsp;			public void actionPerformed( java.awt.event.ActionEvent evt ) {
+<i>139</i>&nbsp;				try {
+<b class="nc"><i>140</i>&nbsp;					buttonAActionPerformed( evt );</b>
+<b class="nc"><i>141</i>&nbsp;				} catch (RemoteException e) {</b>
+<b class="nc"><i>142</i>&nbsp;					e.printStackTrace();</b>
+<b class="nc"><i>143</i>&nbsp;				}</b>
+<i>144</i>&nbsp;			}
+<i>145</i>&nbsp;		} );
+<b class="nc"><i>146</i>&nbsp;		schemeCardPanel1.add( buttonA );</b>
+<b class="nc"><i>147</i>&nbsp;		buttonA.setBounds( 13, 342, 203, 24 );</b>
+<i>148</i>&nbsp;
+<b class="nc"><i>149</i>&nbsp;		buttonB.setFont( new java.awt.Font( &quot;Eras Demi ITC&quot;, 2, 12 ) ); // NOI18N</b>
+<b class="nc"><i>150</i>&nbsp;		buttonB.setText( &quot;button B&quot; );</b>
+<b class="nc"><i>151</i>&nbsp;		buttonB.addActionListener( new java.awt.event.ActionListener() {</b>
+<i>152</i>&nbsp;			public void actionPerformed( java.awt.event.ActionEvent evt ) {
+<i>153</i>&nbsp;				try {
+<b class="nc"><i>154</i>&nbsp;					buttonBActionPerformed( evt );</b>
+<b class="nc"><i>155</i>&nbsp;				} catch (RemoteException e) {</b>
+<b class="nc"><i>156</i>&nbsp;					e.printStackTrace();</b>
+<b class="nc"><i>157</i>&nbsp;				}</b>
+<i>158</i>&nbsp;			}
+<i>159</i>&nbsp;		} );
+<b class="nc"><i>160</i>&nbsp;		schemeCardPanel1.add( buttonB );</b>
+<b class="nc"><i>161</i>&nbsp;		buttonB.setBounds( 228, 342, 203, 24 );</b>
+<i>162</i>&nbsp;
+<b class="nc"><i>163</i>&nbsp;		schemeCardPanel2.setBackground( new java.awt.Color( 204, 204, 204 ) );</b>
+<b class="nc"><i>164</i>&nbsp;		schemeCardPanel2.setBorder( javax.swing.BorderFactory.createLineBorder( new java.awt.Color( 0, 0, 0 ) ) );</b>
+<b class="nc"><i>165</i>&nbsp;		schemeCardPanel2.setLayout( null );</b>
+<i>166</i>&nbsp;
+<b class="nc"><i>167</i>&nbsp;		nameSchemeLabel3.setFont( new java.awt.Font( &quot;Eras Demi ITC&quot;, 1, 12 ) ); // NOI18N</b>
+<b class="nc"><i>168</i>&nbsp;		nameSchemeLabel3.setForeground( new java.awt.Color( 51, 51, 51 ) );</b>
+<b class="nc"><i>169</i>&nbsp;		nameSchemeLabel3.setText( &quot;nameSchemeC&quot; );</b>
+<b class="nc"><i>170</i>&nbsp;		schemeCardPanel2.add( nameSchemeLabel3 );</b>
+<b class="nc"><i>171</i>&nbsp;		nameSchemeLabel3.setBounds( 13, 29, 96, 14 );</b>
+<i>172</i>&nbsp;
+<b class="nc"><i>173</i>&nbsp;		diffSchemeLabel3.setFont( new java.awt.Font( &quot;Eras Demi ITC&quot;, 1, 12 ) ); // NOI18N</b>
+<b class="nc"><i>174</i>&nbsp;		diffSchemeLabel3.setForeground( new java.awt.Color( 51, 51, 51 ) );</b>
+<b class="nc"><i>175</i>&nbsp;		diffSchemeLabel3.setHorizontalAlignment( javax.swing.SwingConstants.RIGHT );</b>
+<b class="nc"><i>176</i>&nbsp;		diffSchemeLabel3.setText( &quot;diff&quot; );</b>
+<b class="nc"><i>177</i>&nbsp;		schemeCardPanel2.add( diffSchemeLabel3 );</b>
+<b class="nc"><i>178</i>&nbsp;		diffSchemeLabel3.setBounds( 143, 30, 70, 14 );</b>
+<i>179</i>&nbsp;
+<b class="nc"><i>180</i>&nbsp;		nameSchemeLabel4.setFont( new java.awt.Font( &quot;Eras Demi ITC&quot;, 1, 12 ) ); // NOI18N</b>
+<b class="nc"><i>181</i>&nbsp;		nameSchemeLabel4.setForeground( new java.awt.Color( 51, 51, 51 ) );</b>
+<b class="nc"><i>182</i>&nbsp;		nameSchemeLabel4.setText( &quot;nameSchemeD&quot; );</b>
+<b class="nc"><i>183</i>&nbsp;		schemeCardPanel2.add( nameSchemeLabel4 );</b>
+<b class="nc"><i>184</i>&nbsp;		nameSchemeLabel4.setBounds( 228, 29, 96, 14 );</b>
+<i>185</i>&nbsp;
+<b class="nc"><i>186</i>&nbsp;		diffSchemeLabel4.setFont( new java.awt.Font( &quot;Eras Demi ITC&quot;, 1, 12 ) ); // NOI18N</b>
+<b class="nc"><i>187</i>&nbsp;		diffSchemeLabel4.setForeground( new java.awt.Color( 51, 51, 51 ) );</b>
+<b class="nc"><i>188</i>&nbsp;		diffSchemeLabel4.setHorizontalAlignment( javax.swing.SwingConstants.RIGHT );</b>
+<b class="nc"><i>189</i>&nbsp;		diffSchemeLabel4.setText( &quot;diff&quot; );</b>
+<b class="nc"><i>190</i>&nbsp;		schemeCardPanel2.add( diffSchemeLabel4 );</b>
+<b class="nc"><i>191</i>&nbsp;		diffSchemeLabel4.setBounds( 361, 29, 70, 14 );</b>
+<i>192</i>&nbsp;
+<b class="nc"><i>193</i>&nbsp;		nameSchemeCardLabel2.setFont( new java.awt.Font( &quot;Eras Demi ITC&quot;, 1, 12 ) ); // NOI18N</b>
+<b class="nc"><i>194</i>&nbsp;		nameSchemeCardLabel2.setForeground( new java.awt.Color( 51, 51, 51 ) );</b>
+<b class="nc"><i>195</i>&nbsp;		nameSchemeCardLabel2.setHorizontalAlignment( javax.swing.SwingConstants.CENTER );</b>
+<b class="nc"><i>196</i>&nbsp;		nameSchemeCardLabel2.setText( &quot;Scheme Card B&quot; );</b>
+<b class="nc"><i>197</i>&nbsp;		schemeCardPanel2.add( nameSchemeCardLabel2 );</b>
+<b class="nc"><i>198</i>&nbsp;		nameSchemeCardLabel2.setBounds( 140, 10, 149, 14 );</b>
+<i>199</i>&nbsp;
+<b class="nc"><i>200</i>&nbsp;		buttonC.setFont( new java.awt.Font( &quot;Eras Demi ITC&quot;, 2, 12 ) ); // NOI18N</b>
+<b class="nc"><i>201</i>&nbsp;		buttonC.setText( &quot;button C&quot; );</b>
+<b class="nc"><i>202</i>&nbsp;		buttonC.addActionListener( new java.awt.event.ActionListener() {</b>
+<i>203</i>&nbsp;			public void actionPerformed( java.awt.event.ActionEvent evt ) {
+<i>204</i>&nbsp;				try {
+<b class="nc"><i>205</i>&nbsp;					buttonCActionPerformed( evt );</b>
+<b class="nc"><i>206</i>&nbsp;				} catch (RemoteException e) {</b>
+<b class="nc"><i>207</i>&nbsp;					e.printStackTrace();</b>
+<b class="nc"><i>208</i>&nbsp;				}</b>
+<i>209</i>&nbsp;			}
+<i>210</i>&nbsp;		} );
+<b class="nc"><i>211</i>&nbsp;		schemeCardPanel2.add( buttonC );</b>
+<b class="nc"><i>212</i>&nbsp;		buttonC.setBounds( 13, 342, 203, 24 );</b>
+<i>213</i>&nbsp;
+<b class="nc"><i>214</i>&nbsp;		buttonD.setFont( new java.awt.Font( &quot;Eras Demi ITC&quot;, 2, 12 ) ); // NOI18N</b>
+<b class="nc"><i>215</i>&nbsp;		buttonD.setText( &quot;button D&quot; );</b>
+<b class="nc"><i>216</i>&nbsp;		buttonD.addActionListener( new java.awt.event.ActionListener() {</b>
+<i>217</i>&nbsp;			public void actionPerformed( java.awt.event.ActionEvent evt ) {
+<i>218</i>&nbsp;				try {
+<b class="nc"><i>219</i>&nbsp;					buttonDActionPerformed( evt );</b>
+<b class="nc"><i>220</i>&nbsp;				} catch (RemoteException e) {</b>
+<b class="nc"><i>221</i>&nbsp;					e.printStackTrace();</b>
+<b class="nc"><i>222</i>&nbsp;				}</b>
+<i>223</i>&nbsp;			}
+<i>224</i>&nbsp;		} );
+<b class="nc"><i>225</i>&nbsp;		schemeCardPanel2.add( buttonD );</b>
+<b class="nc"><i>226</i>&nbsp;		buttonD.setBounds( 228, 342, 203, 24 );</b>
+<i>227</i>&nbsp;
+<b class="nc"><i>228</i>&nbsp;		javax.swing.GroupLayout layout = new javax.swing.GroupLayout( getContentPane() );</b>
+<b class="nc"><i>229</i>&nbsp;		getContentPane().setLayout( layout );</b>
+<b class="nc"><i>230</i>&nbsp;		layout.setHorizontalGroup(</b>
+<b class="nc"><i>231</i>&nbsp;				layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING )</b>
+<b class="nc"><i>232</i>&nbsp;						.addGroup( javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()</b>
+<b class="nc"><i>233</i>&nbsp;								.addComponent( schemeCardPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE )</b>
+<b class="nc"><i>234</i>&nbsp;								.addPreferredGap( javax.swing.LayoutStyle.ComponentPlacement.RELATED )</b>
+<b class="nc"><i>235</i>&nbsp;								.addComponent( schemeCardPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 447, javax.swing.GroupLayout.PREFERRED_SIZE ) )</b>
+<i>236</i>&nbsp;		);
+<b class="nc"><i>237</i>&nbsp;		layout.setVerticalGroup(</b>
+<b class="nc"><i>238</i>&nbsp;				layout.createParallelGroup( javax.swing.GroupLayout.Alignment.LEADING )</b>
+<b class="nc"><i>239</i>&nbsp;						.addComponent( schemeCardPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE )</b>
+<b class="nc"><i>240</i>&nbsp;						.addComponent( schemeCardPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE )</b>
+<i>241</i>&nbsp;		);
+<i>242</i>&nbsp;
+<b class="nc"><i>243</i>&nbsp;		pack();</b>
+<i>244</i>&nbsp;	}// &lt;/editor-fold&gt;//GEN-END:initComponents
+<i>245</i>&nbsp;
+<i>246</i>&nbsp;	private void buttonBActionPerformed( java.awt.event.ActionEvent evt ) throws RemoteException {//GEN-FIRST:event_buttonBActionPerformed
+<b class="nc"><i>247</i>&nbsp;		schemeSelected(schemeList.get( 1 ));</b>
+<i>248</i>&nbsp;	}//GEN-LAST:event_buttonBActionPerformed
+<i>249</i>&nbsp;
+<i>250</i>&nbsp;	private void buttonDActionPerformed( java.awt.event.ActionEvent evt ) throws RemoteException {//GEN-FIRST:event_buttonDActionPerformed
+<b class="nc"><i>251</i>&nbsp;		schemeSelected(schemeList.get( 3 ));</b>
+<i>252</i>&nbsp;	}//GEN-LAST:event_buttonDActionPerformed
+<i>253</i>&nbsp;
+<i>254</i>&nbsp;	private void buttonCActionPerformed( java.awt.event.ActionEvent evt ) throws RemoteException {//GEN-FIRST:event_buttonCActionPerformed
+<b class="nc"><i>255</i>&nbsp;		schemeSelected(schemeList.get( 2 ));</b>
+<i>256</i>&nbsp;	}//GEN-LAST:event_buttonCActionPerformed
+<i>257</i>&nbsp;
+<i>258</i>&nbsp;	private void buttonAActionPerformed( java.awt.event.ActionEvent evt ) throws RemoteException {//GEN-FIRST:event_buttonAActionPerformed
+<b class="nc"><i>259</i>&nbsp;		schemeSelected(schemeList.get( 0 ));</b>
+<i>260</i>&nbsp;	}//GEN-LAST:event_buttonAActionPerformed
+<i>261</i>&nbsp;
+<i>262</i>&nbsp;	private void schemeSelected(Scheme scheme) throws RemoteException {
+<b class="nc"><i>263</i>&nbsp;		controller.setChosenScheme( scheme.getId() );   //se per esempio qui c&#39;è un errore, se lo gestisce il PlayerController*/</b>
+<b class="nc"><i>264</i>&nbsp;        setVisible(false);</b>
+<i>265</i>&nbsp;	}
+<i>266</i>&nbsp;	private void setIcons() {
+<b class="nc"><i>267</i>&nbsp;		setIconImage( Toolkit.getDefaultToolkit().getImage( getClass().getResource( SAGRADA_ICO ) ) );</b>
+<b class="nc"><i>268</i>&nbsp;		this.setTitle( DEFAULT_TITLE );</b>
+<i>269</i>&nbsp;	}
+<i>270</i>&nbsp;
+<i>271</i>&nbsp;	// Variables declaration - do not modify//GEN-BEGIN:variables
+<i>272</i>&nbsp;	private javax.swing.JButton buttonA;
+<i>273</i>&nbsp;	private javax.swing.JButton buttonB;
+<i>274</i>&nbsp;	private javax.swing.JButton buttonC;
+<i>275</i>&nbsp;	private javax.swing.JButton buttonD;
+<i>276</i>&nbsp;	private javax.swing.JLabel diffSchemeLabel1;
+<i>277</i>&nbsp;	private javax.swing.JLabel diffSchemeLabel2;
+<i>278</i>&nbsp;	private javax.swing.JLabel diffSchemeLabel3;
+<i>279</i>&nbsp;	private javax.swing.JLabel diffSchemeLabel4;
+<i>280</i>&nbsp;	private javax.swing.JLabel nameSchemeCardLabel1;
+<i>281</i>&nbsp;	private javax.swing.JLabel nameSchemeCardLabel2;
+<i>282</i>&nbsp;	private javax.swing.JLabel nameSchemeLabel1;
+<i>283</i>&nbsp;	private javax.swing.JLabel nameSchemeLabel2;
+<i>284</i>&nbsp;	private javax.swing.JLabel nameSchemeLabel3;
+<i>285</i>&nbsp;	private javax.swing.JLabel nameSchemeLabel4;
+<i>286</i>&nbsp;	private javax.swing.JPanel schemeCardPanel1;
+<i>287</i>&nbsp;	private javax.swing.JPanel schemeCardPanel2;
+<i>288</i>&nbsp;	// End of variables declaration//GEN-END:variables
+<i>289</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-07-04 21:00</div>
+</div>
+</body>
+</html>

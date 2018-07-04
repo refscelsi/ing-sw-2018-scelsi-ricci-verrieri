@@ -1,0 +1,168 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ShowDraftPool</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ing.sw.ui.cli</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ShowDraftPool (it.polimi.ing.sw.ui.cli)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ShowDraftPool</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 36)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ing.sw.ui.cli;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ing.sw.model.Color;
+<i>4</i>&nbsp;import it.polimi.ing.sw.model.Dice;
+<i>5</i>&nbsp;import it.polimi.ing.sw.model.DraftPool;
+<i>6</i>&nbsp;import it.polimi.ing.sw.util.ConsoleColors;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;import java.util.ArrayList;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;public class ShowDraftPool {
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;    private DraftPool draftPool;
+<i>13</i>&nbsp;
+<b class="nc"><i>14</i>&nbsp;    public ShowDraftPool(DraftPool draftPool) {</b>
+<b class="nc"><i>15</i>&nbsp;        this.draftPool = draftPool;</b>
+<b class="nc"><i>16</i>&nbsp;        show();</b>
+<i>17</i>&nbsp;    }
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    public void show() {
+<i>20</i>&nbsp;        int j, k, h;
+<b class="nc"><i>21</i>&nbsp;        ArrayList&lt;Dice&gt; draft = draftPool.getDraftPool();</b>
+<i>22</i>&nbsp;
+<b class="nc"><i>23</i>&nbsp;        for (j = 0; j &lt; 5; j++) {</b>
+<i>24</i>&nbsp;            // seleziono la riga della console
+<i>25</i>&nbsp;
+<b class="nc"><i>26</i>&nbsp;            for (k = 0; k &lt; draftPool.getSize(); k++) {</b>
+<i>27</i>&nbsp;                // seleziono il dado
+<i>28</i>&nbsp;
+<b class="nc"><i>29</i>&nbsp;                getBackgroundColor(draft.get(k).getDiceColor());</b>
+<b class="nc"><i>30</i>&nbsp;                for (h = 0; h &lt; 11; h++) {</b>
+<i>31</i>&nbsp;                    // seleziono la singola casella della console
+<i>32</i>&nbsp;
+<b class="nc"><i>33</i>&nbsp;                    if (j == 2 &amp;&amp; h == 5)</b>
+<b class="nc"><i>34</i>&nbsp;                        System.out.print(draft.get(k).getNumFacciaUp());</b>
+<i>35</i>&nbsp;                    else
+<b class="nc"><i>36</i>&nbsp;                        System.out.print(&quot; &quot;);</b>
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;                }
+<b class="nc"><i>39</i>&nbsp;                getBackgroundColor(Color.WHITE);</b>
+<b class="nc"><i>40</i>&nbsp;                System.out.print(&quot;     &quot;);</b>
+<i>41</i>&nbsp;            }
+<i>42</i>&nbsp;
+<b class="nc"><i>43</i>&nbsp;            getBackgroundColor(Color.WHITE);</b>
+<b class="nc"><i>44</i>&nbsp;            System.out.print(&quot;\n&quot;);</b>
+<i>45</i>&nbsp;        }
+<i>46</i>&nbsp;
+<b class="nc"><i>47</i>&nbsp;        System.out.print(&quot;\n&quot;);</b>
+<i>48</i>&nbsp;
+<b class="nc"><i>49</i>&nbsp;        for (k = 0; k &lt; draftPool.getSize(); k++) {</b>
+<i>50</i>&nbsp;            // seleziono la casella del roundtrack
+<i>51</i>&nbsp;
+<b class="nc"><i>52</i>&nbsp;            for (h = 0; h &lt; 11; h++) {</b>
+<i>53</i>&nbsp;                // seleziono la singola casella della console
+<i>54</i>&nbsp;
+<b class="nc"><i>55</i>&nbsp;                if (h == 5)</b>
+<b class="nc"><i>56</i>&nbsp;                    System.out.print(k + 1);</b>
+<i>57</i>&nbsp;                else
+<b class="nc"><i>58</i>&nbsp;                    System.out.print(&quot; &quot;);</b>
+<i>59</i>&nbsp;
+<i>60</i>&nbsp;            }
+<b class="nc"><i>61</i>&nbsp;            System.out.print(&quot;     &quot;);</b>
+<i>62</i>&nbsp;        }
+<i>63</i>&nbsp;
+<b class="nc"><i>64</i>&nbsp;        System.out.print(&quot;     DICE\n&quot;);</b>
+<i>65</i>&nbsp;
+<i>66</i>&nbsp;    }
+<i>67</i>&nbsp;
+<i>68</i>&nbsp;    public void getBackgroundColor(Color color) {
+<b class="nc"><i>69</i>&nbsp;        if (color.equals(Color.RED))</b>
+<b class="nc"><i>70</i>&nbsp;            System.out.print(ConsoleColors.RED_BACKGROUND);</b>
+<b class="nc"><i>71</i>&nbsp;        else if (color.equals(Color.GREEN))</b>
+<b class="nc"><i>72</i>&nbsp;            System.out.print(ConsoleColors.GREEN_BACKGROUND);</b>
+<b class="nc"><i>73</i>&nbsp;        else if (color.equals(Color.YELLOW))</b>
+<b class="nc"><i>74</i>&nbsp;            System.out.print(ConsoleColors.YELLOW_BACKGROUND);</b>
+<b class="nc"><i>75</i>&nbsp;        else if (color.equals(Color.PURPLE))</b>
+<b class="nc"><i>76</i>&nbsp;            System.out.print(ConsoleColors.PURPLE_BACKGROUND);</b>
+<b class="nc"><i>77</i>&nbsp;        else if (color.equals(Color.GREEN))</b>
+<b class="nc"><i>78</i>&nbsp;            System.out.print(ConsoleColors.GREEN_BACKGROUND);</b>
+<b class="nc"><i>79</i>&nbsp;        else if (color.equals(Color.BLUE))</b>
+<b class="nc"><i>80</i>&nbsp;            System.out.print(ConsoleColors.BLUE_BACKGROUND);</b>
+<i>81</i>&nbsp;        else
+<b class="nc"><i>82</i>&nbsp;            System.out.print(ConsoleColors.WHITE_BACKGROUND);</b>
+<i>83</i>&nbsp;    }
+<i>84</i>&nbsp;
+<i>85</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-07-04 21:00</div>
+</div>
+</body>
+</html>

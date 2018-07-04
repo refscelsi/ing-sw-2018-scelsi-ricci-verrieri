@@ -1,0 +1,346 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: PlayerControllerSocket</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ing.sw.controller.network.socket</a> ]
+</div>
+
+<h1>Coverage Summary for Class: PlayerControllerSocket (it.polimi.ing.sw.controller.network.socket)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PlayerControllerSocket</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 15)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 137)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ing.sw.controller.network.socket;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;//classe che riceve i pacchetti da socket e chiama i metodi di PlayerController
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import it.polimi.ing.sw.controller.LoginController;
+<i>6</i>&nbsp;import it.polimi.ing.sw.controller.PlayerController;
+<i>7</i>&nbsp;import it.polimi.ing.sw.controller.RemotePlayer;
+<i>8</i>&nbsp;import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
+<i>9</i>&nbsp;import it.polimi.ing.sw.model.Match;
+<i>10</i>&nbsp;import it.polimi.ing.sw.model.exceptions.NotValidException;
+<i>11</i>&nbsp;import it.polimi.ing.sw.model.exceptions.NotValidNicknameException;
+<i>12</i>&nbsp;import it.polimi.ing.sw.util.Constants;
+<i>13</i>&nbsp;import org.json.simple.JSONObject;
+<i>14</i>&nbsp;import org.json.simple.parser.JSONParser;
+<i>15</i>&nbsp;import org.json.simple.parser.ParseException;
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;import java.io.IOException;
+<i>18</i>&nbsp;import java.io.ObjectInputStream;
+<i>19</i>&nbsp;import java.io.ObjectOutputStream;
+<i>20</i>&nbsp;import java.net.Socket;
+<i>21</i>&nbsp;import java.rmi.RemoteException;
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;import static java.lang.String.format;
+<i>24</i>&nbsp;import static java.lang.String.valueOf;
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;public class PlayerControllerSocket implements RemotePlayer, Runnable {
+<i>27</i>&nbsp;    private ObjectOutputStream out;
+<i>28</i>&nbsp;    private Socket clientSocket;
+<i>29</i>&nbsp;    private PlayerController controller;
+<i>30</i>&nbsp;    private LoginController loginController;
+<b class="nc"><i>31</i>&nbsp;    private JSONParser parser= new JSONParser();</b>
+<i>32</i>&nbsp;    private JSONObject jsonObject;
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;
+<b class="nc"><i>35</i>&nbsp;    public PlayerControllerSocket(Socket clientSocket, LoginController loginController) {</b>
+<i>36</i>&nbsp;        try {
+<b class="nc"><i>37</i>&nbsp;            this.loginController= loginController;</b>
+<b class="nc"><i>38</i>&nbsp;            this.out= new ObjectOutputStream(clientSocket.getOutputStream());</b>
+<b class="nc"><i>39</i>&nbsp;            this.clientSocket = clientSocket;</b>
+<b class="nc"><i>40</i>&nbsp;        } catch (IOException e) {</b>
+<i>41</i>&nbsp;            try {
+<b class="nc"><i>42</i>&nbsp;                controller.stopPlayer();</b>
+<b class="nc"><i>43</i>&nbsp;            } catch ( RemoteException e1 ) {</b>
+<b class="nc"><i>44</i>&nbsp;                e1.printStackTrace();</b>
+<b class="nc"><i>45</i>&nbsp;            }</b>
+<b class="nc"><i>46</i>&nbsp;        }</b>
+<i>47</i>&nbsp;    }
+<i>48</i>&nbsp;
+<i>49</i>&nbsp;    @Override
+<i>50</i>&nbsp;    public void run() {
+<b class="nc"><i>51</i>&nbsp;        int i =0;</b>
+<b class="nc"><i>52</i>&nbsp;        try (ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream())) {</b>
+<i>53</i>&nbsp;            while (true) {
+<b class="nc"><i>54</i>&nbsp;                String input = (String) in.readObject();</b>
+<b class="nc"><i>55</i>&nbsp;                System.out.println(input);</b>
+<i>56</i>&nbsp;                try {
+<b class="nc"><i>57</i>&nbsp;                    jsonObject = (JSONObject) parser.parse(input);</b>
+<b class="nc"><i>58</i>&nbsp;                } catch (ParseException e) {</b>
+<b class="nc"><i>59</i>&nbsp;                    e.printStackTrace();</b>
+<b class="nc"><i>60</i>&nbsp;                }</b>
+<b class="nc"><i>61</i>&nbsp;                String method= (String) jsonObject.get(&quot;method&quot;);</b>
+<b class="nc"><i>62</i>&nbsp;                switch (method) {</b>
+<i>63</i>&nbsp;                    case Constants.CONNECT:
+<b class="nc"><i>64</i>&nbsp;                        this.controller = loginController.connectSocket(this);</b>
+<b class="nc"><i>65</i>&nbsp;                        break;</b>
+<i>66</i>&nbsp;                    case Constants.LOGIN:
+<b class="nc"><i>67</i>&nbsp;                        String nickname = (String ) jsonObject.get(&quot;nickname&quot;);</b>
+<b class="nc"><i>68</i>&nbsp;                        controller.login(nickname);</b>
+<b class="nc"><i>69</i>&nbsp;                        break;</b>
+<i>70</i>&nbsp;                    case Constants.JOINMATCH:
+<b class="nc"><i>71</i>&nbsp;                        controller.joinMatch();</b>
+<b class="nc"><i>72</i>&nbsp;                        break;</b>
+<i>73</i>&nbsp;                    case Constants.CHECKREADY:
+<b class="nc"><i>74</i>&nbsp;                        controller.checkAllReady();</b>
+<b class="nc"><i>75</i>&nbsp;                        break;</b>
+<i>76</i>&nbsp;                    case Constants.SETCHOSENSCHEME:
+<b class="nc"><i>77</i>&nbsp;                        int id= ((Long) jsonObject.get(&quot;id&quot;)).intValue();</b>
+<b class="nc"><i>78</i>&nbsp;                        controller.setChosenScheme(id);</b>
+<b class="nc"><i>79</i>&nbsp;                        break;</b>
+<i>80</i>&nbsp;                    case Constants.ENDTURN:
+<b class="nc"><i>81</i>&nbsp;                        controller.endTurn();</b>
+<b class="nc"><i>82</i>&nbsp;                        break;</b>
+<i>83</i>&nbsp;                    case Constants.USEDICEREQUEST:
+<b class="nc"><i>84</i>&nbsp;                        int indexDiceDraftPool= Integer.valueOf (((Long) jsonObject.get(&quot;indexDice&quot;)).intValue());</b>
+<b class="nc"><i>85</i>&nbsp;                        int row= ((Long) jsonObject.get(&quot;row&quot;)).intValue();</b>
+<b class="nc"><i>86</i>&nbsp;                        int col= ((Long) jsonObject.get(&quot;col&quot;)).intValue();</b>
+<b class="nc"><i>87</i>&nbsp;                        System.out.println(&quot;mando richiesta dado&quot;);</b>
+<b class="nc"><i>88</i>&nbsp;                        controller.sendUseDiceRequest(indexDiceDraftPool,row,col);</b>
+<b class="nc"><i>89</i>&nbsp;                        break;</b>
+<i>90</i>&nbsp;                    case Constants.TOOLCARD:
+<b class="nc"><i>91</i>&nbsp;                        int idCard =Integer.valueOf (((Long) jsonObject.get(&quot;id&quot;)).intValue());</b>
+<b class="nc"><i>92</i>&nbsp;                        int dice= ((Long) jsonObject.get(&quot;dice&quot;)).intValue();</b>
+<b class="nc"><i>93</i>&nbsp;                        int operation=((Long) jsonObject.get(&quot;operation&quot;)).intValue();</b>
+<b class="nc"><i>94</i>&nbsp;                        int sourceRow= ((Long) jsonObject.get(&quot;row&quot;)).intValue();</b>
+<b class="nc"><i>95</i>&nbsp;                        int sourceCol=((Long) jsonObject.get(&quot;col&quot;)).intValue();</b>
+<b class="nc"><i>96</i>&nbsp;                        int destRow=((Long) jsonObject.get(&quot;destRow&quot;)).intValue();</b>
+<b class="nc"><i>97</i>&nbsp;                        int destCol=((Long) jsonObject.get(&quot;destCol&quot;)).intValue();</b>
+<b class="nc"><i>98</i>&nbsp;                        controller.useToolCard(idCard,dice,operation,sourceRow,sourceCol,destRow,destCol);</b>
+<b class="nc"><i>99</i>&nbsp;                        break;</b>
+<i>100</i>&nbsp;                    case Constants.STOPPLAYER:
+<i>101</i>&nbsp;
+<b class="nc"><i>102</i>&nbsp;                     default: throw new IOException();</b>
+<i>103</i>&nbsp;                }
+<b class="nc"><i>104</i>&nbsp;            }</b>
+<b class="nc"><i>105</i>&nbsp;        } catch (ClassNotFoundException e) {</b>
+<b class="nc"><i>106</i>&nbsp;        } catch (IOException e) {</b>
+<b class="nc"><i>107</i>&nbsp;            System.out.println(&quot;presa qui &quot;);</b>
+<b class="nc"><i>108</i>&nbsp;        }</b>
+<i>109</i>&nbsp;
+<i>110</i>&nbsp;    }
+<i>111</i>&nbsp;
+<i>112</i>&nbsp;    @Override
+<i>113</i>&nbsp;    public void onLogin(String nickname) throws RemoteException {
+<b class="nc"><i>114</i>&nbsp;        MatchToSend matchToSend=new MatchToSend(&quot;onLogin&quot;, nickname);</b>
+<i>115</i>&nbsp;        try {
+<b class="nc"><i>116</i>&nbsp;            out.writeObject(matchToSend);</b>
+<b class="nc"><i>117</i>&nbsp;            out.flush();</b>
+<b class="nc"><i>118</i>&nbsp;        } catch (IOException e) {</b>
+<b class="nc"><i>119</i>&nbsp;            controller.stopPlayer();</b>
+<b class="nc"><i>120</i>&nbsp;        }</b>
+<i>121</i>&nbsp;    }
+<i>122</i>&nbsp;
+<i>123</i>&nbsp;
+<i>124</i>&nbsp;    @Override
+<i>125</i>&nbsp;    public void onSchemeToChoose(Match match) throws RemoteException {
+<b class="nc"><i>126</i>&nbsp;        MatchToSend matchToSend=new MatchToSend(Constants.ONSCHEMETOCHOOSE, match);</b>
+<i>127</i>&nbsp;        try {
+<b class="nc"><i>128</i>&nbsp;            out.writeObject(matchToSend);</b>
+<b class="nc"><i>129</i>&nbsp;            out.flush();</b>
+<b class="nc"><i>130</i>&nbsp;        } catch (IOException e) {</b>
+<b class="nc"><i>131</i>&nbsp;            controller.stopPlayer();</b>
+<b class="nc"><i>132</i>&nbsp;        }</b>
+<i>133</i>&nbsp;    }
+<i>134</i>&nbsp;
+<i>135</i>&nbsp;    @Override
+<i>136</i>&nbsp;    public void onSuccess(String message) throws RemoteException {
+<b class="nc"><i>137</i>&nbsp;        MatchToSend matchToSend=new MatchToSend(Constants.ONSUCCES);</b>
+<b class="nc"><i>138</i>&nbsp;        matchToSend.setMessage(message);</b>
+<i>139</i>&nbsp;        try {
+<b class="nc"><i>140</i>&nbsp;            out.writeObject(matchToSend);</b>
+<b class="nc"><i>141</i>&nbsp;            out.flush();</b>
+<b class="nc"><i>142</i>&nbsp;        } catch (IOException e) {</b>
+<b class="nc"><i>143</i>&nbsp;            controller.stopPlayer();</b>
+<i>144</i>&nbsp;
+<b class="nc"><i>145</i>&nbsp;        }</b>
+<i>146</i>&nbsp;    }
+<i>147</i>&nbsp;
+<i>148</i>&nbsp;    @Override
+<i>149</i>&nbsp;    public void onGameUpdate(Match match) throws RemoteException {
+<b class="nc"><i>150</i>&nbsp;        MatchToSend matchToSend=new MatchToSend(Constants.ONGAMEUPDATE,match);</b>
+<i>151</i>&nbsp;        try {
+<b class="nc"><i>152</i>&nbsp;            out.writeObject(matchToSend);</b>
+<b class="nc"><i>153</i>&nbsp;            out.flush();</b>
+<b class="nc"><i>154</i>&nbsp;        } catch (IOException e) {</b>
+<b class="nc"><i>155</i>&nbsp;            System.out.println(&quot;presa anche qui &quot;);</b>
+<b class="nc"><i>156</i>&nbsp;            controller.stopPlayer();</b>
+<b class="nc"><i>157</i>&nbsp;        }</b>
+<i>158</i>&nbsp;    }
+<i>159</i>&nbsp;
+<i>160</i>&nbsp;    @Override
+<i>161</i>&nbsp;    public void onTurnEnd() throws RemoteException {
+<b class="nc"><i>162</i>&nbsp;        MatchToSend matchToSend=new MatchToSend(Constants.ONTURNEND);</b>
+<i>163</i>&nbsp;        try {
+<b class="nc"><i>164</i>&nbsp;            out.writeObject(matchToSend);</b>
+<b class="nc"><i>165</i>&nbsp;            out.flush();</b>
+<b class="nc"><i>166</i>&nbsp;        } catch (IOException e) {</b>
+<b class="nc"><i>167</i>&nbsp;            controller.stopPlayer();</b>
+<b class="nc"><i>168</i>&nbsp;        }</b>
+<i>169</i>&nbsp;    }
+<i>170</i>&nbsp;
+<i>171</i>&nbsp;    @Override
+<i>172</i>&nbsp;    public void onGameEnd(Match match) throws RemoteException {
+<b class="nc"><i>173</i>&nbsp;        MatchToSend matchToSend=new MatchToSend(Constants.ONGAMEEND, match);</b>
+<i>174</i>&nbsp;        try {
+<b class="nc"><i>175</i>&nbsp;            out.writeObject(matchToSend);</b>
+<b class="nc"><i>176</i>&nbsp;            out.flush();</b>
+<b class="nc"><i>177</i>&nbsp;        } catch (IOException e) {</b>
+<b class="nc"><i>178</i>&nbsp;            controller.stopPlayer();</b>
+<b class="nc"><i>179</i>&nbsp;        }</b>
+<i>180</i>&nbsp;    }
+<i>181</i>&nbsp;
+<i>182</i>&nbsp;
+<i>183</i>&nbsp;    @Override
+<i>184</i>&nbsp;    public void onSetPlaying() throws RemoteException {
+<b class="nc"><i>185</i>&nbsp;        MatchToSend matchToSend=new MatchToSend(Constants.ONSETPLAYING);</b>
+<i>186</i>&nbsp;        try {
+<b class="nc"><i>187</i>&nbsp;            out.writeObject(matchToSend);</b>
+<b class="nc"><i>188</i>&nbsp;            out.flush();</b>
+<b class="nc"><i>189</i>&nbsp;        } catch (IOException e) {</b>
+<b class="nc"><i>190</i>&nbsp;            controller.stopPlayer();</b>
+<b class="nc"><i>191</i>&nbsp;        }</b>
+<i>192</i>&nbsp;    }
+<i>193</i>&nbsp;
+<i>194</i>&nbsp;    @Override
+<i>195</i>&nbsp;    public void onOtherInfoToolCard(int id) throws RemoteException {
+<b class="nc"><i>196</i>&nbsp;        MatchToSend matchToSend=new MatchToSend(Constants.ONOTHERINFOTOOLCARD);</b>
+<b class="nc"><i>197</i>&nbsp;        matchToSend.setId(id);</b>
+<i>198</i>&nbsp;        try {
+<b class="nc"><i>199</i>&nbsp;            out.writeObject(matchToSend);</b>
+<b class="nc"><i>200</i>&nbsp;            out.flush();</b>
+<b class="nc"><i>201</i>&nbsp;        } catch (IOException e) {</b>
+<b class="nc"><i>202</i>&nbsp;            controller.stopPlayer();</b>
+<b class="nc"><i>203</i>&nbsp;        }</b>
+<i>204</i>&nbsp;    }
+<i>205</i>&nbsp;
+<i>206</i>&nbsp;    @Override
+<i>207</i>&nbsp;    public void onNotValidUseDiceException(String message) throws RemoteException {
+<b class="nc"><i>208</i>&nbsp;        MatchToSend matchToSend=new MatchToSend(Constants.ONNOTVALIDUSEDICEEXCEPTION, message);</b>
+<i>209</i>&nbsp;        try {
+<b class="nc"><i>210</i>&nbsp;            out.writeObject(matchToSend);</b>
+<b class="nc"><i>211</i>&nbsp;            out.flush();</b>
+<b class="nc"><i>212</i>&nbsp;        } catch (IOException e) {</b>
+<b class="nc"><i>213</i>&nbsp;            controller.stopPlayer();</b>
+<b class="nc"><i>214</i>&nbsp;        }</b>
+<i>215</i>&nbsp;    }
+<i>216</i>&nbsp;
+<i>217</i>&nbsp;    @Override
+<i>218</i>&nbsp;    public void onNotValidToolCardException(int id, String message) throws RemoteException {
+<b class="nc"><i>219</i>&nbsp;        MatchToSend matchToSend=new MatchToSend(Constants.ONNOTVALIDTOOLCARDEXCEPTION, message, id);</b>
+<i>220</i>&nbsp;        try {
+<b class="nc"><i>221</i>&nbsp;            out.writeObject(matchToSend);</b>
+<b class="nc"><i>222</i>&nbsp;            out.flush();</b>
+<b class="nc"><i>223</i>&nbsp;        } catch (IOException e) {</b>
+<b class="nc"><i>224</i>&nbsp;            controller.stopPlayer();</b>
+<b class="nc"><i>225</i>&nbsp;        }</b>
+<i>226</i>&nbsp;    }
+<i>227</i>&nbsp;
+<i>228</i>&nbsp;    @Override
+<i>229</i>&nbsp;    public void onNotValidPlayException(String message) throws RemoteException {
+<b class="nc"><i>230</i>&nbsp;        MatchToSend matchToSend=new MatchToSend(Constants.ONNOTVALIDPLAYEXCEPTION, message);</b>
+<i>231</i>&nbsp;        try {
+<b class="nc"><i>232</i>&nbsp;            out.writeObject(matchToSend);</b>
+<b class="nc"><i>233</i>&nbsp;            out.flush();</b>
+<b class="nc"><i>234</i>&nbsp;        } catch (IOException e) {</b>
+<b class="nc"><i>235</i>&nbsp;            controller.stopPlayer();</b>
+<b class="nc"><i>236</i>&nbsp;        }</b>
+<i>237</i>&nbsp;    }
+<i>238</i>&nbsp;
+<i>239</i>&nbsp;    @Override
+<i>240</i>&nbsp;    public void onNotValidNicknameException(String message) throws RemoteException {
+<b class="nc"><i>241</i>&nbsp;        MatchToSend matchToSend=new MatchToSend(Constants.ONNOTVALIDNICKNAMEEXCEPTION, message);</b>
+<i>242</i>&nbsp;        try {
+<b class="nc"><i>243</i>&nbsp;            out.writeObject(matchToSend);</b>
+<b class="nc"><i>244</i>&nbsp;            out.flush();</b>
+<b class="nc"><i>245</i>&nbsp;        } catch (IOException e) {</b>
+<b class="nc"><i>246</i>&nbsp;            controller.stopPlayer();</b>
+<b class="nc"><i>247</i>&nbsp;        }</b>
+<i>248</i>&nbsp;    }
+<i>249</i>&nbsp;
+<i>250</i>&nbsp;    @Override
+<i>251</i>&nbsp;    public void onNotPossibleConnectionException(String message) throws RemoteException {
+<b class="nc"><i>252</i>&nbsp;        MatchToSend matchToSend=new MatchToSend(Constants.ONNOTPOSSIBLECONNECTIONEXCEPTION, message);</b>
+<i>253</i>&nbsp;        try {
+<b class="nc"><i>254</i>&nbsp;            out.writeObject(matchToSend);</b>
+<b class="nc"><i>255</i>&nbsp;            out.flush();</b>
+<b class="nc"><i>256</i>&nbsp;        } catch (IOException e) {</b>
+<b class="nc"><i>257</i>&nbsp;            controller.stopPlayer();</b>
+<b class="nc"><i>258</i>&nbsp;        }</b>
+<i>259</i>&nbsp;
+<i>260</i>&nbsp;    }
+<i>261</i>&nbsp;
+<i>262</i>&nbsp;
+<i>263</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-07-04 21:00</div>
+</div>
+</body>
+</html>

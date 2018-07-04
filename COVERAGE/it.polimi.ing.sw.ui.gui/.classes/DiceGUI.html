@@ -1,0 +1,461 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: DiceGUI</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ing.sw.ui.gui</a> ]
+</div>
+
+<h1>Coverage Summary for Class: DiceGUI (it.polimi.ing.sw.ui.gui)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DiceGUI</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 23)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 143)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">DiceGUI$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">DiceGUI$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 11)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 30)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 156)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ing.sw.ui.gui;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ing.sw.model.Box;
+<i>4</i>&nbsp;import it.polimi.ing.sw.model.Dice;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import javax.swing.*;
+<i>7</i>&nbsp;import javax.swing.border.LineBorder;
+<i>8</i>&nbsp;import java.awt.*;
+<i>9</i>&nbsp;import java.awt.event.MouseEvent;
+<i>10</i>&nbsp;import java.rmi.RemoteException;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;import static it.polimi.ing.sw.model.Color.*;
+<i>13</i>&nbsp;import static it.polimi.ing.sw.util.Constants.IMAGE_PATH;
+<i>14</i>&nbsp;
+<b class="nc"><i>15</i>&nbsp;public class DiceGUI extends javax.swing.JPanel {</b>
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;    private Box box;
+<i>18</i>&nbsp;    private GUI gui;
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;    private int dimXdice;
+<i>21</i>&nbsp;    private int dimYdice;
+<i>22</i>&nbsp;
+<b class="nc"><i>23</i>&nbsp;    public DiceGUI(Boolean isVoid, int dimXdice, int dimYdice) {</b>
+<b class="nc"><i>24</i>&nbsp;        this.dimXdice = dimXdice;</b>
+<b class="nc"><i>25</i>&nbsp;        this.dimYdice = dimYdice;</b>
+<b class="nc"><i>26</i>&nbsp;        initComponents();</b>
+<b class="nc"><i>27</i>&nbsp;        box = new Box();</b>
+<b class="nc"><i>28</i>&nbsp;        if (!isVoid)</b>
+<b class="nc"><i>29</i>&nbsp;            updateIcon(&quot;1g&quot;, false);</b>
+<i>30</i>&nbsp;    }
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    public void setController(GUI gui) {
+<b class="nc"><i>33</i>&nbsp;        this.gui = gui;</b>
+<i>34</i>&nbsp;    }
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    public void setDice(Dice dice) {
+<b class="nc"><i>37</i>&nbsp;        box.placeDice(dice);</b>
+<b class="nc"><i>38</i>&nbsp;        updateDice();</b>
+<i>39</i>&nbsp;    }
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;    public void setBox(Box box) {
+<b class="nc"><i>42</i>&nbsp;        this.box = box;</b>
+<b class="nc"><i>43</i>&nbsp;        updateBox();</b>
+<i>44</i>&nbsp;    }
+<i>45</i>&nbsp;
+<i>46</i>&nbsp;    private void updateBox() {
+<b class="nc"><i>47</i>&nbsp;        updateIcon(String.valueOf(box.getShade()), false);</b>
+<b class="nc"><i>48</i>&nbsp;        if (box.isFull()) {</b>
+<b class="nc"><i>49</i>&nbsp;            updateDice();</b>
+<i>50</i>&nbsp;        } else {
+<b class="nc"><i>51</i>&nbsp;            updateColor(box.getColor());</b>
+<i>52</i>&nbsp;        }
+<i>53</i>&nbsp;
+<b class="nc"><i>54</i>&nbsp;        diceLabel.repaint();</b>
+<i>55</i>&nbsp;    }
+<i>56</i>&nbsp;
+<i>57</i>&nbsp;    private void updateDice() {
+<b class="nc"><i>58</i>&nbsp;        updateIcon(String.valueOf(box.getDice().getNumFacciaUp()), true);</b>
+<b class="nc"><i>59</i>&nbsp;        updateColor(box.getDice().getDiceColor());</b>
+<b class="nc"><i>60</i>&nbsp;        diceLabel.repaint();</b>
+<i>61</i>&nbsp;    }
+<i>62</i>&nbsp;
+<i>63</i>&nbsp;    private void updateColor(it.polimi.ing.sw.model.Color color) {
+<b class="nc"><i>64</i>&nbsp;        if (RED == color) {</b>
+<b class="nc"><i>65</i>&nbsp;            diceLabel.setBackground(new java.awt.Color(255, 0, 51));</b>
+<i>66</i>&nbsp;        }
+<b class="nc"><i>67</i>&nbsp;        if (BLUE == color) {</b>
+<b class="nc"><i>68</i>&nbsp;            diceLabel.setBackground(new java.awt.Color(0, 102, 255));</b>
+<i>69</i>&nbsp;        }
+<b class="nc"><i>70</i>&nbsp;        if (GREEN == color) {</b>
+<b class="nc"><i>71</i>&nbsp;            diceLabel.setBackground(new java.awt.Color(4, 175, 98));</b>
+<i>72</i>&nbsp;        }
+<b class="nc"><i>73</i>&nbsp;        if (YELLOW == color) {</b>
+<b class="nc"><i>74</i>&nbsp;            diceLabel.setBackground(new java.awt.Color(255, 255, 51));</b>
+<i>75</i>&nbsp;        }
+<b class="nc"><i>76</i>&nbsp;        if (PURPLE == color) {</b>
+<b class="nc"><i>77</i>&nbsp;            diceLabel.setBackground(new java.awt.Color(204, 0, 255));</b>
+<i>78</i>&nbsp;        }
+<b class="nc"><i>79</i>&nbsp;        if (WHITE == color) {</b>
+<b class="nc"><i>80</i>&nbsp;            diceLabel.setBackground(new java.awt.Color(255, 255, 255));</b>
+<i>81</i>&nbsp;        }
+<b class="nc"><i>82</i>&nbsp;        diceLabel.repaint();</b>
+<i>83</i>&nbsp;    }
+<i>84</i>&nbsp;
+<i>85</i>&nbsp;    public Box getBox() {
+<b class="nc"><i>86</i>&nbsp;        return box;</b>
+<i>87</i>&nbsp;    }
+<i>88</i>&nbsp;
+<i>89</i>&nbsp;    public static String getImagePath() {
+<b class="nc"><i>90</i>&nbsp;        return IMAGE_PATH;</b>
+<i>91</i>&nbsp;    }
+<i>92</i>&nbsp;
+<i>93</i>&nbsp;    private void updateIcon(String name, Boolean isSetDice) {
+<b class="nc"><i>94</i>&nbsp;        String PATH = new String();</b>
+<b class="nc"><i>95</i>&nbsp;        if (name != null) {</b>
+<b class="nc"><i>96</i>&nbsp;            if (name.equals(&quot;1g&quot;) || name.equals(&quot;2g&quot;) || name.equals(&quot;3g&quot;) || name.equals(&quot;4g&quot;) || name.equals(&quot;5g&quot;) || name.equals(&quot;6g&quot;) || isSetDice) {</b>
+<b class="nc"><i>97</i>&nbsp;                PATH = IMAGE_PATH + name + &quot;.png&quot;;</b>
+<i>98</i>&nbsp;            } else {
+<b class="nc"><i>99</i>&nbsp;                int intName = Integer.valueOf(name);</b>
+<b class="nc"><i>100</i>&nbsp;                if (intName &gt; 0 &amp;&amp; intName &lt; 7) {</b>
+<b class="nc"><i>101</i>&nbsp;                    PATH = IMAGE_PATH + name + &quot;g.png&quot;;</b>
+<i>102</i>&nbsp;                }
+<i>103</i>&nbsp;            }
+<b class="nc"><i>104</i>&nbsp;            if (!PATH.isEmpty()) {</b>
+<i>105</i>&nbsp;                ImageIcon icon;
+<i>106</i>&nbsp;                Image scaledImage;
+<b class="nc"><i>107</i>&nbsp;                icon = new javax.swing.ImageIcon(getClass().getResource(PATH));</b>
+<b class="nc"><i>108</i>&nbsp;                scaledImage = icon.getImage().getScaledInstance(dimXdice, dimYdice, Image.SCALE_DEFAULT);</b>
+<b class="nc"><i>109</i>&nbsp;                icon.setImage(scaledImage);</b>
+<b class="nc"><i>110</i>&nbsp;                diceLabel.setIcon(icon);</b>
+<b class="nc"><i>111</i>&nbsp;                diceLabel.repaint();</b>
+<i>112</i>&nbsp;            }
+<i>113</i>&nbsp;        }
+<i>114</i>&nbsp;    }
+<i>115</i>&nbsp;
+<i>116</i>&nbsp;    // &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Generated Code&quot;&gt;//GEN-BEGIN:initComponents
+<i>117</i>&nbsp;    private void initComponents() {
+<i>118</i>&nbsp;
+<b class="nc"><i>119</i>&nbsp;        diceLabel = new javax.swing.JLabel();</b>
+<i>120</i>&nbsp;
+<b class="nc"><i>121</i>&nbsp;        setPreferredSize(new java.awt.Dimension(50, 50));</b>
+<i>122</i>&nbsp;
+<b class="nc"><i>123</i>&nbsp;        diceLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.CROSSHAIR_CURSOR));</b>
+<b class="nc"><i>124</i>&nbsp;        diceLabel.setOpaque(true);</b>
+<b class="nc"><i>125</i>&nbsp;        diceLabel.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {</b>
+<i>126</i>&nbsp;            public void mouseDragged(java.awt.event.MouseEvent evt) {
+<b class="nc"><i>127</i>&nbsp;                diceLabelMouseDragged(evt);</b>
+<i>128</i>&nbsp;            }
+<i>129</i>&nbsp;        });
+<b class="nc"><i>130</i>&nbsp;        diceLabel.addMouseListener(new java.awt.event.MouseAdapter() {</b>
+<i>131</i>&nbsp;            public void mouseEntered(java.awt.event.MouseEvent evt) {
+<b class="nc"><i>132</i>&nbsp;                diceLabelMouseEntered(evt);</b>
+<i>133</i>&nbsp;            }
+<i>134</i>&nbsp;
+<i>135</i>&nbsp;            public void mouseExited(java.awt.event.MouseEvent evt) {
+<b class="nc"><i>136</i>&nbsp;                diceLabelMouseExited(evt);</b>
+<i>137</i>&nbsp;            }
+<i>138</i>&nbsp;
+<i>139</i>&nbsp;            public void mousePressed(java.awt.event.MouseEvent evt) {
+<i>140</i>&nbsp;                try {
+<b class="nc"><i>141</i>&nbsp;                    diceLabelMousePressed(evt);</b>
+<b class="nc"><i>142</i>&nbsp;                } catch (RemoteException e) {</b>
+<b class="nc"><i>143</i>&nbsp;                    e.printStackTrace();</b>
+<b class="nc"><i>144</i>&nbsp;                }</b>
+<i>145</i>&nbsp;            }
+<i>146</i>&nbsp;
+<i>147</i>&nbsp;            public void mouseReleased(java.awt.event.MouseEvent evt) {
+<i>148</i>&nbsp;                try {
+<b class="nc"><i>149</i>&nbsp;                    diceLabelMouseReleased(evt);</b>
+<b class="nc"><i>150</i>&nbsp;                } catch (RemoteException e) {</b>
+<b class="nc"><i>151</i>&nbsp;                    e.printStackTrace();</b>
+<b class="nc"><i>152</i>&nbsp;                }</b>
+<i>153</i>&nbsp;            }
+<i>154</i>&nbsp;        });
+<i>155</i>&nbsp;
+<b class="nc"><i>156</i>&nbsp;        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);</b>
+<b class="nc"><i>157</i>&nbsp;        this.setLayout(layout);</b>
+<b class="nc"><i>158</i>&nbsp;        layout.setHorizontalGroup(</b>
+<b class="nc"><i>159</i>&nbsp;                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</b>
+<b class="nc"><i>160</i>&nbsp;                        .addComponent(diceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)</b>
+<i>161</i>&nbsp;        );
+<b class="nc"><i>162</i>&nbsp;        layout.setVerticalGroup(</b>
+<b class="nc"><i>163</i>&nbsp;                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</b>
+<b class="nc"><i>164</i>&nbsp;                        .addComponent(diceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)</b>
+<i>165</i>&nbsp;        );
+<i>166</i>&nbsp;    }// &lt;/editor-fold&gt;//GEN-END:initComponents
+<i>167</i>&nbsp;
+<i>168</i>&nbsp;    private void diceLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_diceLabelMouseEntered
+<b class="nc"><i>169</i>&nbsp;        diceLabel.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 2, true));</b>
+<b class="nc"><i>170</i>&nbsp;        setCursor(new Cursor(Cursor.HAND_CURSOR));</b>
+<b class="nc"><i>171</i>&nbsp;        TableFrame.setCurrentComponentName(this.getName(), true);</b>
+<b class="nc"><i>172</i>&nbsp;        System.out.println(getName());</b>
+<i>173</i>&nbsp;    }//GEN-LAST:event_diceLabelMouseEntered
+<i>174</i>&nbsp;
+<i>175</i>&nbsp;    private void diceLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_diceLabelMouseExited
+<b class="nc"><i>176</i>&nbsp;        diceLabel.setBorder(null);</b>
+<b class="nc"><i>177</i>&nbsp;        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));</b>
+<b class="nc"><i>178</i>&nbsp;        TableFrame.setIsAdiceGui(false);</b>
+<i>179</i>&nbsp;    }//GEN-LAST:event_diceLabelMouseExited
+<i>180</i>&nbsp;
+<i>181</i>&nbsp;    private void diceLabelMousePressed(java.awt.event.MouseEvent evt) throws RemoteException {//GEN-FIRST:event_diceLabelMousePressed
+<b class="nc"><i>182</i>&nbsp;        if (gui.isPlaying()) {</b>
+<b class="nc"><i>183</i>&nbsp;            if (TableFrame.aToolCardIsUsed()) {</b>
+<b class="nc"><i>184</i>&nbsp;                switch (TableFrame.idSelectedTc) {</b>
+<i>185</i>&nbsp;                    case &quot;1&quot;:
+<b class="nc"><i>186</i>&nbsp;                        gui.useToolCard1(this);</b>
+<b class="nc"><i>187</i>&nbsp;                        break;</b>
+<i>188</i>&nbsp;                    case &quot;5&quot;:
+<b class="nc"><i>189</i>&nbsp;                        if (20 &gt; Integer.valueOf(evt.getComponent().getName()) &amp;&amp; 9 &lt; Integer.valueOf(evt.getComponent().getName())) {</b>
+<b class="nc"><i>190</i>&nbsp;                            if (null == TableFrame.toolCard5Dice) {</b>
+<b class="nc"><i>191</i>&nbsp;                                TableFrame.toolCard5Dice = this;</b>
+<b class="nc"><i>192</i>&nbsp;                            } else if (Integer.valueOf(evt.getComponent().getName()) &lt; 10) {</b>
+<b class="nc"><i>193</i>&nbsp;                                gui.useToolCard5(Integer.valueOf(evt.getComponent().getName()),Integer.valueOf(TableFrame.toolCard5Dice.getName())-10);</b>
+<i>194</i>&nbsp;                            }
+<i>195</i>&nbsp;                        }
+<i>196</i>&nbsp;                        break;
+<i>197</i>&nbsp;                    case &quot;6&quot;:
+<b class="nc"><i>198</i>&nbsp;                        gui.useToolCard6(Integer.valueOf(getName()));</b>
+<b class="nc"><i>199</i>&nbsp;                        break;</b>
+<i>200</i>&nbsp;                    case &quot;10&quot;:
+<b class="nc"><i>201</i>&nbsp;                        gui.useToolCard10(Integer.valueOf(getName()));</b>
+<b class="nc"><i>202</i>&nbsp;                        break;</b>
+<i>203</i>&nbsp;                    case &quot;11&quot;:
+<b class="nc"><i>204</i>&nbsp;                        gui.useToolCard11(Integer.valueOf(getName()), getX(), getY());</b>
+<b class="nc"><i>205</i>&nbsp;                        break;</b>
+<i>206</i>&nbsp;                }
+<i>207</i>&nbsp;            } else {
+<b class="nc"><i>208</i>&nbsp;                if (box.isFull()) {</b>
+<i>209</i>&nbsp;                    //if(gui.getNickname()==TableFrame.getMatch().getPlayerPlaying()){
+<b class="nc"><i>210</i>&nbsp;                    wasPressed = true;</b>
+<b class="nc"><i>211</i>&nbsp;                    floatingDiceFrame = new FloatingDiceFrame(box.getDice(), DIM_X_FLOATING_DICE, DIM_Y_FLOATING_DICE);</b>
+<i>212</i>&nbsp;                    //}
+<i>213</i>&nbsp;                }
+<i>214</i>&nbsp;            }
+<i>215</i>&nbsp;        }
+<i>216</i>&nbsp;
+<i>217</i>&nbsp;    }//GEN-LAST:event_diceLabelMousePressed
+<i>218</i>&nbsp;
+<i>219</i>&nbsp;    private void diceLabelMouseReleased(java.awt.event.MouseEvent evt) throws RemoteException {//GEN-FIRST:event_diceLabelMouseReleased
+<b class="nc"><i>220</i>&nbsp;        wasPressed = false;</b>
+<b class="nc"><i>221</i>&nbsp;        if (this != evt.getComponent() &amp;&amp; floatingDiceFrame != null /*&amp;&amp; gui.isPlaying()*/) {</b>
+<b class="nc"><i>222</i>&nbsp;            floatingDiceFrame.setVisible(false);</b>
+<b class="nc"><i>223</i>&nbsp;            injectDice(evt);</b>
+<b class="nc"><i>224</i>&nbsp;            floatingDiceFrame = null;</b>
+<i>225</i>&nbsp;        }
+<i>226</i>&nbsp;    }//GEN-LAST:event_diceLabelMouseReleased
+<i>227</i>&nbsp;
+<i>228</i>&nbsp;    private void removeDice() {
+<b class="nc"><i>229</i>&nbsp;        box.removeDice();/*</b>
+<i>230</i>&nbsp;        diceLabel.setIcon(null);
+<i>231</i>&nbsp;        box.setColor(WHITE);*/
+<b class="nc"><i>232</i>&nbsp;        this.setVisible(false);</b>
+<i>233</i>&nbsp;    }
+<i>234</i>&nbsp;
+<i>235</i>&nbsp;    private void diceLabelMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_diceLabelMouseDragged
+<b class="nc"><i>236</i>&nbsp;        if (wasPressed) {</b>
+<b class="nc"><i>237</i>&nbsp;            floatingDiceFrame.setVisible(true);</b>
+<b class="nc"><i>238</i>&nbsp;            floatingDiceFrame.setLocation(evt.getXOnScreen() + 3, evt.getYOnScreen() - DIM_Y_FLOATING_DICE - 3);</b>
+<b class="nc"><i>239</i>&nbsp;            floatingDiceFrame.setGUI(gui);</b>
+<i>240</i>&nbsp;        }
+<i>241</i>&nbsp;    }//GEN-LAST:event_diceLabelMouseDragged
+<i>242</i>&nbsp;
+<i>243</i>&nbsp;    private void injectDice(MouseEvent evt) throws RemoteException {
+<b class="nc"><i>244</i>&nbsp;        String nameComponent = TableFrame.getCurrentComponentName();</b>
+<b class="nc"><i>245</i>&nbsp;        char id = nameComponent.charAt(0);</b>
+<b class="nc"><i>246</i>&nbsp;        System.out.println(id);</b>
+<i>247</i>&nbsp;
+<b class="nc"><i>248</i>&nbsp;        if (TableFrame.isPlayerTurn(gui.getNickname(), id)) {</b>
+<b class="nc"><i>249</i>&nbsp;            int destY = (int) nameComponent.charAt(2) - 48;</b>
+<b class="nc"><i>250</i>&nbsp;            int destX = (int) nameComponent.charAt(1) - 48;</b>
+<b class="nc"><i>251</i>&nbsp;            handleToolCards(id, destX, destY);</b>
+<i>252</i>&nbsp;        }
+<i>253</i>&nbsp;    }
+<i>254</i>&nbsp;
+<i>255</i>&nbsp;    private void handleToolCards(char id, int destX, int destY) throws RemoteException {
+<b class="nc"><i>256</i>&nbsp;        if (TableFrame.isToolCard.get(2 - 1)) {</b>
+<b class="nc"><i>257</i>&nbsp;            if (TableFrame.isPlayerScheme(gui.getNickname(), id)) {</b>
+<b class="nc"><i>258</i>&nbsp;                reprindDices(id, destX, destY);</b>
+<b class="nc"><i>259</i>&nbsp;                gui.useToolCard2(floatingDiceFrame, destX, destY);</b>
+<i>260</i>&nbsp;            }
+<b class="nc"><i>261</i>&nbsp;        } else if (TableFrame.isToolCard.get(3 - 1)) {</b>
+<b class="nc"><i>262</i>&nbsp;            if (TableFrame.isPlayerScheme(gui.getNickname(), id)) {</b>
+<b class="nc"><i>263</i>&nbsp;                reprindDices(id, destX, destY);</b>
+<b class="nc"><i>264</i>&nbsp;                gui.useToolCard3(floatingDiceFrame, destX, destY);</b>
+<i>265</i>&nbsp;            }
+<b class="nc"><i>266</i>&nbsp;        } else if (TableFrame.isToolCard.get(4 - 1)) {</b>
+<b class="nc"><i>267</i>&nbsp;            if (TableFrame.isPlayerScheme(gui.getNickname(), id)) {</b>
+<b class="nc"><i>268</i>&nbsp;                reprindDices(id, destX, destY);</b>
+<b class="nc"><i>269</i>&nbsp;                gui.useToolCard4(floatingDiceFrame, destX, destY);</b>
+<i>270</i>&nbsp;            }
+<b class="nc"><i>271</i>&nbsp;        } else if (TableFrame.isToolCard.get(12 - 1)) {</b>
+<b class="nc"><i>272</i>&nbsp;            boolean roundTrackIsFull = gui.checkIfRoundTrackIsFull();</b>
+<b class="nc"><i>273</i>&nbsp;            if (!roundTrackIsFull) {</b>
+<b class="nc"><i>274</i>&nbsp;                JOptionPane.showMessageDialog(null,</b>
+<i>275</i>&nbsp;                        &quot;Non puoi utilizzare questa carta perché ancora non ci sono dadi sul tracciato dei round&quot;,
+<i>276</i>&nbsp;                        &quot;Not valid Action&quot;,
+<i>277</i>&nbsp;                        JOptionPane.ERROR_MESSAGE);
+<i>278</i>&nbsp;            } else {
+<b class="nc"><i>279</i>&nbsp;                reprindDices(id, destX, destY);</b>
+<b class="nc"><i>280</i>&nbsp;                gui.useToolCard12(floatingDiceFrame, destX, destY);</b>
+<i>281</i>&nbsp;
+<i>282</i>&nbsp;            }
+<b class="nc"><i>283</i>&nbsp;        } else {</b>
+<b class="nc"><i>284</i>&nbsp;            if (!TableFrame.isToolCard.get(9 - 1)) {</b>
+<b class="nc"><i>285</i>&nbsp;                if (0 &lt;= Integer.valueOf(getName()) &amp;&amp; 9 &gt; Integer.valueOf(getName())) {</b>
+<b class="nc"><i>286</i>&nbsp;                    reprindDices(id, destX, destY);</b>
+<b class="nc"><i>287</i>&nbsp;                    gui.useDice(Integer.valueOf(getName()), destX, destY);</b>
+<i>288</i>&nbsp;
+<i>289</i>&nbsp;                }
+<i>290</i>&nbsp;            } else {
+<b class="nc"><i>291</i>&nbsp;                reprindDices(id, destX, destY);</b>
+<b class="nc"><i>292</i>&nbsp;                gui.useToolCard9(Integer.valueOf(getName()), destX, destY);</b>
+<i>293</i>&nbsp;
+<i>294</i>&nbsp;            }
+<i>295</i>&nbsp;            //reprindDices(id, destX, destY);
+<i>296</i>&nbsp;        }
+<i>297</i>&nbsp;    }
+<i>298</i>&nbsp;
+<i>299</i>&nbsp;    private void reprindDices(char id, int destX, int destY) {
+<b class="nc"><i>300</i>&nbsp;        removeDice();</b>
+<b class="nc"><i>301</i>&nbsp;        switch (id) {</b>
+<i>302</i>&nbsp;            case &#39;1&#39;:
+<b class="nc"><i>303</i>&nbsp;                TableFrame.updateDice(1, floatingDiceFrame.getDice(), destX, destY);</b>
+<b class="nc"><i>304</i>&nbsp;                break;</b>
+<i>305</i>&nbsp;            case &#39;2&#39;:
+<b class="nc"><i>306</i>&nbsp;                TableFrame.updateDice(2, floatingDiceFrame.getDice(), destX, destY);</b>
+<b class="nc"><i>307</i>&nbsp;                break;</b>
+<i>308</i>&nbsp;            case &#39;3&#39;:
+<b class="nc"><i>309</i>&nbsp;                TableFrame.updateDice(3, floatingDiceFrame.getDice(), destX, destY);</b>
+<b class="nc"><i>310</i>&nbsp;                break;</b>
+<i>311</i>&nbsp;            case &#39;4&#39;:
+<b class="nc"><i>312</i>&nbsp;                TableFrame.updateDice(4, floatingDiceFrame.getDice(), destX, destY);</b>
+<i>313</i>&nbsp;                break;
+<i>314</i>&nbsp;        }
+<i>315</i>&nbsp;    }
+<i>316</i>&nbsp;
+<i>317</i>&nbsp;    private static final int DIM_X_FLOATING_DICE = 34;
+<i>318</i>&nbsp;    private static final int DIM_Y_FLOATING_DICE = 34;
+<i>319</i>&nbsp;    private FloatingDiceFrame floatingDiceFrame;
+<i>320</i>&nbsp;    private Boolean wasPressed;
+<i>321</i>&nbsp;
+<i>322</i>&nbsp;    // Variables declaration - do not modify//GEN-BEGIN:variables
+<i>323</i>&nbsp;    private javax.swing.JLabel diceLabel;
+<i>324</i>&nbsp;
+<i>325</i>&nbsp;    public void setX(int i) {
+<b class="nc"><i>326</i>&nbsp;        box.setX(i);</b>
+<i>327</i>&nbsp;    }
+<i>328</i>&nbsp;
+<i>329</i>&nbsp;    public void setY(int i) {
+<b class="nc"><i>330</i>&nbsp;        box.setY(i);</b>
+<i>331</i>&nbsp;    }
+<i>332</i>&nbsp;    // End of variables declaration//GEN-END:variables
+<i>333</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-07-04 21:00</div>
+</div>
+</body>
+</html>

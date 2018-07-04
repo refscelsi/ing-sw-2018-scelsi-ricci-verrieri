@@ -1,0 +1,125 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: TenagliaARotelle</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ing.sw.model.toolCard</a> ]
+</div>
+
+<h1>Coverage Summary for Class: TenagliaARotelle (it.polimi.ing.sw.model.toolCard)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">TenagliaARotelle</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (19/ 19)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ing.sw.model.toolCard;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ing.sw.model.*;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;public class TenagliaARotelle extends ToolCard {
+<i>7</i>&nbsp;
+<b class="fc"><i>8</i>&nbsp;    private final int id=8;</b>
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;    public TenagliaARotelle() {
+<b class="fc"><i>12</i>&nbsp;        super(8);</b>
+<b class="fc"><i>13</i>&nbsp;    }</b>
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    @Override
+<i>17</i>&nbsp;    public void execute(DraftPool neverUsed1, RoundTrack neverUsed2, Scheme neverUsed3, Player[] playersRound, Bag neverUsed4, int playersRoundIndex, int neverUsed5, int neverUsed6, int neverUsed7, int neverUsed8, int neverUsed9){
+<i>18</i>&nbsp;        Player temp, succ;
+<b class="fc"><i>19</i>&nbsp;        succ=playersRound[playersRoundIndex+1];</b>
+<b class="fc"><i>20</i>&nbsp;        playersRound[playersRoundIndex+1] = playersRound[playersRoundIndex];</b>
+<b class="fc"><i>21</i>&nbsp;        for (int j = playersRoundIndex+2; j &lt; playersRound.length; j++) {</b>
+<b class="fc"><i>22</i>&nbsp;            if (playersRound[j] != playersRound[playersRoundIndex]) {</b>
+<b class="fc"><i>23</i>&nbsp;                temp = playersRound[j];</b>
+<b class="fc"><i>24</i>&nbsp;                playersRound[j] = succ;</b>
+<b class="fc"><i>25</i>&nbsp;                succ = temp;</b>
+<i>26</i>&nbsp;            } else {
+<b class="fc"><i>27</i>&nbsp;                playersRound[j] = succ;</b>
+<b class="fc"><i>28</i>&nbsp;                j = playersRound.length;</b>
+<i>29</i>&nbsp;            }
+<i>30</i>&nbsp;        }
+<b class="fc"><i>31</i>&nbsp;    }</b>
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;    @Override
+<i>34</i>&nbsp;    public ToolCard toolCardClone(){
+<b class="fc"><i>35</i>&nbsp;        ToolCard toolCardClone=new TenagliaARotelle();</b>
+<b class="fc"><i>36</i>&nbsp;        toolCardClone.setName(this.getName());</b>
+<b class="fc"><i>37</i>&nbsp;        toolCardClone.setDescription(this.getDescription());</b>
+<b class="fc"><i>38</i>&nbsp;        toolCardClone.setId(id);</b>
+<b class="fc"><i>39</i>&nbsp;        toolCardClone.setNumOfTokens(this.getNumOfTokens());</b>
+<b class="fc"><i>40</i>&nbsp;        return toolCardClone;</b>
+<i>41</i>&nbsp;    }
+<i>42</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-07-04 21:00</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,122 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: RigaInSughero</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ing.sw.model.toolCard</a> ]
+</div>
+
+<h1>Coverage Summary for Class: RigaInSughero (it.polimi.ing.sw.model.toolCard)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RigaInSughero</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    94,4%
+  </span>
+  <span class="absValue">
+    (17/ 18)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ing.sw.model.toolCard;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ing.sw.model.*;
+<i>4</i>&nbsp;import it.polimi.ing.sw.model.exceptions.NotValidException;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;public class RigaInSughero extends ToolCard {
+<b class="fc"><i>7</i>&nbsp;    private final int id = 9;</b>
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;    public RigaInSughero() {
+<b class="fc"><i>10</i>&nbsp;        super(9);</b>
+<b class="fc"><i>11</i>&nbsp;    }</b>
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;    @Override
+<i>15</i>&nbsp;    public void execute(DraftPool draftPool, RoundTrack neverUsed2, Scheme scheme, Player[] neverUsed3, Bag neverUsed4, int indexInDraftPool, int neverUsed5, int row, int col, int neverUsed6, int neverUsed7) throws NotValidException {
+<b class="fc"><i>16</i>&nbsp;        Box destBox = scheme.getBox(row, col);</b>
+<b class="fc"><i>17</i>&nbsp;        Dice dice = draftPool.getDice(indexInDraftPool);</b>
+<b class="fc"><i>18</i>&nbsp;        if (destBox.isFull())</b>
+<b class="nc"><i>19</i>&nbsp;            throw new NotValidException(&quot;Non puoi posizionare un dado in una casella già piena!&quot;);</b>
+<i>20</i>&nbsp;        else {
+<b class="fc"><i>21</i>&nbsp;            if (scheme.checkBox(row, col, dice) &amp;&amp; scheme.checkIfHasDiceAdjacent(row, col, dice, 2)) {</b>
+<b class="fc"><i>22</i>&nbsp;                destBox.placeDice(dice);</b>
+<b class="fc"><i>23</i>&nbsp;                draftPool.removeDice(dice);</b>
+<i>24</i>&nbsp;            } else
+<b class="fc"><i>25</i>&nbsp;                throw new NotValidException(&quot;Non stai rispettando le condizioni di piazzamento!&quot;);</b>
+<i>26</i>&nbsp;        }
+<b class="fc"><i>27</i>&nbsp;    }</b>
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    @Override
+<i>30</i>&nbsp;    public ToolCard toolCardClone(){
+<b class="fc"><i>31</i>&nbsp;        ToolCard toolCardClone=new RigaInSughero();</b>
+<b class="fc"><i>32</i>&nbsp;        toolCardClone.setName(this.getName());</b>
+<b class="fc"><i>33</i>&nbsp;        toolCardClone.setDescription(this.getDescription());</b>
+<b class="fc"><i>34</i>&nbsp;        toolCardClone.setId(id);</b>
+<b class="fc"><i>35</i>&nbsp;        toolCardClone.setNumOfTokens(this.getNumOfTokens());</b>
+<b class="fc"><i>36</i>&nbsp;        return toolCardClone;</b>
+<i>37</i>&nbsp;    }
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-07-04 21:00</div>
+</div>
+</body>
+</html>
