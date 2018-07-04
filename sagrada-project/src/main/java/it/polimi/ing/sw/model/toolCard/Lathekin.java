@@ -62,9 +62,8 @@ public class Lathekin extends ToolCard {
 
                 if (scheme.checkBox(destRow, destCol, dice) && scheme.checkIfHasDiceAdjacent(destRow, destCol, dice, 1)) {
                     if (!firstExecutionDone) {
-                        System.out.println("prima esecuzione ok");
                         firstExecutionDone = true;
-                        sourceBox.placeDice(dice);
+                        destBox.placeDice(dice);
                         replaceDice(scheme);
                     }
                     else {

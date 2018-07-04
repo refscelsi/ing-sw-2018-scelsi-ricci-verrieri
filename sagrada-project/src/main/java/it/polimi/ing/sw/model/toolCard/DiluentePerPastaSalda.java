@@ -24,7 +24,13 @@ public class DiluentePerPastaSalda extends ToolCard {
 
 
     @Override
-    public void execute(DraftPool draftPool, RoundTrack neverUsed1, Scheme scheme, Player[] neverUsed2, Bag bag, int indexInDraftPool, int numFacciaUp, int row, int col, int neverUsed3, int neverUsed4) throws NotValidException {
+    public void execute(DraftPool draftPool, RoundTrack neverUsed1, Scheme scheme, Player[] neverUsed2, Bag bag, int indexInDraftPool, int numFacciaUp, int row, int col, int firstExecution, int neverUsed4) throws NotValidException {
+
+        if (firstExecution==1)
+            firstExecutionDone = true;
+        else
+            firstExecutionDone = false;
+
         if (!firstExecutionDone) {
             bag.addDice(draftPool.getDice(indexInDraftPool));
             draftPool.setDice(bag.drawDice(), indexInDraftPool);

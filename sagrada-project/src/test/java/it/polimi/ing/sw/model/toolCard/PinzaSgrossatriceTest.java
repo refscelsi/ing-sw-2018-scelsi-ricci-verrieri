@@ -11,6 +11,7 @@ public class PinzaSgrossatriceTest {
     private PinzaSgrossatrice pinzaSgrossatrice;
     private Dice dice1, dice2, dice3;
     private DraftPool draftPool;
+    private ToolCard toolCardClone;
 
     @Before
     public void before() {
@@ -43,6 +44,15 @@ public class PinzaSgrossatriceTest {
         }
 
         assertTrue(draftPool.getDice(0).getNumFacciaUp()==6&&draftPool.getDice(1).getNumFacciaUp()==1&&draftPool.getDice(2).getNumFacciaUp()==3);
+    }
+
+
+    @Test
+    public void cloneTest() {
+
+        toolCardClone = pinzaSgrossatrice.toolCardClone();
+
+        assertTrue(toolCardClone.getId()==1);
     }
 
 }
