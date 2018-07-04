@@ -7,8 +7,10 @@ import it.polimi.ing.sw.model.exceptions.NotValidException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-//interfaccia per chiamare i metodi del controller in RMI
-
+/**
+ * Interfaccia per chiamare i metodi remoti in RMI.
+ * In caso di connessione RMI, sarà il "controller" lato View.
+ */
 public interface PlayerControllerInterfaceRMI extends Remote, PlayerControllerInterface {
 
     void joinMatch() throws RemoteException;

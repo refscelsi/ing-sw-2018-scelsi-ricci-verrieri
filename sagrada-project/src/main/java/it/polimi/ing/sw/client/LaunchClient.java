@@ -2,7 +2,9 @@ package it.polimi.ing.sw.client;
 
 import java.rmi.RemoteException;
 
-// classe che lancia il client e crea un nuovo clientController su cui chiama il mainLoop
+/**
+ * Classe che lancia classe il client e istanzia la View, su cui chiama @start()
+ */
 public class LaunchClient {
     public static void main(String[] args) {
         try {

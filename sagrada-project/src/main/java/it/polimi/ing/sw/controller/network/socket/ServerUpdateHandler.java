@@ -9,23 +9,52 @@ import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.rmi.RemoteException;
 
+/**
+ * Classe che gestisce gli aggiornamenti da Server (PlayerControllerSocketServer) a Client in caso di connessione Socket, lato Client.
+ * Riceve dei messaggi di tipo MessageFromServer, da cui estrapola le informazioni necessarie per chiamare i metodi della View, a cui
+ * ha un riferimento.
+ *
+ * Tutti metodi di questa classe lanciano e cattura IOException. Nel caso venga catturata tale eccezione,
+ * poichè significa caduta di connessione lato Server viene notificato il Client e poi viene chiusa la connessione.
+ */
+
+
 public class ServerUpdateHandler implements Runnable {
+    /**
+     * Riferimento alla View, sui cui chiamare i metodi
+     */
     private View view;
+    /**
+     * riferimento al socket da cui si ricevono i messaggi.
+     */
     private Socket socket;
+    /**
+     * Attributo di tipo Match in cui viene salvato il clone ricevuto dal Server, in caso sia necessario alla View per gli
+     * aggiornamenti
+     */
     private Match match;
 
+    /**
+     * Costruttore a cui passo il riferimento alla View associata e al socket associato
+     * @param view
+     * @param socket
+     */
     public ServerUpdateHandler(View view, Socket socket){
         this.view = view;
         this.socket = socket;
     }
 
+    /**
+     * Metodo per ricevere in continuazione i messaggi del Server, in base al nome del metodo vengono
+     * chiamati diversi aggiornamenti sulla View
+     */
     @Override
     public void run() {
         try (ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {
             while (true) {
-                MatchToSend matchToSend = (MatchToSend) in.readObject();
-                String method = matchToSend.getMethod();
-                this.match=matchToSend.getMatch();
+                MessageFromServer messageFromServer = (MessageFromServer) in.readObject();
+                String method = messageFromServer.getMethod();
+                this.match= messageFromServer.getMatch();
                 switch (method) {
                     case Constants.ONTURNEND: {
                         view.onTurnEnd();
@@ -33,7 +62,7 @@ public class ServerUpdateHandler implements Runnable {
                     }
                     case Constants.ONSUCCES: {
                         try {
-                            view.onSuccess(matchToSend.getMessage());
+                            view.onSuccess(messageFromServer.getMessage());
                         } catch (RemoteException e) {
                             e.printStackTrace();
                         }
@@ -56,34 +85,34 @@ public class ServerUpdateHandler implements Runnable {
                         break;
                     }
                     case Constants.ONNOTPOSSIBLECONNECTIONEXCEPTION: {
-                        view.onNotPossibleConnectionException(matchToSend.getMessage());
+                        view.onNotPossibleConnectionException(messageFromServer.getMessage());
                         break;
                     }
 
                     case Constants.ONNOTVALIDNICKNAMEEXCEPTION:{
                         view.setLogin(false);
-                        view.onNotValidNicknameException(matchToSend.getMessage());
+                        view.onNotValidNicknameException(messageFromServer.getMessage());
                         break;
                     }
 
                     case Constants.ONNOTVALIDPLAYEXCEPTION: {
-                        view.onNotValidPlayException(matchToSend.getMessage());
+                        view.onNotValidPlayException(messageFromServer.getMessage());
                         break;
                     }
 
                     case Constants.ONNOTVALIDUSEDICEEXCEPTION: {
-                        view.onNotValidUseDiceException(matchToSend.getMessage());
+                        view.onNotValidUseDiceException(messageFromServer.getMessage());
                         break;
                     }
 
                     case Constants.ONNOTVALIDTOOLCARDEXCEPTION: {
-                        view.onNotValidToolCardException(matchToSend.getId(),matchToSend.getMessage());
+                        view.onNotValidToolCardException(messageFromServer.getId(), messageFromServer.getMessage());
                         break;
                     }
 
-                    case "onLogin":
+                    case Constants.ONLOGIN:
                         view.setLogin(true);
-                        view.onLogin(matchToSend.getMessage());
+                        view.onLogin(messageFromServer.getMessage());
                         break;
                     default:
                         System.out.println("Ho ricevuto un oggetto che non sono stato in grado di interpretare");
@@ -93,5 +122,4 @@ public class ServerUpdateHandler implements Runnable {
             } catch(ClassNotFoundException e){
             }
         }
-
 }

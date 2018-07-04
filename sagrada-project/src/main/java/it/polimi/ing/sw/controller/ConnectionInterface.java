@@ -9,7 +9,11 @@ import java.io.Serializable;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-public interface LoginInterface extends Remote, Serializable {
+/**
+ * Classe per richiedere la connessione in RMI
+ */
+
+public interface ConnectionInterface extends Remote, Serializable {
 
     public PlayerControllerInterfaceRMI connectRMI(String nickname, RemotePlayer remotePlayer) throws RemoteException;
 

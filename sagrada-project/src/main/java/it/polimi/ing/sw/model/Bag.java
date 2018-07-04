@@ -4,12 +4,17 @@ import java.io.Serializable;
 import java.util.*;
 import java.util.Random;
 
+/**
+ * Classe che rappresenta il Sacchetto da cui estrarre i dadi
+ */
 
 public class Bag{
 
     private ArrayList<Dice> dices = new ArrayList<Dice>();;
 
-
+    /**
+     * Quando viene istanziato un oggetto di questa classe viene inizializzato già con i 90 dadi dei diversi colori
+     */
     public Bag() {
 
         Dice dice;
@@ -43,7 +48,14 @@ public class Bag{
     }
 
 
-    // estrae un dado e lo lancia -> ritorna un dado di un determinato colore e di un determinato numero
+    public int getSize(){
+        return dices.size();
+    }
+
+    /**
+     * Metodo che simula l'estrazione e il lancio di un dado e lo lancia
+     * @return, ritorna un dado di un determinato colore e di un determinato numero
+     */
 
     public Dice drawDice(){
         Collections.shuffle(dices);
@@ -54,7 +66,12 @@ public class Bag{
     }
 
 
-    //estrae tot dadi casuali in base al numero dei giocatori e che costituiscono la draftpool
+    /**
+     * Metodo per l'estrazione di un certo numero di dadi casuali in base al numero dei giocatori,
+     * i dati estratti vengono aggiunti ad un oggetto di tipo Riserva, che viene ritornata dal metodo
+     * @param numPlayers
+     * @return
+     */
 
     public DraftPool draw (int numPlayers){
         int bound=(numPlayers*2)+1;
@@ -69,11 +86,6 @@ public class Bag{
 
     public void addDice (Dice dice) {
         dices.add(dice);
-    }
-
-
-    public int getSize(){
-        return dices.size();
     }
 
 }

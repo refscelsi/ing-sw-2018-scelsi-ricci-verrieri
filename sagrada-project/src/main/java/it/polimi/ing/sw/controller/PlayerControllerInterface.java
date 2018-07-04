@@ -6,8 +6,10 @@ import it.polimi.ing.sw.model.exceptions.NotValidException;
 import java.io.IOException;
 import java.rmi.RemoteException;
 
-//interfaccia implementata sia da PlayerControllerInterfaceSocket sia da PlayerControllerInterfaceRMI , controller della view
-//garantisce la trasparenza della rete
+/**
+ * interfaccia implementata sia da PlayerControllerSocketClient sia da PlayerControllerInterfaceRMI,
+ * contiene i metodi chiamati da View a Controller e garantisce un ulteriore livello di trasparenza della rete.
+ */
 
 public interface PlayerControllerInterface {
 

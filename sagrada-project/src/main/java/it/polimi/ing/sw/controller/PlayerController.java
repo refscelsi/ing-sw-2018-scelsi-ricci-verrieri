@@ -13,30 +13,55 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-//classe che gestisce gli input dei client e implementa i metodi di PlayerControllerInterfaceSocket (sulla rete)
+/**
+ * Classe che implementa i metodi di PlayerControllerInterface.
+ * Sia in caso di connessione Socket che di connessione RMI è il Controller delle azioni del giocatore.
+ * In base allo stato in cui si trova il giocatore autorizza o meno le mosse.
+ * In RMI i metodi sono chiamati da remoto sull'interfaccia PlayerControllerInterfaceRMI ed implementati in questa classe.
+ * In Socket i metodi sono chiamati da @PlayerControllerSocketServer, che a sua volta riceve messaggi dal Client.
+ */
 
 public class PlayerController extends UnicastRemoteObject implements PlayerControllerInterfaceRMI, Remote {
-    //riferimento alla partita
+
+    /**
+     * riferimento alla partita in corso
+     */
     private Match match;
-    //riferimento al player
+    /**
+     * riferimento al Player associato a questo PlayerController
+     */
     private Player player;
-    //riferimento alla view
+    /**
+     * riferimento al RemotePlayer associato a questo PlayerController
+     *
+     */
     private RemotePlayer remotePlayer;
-    //stato del giocatore
+    /**
+     * Stato del giocatore
+     */
     private PlayerState state;
-    //tengo traccia del nickname nel caso lo stronzo si riconnettesse
+    /**
+     * Riferimento al nickname in caso il giocatore si riconnetta
+     */
     private String nickname;
 
+
+    /**
+     * Costruttore della classe , cui passano i riferimenti alla partita in corso e al RemotePlayer associato
+     * @param match
+     * @param remotePlayer
+     * @throws RemoteException
+     */
     public PlayerController(Match match, RemotePlayer remotePlayer) throws RemoteException {
         super();
         this.match = match;
         this.remotePlayer = remotePlayer;
     }
 
-
-    public PlayerState getState() {
-        return this.player.getState();
-    }
+    /**
+     * GETTERS
+     *
+     */
 
     public RemotePlayer getRemotePlayer() {
         return this.remotePlayer;
@@ -46,12 +71,17 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
         return this.nickname;
     }
 
+    /**
+     * Metodo per il Login del giocatore. In caso di successo salva il riferimento al Player appena creato,
+     * notificando il RemotePlayer associato, altrimenti lancia eccezione.
+     * @param nickname
+     * @throws RemoteException
+     */
     @Override
     public void login(String nickname) throws RemoteException {
         try {
             match.login(nickname, remotePlayer);
             this.player=match.getPlayer(nickname);
-            System.out.println("assegno il player");
             remotePlayer.onLogin(player.getNickname());
         } catch ( NotValidNicknameException e ) {
             match.notifyNotValidNicknameException(this.remotePlayer ,e.getMessage());
@@ -61,12 +91,14 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
 
     }
 
+    /**
+     * Metodo con cui i giocatori prendono effettivamente parte alla partita
+     * @throws RemoteException
+     */
     @Override
     public void joinMatch() throws RemoteException {
         try {
-            if (player.getState().equals(PlayerState.OFFLINE)) {
-                //gestisci lo stronzo che ritorna in partita
-            } else if (player.getState().equals(PlayerState.INIZIALIZED)) {
+            if (player.getState().equals(PlayerState.INIZIALIZED)) {
                 match.joinMatch();
             }
         } catch (NotValidPlayException e) {
@@ -74,6 +106,10 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
         }
     }
 
+    /**
+     * Metodo chiamato dopo aver scelto lo schema per controllare lo stato degli altri giocatori
+     * @throws RemoteException
+     */
     @Override
     public void checkAllReady() throws RemoteException {
         try {
@@ -86,7 +122,11 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
         }
     }
 
-
+    /**
+     * Metodo chiamato per settare la Carta Schema scelta
+     * @param id
+     * @throws RemoteException
+     */
     @Override
     public void setChosenScheme(int id) throws RemoteException {
         try {
@@ -99,6 +139,14 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
         }
     }
 
+    /**
+     * Richiesta di utilizzo del dado, in base allo stato del giocatore può essere autorizzata o meno
+     * in caso sia l'ultima mossa possibile del giocatore il turno verrà passato automaticamente su Match
+     * @param indexOfDiceInDraftPool
+     * @param row
+     * @param col
+     * @throws RemoteException
+     */
     @Override
     public void sendUseDiceRequest(int indexOfDiceInDraftPool, int row, int col) throws RemoteException {
         try {
@@ -119,23 +167,23 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
 
             }
         } catch (NotValidPlayException e) {
-            System.out.println("Vorrei lanciare eccezione");
             match.notifyNotValidPlayException(player, e.getMessage());
         } catch (NotValidException e) {
             match.notifyNotValidUseDiceException(player, e.getMessage());
         }
     }
 
-    //quando passo il turno poi sono pronto a giocare il prossimo turno--> tanto non sarò attivo quindi non potrò chiamare
-    //i metodi. Oppure facciamo un altro stato per essere più sicuri e quando vieni notificato isPlaying passi allo stato READYTOPLAY???
+    /**
+     * Metodo chiamato dal giocatore per terminare il proprio turno
+     * @throws RemoteException
+     */
     @Override
     public void endTurn() throws RemoteException {
         try {
-            System.out.println("giocatore: " + nickname + "\n stato:" + player.getState().toString());
             if (player.getState().equals(PlayerState.READYTOPLAY) || player.getState().equals(PlayerState.INIZIALIZED) || player.getState().equals(PlayerState.OFFLINE)) {
                 throw new NotValidPlayException("Finisci il turno!");
             } else {
-                match.notifyChangement();
+                match.notifyChangement();//siamo sicuri??
                 match.changePlayer();
             }
         } catch (NotValidPlayException e) {
@@ -143,12 +191,24 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
         }
     }
 
+    /**
+     * Metodo di gestione delle ToolCard in base all'id e ai parametri ricevuti
+     * @param id
+     * @param dice
+     * @param operation
+     * @param sourceRow
+     * @param sourceCol
+     * @param destRow
+     * @param destCol
+     * @throws RemoteException
+     */
     @Override
     public void useToolCard(int id, int dice, int operation, int sourceRow, int sourceCol, int destRow, int destCol) throws RemoteException {
         try {
             switch (id) {
-
-                // carte che si possono utilizzare in qualsiasi momento
+                /**
+                 * carte che si possono utilizzare in qualsiasi momento
+                 */
                 case 1:
                 case 2:
                 case 3:
@@ -160,8 +220,9 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
                     } else
                         throw new NotValidPlayException("Non puoi usare questa carta");
                 }
-
-                // carte che si possono utilizzare in qualsiasi momento ma si eseguono in 2 step
+                /**
+                 * carte che si possono utilizzare in qualsiasi momento ma si eseguono in 2 step
+                 */
                 case 4:
                 case 12: {
                     if (player.getState().equals(PlayerState.TURNSTARTED) || player.getState().equals(PlayerState.USEDDICE)) {
@@ -177,9 +238,9 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
                             throw new NotValidPlayException("Non puoi usare questa carta");
                     }
                 }
-
-
-                // carte utilizzabili solo se non si è già utilizzato un dado nel turno e che prevedono 2 step
+                /**
+                 * carte utilizzabili solo se non si è già utilizzato un dado nel turno e che prevedono 2 step
+                 */
                 case 6: {
                     if (player.getState().equals(PlayerState.TURNSTARTED)) {
                         match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol);
@@ -188,9 +249,10 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
                         throw new NotValidPlayException("Non puoi usare questa carta");
 
                 }
-
-                // carte utilizzabili solo se non si è già utilizzato un dado nel turno e che prevedono 2 step
-                // il controller setta destRow a 0 o 1 a seconda che sia la prima o la seconda esecuzione
+                /**
+                 * carte utilizzabili solo se non si è già utilizzato un dado nel turno e che prevedono 2 step
+                 *il controller setta destRow a 0 o 1 a seconda che sia la prima o la seconda esecuzione
+                 */
                 case 11: {
                     if (player.getState().equals(PlayerState.TURNSTARTED)) {
                         match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, 0, destCol);
@@ -204,9 +266,9 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
                             throw new NotValidPlayException("Non puoi usare questa carta");
                     }
                 }
-
-
-                // carta che può essere utilizzata solo durante il secondo turno e prima di scegliere il secondo dado
+                /**
+                 * carta che può essere utilizzata solo durante il secondo turno e prima di scegliere il secondo dado
+                 */
                 case 7: {
                     if (player.getState().equals(PlayerState.TURNSTARTED) && !match.getIfFirstTurn(player)) {
                         match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol);
@@ -214,8 +276,9 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
                     } else
                         throw new NotValidPlayException("Non puoi usare questa carta");
                 }
-
-                // carta che può essere utilizzata solo durante il primo turno
+                /**
+                 * carta che può essere utilizzata solo durante il primo turno
+                 */
                 case 8: {
                     if ((player.getState().equals(PlayerState.TURNSTARTED) && match.getIfFirstTurn(player)) || (player.getState().equals(PlayerState.USEDDICE) && match.getIfFirstTurn(player))) {
                         match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol);
@@ -223,12 +286,11 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
                     } else
                         throw new NotValidPlayException("Non puoi usare questa carta");
                 }
-
-
-                // carta che può essere utilizzata solo se non si è già piazzato un dado
+                /**
+                 * carta che può essere utilizzata solo durante il primo turno
+                 */
                 case 9: {
                     if (player.getState().equals(PlayerState.TURNSTARTED)) {
-                        System.out.println("giocatore: " + nickname + "\n stato:" + player.getState().toString());
                         match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol);
                         endTurn();
                         break;
@@ -245,6 +307,10 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
         }
     }
 
+    /**
+     * Metodo chiamato in caso di disconnessione, quindi di cattura di un'eccezione di rete
+     * @throws RemoteException
+     */
     @Override
     public void stopPlayer() throws RemoteException {
         match.exitPlayer(player);

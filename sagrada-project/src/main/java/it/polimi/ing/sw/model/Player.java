@@ -15,19 +15,32 @@ public class Player implements Serializable{
     private int numOfToken;
     private int score;
     private boolean isLogged;
-    private boolean isOnline; //true quando sta giocando (posso ricevere i comandi) false altrimenti
+    private boolean isOnline;
     private Scheme scheme;
     private PrivateObjectiveCard privateObjective;
     private Color color;
     private ArrayList<Scheme> schemesToChoose;
+    /**
+     * Stato attuale del giocatore
+     */
     private transient PlayerState state;
 
 
+    /**
+     * il Player viene creato passandogli il nickname come parametro,
+     * quindi solo una volta che il login va a buon fine
+     * @param nickname
+     */
     public Player (String nickname){
         this.nickname=nickname;
         this.isOnline=true;
         this.state=PlayerState.INIZIALIZED;
     };
+
+    /**
+     * Metodi GET
+     *
+     */
 
     public boolean isOnline() {
         return isOnline;
@@ -65,6 +78,10 @@ public class Player implements Serializable{
         return scheme;
     }
 
+    /**
+     * Metodi SET
+     *
+     */
     public void setScore(int score) {
         this.score = score;
     }
@@ -115,6 +132,11 @@ public class Player implements Serializable{
     public void setOffline(){
         this.isOnline=false;
     }
+
+    /**
+     * Metodo che crea un clone del Player, da poter inviare via Socket
+     * @return
+     */
 
     public Player playerClone(){
         Player playerClone=new Player(this.nickname);

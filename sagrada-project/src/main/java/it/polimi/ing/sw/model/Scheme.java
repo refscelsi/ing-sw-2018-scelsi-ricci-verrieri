@@ -27,9 +27,10 @@ public class Scheme implements Serializable {
     }
 
 
-
-    // METODI SETTERS
-
+    /**
+     * Metodi SET
+     *
+     */
 
     public void setDifficulty( int difficulty ) {
         this.difficulty = difficulty;
@@ -56,8 +57,10 @@ public class Scheme implements Serializable {
     }
 
 
-
-    // METODI GETTERS
+    /**
+     * Metodi GET
+     *
+     */
 
 
     public Box[][] getBoxes() {

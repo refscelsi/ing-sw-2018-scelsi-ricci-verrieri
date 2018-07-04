@@ -1,10 +1,10 @@
 package it.polimi.ing.sw.client;
 
 //import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
-import it.polimi.ing.sw.controller.LoginInterface;
+import it.polimi.ing.sw.controller.ConnectionInterface;
 import it.polimi.ing.sw.controller.PlayerControllerInterface;
 import it.polimi.ing.sw.controller.RemotePlayer;
-import it.polimi.ing.sw.controller.network.socket.PlayerControllerInterfaceSocket;
+import it.polimi.ing.sw.controller.network.socket.PlayerControllerSocketClient;
 import it.polimi.ing.sw.controller.network.socket.ServerUpdateHandler;
 import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.ui.cli.CLI;
@@ -20,8 +20,6 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
-import java.util.TimerTask;
-import java.util.Timer;
 
 import static java.lang.System.exit;
 
@@ -42,7 +40,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
     private boolean isGameStarted;     // flag per vedere se la partita è iniziata: non so se sarà utile o meno
     private boolean isOnline;
     private PlayerControllerInterface controller;//il client può chiamare solo i metodi di PlayerInterfaceSocket
-    private LoginInterface loginController;
+    private ConnectionInterface loginController;
     private UiUpdate ui;
     private String input;
     private static Scanner scanner = new Scanner(System.in);
@@ -255,7 +253,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
     public void loginPlayerRMI(String nickname) {
         try {
             Registry reg = LocateRegistry.getRegistry();
-            LoginInterface loginController = (LoginInterface) reg.lookup("LoginController");
+            ConnectionInterface loginController = (ConnectionInterface) reg.lookup("ConnectionController");
             controller = loginController.connectRMI(nickname, this);
             controller.login(nickname);
             System.out.println("forza chievo");
@@ -270,11 +268,11 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
     }
 
         public void loginPlayerSocket(String nickname) {
-        PlayerControllerInterfaceSocket playerInterfaceSocket = null;
+        PlayerControllerSocketClient playerInterfaceSocket = null;
         try {
             Socket socket = new Socket("localhost", Constants.SOCKET_PORT);
             new Thread(new ServerUpdateHandler(this, socket )).start();
-            playerInterfaceSocket = new PlayerControllerInterfaceSocket(socket);
+            playerInterfaceSocket = new PlayerControllerSocketClient(socket);
         } catch (IOException e) {
             e.printStackTrace();
         }

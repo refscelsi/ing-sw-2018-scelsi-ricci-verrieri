@@ -1,11 +1,10 @@
 package it.polimi.ing.sw.server;
 
-import it.polimi.ing.sw.controller.LoginController;
-import it.polimi.ing.sw.controller.network.socket.PlayerControllerSocket;
+import it.polimi.ing.sw.controller.ConnectionController;
+import it.polimi.ing.sw.controller.network.socket.PlayerControllerSocketServer;
 import it.polimi.ing.sw.model.Match;
 
 
-import javax.swing.table.TableRowSorter;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -15,22 +14,24 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
 import static it.polimi.ing.sw.util.Constants.SOCKET_PORT;
-//classe che fa partire il server e farà partire il timer
-//crea subito un match e un controller, sarà poi il controller una volta che ha ricevuto 4 connessioni a fare match.start()
-//oppure facciamo che il server crea la partita solo dopo aver ricevuto 4 connessioni?? da decidere
+
+/**
+ * Classe che lancia il Server ed istanzia un Match.
+ * Rimane in attesa di connessioni, sia in RMI che in Socket
+ */
 
 public class Server {
     public static void main(String args[]){
         try {
             Registry reg = LocateRegistry.createRegistry(1099);
             Match match= new Match();
-            LoginController loginController = new LoginController(match);
-            reg.rebind("LoginController", (Remote) loginController);
+            ConnectionController connectionController = new ConnectionController(match);
+            reg.rebind("ConnectionController", (Remote) connectionController);
             new Thread(()->{
                 try(ServerSocket serverSocket=new ServerSocket(SOCKET_PORT)){
                     while(true){
                         Socket clientSocket= serverSocket.accept();
-                        PlayerControllerSocket controllerSocket = new PlayerControllerSocket(clientSocket, loginController );
+                        PlayerControllerSocketServer controllerSocket = new PlayerControllerSocketServer(clientSocket, connectionController);
                         new Thread(controllerSocket).start();
                     }
                 } catch (IOException e) {

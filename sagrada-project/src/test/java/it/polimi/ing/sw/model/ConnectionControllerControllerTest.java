@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 
-public class LoginControllerControllerTest {
+public class ConnectionControllerControllerTest {
 
     private Match match;
     private Player player;
