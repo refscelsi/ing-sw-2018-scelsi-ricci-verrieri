@@ -1,7 +1,7 @@
-package it.polimi.ing.sw.ui.gui;
+package it.polimi.ing.sw.ui.gui.advanced;
 
-import it.polimi.ing.sw.App;
 import it.polimi.ing.sw.model.Scheme;
+import it.polimi.ing.sw.ui.gui.SchemeListFileConverter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -497,13 +497,6 @@ public class AddScheme extends javax.swing.JFrame {
 
         setIconImage(Toolkit.getDefaultToolkit( ).getImage(getClass( ).getResource(IMAGE_PATH + "sagrada.png")));
         this.setTitle("Sagrada Boardgame");
-    }
-    //</editor-fold>
-
-    //<editor-fold defaultstate="collapsed" desc=" tornaMenu Method ">
-    public void tornaMenu() {
-        this.setVisible(false);
-        App.menu.setVisible(true);
     }
     //</editor-fold>
 

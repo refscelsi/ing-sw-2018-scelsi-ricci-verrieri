@@ -1,6 +1,7 @@
 package it.polimi.ing.sw.ui.gui;
 
-import javax.swing.*;
+import it.polimi.ing.sw.model.objectiveCard.PrivateObjectiveCard;
+
 import javax.swing.border.LineBorder;
 
 public class SumPlayerPanel extends javax.swing.JPanel {
@@ -8,9 +9,14 @@ public class SumPlayerPanel extends javax.swing.JPanel {
     private int token;
     private String playerName;
     private String schemeName;
+    private PrivateObjectiveCard privateObjective;
+    private Boolean isShown;
+    private GUI gui;
 
-    public SumPlayerPanel() {
+    public SumPlayerPanel( GUI gui) {
+        this.gui=gui;
         initComponents();
+        isShown = false;
     }
 
     @SuppressWarnings("unchecked")
@@ -34,9 +40,14 @@ public class SumPlayerPanel extends javax.swing.JPanel {
         privateObjButtonLabel.setText("PO");
         privateObjButtonLabel.setOpaque(true);
         privateObjButtonLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                privateObjButtonLabelMouseClicked(evt);
+            }
+
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 privateObjButtonLabelMouseEntered(evt);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 privateObjButtonLabelMouseExited(evt);
             }
@@ -74,24 +85,49 @@ public class SumPlayerPanel extends javax.swing.JPanel {
         privateObjButtonLabel.setBorder(null);
     }//GEN-LAST:event_privateObjButtonLabelMouseExited
 
+    private void privateObjButtonLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_privateObjButtonLabelMouseClicked
+        if (TableFrame.isPlayerTurn(gui.getNickname(), getName().charAt(0))) {
+            if (!isShown) {
+                privateOBJFrame = new PrivateOBJFrame(privateObjective);
+                privateOBJFrame.setVisible(true);
+                isShown = true;
+            } else {
+                privateOBJFrame.setVisible(true);
+                privateOBJFrame.setLocationRelativeTo(null);
+            }
+        }
+
+    }//GEN-LAST:event_privateObjButtonLabelMouseClicked
+
     public void setToken(int token) {
         this.token = token;
         numTokenRemainingLabel.setText(String.valueOf(token));
     }
 
     public void setPlayerName(String playerName) {
-        this.playerName=playerName;
+        this.playerName = playerName;
         namePlayerLabel.setText(playerName);
     }
+
     public void setSchemeName(String schemeName) {
-        this.schemeName=schemeName;
+        this.schemeName = schemeName;
         schemeNameLabel.setText(schemeName);
     }
 
+    public void setPrivateObjCard(PrivateObjectiveCard privateObjective) {
+        this.privateObjective = privateObjective;
+    }
+
+    private PrivateOBJFrame privateOBJFrame;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel namePlayerLabel;
     private javax.swing.JLabel numTokenRemainingLabel;
     private javax.swing.JLabel privateObjButtonLabel;
     private javax.swing.JLabel schemeNameLabel;
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
     // End of variables declaration//GEN-END:variables
 }

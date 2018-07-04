@@ -10,9 +10,11 @@ public class DiceFieldPanel extends javax.swing.JPanel {
     private static final int dimXdice = 45;
     private static final int dimYdice = 45;
 
+    private GUI gui;
     private List<DiceGUI> diceGUIList;
 
-    public DiceFieldPanel() {
+    public DiceFieldPanel(GUI gui) {
+        this.gui=gui;
         diceGUIList = new ArrayList<>();
         initComponents();
         positionateDiceGUIboxes();
@@ -21,6 +23,7 @@ public class DiceFieldPanel extends javax.swing.JPanel {
     private void positionateDiceGUIboxes() {
         for (int i = 0; i < 11; i++) {
             DiceGUI diceGUI = new DiceGUI(false, dimXdice, dimYdice);
+            diceGUI.setController(gui);
             diceGUIList.add(diceGUI);
             positionateBox(diceGUI, i);
         }
@@ -84,6 +87,7 @@ public class DiceFieldPanel extends javax.swing.JPanel {
         for (int i = 0; i < dices.size(); i++) {
             diceGUIList.get(i).setDice(dices.get(i));
             diceGUIList.get(i).setVisible(true);
+            diceGUIList.get(i).setName(String.valueOf(i));
         }
     }
 
