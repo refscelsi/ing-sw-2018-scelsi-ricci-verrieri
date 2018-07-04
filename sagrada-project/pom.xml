@@ -119,28 +119,179 @@
           <artifactId>maven-deploy-plugin</artifactId>
           <version>2.8.2</version>
         </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <configuration>
+            <source>1.8</source>
+            <target>1.8</target>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>3.0.0</version>
+          <configuration>
+            <descriptorRefs>
+              <descriptorRef>jar-with-dependencies</descriptorRef>
+            </descriptorRefs>
+            <archive>
+              <manifest>
+                <mainClass>it.polimi.ing.sw.server.Server</mainClass>
+              </manifest>
+            </archive>
+          </configuration>
+          <executions>
+            <execution>
+              <phase>package</phase>
+              <goals>
+                <goal>single</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
+       <!-- <plugin>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>2.4</version>
+          <executions>
+            <execution>
+              <id>build-publisher</id>
+              <configuration>
+                <appendAssemblyId>false</appendAssemblyId>
+                <archive>
+                  <manifest>
+                    <mainClass>it.polimi.ing.sw.server.Server</mainClass>
+                  </manifest>
+                </archive>
+                <descriptorRefs>
+                  <descriptorRef>jar-with-dependencies</descriptorRef>
+                </descriptorRefs>
+                <finalName>${project.artifactId}</finalName>
+              </configuration>
+              <phase>package</phase>
+              <goals>
+                <goal>single</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>build-logReader</id>
+              <configuration>
+                <appendAssemblyId>false</appendAssemblyId>
+                <archive>
+                  <manifest>
+                    <mainClass>it.polimi.ing.sw.client.LaunchClient</mainClass>
+                  </manifest>
+                </archive>
+                <descriptorRefs>
+                  <descriptorRef>jar-with-dependencies</descriptorRef>
+                </descriptorRefs>
+                <finalName>${project.artifactId}-logReader</finalName>
+              </configuration>
+              <phase>package</phase>
+              <goals>
+                <goal>single</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>-->
+
+       <!-- <plugin>
+          <groupId>org.dstovall</groupId>
+          <artifactId>onejar-maven-plugin</artifactId>
+          <version>1.4.4</version>
+          <executions>
+            <execution>
+              <id>build-first</id>
+              <configuration>
+                <mainClass>it.polimi.ing.sw.client.LaunchClient</mainClass>
+                <attachToBuild>true</attachToBuild>
+                <classifier>onejar</classifier>
+                <filename>first-runnable.jar</filename>
+              </configuration>
+              <goals>
+                <goal>one-jar</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>build-second</id>
+              <configuration>
+                <mainClass>it.polimi.ing.sw.server.Server</mainClass>
+                <attachToBuild>true</attachToBuild>
+                <classifier>onejar</classifier>
+                <filename>second-runnable.jar</filename>
+              </configuration>
+              <goals>
+                <goal>server-jar</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>-->
+
       </plugins>
     </pluginManagement>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
-        </configuration>
-      </plugin>
 
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>3.1.0</version>
-        <configuration>
-          <archive>
-            <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
-          </archive>
-        </configuration>
-      </plugin>
-    </plugins>
+
+
+
+    <!-- <plugin>
+       <artifactId>maven-assembly-plugin</artifactId>
+       <version>2.4</version>
+       <executions>
+         <execution>
+           <id>client</id>
+           <configuration>
+             <appendAssemblyId>false</appendAssemblyId>
+             <archive>
+               <manifest>
+                 <mainClass>it.polimi.ing.sw.client.LaunchClient</mainClass>
+               </manifest>
+             </archive>
+             <descriptorRefs>
+               <descriptorRef>client</descriptorRef>
+             </descriptorRefs>
+             <finalName>${project.artifactId}</finalName>
+           </configuration>
+           <phase>package</phase>
+           <goals>
+             <goal>single</goal>
+           </goals>
+         </execution>
+         <execution>
+           <id>server</id>
+           <configuration>
+             <appendAssemblyId>false</appendAssemblyId>
+             <archive>
+               <manifest>
+                 <mainClass>it.polimi.ing.sw.server.Server</mainClass>
+               </manifest>
+             </archive>
+             <descriptorRefs>
+               <descriptorRef>server</descriptorRef>
+             </descriptorRefs>
+             <finalName>${project.artifactId}-logReader</finalName>
+           </configuration>
+           <phase>package</phase>
+           <goals>
+             <goal>single</goal>
+           </goals>
+         </execution>
+       </executions>
+     </plugin>-->
+
+
+
   </build>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>onejar-maven-plugin.googlecode.com</id>
+      <url>http://onejar-maven-plugin.googlecode.com/svn/mavenrepo</url>
+    </pluginRepository>
+  </pluginRepositories>
 </project>
+
+
+
