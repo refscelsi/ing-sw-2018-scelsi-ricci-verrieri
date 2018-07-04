@@ -126,6 +126,7 @@ public class Player implements Serializable{
         if(this.scheme!=null) {
             playerClone.setScheme(this.scheme.schemeClone());
         }
+        playerClone.setScheme(this.scheme);
         return playerClone;
     }
 

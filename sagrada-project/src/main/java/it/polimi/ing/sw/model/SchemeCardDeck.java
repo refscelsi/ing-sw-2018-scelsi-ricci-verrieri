@@ -42,22 +42,6 @@ public class SchemeCardDeck implements Serializable {
         }
     }
 
-    /*public void setDeck(){
-        int index=0;
-        while(index<16) {
-            Box[][] boxes = new Box[4][5];
-            for(int i=0;i<4;i++){
-                for(int j=0;j<5;j++){
-                    boxes[i][j]=new Box(i,j);
-                }
-            }
-
-            Scheme scheme = new Scheme(index, 2, boxes);
-            deck.add(scheme);
-            index++;
-        }
-
-    }*/
 
     public ArrayList<Scheme> drawSchemeCard() {
         ArrayList<Scheme> drawnCards = new ArrayList<Scheme>();

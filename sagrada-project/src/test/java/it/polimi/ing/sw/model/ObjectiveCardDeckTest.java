@@ -5,7 +5,8 @@ import static org.junit.Assert.*;
 
 import it.polimi.ing.sw.model.ObjectiveCardDeck;
 
-public class ObjectiveCardDeckTest {
+public class
+ObjectiveCardDeckTest {
     private ObjectiveCardDeck deck;
 
     @org.junit.Before

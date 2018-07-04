@@ -38,7 +38,11 @@ public class PlayerControllerSocket implements RemotePlayer, Runnable {
             this.out= new ObjectOutputStream(clientSocket.getOutputStream());
             this.clientSocket = clientSocket;
         } catch (IOException e) {
-            e.printStackTrace();
+            try {
+                controller.stopPlayer();
+            } catch ( RemoteException e1 ) {
+                e1.printStackTrace();
+            }
         }
     }
 
@@ -100,6 +104,7 @@ public class PlayerControllerSocket implements RemotePlayer, Runnable {
             }
         } catch (ClassNotFoundException e) {
         } catch (IOException e) {
+            System.out.println("presa qui ");
         }
 
     }
@@ -111,7 +116,7 @@ public class PlayerControllerSocket implements RemotePlayer, Runnable {
             out.writeObject(matchToSend);
             out.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            controller.stopPlayer();
         }
     }
 
@@ -123,7 +128,7 @@ public class PlayerControllerSocket implements RemotePlayer, Runnable {
             out.writeObject(matchToSend);
             out.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            controller.stopPlayer();
         }
     }
 
@@ -135,7 +140,8 @@ public class PlayerControllerSocket implements RemotePlayer, Runnable {
             out.writeObject(matchToSend);
             out.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            controller.stopPlayer();
+
         }
     }
 
@@ -146,7 +152,8 @@ public class PlayerControllerSocket implements RemotePlayer, Runnable {
             out.writeObject(matchToSend);
             out.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("presa anche qui ");
+            controller.stopPlayer();
         }
     }
 
@@ -157,7 +164,7 @@ public class PlayerControllerSocket implements RemotePlayer, Runnable {
             out.writeObject(matchToSend);
             out.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            controller.stopPlayer();
         }
     }
 
@@ -168,7 +175,7 @@ public class PlayerControllerSocket implements RemotePlayer, Runnable {
             out.writeObject(matchToSend);
             out.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            controller.stopPlayer();
         }
     }
 
@@ -180,7 +187,7 @@ public class PlayerControllerSocket implements RemotePlayer, Runnable {
             out.writeObject(matchToSend);
             out.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            controller.stopPlayer();
         }
     }
 
@@ -192,7 +199,7 @@ public class PlayerControllerSocket implements RemotePlayer, Runnable {
             out.writeObject(matchToSend);
             out.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            controller.stopPlayer();
         }
     }
 
@@ -203,7 +210,7 @@ public class PlayerControllerSocket implements RemotePlayer, Runnable {
             out.writeObject(matchToSend);
             out.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            controller.stopPlayer();
         }
     }
 
@@ -214,7 +221,7 @@ public class PlayerControllerSocket implements RemotePlayer, Runnable {
             out.writeObject(matchToSend);
             out.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            controller.stopPlayer();
         }
     }
 
@@ -225,7 +232,7 @@ public class PlayerControllerSocket implements RemotePlayer, Runnable {
             out.writeObject(matchToSend);
             out.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            controller.stopPlayer();
         }
     }
 
@@ -236,7 +243,7 @@ public class PlayerControllerSocket implements RemotePlayer, Runnable {
             out.writeObject(matchToSend);
             out.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            controller.stopPlayer();
         }
     }
 
@@ -247,9 +254,10 @@ public class PlayerControllerSocket implements RemotePlayer, Runnable {
             out.writeObject(matchToSend);
             out.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            controller.stopPlayer();
         }
 
     }
+
 
 }

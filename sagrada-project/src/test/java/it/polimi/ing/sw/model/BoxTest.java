@@ -12,33 +12,31 @@ import static org.junit.Assert.*;
 public class BoxTest{
     private Dice dice;
     private Box box;
+    private Box box1;
     private Color color;
 
     @Before
     public void setUp() throws Exception {
         dice = new Dice();
         box = new Box();
+        box1= new Box(1,2,Color.GREEN,0);
+
     }
 
     @Test
     public void cloneBox(){
-        Box box= new Box(1,2,Color.GREEN,0);
-        assertTrue(box.getX()==1);
-        assertTrue(box.getY()==2);
-        assertTrue(box.getColor()==Color.GREEN);
-        assertTrue(box.getShade()==0);
-        Box box1=new Box(2,3);
-        assertTrue(box1.getX()==2);
-        assertTrue(box1.getY()==3);
-        assertTrue(box1.getColor()==Color.WHITE);
-        assertTrue(box1.getShade()==0);
-        assertTrue(box1.isFull()==false);
-        box1=box.cloneBox();
+        Box box= new Box();
+        box=box1.cloneBox();
         assertTrue(box1.getX()==1);
         assertTrue(box1.getY()==2);
         assertTrue(box1.getColor()==Color.GREEN);
         assertTrue(box1.getShade()==0);
-
+        Box box2=new Box(1,2);
+        box2=box1.cloneBox();
+        assertTrue(box1.getX()==1);
+        assertTrue(box1.getY()==2);
+        assertTrue(box1.getColor()==Color.GREEN);
+        assertTrue(box1.getShade()==0);
     }
 
     @Test

@@ -174,12 +174,12 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
 
     @Override
     public void onSetPlaying() {
-        if (!isPlaying) {
+        /*if (!isPlaying) {
             isPlaying = true;
             Timer timer = new Timer();
             TimerTask turnTimer = new TurnTimer(this);
             timer.schedule(turnTimer, 100000);
-        }
+        }*/
         System.out.println("inizio thread fuori onSetPlaying");
         Runnable task1 = () -> {
             System.out.println("inizio thread dentro onSetPlaying");
