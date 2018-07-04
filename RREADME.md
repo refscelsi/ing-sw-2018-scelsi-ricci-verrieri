@@ -4,7 +4,7 @@
 >Ricci Arianna MAT COD PERSONA
 
 #**COVERAGE TEST**
-[Coverage link](./COVERAGE/index.html)
+[Coverage link](./COVERAGE/)
 
 #DIAGRAMMA UML https://www.draw.io/#G1PCbA6g2C3OemZky3b2PotWH-zAOn0Jcq
 
