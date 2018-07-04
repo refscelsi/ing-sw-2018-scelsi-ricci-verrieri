@@ -10,6 +10,16 @@
   <!-- <packaging>jar</packaging>  -->
 
   <name>sagrada-project</name>
+  <distributionManagement>
+    <repository>
+      <uniqueVersion>false</uniqueVersion>
+      <id>Sagrada</id>
+      <name>Sagrada Repository</name>
+      <url>scp://sagrada-project</url>
+      <layout>default</layout>
+    </repository>
+  </distributionManagement>
+
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -87,6 +97,7 @@
     </dependency>
   </dependencies>
 
+
   <build>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
@@ -131,16 +142,7 @@
         </configuration>
       </plugin>
 
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>3.1.0</version>
-        <configuration>
-          <archive>
-            <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
-          </archive>
-        </configuration>
-      </plugin>
+
     </plugins>
   </build>
 </project>
