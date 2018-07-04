@@ -526,12 +526,26 @@ public class Match implements Serializable{
         if(first<numPlayers-1){
             firstPlayer=players.get(first+1);
             if(firstPlayer.getState().equals(PlayerState.OFFLINE)){
-                firstPlayer=players.get(first+2);
+                if(first+1==numPlayers){
+                    firstPlayer=players.get(0);
+                    if(!firstPlayer.getState().equals(PlayerState.OFFLINE)) {
+                        createRoundPlayers(0);
+                    }
+                }
+                else {
+                    firstPlayer = players.get(first + 2);
+                }
                 if(!firstPlayer.getState().equals(PlayerState.OFFLINE)){
                 createRoundPlayers(first+2);
                 }
                 else
-                    createRoundPlayers(first+3);
+                    if(first+2==numPlayers) {
+                        firstPlayer = players.get(0);
+                        if (!firstPlayer.getState().equals(PlayerState.OFFLINE)) {
+                            createRoundPlayers(0);
+                        }
+                } else
+                        createRoundPlayers(first + 3);
             }
             else {
                 createRoundPlayers(first + 1);
@@ -1035,6 +1049,7 @@ public class Match implements Serializable{
      */
     public void exitPlayer(Player player) throws RemoteException {
         if(!matchStarted){
+            System.out.println("aiuto");
             players.remove(player);
             playerMap.remove(player);
             numPlayersPlaying--;
