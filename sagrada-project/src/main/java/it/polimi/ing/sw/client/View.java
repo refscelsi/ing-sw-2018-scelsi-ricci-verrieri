@@ -348,6 +348,10 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         }
     }
 
+    public Match getMatch() {
+        return match;
+    }
+
 
     // metodo che mi serve solo perché la carta utensile 12 può sollevare una notValidException sia al primo step
     // che al secondo. Grazie a questo metodo riesco a gestire le due eccezioni in maniera differente.

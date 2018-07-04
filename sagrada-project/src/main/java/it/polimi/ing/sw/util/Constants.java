@@ -42,4 +42,13 @@ public class Constants {
     public static final String ONNOTVALIDNICKNAMEEXCEPTION ="onNotValidNicknameException";
     public static final String ONNOTPOSSIBLECONNECTIONEXCEPTION ="onNotPossibleConnectionException";
 
+    //GUI
+    public static final String PLAYER_STANDARD_NAME = "Player";
+    public static final String IMAGE_PATH = "/img/dices/";
+    public static final String SAGRADA_ICO = "/img/sagrada.png";
+    public static final String SOCKET_CODE = "s";
+    public static final String RMI_CODE = "r";
+    public static final String DEFAULT_TITLE = "Sagrada Boardgame";
+    public static final String NOT_A_DICE = "notADice";
+
 }

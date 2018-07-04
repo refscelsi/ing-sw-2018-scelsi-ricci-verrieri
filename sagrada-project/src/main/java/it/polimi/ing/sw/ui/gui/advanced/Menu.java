@@ -1,4 +1,4 @@
-package it.polimi.ing.sw.ui.gui;
+package it.polimi.ing.sw.ui.gui.advanced;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,8 +8,6 @@ import java.awt.event.WindowListener;
 
 public class Menu extends javax.swing.JFrame {
 
-
-    private NewMatchForm nmf;
     private AddScheme as;
     private static final String IMAGE_PATH = "/img/";
 
@@ -152,8 +150,6 @@ public class Menu extends javax.swing.JFrame {
 
     private void newMatchLabelMouseClicked(java.awt.event.MouseEvent evt) {
         scompareMenu();
-        nmf = new NewMatchForm();
-        nmf.setVisible(true);
     }
 
     private void addSchemeLabelMouseClicked(java.awt.event.MouseEvent evt) {
