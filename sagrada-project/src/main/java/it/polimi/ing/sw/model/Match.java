@@ -636,15 +636,6 @@ public class Match implements Serializable {
                 playerPlaying.setState(PlayerState.TURNSTARTED);
                 notifyStartTurn(playerPlaying);
             }
-            else if(numPlayers==4){
-                playersRoundIndex++;
-                playerPlaying.setState(PlayerState.ENDEDTURN);
-                notifyEndTurn(playerPlaying);
-                playerPlaying = playersRound[playersRoundIndex];
-                checkOffline(playerPlaying);
-                playerPlaying.setState(PlayerState.TURNSTARTED);
-                notifyStartTurn(playerPlaying);
-            }
         } else if (playersRoundIndex == (numPlayers * 2) - 1) {
                 playersRoundIndex = 0;
                 endRound();
