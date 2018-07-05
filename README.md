@@ -9,6 +9,7 @@
 [Coverage link](COVERAGE/)
 
 # DIAGRAMMA UML https://www.draw.io/#G1PCbA6g2C3OemZky3b2PotWH-zAOn0Jcq
+[UML link](DOCUMENTS/)
 
 # Funzionalità implementate
 
