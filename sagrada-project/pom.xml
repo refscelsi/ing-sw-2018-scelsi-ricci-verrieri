@@ -86,6 +86,17 @@
       <artifactId>sonar-scanner-api</artifactId>
       <version>2.10.0.1189</version>
     </dependency>
+
+    <dependency>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+      <version>2.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-utils</artifactId>
+      <version>1.1</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -132,168 +143,20 @@
 
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-assembly-plugin</artifactId>
-          <version>3.0.0</version>
+          <artifactId>maven-jar-plugin</artifactId>
           <configuration>
-            <descriptorRefs>
-              <descriptorRef>jar-with-dependencies</descriptorRef>
-            </descriptorRefs>
             <archive>
               <manifest>
+                <addClasspath>true</addClasspath>
+                <!--<mainClass>it.polimi.ing.sw.client.LaunchClient</mainClass>-->
                 <mainClass>it.polimi.ing.sw.server.Server</mainClass>
               </manifest>
             </archive>
           </configuration>
-          <executions>
-            <execution>
-              <phase>package</phase>
-              <goals>
-                <goal>single</goal>
-              </goals>
-            </execution>
-          </executions>
         </plugin>
-
-       <!-- <plugin>
-          <artifactId>maven-assembly-plugin</artifactId>
-          <version>2.4</version>
-          <executions>
-            <execution>
-              <id>build-publisher</id>
-              <configuration>
-                <appendAssemblyId>false</appendAssemblyId>
-                <archive>
-                  <manifest>
-                    <mainClass>it.polimi.ing.sw.server.Server</mainClass>
-                  </manifest>
-                </archive>
-                <descriptorRefs>
-                  <descriptorRef>jar-with-dependencies</descriptorRef>
-                </descriptorRefs>
-                <finalName>${project.artifactId}</finalName>
-              </configuration>
-              <phase>package</phase>
-              <goals>
-                <goal>single</goal>
-              </goals>
-            </execution>
-            <execution>
-              <id>build-logReader</id>
-              <configuration>
-                <appendAssemblyId>false</appendAssemblyId>
-                <archive>
-                  <manifest>
-                    <mainClass>it.polimi.ing.sw.client.LaunchClient</mainClass>
-                  </manifest>
-                </archive>
-                <descriptorRefs>
-                  <descriptorRef>jar-with-dependencies</descriptorRef>
-                </descriptorRefs>
-                <finalName>${project.artifactId}-logReader</finalName>
-              </configuration>
-              <phase>package</phase>
-              <goals>
-                <goal>single</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>-->
-
-       <!-- <plugin>
-          <groupId>org.dstovall</groupId>
-          <artifactId>onejar-maven-plugin</artifactId>
-          <version>1.4.4</version>
-          <executions>
-            <execution>
-              <id>build-first</id>
-              <configuration>
-                <mainClass>it.polimi.ing.sw.client.LaunchClient</mainClass>
-                <attachToBuild>true</attachToBuild>
-                <classifier>onejar</classifier>
-                <filename>first-runnable.jar</filename>
-              </configuration>
-              <goals>
-                <goal>one-jar</goal>
-              </goals>
-            </execution>
-            <execution>
-              <id>build-second</id>
-              <configuration>
-                <mainClass>it.polimi.ing.sw.server.Server</mainClass>
-                <attachToBuild>true</attachToBuild>
-                <classifier>onejar</classifier>
-                <filename>second-runnable.jar</filename>
-              </configuration>
-              <goals>
-                <goal>server-jar</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>-->
-
       </plugins>
     </pluginManagement>
-
-
-
-
-
-    <!-- <plugin>
-       <artifactId>maven-assembly-plugin</artifactId>
-       <version>2.4</version>
-       <executions>
-         <execution>
-           <id>client</id>
-           <configuration>
-             <appendAssemblyId>false</appendAssemblyId>
-             <archive>
-               <manifest>
-                 <mainClass>it.polimi.ing.sw.client.LaunchClient</mainClass>
-               </manifest>
-             </archive>
-             <descriptorRefs>
-               <descriptorRef>client</descriptorRef>
-             </descriptorRefs>
-             <finalName>${project.artifactId}</finalName>
-           </configuration>
-           <phase>package</phase>
-           <goals>
-             <goal>single</goal>
-           </goals>
-         </execution>
-         <execution>
-           <id>server</id>
-           <configuration>
-             <appendAssemblyId>false</appendAssemblyId>
-             <archive>
-               <manifest>
-                 <mainClass>it.polimi.ing.sw.server.Server</mainClass>
-               </manifest>
-             </archive>
-             <descriptorRefs>
-               <descriptorRef>server</descriptorRef>
-             </descriptorRefs>
-             <finalName>${project.artifactId}-logReader</finalName>
-           </configuration>
-           <phase>package</phase>
-           <goals>
-             <goal>single</goal>
-           </goals>
-         </execution>
-       </executions>
-     </plugin>-->
-
-
-
->>>>>>> ee344df62b05aee838f9cd9525e9e89384d2e7de
   </build>
-
-  <pluginRepositories>
-    <pluginRepository>
-      <id>onejar-maven-plugin.googlecode.com</id>
-      <url>http://onejar-maven-plugin.googlecode.com/svn/mavenrepo</url>
-    </pluginRepository>
-  </pluginRepositories>
 </project>
 
 
