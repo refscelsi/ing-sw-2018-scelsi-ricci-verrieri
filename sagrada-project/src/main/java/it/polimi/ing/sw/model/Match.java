@@ -107,11 +107,6 @@ public class Match implements Serializable {
      */
     private transient HashMap<Player, RemotePlayer> playerMap;
     /**
-     * ArrayList contenente tutti i giocatori che si sono loggati,
-     * anche quelli che non sono attualmente in gioco
-     */
-    private transient ArrayList<Player> playersLogged;
-    /**
      * Boolean per verificare lo stato della partita
      * e la possibilità di aggiungere o meno giocatori
      */
@@ -133,22 +128,6 @@ public class Match implements Serializable {
      * METODI GETTERS, utili per il metodo @cloneMatch() e per gli update sulla view
      */
 
-    /**
-     * Ritorna un giocatore loggato con un certo nickname
-     *
-     * @param nickname
-     * @return il giocatore corrispondente al nickname, null altrimenti
-     */
-    public Player getPlayerLogged(String nickname) {
-        if (playersLogged.size() != 0) {
-            for (Player player : playersLogged) {
-                if (player.getNickname().equals(nickname)) {
-                    return player;
-                }
-            }
-        }
-        return null;
-    }
 
     /**
      * ritorna il giocatore in gioco con un certo nickname
