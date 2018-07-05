@@ -528,36 +528,6 @@ public class Match implements Serializable {
 
 
     /**
-     * Metodo di supporto per la gestione di eventuali players offline
-     * @param //player
-     */
-    /*public void checkOffline(Player player) throws RemoteException {
-        if(player.getState().equals(PlayerState.OFFLINE)){
-            playersRoundIndex++;
-            if(playersRoundIndex>(numPlayers*2)-1){
-                playersRoundIndex=0;
-                endRound();
-            }
-            else {
-                playerPlaying = playersRound[playersRoundIndex];
-                if(numPlayers==4){
-                    if(player.getState().equals(PlayerState.OFFLINE)) {
-                    playersRoundIndex++;
-                        if(playersRoundIndex>(numPlayers*2)-1){
-                            playersRoundIndex=0;
-                            endRound();
-                        }
-                        else{
-                            playerPlaying = playersRound[playersRoundIndex];
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-
-    /**
      * Metodo che modifica l'Array dell'ordine dei giocatori nel round dopo l'inizio di un nuovo Round
      * Modifica il primo giocatore nel Round. Se tutti sono già stati primi giocatori, si ricomincia.
      *
@@ -607,16 +577,13 @@ public class Match implements Serializable {
      */
     public void changePlayer() throws RemoteException {
         Boolean roundChanged = false;
-        System.out.println("giocatore: " + playerPlaying.getNickname() + "\n stato:" + playerPlaying.getState().toString());
         playerPlaying.setState(PlayerState.READYTOPLAY);
         if (playerPlaying.isOnline()) {
             notifyEndTurn(playerPlaying);
-            System.out.println("giocatore: " + playerPlaying.getNickname() + "\n stato:" + playerPlaying.getState().toString());
         }
         do {
             if (playersRoundIndex < (numPlayers * 2) - 1) {
                 playersRoundIndex++;
-                System.out.println("giocatore: " + playerPlaying.getNickname() + "\n stato:" + playerPlaying.getState().toString());
             } else if (playersRoundIndex == (numPlayers * 2) - 1) {
                 playersRoundIndex = 0;
                 endRound();
@@ -1083,40 +1050,10 @@ public class Match implements Serializable {
                 notifyGameEnd();
             }
             else {
-                System.out.println("Non notifico");
                 notifyPlayerDisconnection(player.getNickname());
                 if (player.equals(playerPlaying))
                     changePlayer();
             }
-
-                //da ricontrollare
-                /*else if (playerPlaying.equals(player)) {
-                    if (playersRoundIndex < numPlayers * 2 - 1) {
-                        playersRoundIndex++;
-                        if (!playersRound[playersRoundIndex].getState().equals(PlayerState.OFFLINE)) {
-                            playerPlaying.setState(PlayerState.OFFLINE);
-                            playerPlaying = playersRound[playersRoundIndex];
-                            playerPlaying.setState(PlayerState.TURNSTARTED);
-                            notifyStartTurn(playerPlaying);
-                        } else {
-                            playersRoundIndex++;
-                            if (playersRoundIndex > (numPlayers * 2) - 1) {
-                                playersRoundIndex = 0;
-                                endRound();
-                            } else if (!playersRound[playersRoundIndex].getState().equals(PlayerState.OFFLINE)) {
-                                playerPlaying = playersRound[playersRoundIndex];
-                                playerPlaying.setState(PlayerState.TURNSTARTED);
-                                System.out.println("ultimo if");
-                                notifyStartTurn(playerPlaying);
-                            }
-                        }
-                    } else if (playersRoundIndex == ((numPlayers * 2) - 1)) {
-                        playersRoundIndex = 0;
-                        endRound();
-                    }
-                }
-            }*/
-
         }
     }
 

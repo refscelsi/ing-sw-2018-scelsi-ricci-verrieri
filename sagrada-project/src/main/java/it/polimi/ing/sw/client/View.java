@@ -249,9 +249,10 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
     }
 
 
-    /////////////////////////////////////////////////////////////////////////////////////////
-    // "Senders" (per l'invio di informazioni verso il Server, in Remoto).
-    /////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     * "Senders" (per l'invio di informazioni verso il Server, in Remoto).
+     *
+     */
 
 
     public void chooseNetwork (String choice) {
@@ -293,7 +294,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         public void loginPlayerSocket(String nickname) {
         PlayerControllerSocketClient playerInterfaceSocket = null;
         try {
-            Socket socket = new Socket("localhost", Constants.SOCKET_PORT);
+            Socket socket = new Socket(SERVER_ADDRESS, Constants.SOCKET_PORT);
             new Thread(new ServerUpdateHandler(this, socket )).start();
             playerInterfaceSocket = new PlayerControllerSocketClient(socket);
         } catch (IOException e) {
@@ -379,7 +380,6 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
 
     public void reconnectPlayer() {
         try {
-            System.out.println("Mi riconnettooooo");
             controller.reconnectPlayer();
         } catch (RemoteException e) {
             ui.onActionNotValid(e.getMessage());
@@ -388,7 +388,10 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
     }
 
 
-    // SENDERS ToolCards
+    /**
+     *  SENDERS ToolCards
+
+     */
 
 
     public void useToolCard(int id, int dice, int operation, int sourceRow, int sourceCol, int destRow, int destCol) {

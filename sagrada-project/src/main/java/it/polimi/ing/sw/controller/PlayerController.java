@@ -116,7 +116,6 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
 
     @Override
     public void reconnectPlayer() throws RemoteException {
-        System.out.println("Mi riconnettooooo");
         if (!player.isOnline()) {
             if (match.isMatchStarted()) {
                 player.setOnline();
@@ -177,7 +176,7 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
             if (player.getState().equals(PlayerState.SCHEMETOCHOOSE)) {
                 match.chooseScheme(this.player, id);
             } else
-                throw new NotValidPlayException("Non puoi fare questa mossa ora!");   // se succede questa cosa c'è un errore del server
+                throw new NotValidPlayException("Non puoi fare questa mossa ora!");
         } catch (NotValidPlayException e) {
             match.notifyNotValidPlayException(player, e.getMessage());
         }
@@ -206,7 +205,7 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
                     break;
                 }
                 default:
-                    throw new NotValidPlayException("Non puoi fare questa mossa ora");     // se succede questa cosa c'è un errore del server
+                    throw new NotValidPlayException("Non puoi fare questa mossa ora");
             }
         } catch (NotValidPlayException e) {
             match.notifyNotValidPlayException(player, e.getMessage());
@@ -226,7 +225,7 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
         indexInRound = match.getPlayersRoundIndex();
         try {
             if (player.getState().equals(PlayerState.READYTOPLAY) || player.getState().equals(PlayerState.INIZIALIZED) || player.getState().equals(PlayerState.INIZIALIZED) || !player.isOnline()) {
-                throw new NotValidPlayException("Impossibile terminare il turno in questo momento");      // se succede questa cosa c'è un errore del server
+                throw new NotValidPlayException("Impossibile terminare il turno in questo momento");
             } else {
                 match.notifyChangement();
                 match.changePlayer();
@@ -361,7 +360,6 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
      */
     @Override
     public void stopPlayer() throws RemoteException {
-        System.out.println("stop");
         if (player.isOnline()) {
             match.exitPlayer(player);
         }

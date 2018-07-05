@@ -136,6 +136,9 @@ public class PlayerControllerSocketServer implements RemotePlayer, Runnable {
                     case Constants.RECONNECT:
                         controller.reconnectPlayer();
                         break;
+                    case Constants.STOPPLAYER:
+                        controller.stopPlayer();
+                        break;
 
                     default: throw new IOException();
                 }

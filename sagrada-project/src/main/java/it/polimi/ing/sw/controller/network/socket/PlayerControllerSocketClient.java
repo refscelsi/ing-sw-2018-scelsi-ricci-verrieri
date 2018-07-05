@@ -125,7 +125,14 @@ public class PlayerControllerSocketClient implements PlayerControllerInterface {
 
     @Override
     public void stopPlayer() throws RemoteException {
-
+        Gson gson=new Gson();
+        String json=gson.toJson(new MessageFromClient(Constants.STOPPLAYER));
+        try {
+            out.writeObject(json);
+            out.flush();
+        } catch (IOException e) {
+            stopMatch();
+        }
     }
 
     @Override

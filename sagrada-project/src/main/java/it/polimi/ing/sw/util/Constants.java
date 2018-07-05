@@ -2,14 +2,20 @@ package it.polimi.ing.sw.util;
 
 public class Constants {
 
-    // Generali
+    /**
+     * Generali
+     */
+
     public static final int NUM_ROWS = 4;
     public static final int NUM_COLS = 5;
     public static final int NUM_ROUNDS = 10;
     public static final int MAX_PLAYERS = 4;
 
-    // Connessione
-    public static final String SERVER_ADDRESS = "192.168.1.49";
+    /**
+     * Connessione
+     */
+
+    public static String SERVER_ADDRESS = "localhost";
     public static final int SOCKET_PORT = 1097;
     public static final int RMI_PORT = 1099;
     public static final int timerTime = 50000;
