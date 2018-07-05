@@ -142,11 +142,26 @@ public class PlayerControllerSocketClient implements PlayerControllerInterface {
 
     @Override
     public void reconnectPlayer() throws RemoteException {
-
+        Gson gson= new Gson();
+        String json=gson.toJson(new MessageFromClient(Constants.RECONNECT));
+        try {
+            out.writeObject(json);
+            out.flush();
+        } catch (IOException e) {
+            stopMatch();
+        }
     }
 
     @Override
     public void startingMyTurn() throws RemoteException {
+        Gson gson=new Gson();
+        String json= gson.toJson(new MessageFromClient(Constants.STARTINGTURN));
+        try {
+            out.writeObject(json);
+            out.flush();
+        } catch (IOException e) {
+            stopMatch();
+        }
 
     }
 

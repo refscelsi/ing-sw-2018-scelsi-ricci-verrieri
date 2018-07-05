@@ -5,11 +5,11 @@ public class Constants {
     // Generali
     public static final int NUM_ROWS = 4;
     public static final int NUM_COLS = 5;
-    public static final int NUM_ROUNDS = 3;
+    public static final int NUM_ROUNDS = 10;
     public static final int MAX_PLAYERS = 4;
 
     // Connessione
-    public static final String SERVER_ADDRESS = "127.0.0.1";
+    public static final String SERVER_ADDRESS = "192.168.1.49";
     public static final int SOCKET_PORT = 1097;
     public static final int RMI_PORT = 1099;
     public static final int timerTime = 50000;
@@ -27,6 +27,8 @@ public class Constants {
     public static final String TOOLCARD= "useToolCard";
     public static final String STOPPLAYER= "stopPlayer";
     public static final String LOGIN="login";
+    public static final String RECONNECT="reconnectPlayer";
+    public static final String STARTINGTURN="startingMyTurn";
 
     /**
      * JSON
@@ -61,6 +63,7 @@ public class Constants {
     public static final String ONNOTVALIDNICKNAMEEXCEPTION ="onNotValidNicknameException";
     public static final String ONNOTPOSSIBLECONNECTIONEXCEPTION ="onNotPossibleConnectionException";
     public static final String ONLOGIN= "onLogin";
+    public static final String ONPLAYERDISCONNECT="onPlayerDisconnect";
 
     //GUI
     public static final String PLAYER_STANDARD_NAME = "Player";

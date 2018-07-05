@@ -276,7 +276,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
 
     public void loginPlayerRMI(String nickname) {
         try {
-            Registry reg = LocateRegistry.getRegistry();
+            Registry reg = LocateRegistry.getRegistry(SERVER_ADDRESS, SERVER_RMI_PORT);
             ConnectionInterface loginController = (ConnectionInterface) reg.lookup("ConnectionController");
             controller = loginController.connectRMI(nickname, this);
             controller.login(nickname);

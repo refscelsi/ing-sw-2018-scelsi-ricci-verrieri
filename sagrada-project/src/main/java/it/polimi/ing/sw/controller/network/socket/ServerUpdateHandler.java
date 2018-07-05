@@ -114,12 +114,15 @@ public class ServerUpdateHandler implements Runnable {
                         view.setLogin(true);
                         view.onLogin(messageFromServer.getMessage());
                         break;
+                    case Constants.ONPLAYERDISCONNECT:
+                        view.onPlayerDisconnection(messageFromServer.getMessage());
+                        break;
                     default:
                         System.out.println("Ho ricevuto un oggetto che non sono stato in grado di interpretare");
                 }
             }
-            } catch(IOException e){
-            } catch(ClassNotFoundException e){
-            }
+        } catch(IOException e){
+        } catch(ClassNotFoundException e){
         }
+    }
 }

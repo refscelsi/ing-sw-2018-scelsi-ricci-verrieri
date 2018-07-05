@@ -28,6 +28,7 @@ import java.net.Socket;
 import java.rmi.RemoteException;
 import java.util.concurrent.ConcurrentNavigableMap;
 
+import static java.lang.String.CASE_INSENSITIVE_ORDER;
 import static java.lang.String.format;
 import static java.lang.String.valueOf;
 
@@ -129,9 +130,14 @@ public class PlayerControllerSocketServer implements RemotePlayer, Runnable {
                         int destCol=((Long) jsonObject.get(Constants.DESTCOL)).intValue();
                         controller.useToolCard(idCard,dice,operation,sourceRow,sourceCol,destRow,destCol);
                         break;
-                    case Constants.STOPPLAYER:
+                    case Constants.STARTINGTURN:
+                        controller.startingMyTurn();
+                        break;
+                    case Constants.RECONNECT:
+                        controller.reconnectPlayer();
+                        break;
 
-                     default: throw new IOException();
+                    default: throw new IOException();
                 }
             }
         } catch (ClassNotFoundException e) {
@@ -297,7 +303,13 @@ public class PlayerControllerSocketServer implements RemotePlayer, Runnable {
 
     @Override
     public void onPlayerDisconnection(String nickname) throws RemoteException {
-
+        MessageFromServer messageFromServer= new MessageFromServer((Constants.ONPLAYERDISCONNECT),nickname);
+        try {
+            out.writeObject(messageFromServer);
+            out.flush();
+        } catch (IOException e) {
+            controller.stopPlayer();
+        }
     }
 
 
