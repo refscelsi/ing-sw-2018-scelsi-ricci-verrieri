@@ -52,6 +52,10 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
      */
     Timer timer = new Timer();
     TimerTask lastTimer;
+    /**
+     * Indice del giocatore nel round corrispondente all'ultimo timer del giocatore lanciato
+     */
+    int indexInRound;
 
 
     /**
@@ -87,9 +91,12 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
      */
     @Override
     public void login(String nickname) throws RemoteException {
+        lastTimer = new TurnTimer(this);
+        timer.schedule(lastTimer, Constants.timerTime);
         try {
             match.login(nickname, remotePlayer);
             this.player=match.getPlayer(nickname);
+            player.setOnline();
             remotePlayer.onLogin(player.getNickname());
         } catch ( NotValidNicknameException e ) {
             match.notifyNotValidNicknameException(this.remotePlayer ,e.getMessage());
@@ -99,18 +106,33 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
 
     }
 
+    @Override
+    public void reconnectPlayer() throws RemoteException {
+        if (!player.isOnline()) {
+            if (match.isMatchStarted()) {
+                player.setOnline();
+                match.notifySuccess(player, "Sei rientrato in partita");
+            }
+            else
+                match.notifyNotValidPlayException(player, "Spiacenti, la partita che stavi giocando è già terminata.");
+        }
+    }
+
     /**
      * Metodo con cui i giocatori prendono effettivamente parte alla partita
      * @throws RemoteException
      */
     @Override
     public void joinMatch() throws RemoteException {
-        try {
-            if (player.getState().equals(PlayerState.INIZIALIZED)) {
-                match.joinMatch();
+        if (player.isOnline()) {
+            try {
+                if (player.getState().equals(PlayerState.INIZIALIZED)) {
+                    match.joinMatch();
+                } else
+                    throw new NotValidPlayException("Errore sullo stato");     // se succede questa cosa c'è un errore del server
+            } catch (NotValidPlayException e) {
+                match.notifyNotValidPlayException(player, e.getMessage());
             }
-        } catch (NotValidPlayException e) {
-            match.notifyNotValidPlayException(player, e.getMessage());
         }
     }
 
@@ -120,13 +142,15 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
      */
     @Override
     public synchronized void checkAllReady() throws RemoteException {
-        try {
-            if (player.getState().equals(PlayerState.READYTOPLAY)) {
-                match.checkAllReady();
-            } else
-                throw new NotValidPlayException("Errore sullo stato");
-        } catch (NotValidPlayException e) {
-            match.notifyNotValidPlayException(player, e.getMessage());
+        if (player.isOnline()) {
+            try {
+                if (player.getState().equals(PlayerState.READYTOPLAY)) {
+                    match.checkAllReady();
+                } else
+                    throw new NotValidPlayException("Errore sullo stato");     // se succede questa cosa c'è un errore del server
+            } catch (NotValidPlayException e) {
+                match.notifyNotValidPlayException(player, e.getMessage());
+            }
         }
     }
 
@@ -137,11 +161,13 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
      */
     @Override
     public synchronized void setChosenScheme(int id) throws RemoteException {
+        lastTimer = new TurnTimer(this);
+        timer.schedule(lastTimer, Constants.timerTime);
         try {
             if (player.getState().equals(PlayerState.SCHEMETOCHOOSE)) {
                 match.chooseScheme(this.player, id);
             } else
-                throw new NotValidPlayException("Non puoi fare questa mossa ora!");
+                throw new NotValidPlayException("Non puoi fare questa mossa ora!");   // se succede questa cosa c'è un errore del server
         } catch (NotValidPlayException e) {
             match.notifyNotValidPlayException(player, e.getMessage());
         }
@@ -159,22 +185,18 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
     public void sendUseDiceRequest(int indexOfDiceInDraftPool, int row, int col) throws RemoteException {
         lastTimer = new TurnTimer(this);
         timer.schedule(lastTimer, Constants.timerTime);
+        indexInRound = match.getPlayersRoundIndex();
         try {
             switch (player.getState()) {
                 case USEDDICE:
                     throw new NotValidPlayException("Hai già usato un dado in questo turno!");
-                case FINISHTURN:
-                    throw new NotValidPlayException("Non puoi più fare mosse, passa il turno");
                 case USEDTOOLCARD:
                 case TURNSTARTED: {
                     match.useDice(player, indexOfDiceInDraftPool, row, col);
                     break;
                 }
-                case ENDEDTURN:
-                    throw new NotValidPlayException("Non è il tuo turno!");
                 default:
-                    throw new NotValidPlayException("Non puoi fare questa mossa ora");
-
+                    throw new NotValidPlayException("Non puoi fare questa mossa ora");     // se succede questa cosa c'è un errore del server
             }
         } catch (NotValidPlayException e) {
             match.notifyNotValidPlayException(player, e.getMessage());
@@ -191,11 +213,12 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
     public void endTurn() throws RemoteException {
         lastTimer = new TurnTimer(this);
         timer.schedule(lastTimer, Constants.timerTime);
+        indexInRound = match.getPlayersRoundIndex();
         try {
-            if (player.getState().equals(PlayerState.READYTOPLAY) || player.getState().equals(PlayerState.INIZIALIZED) || player.getState().equals(PlayerState.OFFLINE)) {
-                throw new NotValidPlayException("Finisci il turno!");
+            if (player.getState().equals(PlayerState.READYTOPLAY) || player.getState().equals(PlayerState.INIZIALIZED) || player.getState().equals(PlayerState.INIZIALIZED) || !player.isOnline()) {
+                throw new NotValidPlayException("Impossibile terminare il turno in questo momento");      // se succede questa cosa c'è un errore del server
             } else {
-                match.notifyChangement();//siamo sicuri??
+                match.notifyChangement();
                 match.changePlayer();
             }
         } catch (NotValidPlayException e) {
@@ -218,6 +241,7 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
     public void useToolCard(int id, int dice, int operation, int sourceRow, int sourceCol, int destRow, int destCol) throws RemoteException {
         lastTimer = new TurnTimer(this);
         timer.schedule(lastTimer, Constants.timerTime);
+        indexInRound = match.getPlayersRoundIndex();
         try {
             switch (id) {
                 /**
@@ -327,12 +351,24 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
      */
     @Override
     public void stopPlayer() throws RemoteException {
-        match.exitPlayer(player);
+        System.out.println("stop");
+        if (player.isOnline()) {
+            match.exitPlayer(player);
+        }
     }
 
 
     public void timeout(TurnTimer turnTimer) throws RemoteException {
-        if (turnTimer == lastTimer)
-            stopPlayer();
+        if (turnTimer == lastTimer) {
+            if (player.getState().equals(PlayerState.INIZIALIZED) || player.getState().equals(PlayerState.SCHEMETOCHOOSE)) {
+                stopPlayer();
+            }
+            else {
+                if (!player.getState().equals(PlayerState.READYTOPLAY) && indexInRound == match.getPlayersRoundIndex() && match.getPlayerPlaying().equals(player)) {
+                    stopPlayer();
+                }
+            }
+        }
+
     }
 }

@@ -30,4 +30,6 @@ public interface UiUpdate {
 
     void onOtherInfoToolCard(int id, Match match);
 
+    void onPlayerDisconnection(String message, String nickname);
+
 }

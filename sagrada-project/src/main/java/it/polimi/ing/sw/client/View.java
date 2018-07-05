@@ -20,6 +20,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import static java.lang.System.exit;
@@ -48,6 +49,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
     private String nickname;
     private int dice;
     private String networkChoice;
+    private ArrayList<String> playersDisconnected;
 
 
     public View() throws RemoteException {
@@ -55,23 +57,30 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         isLogged = false;
         isGameStarted = false;
         isPlaying = false;
+        playersDisconnected = new ArrayList<String>();
     }
 
 
     public void start() throws RemoteException {
-        System.out.println("Benvenuto in Sagrada, vuoi giocare con la Cli [c] o con la Gui [g]?");
-        do {
-            input = scanner.nextLine().toLowerCase();
-            if (input.equals("c")) {
-                ui = new CLI(this);
-            } else if (input.equals("g")) {
-                ui = new GUI(this);
-            } else {
-                System.out.println("Inserisci una lettera valida");
-            }
-        } while (!input.equals("c") && !input.equals("g"));
+        try {
+            System.out.println("Benvenuto in Sagrada, vuoi giocare con la Cli [c] o con la Gui [g]?");
+            do {
+                input = scanner.nextLine().toLowerCase();
+                if (input.equals("c")) {
+                    ui = new CLI(this);
+                } else if (input.equals("g")) {
+                    ui = new GUI(this);
+                } else {
+                    System.out.println("Inserisci una lettera valida");
+                }
+            } while (!input.equals("c") && !input.equals("g"));
 
-        ui.onChooseNetwork("Vuoi giocare con la RMI [r] o socket [s]?");
+            ui.onChooseNetwork("Vuoi giocare con la RMI [r] o socket [s]?");
+        } catch (NullPointerException e) {
+        } catch (NumberFormatException e) {
+            System.out.println("Digita un carattere valido");
+        } catch (IndexOutOfBoundsException e) {
+        }
 
     }
 
@@ -135,19 +144,14 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
     @Override
     public void onSchemeToChoose(Match match) {
         this.match = match;
-        System.out.println("inizio thread fuori onSchemeToChose");
         Runnable task2 = () -> {
-            System.out.println("inizio thread dentro onSchemeToChose");
             ui.onSchemeToChoose(match, nickname, "Scegli il numero del tuo schema");
-            System.out.println("fine thread dentro onSchemeToChose");
         };
-        System.out.println("fine thread fuori onSetPlaying");
         new Thread(task2).start();
     }
 
     @Override
     public void onSuccess(String message) throws RemoteException {
-        System.out.println("Arriva notifica schema alla view");
         ui.onSuccess(message);
     }
 
@@ -155,6 +159,10 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
     @Override
     public void onGameUpdate(Match match) {
         this.match = match;
+        /*while (playersDisconnected.size()!=0) {
+            ui.onPlayerDisconnection("Il giocatore " + playersDisconnected.get(playersDisconnected.size()-1) + " non è più in partita.", nickname);
+            playersDisconnected.remove(playersDisconnected.get(playersDisconnected.size()-1));
+        }*/
         ui.onGameUpdate(match, nickname);
     }
 
@@ -173,19 +181,9 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
 
     @Override
     public void onSetPlaying() {
-        /*if (!isPlaying) {
-            isPlaying = true;
-            Timer timer = new Timer();
-            TimerTask turnTimer = new TurnTimer(this);
-            timer.schedule(turnTimer, 100000);
-        }*/
-        System.out.println("inizio thread fuori onSetPlaying");
         Runnable task1 = () -> {
-            System.out.println("inizio thread dentro onSetPlaying");
             ui.onTurnStart(match, nickname);
-            System.out.println("fine thread dentro onSetPlaying");
         };
-        System.out.println("fine thread fuori onSetPlaying");
         Thread thread1 = new Thread(task1);
         thread1.start();
     }
@@ -223,6 +221,19 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
     @Override
     public void onNotPossibleConnectionException(String message) {
         ui.onActionNotValid(message);
+    }
+
+    @Override
+    public void onPlayerDisconnection(String nickname) throws RemoteException {
+        if (nickname.equals(this.nickname)) {
+            Runnable task3 = () -> {
+                ui.onPlayerDisconnection("Sei uscito dalla partita, digita 0 per rientrare", nickname);
+            };
+            Thread thread3 = new Thread(task3);
+            thread3.start();
+        }
+        else
+            playersDisconnected.add(nickname);
     }
 
 
@@ -334,6 +345,16 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
     public void stopPlayer() {
         try {
             controller.stopPlayer();
+        } catch (RemoteException e) {
+            ui.onActionNotValid(e.getMessage());
+            exit(0);
+        }
+    }
+
+
+    public void reconnectPlayer() {
+        try {
+            controller.reconnectPlayer();
         } catch (RemoteException e) {
             ui.onActionNotValid(e.getMessage());
             exit(0);

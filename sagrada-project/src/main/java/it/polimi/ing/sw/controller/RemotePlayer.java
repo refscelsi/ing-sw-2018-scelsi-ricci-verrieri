@@ -40,4 +40,6 @@ public interface RemotePlayer extends Remote {
     void onNotValidNicknameException(String message) throws RemoteException;
 
     void onNotPossibleConnectionException(String message) throws RemoteException;
+
+    void onPlayerDisconnection(String nickname) throws RemoteException;
 }
