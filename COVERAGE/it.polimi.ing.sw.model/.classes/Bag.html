@@ -78,85 +78,97 @@
 <i>4</i>&nbsp;import java.util.*;
 <i>5</i>&nbsp;import java.util.Random;
 <i>6</i>&nbsp;
-<i>7</i>&nbsp;
-<i>8</i>&nbsp;public class Bag{
-<i>9</i>&nbsp;
-<b class="fc"><i>10</i>&nbsp;    private ArrayList&lt;Dice&gt; dices = new ArrayList&lt;Dice&gt;();;</b>
-<i>11</i>&nbsp;
+<i>7</i>&nbsp;/**
+<i>8</i>&nbsp; * Classe che rappresenta il Sacchetto da cui estrarre i dadi
+<i>9</i>&nbsp; */
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;public class Bag{
 <i>12</i>&nbsp;
-<b class="fc"><i>13</i>&nbsp;    public Bag() {</b>
+<b class="fc"><i>13</i>&nbsp;    private ArrayList&lt;Dice&gt; dices = new ArrayList&lt;Dice&gt;();;</b>
 <i>14</i>&nbsp;
-<i>15</i>&nbsp;        Dice dice;
-<i>16</i>&nbsp;        int i;
-<i>17</i>&nbsp;
-<b class="fc"><i>18</i>&nbsp;        for(i=0; i&lt;18; i++){</b>
-<b class="fc"><i>19</i>&nbsp;            dice=new Dice();</b>
-<b class="fc"><i>20</i>&nbsp;            dice.setDiceColor(Color.RED);</b>
-<b class="fc"><i>21</i>&nbsp;            dices.add(dice);</b>
-<i>22</i>&nbsp;        }
+<i>15</i>&nbsp;    /**
+<i>16</i>&nbsp;     * Quando viene istanziato un oggetto di questa classe viene inizializzato già con i 90 dadi dei diversi colori
+<i>17</i>&nbsp;     */
+<b class="fc"><i>18</i>&nbsp;    public Bag() {</b>
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;        Dice dice;
+<i>21</i>&nbsp;        int i;
+<i>22</i>&nbsp;
 <b class="fc"><i>23</i>&nbsp;        for(i=0; i&lt;18; i++){</b>
 <b class="fc"><i>24</i>&nbsp;            dice=new Dice();</b>
-<b class="fc"><i>25</i>&nbsp;            dice.setDiceColor(Color.BLUE);</b>
+<b class="fc"><i>25</i>&nbsp;            dice.setDiceColor(Color.RED);</b>
 <b class="fc"><i>26</i>&nbsp;            dices.add(dice);</b>
 <i>27</i>&nbsp;        }
 <b class="fc"><i>28</i>&nbsp;        for(i=0; i&lt;18; i++){</b>
 <b class="fc"><i>29</i>&nbsp;            dice=new Dice();</b>
-<b class="fc"><i>30</i>&nbsp;            dice.setDiceColor(Color.YELLOW);</b>
+<b class="fc"><i>30</i>&nbsp;            dice.setDiceColor(Color.BLUE);</b>
 <b class="fc"><i>31</i>&nbsp;            dices.add(dice);</b>
 <i>32</i>&nbsp;        }
 <b class="fc"><i>33</i>&nbsp;        for(i=0; i&lt;18; i++){</b>
 <b class="fc"><i>34</i>&nbsp;            dice=new Dice();</b>
-<b class="fc"><i>35</i>&nbsp;            dice.setDiceColor(Color.GREEN);</b>
+<b class="fc"><i>35</i>&nbsp;            dice.setDiceColor(Color.YELLOW);</b>
 <b class="fc"><i>36</i>&nbsp;            dices.add(dice);</b>
 <i>37</i>&nbsp;        }
 <b class="fc"><i>38</i>&nbsp;        for(i=0; i&lt;18; i++){</b>
 <b class="fc"><i>39</i>&nbsp;            dice=new Dice();</b>
-<b class="fc"><i>40</i>&nbsp;            dice.setDiceColor(Color.PURPLE);</b>
+<b class="fc"><i>40</i>&nbsp;            dice.setDiceColor(Color.GREEN);</b>
 <b class="fc"><i>41</i>&nbsp;            dices.add(dice);</b>
 <i>42</i>&nbsp;        }
-<b class="fc"><i>43</i>&nbsp;    }</b>
-<i>44</i>&nbsp;
-<i>45</i>&nbsp;
-<i>46</i>&nbsp;    // estrae un dado e lo lancia -&gt; ritorna un dado di un determinato colore e di un determinato numero
-<i>47</i>&nbsp;
-<i>48</i>&nbsp;    public Dice drawDice(){
-<b class="fc"><i>49</i>&nbsp;        Collections.shuffle(dices);</b>
-<b class="fc"><i>50</i>&nbsp;        Dice dice=dices.get(0);</b>
-<b class="fc"><i>51</i>&nbsp;        dices.remove(dices.get(0));</b>
-<b class="fc"><i>52</i>&nbsp;        dice.throwDice();</b>
-<b class="fc"><i>53</i>&nbsp;        return dice;</b>
-<i>54</i>&nbsp;    }
-<i>55</i>&nbsp;
-<i>56</i>&nbsp;
-<i>57</i>&nbsp;    //estrae tot dadi casuali in base al numero dei giocatori e che costituiscono la draftpool
-<i>58</i>&nbsp;
-<i>59</i>&nbsp;    public DraftPool draw (int numPlayers){
-<b class="fc"><i>60</i>&nbsp;        int bound=(numPlayers*2)+1;</b>
-<b class="fc"><i>61</i>&nbsp;        DraftPool draftPool = new DraftPool();</b>
-<i>62</i>&nbsp;        Dice dice;
-<b class="fc"><i>63</i>&nbsp;        for(int i=0;i&lt;bound;i++){</b>
-<b class="fc"><i>64</i>&nbsp;            dice = drawDice();</b>
-<b class="fc"><i>65</i>&nbsp;            draftPool.addDice(dice);</b>
-<i>66</i>&nbsp;        }
-<b class="fc"><i>67</i>&nbsp;        return draftPool;</b>
-<i>68</i>&nbsp;    }
-<i>69</i>&nbsp;
-<i>70</i>&nbsp;    public void addDice (Dice dice) {
-<b class="fc"><i>71</i>&nbsp;        dices.add(dice);</b>
-<b class="fc"><i>72</i>&nbsp;    }</b>
-<i>73</i>&nbsp;
-<i>74</i>&nbsp;
-<i>75</i>&nbsp;    public int getSize(){
-<b class="fc"><i>76</i>&nbsp;        return dices.size();</b>
-<i>77</i>&nbsp;    }
-<i>78</i>&nbsp;
-<i>79</i>&nbsp;}
+<b class="fc"><i>43</i>&nbsp;        for(i=0; i&lt;18; i++){</b>
+<b class="fc"><i>44</i>&nbsp;            dice=new Dice();</b>
+<b class="fc"><i>45</i>&nbsp;            dice.setDiceColor(Color.PURPLE);</b>
+<b class="fc"><i>46</i>&nbsp;            dices.add(dice);</b>
+<i>47</i>&nbsp;        }
+<b class="fc"><i>48</i>&nbsp;    }</b>
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;    public int getSize(){
+<b class="fc"><i>52</i>&nbsp;        return dices.size();</b>
+<i>53</i>&nbsp;    }
+<i>54</i>&nbsp;
+<i>55</i>&nbsp;    /**
+<i>56</i>&nbsp;     * Metodo che simula l&#39;estrazione e il lancio di un dado e lo lancia
+<i>57</i>&nbsp;     * @return, ritorna un dado di un determinato colore e di un determinato numero
+<i>58</i>&nbsp;     */
+<i>59</i>&nbsp;
+<i>60</i>&nbsp;    public Dice drawDice(){
+<b class="fc"><i>61</i>&nbsp;        Collections.shuffle(dices);</b>
+<b class="fc"><i>62</i>&nbsp;        Dice dice=dices.get(0);</b>
+<b class="fc"><i>63</i>&nbsp;        dices.remove(dices.get(0));</b>
+<b class="fc"><i>64</i>&nbsp;        dice.throwDice();</b>
+<b class="fc"><i>65</i>&nbsp;        return dice;</b>
+<i>66</i>&nbsp;    }
+<i>67</i>&nbsp;
+<i>68</i>&nbsp;
+<i>69</i>&nbsp;    /**
+<i>70</i>&nbsp;     * Metodo per l&#39;estrazione di un certo numero di dadi casuali in base al numero dei giocatori,
+<i>71</i>&nbsp;     * i dati estratti vengono aggiunti ad un oggetto di tipo Riserva, che viene ritornata dal metodo
+<i>72</i>&nbsp;     * @param numPlayers
+<i>73</i>&nbsp;     * @return
+<i>74</i>&nbsp;     */
+<i>75</i>&nbsp;
+<i>76</i>&nbsp;    public DraftPool draw (int numPlayers){
+<b class="fc"><i>77</i>&nbsp;        int bound=(numPlayers*2)+1;</b>
+<b class="fc"><i>78</i>&nbsp;        DraftPool draftPool = new DraftPool();</b>
+<i>79</i>&nbsp;        Dice dice;
+<b class="fc"><i>80</i>&nbsp;        for(int i=0;i&lt;bound;i++){</b>
+<b class="fc"><i>81</i>&nbsp;            dice = drawDice();</b>
+<b class="fc"><i>82</i>&nbsp;            draftPool.addDice(dice);</b>
+<i>83</i>&nbsp;        }
+<b class="fc"><i>84</i>&nbsp;        return draftPool;</b>
+<i>85</i>&nbsp;    }
+<i>86</i>&nbsp;
+<i>87</i>&nbsp;    public void addDice (Dice dice) {
+<b class="fc"><i>88</i>&nbsp;        dices.add(dice);</b>
+<b class="fc"><i>89</i>&nbsp;    }</b>
+<i>90</i>&nbsp;
+<i>91</i>&nbsp;}
 </div>
 </div>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2018-07-04 21:00</div>
+    <div style="float:right;">generated on 2018-07-05 23:17</div>
 </div>
 </body>
 </html>

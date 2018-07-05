@@ -76,97 +76,106 @@
 <i>2</i>&nbsp;
 <i>3</i>&nbsp;import java.io.Serializable;
 <i>4</i>&nbsp;
-<i>5</i>&nbsp;public class Box implements Serializable{
-<i>6</i>&nbsp;    private int x;
-<i>7</i>&nbsp;    private int y;
-<i>8</i>&nbsp;    private Dice dice;
-<i>9</i>&nbsp;    private Color color;
-<i>10</i>&nbsp;    private int shade;
-<i>11</i>&nbsp;
-<b class="fc"><i>12</i>&nbsp;    public Box(){</b>
-<b class="fc"><i>13</i>&nbsp;        color=Color.WHITE;</b>
-<b class="fc"><i>14</i>&nbsp;        shade=0;</b>
-<b class="fc"><i>15</i>&nbsp;        dice=null;</b>
-<b class="fc"><i>16</i>&nbsp;    }</b>
-<i>17</i>&nbsp;
-<b class="fc"><i>18</i>&nbsp;    public Box(int x, int y){</b>
-<b class="fc"><i>19</i>&nbsp;        this.x=x;</b>
-<b class="fc"><i>20</i>&nbsp;        this.y=y;</b>
-<b class="fc"><i>21</i>&nbsp;        shade=0;</b>
-<b class="fc"><i>22</i>&nbsp;        dice=null;</b>
-<b class="fc"><i>23</i>&nbsp;        color=Color.WHITE;</b>
-<b class="fc"><i>24</i>&nbsp;    }</b>
-<i>25</i>&nbsp;
-<b class="fc"><i>26</i>&nbsp;    public Box(int x, int y, Color color, int shade){</b>
-<b class="fc"><i>27</i>&nbsp;        this.x=x;</b>
-<b class="fc"><i>28</i>&nbsp;        this.y=y;</b>
-<b class="fc"><i>29</i>&nbsp;        this.color=color;</b>
-<b class="fc"><i>30</i>&nbsp;        this.shade=shade;</b>
+<i>5</i>&nbsp;/**
+<i>6</i>&nbsp; * Classe che rappresenta la casella di uno schema
+<i>7</i>&nbsp; */
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;public class Box implements Serializable{
+<i>11</i>&nbsp;    private int x;
+<i>12</i>&nbsp;    private int y;
+<i>13</i>&nbsp;    private Dice dice;
+<i>14</i>&nbsp;    private Color color;
+<i>15</i>&nbsp;    private int shade;
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;    /**
+<i>18</i>&nbsp;     * Diversi costruttori usati in caso la casella abbia delle particolarità o meno
+<i>19</i>&nbsp;     */
+<i>20</i>&nbsp;
+<b class="fc"><i>21</i>&nbsp;    public Box(){</b>
+<b class="fc"><i>22</i>&nbsp;        color=Color.WHITE;</b>
+<b class="fc"><i>23</i>&nbsp;        shade=0;</b>
+<b class="fc"><i>24</i>&nbsp;        dice=null;</b>
+<b class="fc"><i>25</i>&nbsp;    }</b>
+<i>26</i>&nbsp;
+<b class="fc"><i>27</i>&nbsp;    public Box(int x, int y){</b>
+<b class="fc"><i>28</i>&nbsp;        this.x=x;</b>
+<b class="fc"><i>29</i>&nbsp;        this.y=y;</b>
+<b class="fc"><i>30</i>&nbsp;        shade=0;</b>
 <b class="fc"><i>31</i>&nbsp;        dice=null;</b>
-<b class="fc"><i>32</i>&nbsp;    }</b>
-<i>33</i>&nbsp;
-<i>34</i>&nbsp;    public boolean isFull(){
-<b class="fc"><i>35</i>&nbsp;        if(this.dice==null){</b>
-<b class="fc"><i>36</i>&nbsp;            return false;</b>
-<i>37</i>&nbsp;        }
-<i>38</i>&nbsp;        else
-<b class="fc"><i>39</i>&nbsp;            return true;</b>
-<i>40</i>&nbsp;    }
-<i>41</i>&nbsp;
-<i>42</i>&nbsp;    public void removeDice(){
-<b class="fc"><i>43</i>&nbsp;        this.dice=null;</b>
-<b class="fc"><i>44</i>&nbsp;    }</b>
-<i>45</i>&nbsp;
-<i>46</i>&nbsp;    public void placeDice(Dice dice) {
-<b class="fc"><i>47</i>&nbsp;        this.dice=dice;</b>
-<b class="fc"><i>48</i>&nbsp;    }</b>
-<i>49</i>&nbsp;
-<i>50</i>&nbsp;    public int getX() {
-<b class="fc"><i>51</i>&nbsp;        return x;</b>
-<i>52</i>&nbsp;    }
-<i>53</i>&nbsp;
-<i>54</i>&nbsp;    public int getY() {
-<b class="fc"><i>55</i>&nbsp;        return y;</b>
-<i>56</i>&nbsp;    }
-<i>57</i>&nbsp;
-<i>58</i>&nbsp;    public int getShade() {
-<b class="fc"><i>59</i>&nbsp;        return shade;</b>
-<i>60</i>&nbsp;    }
-<i>61</i>&nbsp;
-<i>62</i>&nbsp;    public Color getColor() {
-<b class="fc"><i>63</i>&nbsp;        return color;</b>
-<i>64</i>&nbsp;    }
-<i>65</i>&nbsp;
-<i>66</i>&nbsp;    public Dice getDice() {
-<b class="fc"><i>67</i>&nbsp;        return dice;</b>
-<i>68</i>&nbsp;    }
-<i>69</i>&nbsp;
-<i>70</i>&nbsp;    public void setX(int x) {
-<b class="fc"><i>71</i>&nbsp;        this.x = x;</b>
-<b class="fc"><i>72</i>&nbsp;    }</b>
-<i>73</i>&nbsp;
-<i>74</i>&nbsp;    public void setY(int y) {
-<b class="fc"><i>75</i>&nbsp;        this.y = y;</b>
-<b class="fc"><i>76</i>&nbsp;    }</b>
-<i>77</i>&nbsp;
-<i>78</i>&nbsp;    public void setShade(int shade) {
-<b class="fc"><i>79</i>&nbsp;        this.shade = shade;</b>
-<b class="fc"><i>80</i>&nbsp;    }</b>
-<i>81</i>&nbsp;
-<i>82</i>&nbsp;    public void setColor(Color color){
-<b class="fc"><i>83</i>&nbsp;        this.color=color;</b>
-<b class="fc"><i>84</i>&nbsp;    }</b>
-<i>85</i>&nbsp;
-<i>86</i>&nbsp;    public Box cloneBox(){
-<b class="fc"><i>87</i>&nbsp;        return new Box(this.x,this.y,this.color,this.shade);</b>
-<i>88</i>&nbsp;    }
-<i>89</i>&nbsp;}
+<b class="fc"><i>32</i>&nbsp;        color=Color.WHITE;</b>
+<b class="fc"><i>33</i>&nbsp;    }</b>
+<i>34</i>&nbsp;
+<b class="fc"><i>35</i>&nbsp;    public Box(int x, int y, Color color, int shade){</b>
+<b class="fc"><i>36</i>&nbsp;        this.x=x;</b>
+<b class="fc"><i>37</i>&nbsp;        this.y=y;</b>
+<b class="fc"><i>38</i>&nbsp;        this.color=color;</b>
+<b class="fc"><i>39</i>&nbsp;        this.shade=shade;</b>
+<b class="fc"><i>40</i>&nbsp;        dice=null;</b>
+<b class="fc"><i>41</i>&nbsp;    }</b>
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    public boolean isFull(){
+<b class="fc"><i>44</i>&nbsp;        if(this.dice==null){</b>
+<b class="fc"><i>45</i>&nbsp;            return false;</b>
+<i>46</i>&nbsp;        }
+<i>47</i>&nbsp;        else
+<b class="fc"><i>48</i>&nbsp;            return true;</b>
+<i>49</i>&nbsp;    }
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;    public void removeDice(){
+<b class="fc"><i>52</i>&nbsp;        this.dice=null;</b>
+<b class="fc"><i>53</i>&nbsp;    }</b>
+<i>54</i>&nbsp;
+<i>55</i>&nbsp;    public void placeDice(Dice dice) {
+<b class="fc"><i>56</i>&nbsp;        this.dice=dice;</b>
+<b class="fc"><i>57</i>&nbsp;    }</b>
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;    public int getX() {
+<b class="fc"><i>60</i>&nbsp;        return x;</b>
+<i>61</i>&nbsp;    }
+<i>62</i>&nbsp;
+<i>63</i>&nbsp;    public int getY() {
+<b class="fc"><i>64</i>&nbsp;        return y;</b>
+<i>65</i>&nbsp;    }
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;    public int getShade() {
+<b class="fc"><i>68</i>&nbsp;        return shade;</b>
+<i>69</i>&nbsp;    }
+<i>70</i>&nbsp;
+<i>71</i>&nbsp;    public Color getColor() {
+<b class="fc"><i>72</i>&nbsp;        return color;</b>
+<i>73</i>&nbsp;    }
+<i>74</i>&nbsp;
+<i>75</i>&nbsp;    public Dice getDice() {
+<b class="fc"><i>76</i>&nbsp;        return dice;</b>
+<i>77</i>&nbsp;    }
+<i>78</i>&nbsp;
+<i>79</i>&nbsp;    public void setX(int x) {
+<b class="fc"><i>80</i>&nbsp;        this.x = x;</b>
+<b class="fc"><i>81</i>&nbsp;    }</b>
+<i>82</i>&nbsp;
+<i>83</i>&nbsp;    public void setY(int y) {
+<b class="fc"><i>84</i>&nbsp;        this.y = y;</b>
+<b class="fc"><i>85</i>&nbsp;    }</b>
+<i>86</i>&nbsp;
+<i>87</i>&nbsp;    public void setShade(int shade) {
+<b class="fc"><i>88</i>&nbsp;        this.shade = shade;</b>
+<b class="fc"><i>89</i>&nbsp;    }</b>
+<i>90</i>&nbsp;
+<i>91</i>&nbsp;    public void setColor(Color color){
+<b class="fc"><i>92</i>&nbsp;        this.color=color;</b>
+<b class="fc"><i>93</i>&nbsp;    }</b>
+<i>94</i>&nbsp;
+<i>95</i>&nbsp;    public Box cloneBox(){
+<b class="fc"><i>96</i>&nbsp;        return new Box(this.x,this.y,this.color,this.shade);</b>
+<i>97</i>&nbsp;    }
+<i>98</i>&nbsp;}
 </div>
 </div>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2018-07-04 21:00</div>
+    <div style="float:right;">generated on 2018-07-05 23:17</div>
 </div>
 </body>
 </html>

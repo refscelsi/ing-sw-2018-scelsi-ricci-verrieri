@@ -39,18 +39,18 @@
   <td class="name">PlayerController</td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    14.3%
   </span>
   <span class="absValue">
-    (0/ 12)
+    (2/ 14)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    9.7%
   </span>
   <span class="absValue">
-    (0/ 97)
+    (13/ 134)
   </span>
 </td>
 </tr>
@@ -77,18 +77,18 @@
   <td class="name"><strong>total</strong></td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    13.3%
   </span>
   <span class="absValue">
-    (0/ 13)
+    (2/ 15)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    9.6%
   </span>
   <span class="absValue">
-    (0/ 98)
+    (13/ 135)
   </span>
 </td>
 </tr>
@@ -107,258 +107,384 @@
 <i>7</i>&nbsp;import it.polimi.ing.sw.model.Player;
 <i>8</i>&nbsp;import it.polimi.ing.sw.model.exceptions.NotValidException;
 <i>9</i>&nbsp;import it.polimi.ing.sw.model.exceptions.NotValidNicknameException;
-<i>10</i>&nbsp;import org.omg.Messaging.SYNC_WITH_TRANSPORT;
+<i>10</i>&nbsp;import it.polimi.ing.sw.util.Constants;
 <i>11</i>&nbsp;
 <i>12</i>&nbsp;import java.rmi.Remote;
 <i>13</i>&nbsp;import java.rmi.RemoteException;
 <i>14</i>&nbsp;import java.rmi.server.UnicastRemoteObject;
-<i>15</i>&nbsp;
-<i>16</i>&nbsp;//classe che gestisce gli input dei client e implementa i metodi di PlayerControllerInterfaceSocket (sulla rete)
+<i>15</i>&nbsp;import java.util.Timer;
+<i>16</i>&nbsp;import java.util.TimerTask;
 <i>17</i>&nbsp;
-<i>18</i>&nbsp;public class PlayerController extends UnicastRemoteObject implements PlayerControllerInterfaceRMI, Remote {
-<i>19</i>&nbsp;    //riferimento alla partita
-<i>20</i>&nbsp;    private Match match;
-<i>21</i>&nbsp;    //riferimento al player
-<i>22</i>&nbsp;    private Player player;
-<i>23</i>&nbsp;    //riferimento alla view
-<i>24</i>&nbsp;    private RemotePlayer remotePlayer;
-<i>25</i>&nbsp;    //stato del giocatore
-<i>26</i>&nbsp;    private PlayerState state;
-<i>27</i>&nbsp;    //tengo traccia del nickname nel caso lo stronzo si riconnettesse
-<i>28</i>&nbsp;    private String nickname;
-<i>29</i>&nbsp;
-<i>30</i>&nbsp;    public PlayerController(Match match, RemotePlayer remotePlayer) throws RemoteException {
-<b class="nc"><i>31</i>&nbsp;        super();</b>
-<b class="nc"><i>32</i>&nbsp;        this.match = match;</b>
-<b class="nc"><i>33</i>&nbsp;        this.remotePlayer = remotePlayer;</b>
-<i>34</i>&nbsp;    }
-<i>35</i>&nbsp;
-<i>36</i>&nbsp;
-<i>37</i>&nbsp;    public PlayerState getState() {
-<b class="nc"><i>38</i>&nbsp;        return this.player.getState();</b>
-<i>39</i>&nbsp;    }
-<i>40</i>&nbsp;
-<i>41</i>&nbsp;    public RemotePlayer getRemotePlayer() {
-<b class="nc"><i>42</i>&nbsp;        return this.remotePlayer;</b>
-<i>43</i>&nbsp;    }
-<i>44</i>&nbsp;
-<i>45</i>&nbsp;    public String getNickname() {
-<b class="nc"><i>46</i>&nbsp;        return this.nickname;</b>
-<i>47</i>&nbsp;    }
-<i>48</i>&nbsp;
-<i>49</i>&nbsp;    @Override
-<i>50</i>&nbsp;    public void login(String nickname) throws RemoteException {
-<i>51</i>&nbsp;        try {
-<b class="nc"><i>52</i>&nbsp;            match.login(nickname, remotePlayer);</b>
-<b class="nc"><i>53</i>&nbsp;            this.player=match.getPlayer(nickname);</b>
-<b class="nc"><i>54</i>&nbsp;            System.out.println(&quot;assegno il player&quot;);</b>
-<b class="nc"><i>55</i>&nbsp;            remotePlayer.onLogin(player.getNickname());</b>
-<b class="nc"><i>56</i>&nbsp;        } catch ( NotValidNicknameException e ) {</b>
-<b class="nc"><i>57</i>&nbsp;            match.notifyNotValidNicknameException(this.remotePlayer ,e.getMessage());</b>
-<b class="nc"><i>58</i>&nbsp;        } catch ( NotPossibleConnectionException e ) {</b>
-<b class="nc"><i>59</i>&nbsp;            match.notifyNotPossibleConnectionException(this.remotePlayer,e.getMessage());</b>
-<b class="nc"><i>60</i>&nbsp;        }</b>
-<i>61</i>&nbsp;
-<i>62</i>&nbsp;    }
-<i>63</i>&nbsp;
-<i>64</i>&nbsp;    @Override
-<i>65</i>&nbsp;    public void joinMatch() throws RemoteException {
-<i>66</i>&nbsp;        try {
-<b class="nc"><i>67</i>&nbsp;            if (player.getState().equals(PlayerState.OFFLINE)) {</b>
-<i>68</i>&nbsp;                //gestisci lo stronzo che ritorna in partita
-<b class="nc"><i>69</i>&nbsp;            } else if (player.getState().equals(PlayerState.INIZIALIZED)) {</b>
-<b class="nc"><i>70</i>&nbsp;                match.joinMatch();</b>
-<i>71</i>&nbsp;            }
-<b class="nc"><i>72</i>&nbsp;        } catch (NotValidPlayException e) {</b>
-<b class="nc"><i>73</i>&nbsp;            match.notifyNotValidPlayException(player, e.getMessage());</b>
-<b class="nc"><i>74</i>&nbsp;        }</b>
-<i>75</i>&nbsp;    }
+<i>18</i>&nbsp;/**
+<i>19</i>&nbsp; * Classe che implementa i metodi di PlayerControllerInterface.
+<i>20</i>&nbsp; * Sia in caso di connessione Socket che di connessione RMI è il Controller delle azioni del giocatore.
+<i>21</i>&nbsp; * In base allo stato in cui si trova il giocatore autorizza o meno le mosse.
+<i>22</i>&nbsp; * In RMI i metodi sono chiamati da remoto sull&#39;interfaccia PlayerControllerInterfaceRMI ed implementati in questa classe.
+<i>23</i>&nbsp; * In Socket i metodi sono chiamati da @PlayerControllerSocketServer, che a sua volta riceve messaggi dal Client.
+<i>24</i>&nbsp; */
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;public class PlayerController extends UnicastRemoteObject implements PlayerControllerInterfaceRMI, Remote {
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;    /**
+<i>29</i>&nbsp;     * riferimento alla partita in corso
+<i>30</i>&nbsp;     */
+<i>31</i>&nbsp;    private Match match;
+<i>32</i>&nbsp;    /**
+<i>33</i>&nbsp;     * riferimento al Player associato a questo PlayerController
+<i>34</i>&nbsp;     */
+<i>35</i>&nbsp;    private Player player;
+<i>36</i>&nbsp;    /**
+<i>37</i>&nbsp;     * riferimento al RemotePlayer associato a questo PlayerController
+<i>38</i>&nbsp;     *
+<i>39</i>&nbsp;     */
+<i>40</i>&nbsp;    private RemotePlayer remotePlayer;
+<i>41</i>&nbsp;    /**
+<i>42</i>&nbsp;     * Stato del giocatore
+<i>43</i>&nbsp;     */
+<i>44</i>&nbsp;    private PlayerState state;
+<i>45</i>&nbsp;    /**
+<i>46</i>&nbsp;     * Riferimento al nickname in caso il giocatore si riconnetta
+<i>47</i>&nbsp;     */
+<i>48</i>&nbsp;    private String nickname;
+<i>49</i>&nbsp;    /**
+<i>50</i>&nbsp;     * Riferimento all&#39;ultimo timer del giocatore lanciato
+<i>51</i>&nbsp;     */
+<b class="fc"><i>52</i>&nbsp;    Timer timer = new Timer();</b>
+<i>53</i>&nbsp;    TimerTask lastTimer;
+<i>54</i>&nbsp;    /**
+<i>55</i>&nbsp;     * Indice del giocatore nel round corrispondente all&#39;ultimo timer del giocatore lanciato
+<i>56</i>&nbsp;     */
+<i>57</i>&nbsp;    int indexInRound;
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;
+<i>60</i>&nbsp;    /**
+<i>61</i>&nbsp;     * Costruttore della classe , cui passano i riferimenti alla partita in corso e al RemotePlayer associato
+<i>62</i>&nbsp;     * @param match
+<i>63</i>&nbsp;     * @param remotePlayer
+<i>64</i>&nbsp;     * @throws RemoteException
+<i>65</i>&nbsp;     */
+<i>66</i>&nbsp;    public PlayerController(Match match, RemotePlayer remotePlayer) throws RemoteException {
+<b class="fc"><i>67</i>&nbsp;        super();</b>
+<b class="fc"><i>68</i>&nbsp;        this.match = match;</b>
+<b class="fc"><i>69</i>&nbsp;        this.remotePlayer = remotePlayer;</b>
+<b class="fc"><i>70</i>&nbsp;    }</b>
+<i>71</i>&nbsp;
+<i>72</i>&nbsp;    /**
+<i>73</i>&nbsp;     * GETTERS
+<i>74</i>&nbsp;     *
+<i>75</i>&nbsp;     */
 <i>76</i>&nbsp;
-<i>77</i>&nbsp;    @Override
-<i>78</i>&nbsp;    public void checkAllReady() throws RemoteException {
-<i>79</i>&nbsp;        try {
-<b class="nc"><i>80</i>&nbsp;            if (player.getState().equals(PlayerState.READYTOPLAY)) {</b>
-<b class="nc"><i>81</i>&nbsp;                match.checkAllReady();</b>
-<i>82</i>&nbsp;            } else
-<b class="nc"><i>83</i>&nbsp;                throw new NotValidPlayException(&quot;Errore sullo stato&quot;);</b>
-<b class="nc"><i>84</i>&nbsp;        } catch (NotValidPlayException e) {</b>
-<b class="nc"><i>85</i>&nbsp;            match.notifyNotValidPlayException(player, e.getMessage());</b>
-<b class="nc"><i>86</i>&nbsp;        }</b>
-<i>87</i>&nbsp;    }
-<i>88</i>&nbsp;
-<i>89</i>&nbsp;
-<i>90</i>&nbsp;    @Override
-<i>91</i>&nbsp;    public void setChosenScheme(int id) throws RemoteException {
-<i>92</i>&nbsp;        try {
-<b class="nc"><i>93</i>&nbsp;            if (player.getState().equals(PlayerState.SCHEMETOCHOOSE)) {</b>
-<b class="nc"><i>94</i>&nbsp;                match.chooseScheme(this.player, id);</b>
-<i>95</i>&nbsp;            } else
-<b class="nc"><i>96</i>&nbsp;                throw new NotValidPlayException(&quot;Non puoi fare questa mossa ora!&quot;);</b>
-<b class="nc"><i>97</i>&nbsp;        } catch (NotValidPlayException e) {</b>
-<b class="nc"><i>98</i>&nbsp;            match.notifyNotValidPlayException(player, e.getMessage());</b>
-<b class="nc"><i>99</i>&nbsp;        }</b>
-<i>100</i>&nbsp;    }
-<i>101</i>&nbsp;
-<i>102</i>&nbsp;    @Override
-<i>103</i>&nbsp;    public void sendUseDiceRequest(int indexOfDiceInDraftPool, int row, int col) throws RemoteException {
-<i>104</i>&nbsp;        try {
-<b class="nc"><i>105</i>&nbsp;            switch (player.getState()) {</b>
-<i>106</i>&nbsp;                case USEDDICE:
-<b class="nc"><i>107</i>&nbsp;                    throw new NotValidPlayException(&quot;Hai già usato un dado in questo turno!&quot;);</b>
-<i>108</i>&nbsp;                case FINISHTURN:
-<b class="nc"><i>109</i>&nbsp;                    throw new NotValidPlayException(&quot;Non puoi più fare mosse, passa il turno&quot;);</b>
-<i>110</i>&nbsp;                case USEDTOOLCARD:
-<i>111</i>&nbsp;                case TURNSTARTED: {
-<b class="nc"><i>112</i>&nbsp;                    match.useDice(player, indexOfDiceInDraftPool, row, col);</b>
-<b class="nc"><i>113</i>&nbsp;                    break;</b>
-<i>114</i>&nbsp;                }
-<i>115</i>&nbsp;                case ENDEDTURN:
-<b class="nc"><i>116</i>&nbsp;                    throw new NotValidPlayException(&quot;Non è il tuo turno!&quot;);</b>
-<i>117</i>&nbsp;                default:
-<b class="nc"><i>118</i>&nbsp;                    throw new NotValidPlayException(&quot;Non puoi fare questa mossa ora&quot;);</b>
-<i>119</i>&nbsp;
-<i>120</i>&nbsp;            }
-<b class="nc"><i>121</i>&nbsp;        } catch (NotValidPlayException e) {</b>
-<b class="nc"><i>122</i>&nbsp;            System.out.println(&quot;Vorrei lanciare eccezione&quot;);</b>
-<b class="nc"><i>123</i>&nbsp;            match.notifyNotValidPlayException(player, e.getMessage());</b>
-<b class="nc"><i>124</i>&nbsp;        } catch (NotValidException e) {</b>
-<b class="nc"><i>125</i>&nbsp;            match.notifyNotValidUseDiceException(player, e.getMessage());</b>
-<b class="nc"><i>126</i>&nbsp;        }</b>
-<i>127</i>&nbsp;    }
+<i>77</i>&nbsp;    public RemotePlayer getRemotePlayer() {
+<b class="nc"><i>78</i>&nbsp;        return this.remotePlayer;</b>
+<i>79</i>&nbsp;    }
+<i>80</i>&nbsp;
+<i>81</i>&nbsp;    public String getNickname() {
+<b class="nc"><i>82</i>&nbsp;        return this.nickname;</b>
+<i>83</i>&nbsp;    }
+<i>84</i>&nbsp;
+<i>85</i>&nbsp;    /**
+<i>86</i>&nbsp;     * Metodo per il Login del giocatore. In caso di successo salva il riferimento al Player appena creato,
+<i>87</i>&nbsp;     * notificando il RemotePlayer associato, altrimenti lancia eccezione.
+<i>88</i>&nbsp;     * @param nickname
+<i>89</i>&nbsp;     * @throws RemoteException
+<i>90</i>&nbsp;     */
+<i>91</i>&nbsp;    @Override
+<i>92</i>&nbsp;    public void login(String nickname) throws RemoteException {
+<b class="fc"><i>93</i>&nbsp;        lastTimer = new TurnTimer(this);</b>
+<b class="fc"><i>94</i>&nbsp;        timer.schedule(lastTimer, Constants.timerTime);</b>
+<i>95</i>&nbsp;        try {
+<b class="fc"><i>96</i>&nbsp;            match.login(nickname, remotePlayer);</b>
+<b class="fc"><i>97</i>&nbsp;            this.player=match.getPlayer(nickname);</b>
+<b class="fc"><i>98</i>&nbsp;            player.setOnline();</b>
+<b class="fc"><i>99</i>&nbsp;            remotePlayer.onLogin(player.getNickname());</b>
+<b class="nc"><i>100</i>&nbsp;        } catch ( NotValidNicknameException e ) {</b>
+<b class="nc"><i>101</i>&nbsp;            match.notifyNotValidNicknameException(this.remotePlayer ,e.getMessage());</b>
+<b class="nc"><i>102</i>&nbsp;        } catch ( NotPossibleConnectionException e ) {</b>
+<b class="nc"><i>103</i>&nbsp;            match.notifyNotPossibleConnectionException(this.remotePlayer,e.getMessage());</b>
+<b class="fc"><i>104</i>&nbsp;        }</b>
+<i>105</i>&nbsp;
+<b class="fc"><i>106</i>&nbsp;    }</b>
+<i>107</i>&nbsp;
+<i>108</i>&nbsp;    @Override
+<i>109</i>&nbsp;    public void startingMyTurn() throws RemoteException {
+<b class="nc"><i>110</i>&nbsp;        lastTimer = new TurnTimer(this);</b>
+<b class="nc"><i>111</i>&nbsp;        timer.schedule(lastTimer, Constants.timerTime);</b>
+<b class="nc"><i>112</i>&nbsp;        indexInRound = match.getPlayersRoundIndex();</b>
+<b class="nc"><i>113</i>&nbsp;    }</b>
+<i>114</i>&nbsp;
+<i>115</i>&nbsp;
+<i>116</i>&nbsp;    @Override
+<i>117</i>&nbsp;    public void reconnectPlayer() throws RemoteException {
+<b class="nc"><i>118</i>&nbsp;        if (!player.isOnline()) {</b>
+<b class="nc"><i>119</i>&nbsp;            if (match.isMatchStarted()) {</b>
+<b class="nc"><i>120</i>&nbsp;                player.setOnline();</b>
+<b class="nc"><i>121</i>&nbsp;                match.incrementNumPlayersPlaying();</b>
+<b class="nc"><i>122</i>&nbsp;                match.notifySuccess(player, &quot;Sei rientrato in partita&quot;);</b>
+<i>123</i>&nbsp;            }
+<i>124</i>&nbsp;            else
+<b class="nc"><i>125</i>&nbsp;                match.notifyNotValidPlayException(player, &quot;Spiacenti, la partita che stavi giocando è già terminata.&quot;);</b>
+<i>126</i>&nbsp;        }
+<b class="nc"><i>127</i>&nbsp;    }</b>
 <i>128</i>&nbsp;
-<i>129</i>&nbsp;    //quando passo il turno poi sono pronto a giocare il prossimo turno--&gt; tanto non sarò attivo quindi non potrò chiamare
-<i>130</i>&nbsp;    //i metodi. Oppure facciamo un altro stato per essere più sicuri e quando vieni notificato isPlaying passi allo stato READYTOPLAY???
-<i>131</i>&nbsp;    @Override
-<i>132</i>&nbsp;    public void endTurn() throws RemoteException {
-<i>133</i>&nbsp;        try {
-<b class="nc"><i>134</i>&nbsp;            System.out.println(&quot;giocatore: &quot; + nickname + &quot;\n stato:&quot; + player.getState().toString());</b>
-<b class="nc"><i>135</i>&nbsp;            if (player.getState().equals(PlayerState.READYTOPLAY) || player.getState().equals(PlayerState.INIZIALIZED) || player.getState().equals(PlayerState.OFFLINE)) {</b>
-<b class="nc"><i>136</i>&nbsp;                throw new NotValidPlayException(&quot;Finisci il turno!&quot;);</b>
-<i>137</i>&nbsp;            } else {
-<b class="nc"><i>138</i>&nbsp;                match.notifyChangement();</b>
-<b class="nc"><i>139</i>&nbsp;                match.changePlayer();</b>
-<i>140</i>&nbsp;            }
-<b class="nc"><i>141</i>&nbsp;        } catch (NotValidPlayException e) {</b>
-<b class="nc"><i>142</i>&nbsp;            match.notifyNotValidPlayException(player, e.getMessage());</b>
-<b class="nc"><i>143</i>&nbsp;        }</b>
-<i>144</i>&nbsp;    }
-<i>145</i>&nbsp;
-<i>146</i>&nbsp;    @Override
-<i>147</i>&nbsp;    public void useToolCard(int id, int dice, int operation, int sourceRow, int sourceCol, int destRow, int destCol) throws RemoteException {
-<i>148</i>&nbsp;        try {
-<b class="nc"><i>149</i>&nbsp;            switch (id) {</b>
-<i>150</i>&nbsp;
-<i>151</i>&nbsp;                // carte che si possono utilizzare in qualsiasi momento
-<i>152</i>&nbsp;                case 1:
-<i>153</i>&nbsp;                case 2:
-<i>154</i>&nbsp;                case 3:
-<i>155</i>&nbsp;                case 5:
-<i>156</i>&nbsp;                case 10: {
-<b class="nc"><i>157</i>&nbsp;                    if (player.getState().equals(PlayerState.TURNSTARTED) || player.getState().equals(PlayerState.USEDDICE)) {</b>
-<b class="nc"><i>158</i>&nbsp;                        match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol);</b>
-<b class="nc"><i>159</i>&nbsp;                        break;</b>
-<i>160</i>&nbsp;                    } else
-<b class="nc"><i>161</i>&nbsp;                        throw new NotValidPlayException(&quot;Non puoi usare questa carta&quot;);</b>
-<i>162</i>&nbsp;                }
-<i>163</i>&nbsp;
-<i>164</i>&nbsp;                // carte che si possono utilizzare in qualsiasi momento ma si eseguono in 2 step
-<i>165</i>&nbsp;                case 4:
-<i>166</i>&nbsp;                case 12: {
-<b class="nc"><i>167</i>&nbsp;                    if (player.getState().equals(PlayerState.TURNSTARTED) || player.getState().equals(PlayerState.USEDDICE)) {</b>
-<b class="nc"><i>168</i>&nbsp;                        match.useToolCard(player, id, dice, 0, sourceRow, sourceCol, destRow, destCol);</b>
-<b class="nc"><i>169</i>&nbsp;                        break;</b>
-<i>170</i>&nbsp;                    }
-<i>171</i>&nbsp;                    else {
-<b class="nc"><i>172</i>&nbsp;                        if (player.getState().equals(PlayerState.FIRSTSTEPTOOLCARD) || player.getState().equals(PlayerState.USEDDICETOOLCARD)) {</b>
-<b class="nc"><i>173</i>&nbsp;                            match.useToolCard(player, id, dice, 1, sourceRow, sourceCol, destRow, destCol);</b>
-<b class="nc"><i>174</i>&nbsp;                            break;</b>
-<i>175</i>&nbsp;                        }
-<i>176</i>&nbsp;                        else
-<b class="nc"><i>177</i>&nbsp;                            throw new NotValidPlayException(&quot;Non puoi usare questa carta&quot;);</b>
-<i>178</i>&nbsp;                    }
-<i>179</i>&nbsp;                }
-<i>180</i>&nbsp;
-<i>181</i>&nbsp;
-<i>182</i>&nbsp;                // carte utilizzabili solo se non si è già utilizzato un dado nel turno e che prevedono 2 step
-<i>183</i>&nbsp;                case 6: {
-<b class="nc"><i>184</i>&nbsp;                    if (player.getState().equals(PlayerState.TURNSTARTED)) {</b>
-<b class="nc"><i>185</i>&nbsp;                        match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol);</b>
-<b class="nc"><i>186</i>&nbsp;                        break;</b>
-<i>187</i>&nbsp;                    } else
-<b class="nc"><i>188</i>&nbsp;                        throw new NotValidPlayException(&quot;Non puoi usare questa carta&quot;);</b>
-<i>189</i>&nbsp;
-<i>190</i>&nbsp;                }
-<i>191</i>&nbsp;
-<i>192</i>&nbsp;                // carte utilizzabili solo se non si è già utilizzato un dado nel turno e che prevedono 2 step
-<i>193</i>&nbsp;                // il controller setta destRow a 0 o 1 a seconda che sia la prima o la seconda esecuzione
-<i>194</i>&nbsp;                case 11: {
-<b class="nc"><i>195</i>&nbsp;                    if (player.getState().equals(PlayerState.TURNSTARTED)) {</b>
-<b class="nc"><i>196</i>&nbsp;                        match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, 0, destCol);</b>
-<b class="nc"><i>197</i>&nbsp;                        break;</b>
-<i>198</i>&nbsp;                    }
-<i>199</i>&nbsp;                    else {
-<b class="nc"><i>200</i>&nbsp;                        if (player.getState().equals(PlayerState.USEDDICETOOLCARD)) {</b>
-<b class="nc"><i>201</i>&nbsp;                            match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, 1, destCol);</b>
-<b class="nc"><i>202</i>&nbsp;                            break;</b>
-<i>203</i>&nbsp;                        } else
-<b class="nc"><i>204</i>&nbsp;                            throw new NotValidPlayException(&quot;Non puoi usare questa carta&quot;);</b>
-<i>205</i>&nbsp;                    }
-<i>206</i>&nbsp;                }
-<i>207</i>&nbsp;
-<i>208</i>&nbsp;
-<i>209</i>&nbsp;                // carta che può essere utilizzata solo durante il secondo turno e prima di scegliere il secondo dado
-<i>210</i>&nbsp;                case 7: {
-<b class="nc"><i>211</i>&nbsp;                    if (player.getState().equals(PlayerState.TURNSTARTED) &amp;&amp; !match.getIfFirstTurn(player)) {</b>
-<b class="nc"><i>212</i>&nbsp;                        match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol);</b>
-<b class="nc"><i>213</i>&nbsp;                        break;</b>
-<i>214</i>&nbsp;                    } else
-<b class="nc"><i>215</i>&nbsp;                        throw new NotValidPlayException(&quot;Non puoi usare questa carta&quot;);</b>
-<i>216</i>&nbsp;                }
-<i>217</i>&nbsp;
-<i>218</i>&nbsp;                // carta che può essere utilizzata solo durante il primo turno
-<i>219</i>&nbsp;                case 8: {
-<b class="nc"><i>220</i>&nbsp;                    if ((player.getState().equals(PlayerState.TURNSTARTED) &amp;&amp; match.getIfFirstTurn(player)) || (player.getState().equals(PlayerState.USEDDICE) &amp;&amp; match.getIfFirstTurn(player))) {</b>
-<b class="nc"><i>221</i>&nbsp;                        match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol);</b>
-<b class="nc"><i>222</i>&nbsp;                        break;</b>
-<i>223</i>&nbsp;                    } else
-<b class="nc"><i>224</i>&nbsp;                        throw new NotValidPlayException(&quot;Non puoi usare questa carta&quot;);</b>
-<i>225</i>&nbsp;                }
-<i>226</i>&nbsp;
-<i>227</i>&nbsp;
-<i>228</i>&nbsp;                // carta che può essere utilizzata solo se non si è già piazzato un dado
-<i>229</i>&nbsp;                case 9: {
-<b class="nc"><i>230</i>&nbsp;                    if (player.getState().equals(PlayerState.TURNSTARTED)) {</b>
-<b class="nc"><i>231</i>&nbsp;                        System.out.println(&quot;giocatore: &quot; + nickname + &quot;\n stato:&quot; + player.getState().toString());</b>
-<b class="nc"><i>232</i>&nbsp;                        match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol);</b>
-<b class="nc"><i>233</i>&nbsp;                        endTurn();</b>
-<b class="nc"><i>234</i>&nbsp;                        break;</b>
-<i>235</i>&nbsp;                    } else
-<b class="nc"><i>236</i>&nbsp;                        throw new NotValidPlayException(&quot;Non puoi usare questa carta&quot;);</b>
-<i>237</i>&nbsp;                }
-<i>238</i>&nbsp;                default:
-<i>239</i>&nbsp;                    break;
-<i>240</i>&nbsp;            }
-<b class="nc"><i>241</i>&nbsp;        } catch (NotValidPlayException e) {</b>
-<b class="nc"><i>242</i>&nbsp;            match.notifyNotValidPlayException(player, e.getMessage());</b>
-<b class="nc"><i>243</i>&nbsp;        } catch (NotValidException e) {</b>
-<b class="nc"><i>244</i>&nbsp;            match.notifyNotValidToolCardException(player, id, e.getMessage());</b>
-<b class="nc"><i>245</i>&nbsp;        }</b>
-<i>246</i>&nbsp;    }
-<i>247</i>&nbsp;
+<i>129</i>&nbsp;    /**
+<i>130</i>&nbsp;     * Metodo con cui i giocatori prendono effettivamente parte alla partita
+<i>131</i>&nbsp;     * @throws RemoteException
+<i>132</i>&nbsp;     */
+<i>133</i>&nbsp;    @Override
+<i>134</i>&nbsp;    public void joinMatch() throws RemoteException {
+<b class="nc"><i>135</i>&nbsp;        if (player.isOnline()) {</b>
+<i>136</i>&nbsp;            try {
+<b class="nc"><i>137</i>&nbsp;                if (player.getState().equals(PlayerState.INIZIALIZED)) {</b>
+<b class="nc"><i>138</i>&nbsp;                    match.joinMatch();</b>
+<i>139</i>&nbsp;                } else
+<b class="nc"><i>140</i>&nbsp;                    throw new NotValidPlayException(&quot;Errore sullo stato&quot;);     // se succede questa cosa c&#39;è un errore del server</b>
+<b class="nc"><i>141</i>&nbsp;            } catch (NotValidPlayException e) {</b>
+<b class="nc"><i>142</i>&nbsp;                match.notifyNotValidPlayException(player, e.getMessage());</b>
+<b class="nc"><i>143</i>&nbsp;            }</b>
+<i>144</i>&nbsp;        }
+<b class="nc"><i>145</i>&nbsp;    }</b>
+<i>146</i>&nbsp;
+<i>147</i>&nbsp;    /**
+<i>148</i>&nbsp;     * Metodo chiamato dopo aver scelto lo schema per controllare lo stato degli altri giocatori
+<i>149</i>&nbsp;     * @throws RemoteException
+<i>150</i>&nbsp;     */
+<i>151</i>&nbsp;    @Override
+<i>152</i>&nbsp;    public synchronized void checkAllReady() throws RemoteException {
+<b class="nc"><i>153</i>&nbsp;        if (player.isOnline()) {</b>
+<i>154</i>&nbsp;            try {
+<b class="nc"><i>155</i>&nbsp;                if (player.getState().equals(PlayerState.READYTOPLAY)) {</b>
+<b class="nc"><i>156</i>&nbsp;                    match.checkAllReady();</b>
+<i>157</i>&nbsp;                } else
+<b class="nc"><i>158</i>&nbsp;                    throw new NotValidPlayException(&quot;Errore sullo stato&quot;);     // se succede questa cosa c&#39;è un errore del server</b>
+<b class="nc"><i>159</i>&nbsp;            } catch (NotValidPlayException e) {</b>
+<b class="nc"><i>160</i>&nbsp;                match.notifyNotValidPlayException(player, e.getMessage());</b>
+<b class="nc"><i>161</i>&nbsp;            }</b>
+<i>162</i>&nbsp;        }
+<b class="nc"><i>163</i>&nbsp;    }</b>
+<i>164</i>&nbsp;
+<i>165</i>&nbsp;    /**
+<i>166</i>&nbsp;     * Metodo chiamato per settare la Carta Schema scelta
+<i>167</i>&nbsp;     * @param id
+<i>168</i>&nbsp;     * @throws RemoteException
+<i>169</i>&nbsp;     */
+<i>170</i>&nbsp;    @Override
+<i>171</i>&nbsp;    public synchronized void setChosenScheme(int id) throws RemoteException {
+<b class="nc"><i>172</i>&nbsp;        lastTimer = new TurnTimer(this);</b>
+<b class="nc"><i>173</i>&nbsp;        timer.schedule(lastTimer, Constants.timerTime);</b>
+<i>174</i>&nbsp;        try {
+<b class="nc"><i>175</i>&nbsp;            if (player.getState().equals(PlayerState.SCHEMETOCHOOSE)) {</b>
+<b class="nc"><i>176</i>&nbsp;                match.chooseScheme(this.player, id);</b>
+<i>177</i>&nbsp;            } else
+<b class="nc"><i>178</i>&nbsp;                throw new NotValidPlayException(&quot;Non puoi fare questa mossa ora!&quot;);</b>
+<b class="nc"><i>179</i>&nbsp;        } catch (NotValidPlayException e) {</b>
+<b class="nc"><i>180</i>&nbsp;            match.notifyNotValidPlayException(player, e.getMessage());</b>
+<b class="nc"><i>181</i>&nbsp;        }</b>
+<b class="nc"><i>182</i>&nbsp;    }</b>
+<i>183</i>&nbsp;
+<i>184</i>&nbsp;    /**
+<i>185</i>&nbsp;     * Richiesta di utilizzo del dado, in base allo stato del giocatore può essere autorizzata o meno
+<i>186</i>&nbsp;     * in caso sia l&#39;ultima mossa possibile del giocatore il turno verrà passato automaticamente su Match
+<i>187</i>&nbsp;     * @param indexOfDiceInDraftPool
+<i>188</i>&nbsp;     * @param row
+<i>189</i>&nbsp;     * @param col
+<i>190</i>&nbsp;     * @throws RemoteException
+<i>191</i>&nbsp;     */
+<i>192</i>&nbsp;    @Override
+<i>193</i>&nbsp;    public void sendUseDiceRequest(int indexOfDiceInDraftPool, int row, int col) throws RemoteException {
+<b class="nc"><i>194</i>&nbsp;        lastTimer = new TurnTimer(this);</b>
+<b class="nc"><i>195</i>&nbsp;        timer.schedule(lastTimer, Constants.timerTime);</b>
+<b class="nc"><i>196</i>&nbsp;        indexInRound = match.getPlayersRoundIndex();</b>
+<i>197</i>&nbsp;        try {
+<b class="nc"><i>198</i>&nbsp;            switch (player.getState()) {</b>
+<i>199</i>&nbsp;                case USEDDICE:
+<b class="nc"><i>200</i>&nbsp;                    throw new NotValidPlayException(&quot;Hai già usato un dado in questo turno!&quot;);</b>
+<i>201</i>&nbsp;                case USEDTOOLCARD:
+<i>202</i>&nbsp;                case TURNSTARTED: {
+<b class="nc"><i>203</i>&nbsp;                    match.useDice(player, indexOfDiceInDraftPool, row, col);</b>
+<b class="nc"><i>204</i>&nbsp;                    break;</b>
+<i>205</i>&nbsp;                }
+<i>206</i>&nbsp;                default:
+<b class="nc"><i>207</i>&nbsp;                    throw new NotValidPlayException(&quot;Non puoi fare questa mossa ora&quot;);</b>
+<i>208</i>&nbsp;            }
+<b class="nc"><i>209</i>&nbsp;        } catch (NotValidPlayException e) {</b>
+<b class="nc"><i>210</i>&nbsp;            match.notifyNotValidPlayException(player, e.getMessage());</b>
+<b class="nc"><i>211</i>&nbsp;        } catch (NotValidException e) {</b>
+<b class="nc"><i>212</i>&nbsp;            match.notifyNotValidUseDiceException(player, e.getMessage());</b>
+<b class="nc"><i>213</i>&nbsp;        }</b>
+<b class="nc"><i>214</i>&nbsp;    }</b>
+<i>215</i>&nbsp;
+<i>216</i>&nbsp;    /**
+<i>217</i>&nbsp;     * Metodo chiamato dal giocatore per terminare il proprio turno
+<i>218</i>&nbsp;     * @throws RemoteException
+<i>219</i>&nbsp;     */
+<i>220</i>&nbsp;    @Override
+<i>221</i>&nbsp;    public void endTurn() throws RemoteException {
+<b class="nc"><i>222</i>&nbsp;        lastTimer = new TurnTimer(this);</b>
+<b class="nc"><i>223</i>&nbsp;        timer.schedule(lastTimer, Constants.timerTime);</b>
+<b class="nc"><i>224</i>&nbsp;        indexInRound = match.getPlayersRoundIndex();</b>
+<i>225</i>&nbsp;        try {
+<b class="nc"><i>226</i>&nbsp;            if (player.getState().equals(PlayerState.READYTOPLAY) || player.getState().equals(PlayerState.INIZIALIZED) || player.getState().equals(PlayerState.INIZIALIZED) || !player.isOnline()) {</b>
+<b class="nc"><i>227</i>&nbsp;                throw new NotValidPlayException(&quot;Impossibile terminare il turno in questo momento&quot;);</b>
+<i>228</i>&nbsp;            } else {
+<b class="nc"><i>229</i>&nbsp;                match.notifyChangement();</b>
+<b class="nc"><i>230</i>&nbsp;                match.changePlayer();</b>
+<i>231</i>&nbsp;            }
+<b class="nc"><i>232</i>&nbsp;        } catch (NotValidPlayException e) {</b>
+<b class="nc"><i>233</i>&nbsp;            match.notifyNotValidPlayException(player, e.getMessage());</b>
+<b class="nc"><i>234</i>&nbsp;        }</b>
+<b class="nc"><i>235</i>&nbsp;    }</b>
+<i>236</i>&nbsp;
+<i>237</i>&nbsp;    /**
+<i>238</i>&nbsp;     * Metodo di gestione delle ToolCard in base all&#39;id e ai parametri ricevuti
+<i>239</i>&nbsp;     * @param id
+<i>240</i>&nbsp;     * @param dice
+<i>241</i>&nbsp;     * @param operation
+<i>242</i>&nbsp;     * @param sourceRow
+<i>243</i>&nbsp;     * @param sourceCol
+<i>244</i>&nbsp;     * @param destRow
+<i>245</i>&nbsp;     * @param destCol
+<i>246</i>&nbsp;     * @throws RemoteException
+<i>247</i>&nbsp;     */
 <i>248</i>&nbsp;    @Override
-<i>249</i>&nbsp;    public void stopPlayer() throws RemoteException {
-<b class="nc"><i>250</i>&nbsp;        match.exitPlayer(player);</b>
-<i>251</i>&nbsp;    }
-<i>252</i>&nbsp;
-<i>253</i>&nbsp;
-<i>254</i>&nbsp;
-<i>255</i>&nbsp;}
+<i>249</i>&nbsp;    public void useToolCard(int id, int dice, int operation, int sourceRow, int sourceCol, int destRow, int destCol) throws RemoteException {
+<b class="nc"><i>250</i>&nbsp;        lastTimer = new TurnTimer(this);</b>
+<b class="nc"><i>251</i>&nbsp;        timer.schedule(lastTimer, Constants.timerTime);</b>
+<b class="nc"><i>252</i>&nbsp;        indexInRound = match.getPlayersRoundIndex();</b>
+<i>253</i>&nbsp;        try {
+<b class="nc"><i>254</i>&nbsp;            switch (id) {</b>
+<i>255</i>&nbsp;                /**
+<i>256</i>&nbsp;                 * carte che si possono utilizzare in qualsiasi momento
+<i>257</i>&nbsp;                 */
+<i>258</i>&nbsp;                case 1:
+<i>259</i>&nbsp;                case 2:
+<i>260</i>&nbsp;                case 3:
+<i>261</i>&nbsp;                case 5:
+<i>262</i>&nbsp;                case 10: {
+<b class="nc"><i>263</i>&nbsp;                    if (player.getState().equals(PlayerState.TURNSTARTED) || player.getState().equals(PlayerState.USEDDICE)) {</b>
+<b class="nc"><i>264</i>&nbsp;                        match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol);</b>
+<b class="nc"><i>265</i>&nbsp;                        break;</b>
+<i>266</i>&nbsp;                    } else
+<b class="nc"><i>267</i>&nbsp;                        throw new NotValidPlayException(&quot;Non puoi usare questa carta&quot;);</b>
+<i>268</i>&nbsp;                }
+<i>269</i>&nbsp;                /**
+<i>270</i>&nbsp;                 * carte che si possono utilizzare in qualsiasi momento ma si eseguono in 2 step
+<i>271</i>&nbsp;                 */
+<i>272</i>&nbsp;                case 4:
+<i>273</i>&nbsp;                case 12: {
+<b class="nc"><i>274</i>&nbsp;                    if (player.getState().equals(PlayerState.TURNSTARTED) || player.getState().equals(PlayerState.USEDDICE)) {</b>
+<b class="nc"><i>275</i>&nbsp;                        match.useToolCard(player, id, dice, 0, sourceRow, sourceCol, destRow, destCol);</b>
+<b class="nc"><i>276</i>&nbsp;                        break;</b>
+<i>277</i>&nbsp;                    }
+<i>278</i>&nbsp;                    else {
+<b class="nc"><i>279</i>&nbsp;                        if (player.getState().equals(PlayerState.FIRSTSTEPTOOLCARD) || player.getState().equals(PlayerState.USEDDICETOOLCARD)) {</b>
+<b class="nc"><i>280</i>&nbsp;                            match.useToolCard(player, id, dice, 1, sourceRow, sourceCol, destRow, destCol);</b>
+<b class="nc"><i>281</i>&nbsp;                            break;</b>
+<i>282</i>&nbsp;                        }
+<i>283</i>&nbsp;                        else
+<b class="nc"><i>284</i>&nbsp;                            throw new NotValidPlayException(&quot;Non puoi usare questa carta&quot;);</b>
+<i>285</i>&nbsp;                    }
+<i>286</i>&nbsp;                }
+<i>287</i>&nbsp;                /**
+<i>288</i>&nbsp;                 * carte utilizzabili solo se non si è già utilizzato un dado nel turno e che prevedono 2 step
+<i>289</i>&nbsp;                 */
+<i>290</i>&nbsp;                case 6: {
+<b class="nc"><i>291</i>&nbsp;                    if (player.getState().equals(PlayerState.TURNSTARTED)) {</b>
+<b class="nc"><i>292</i>&nbsp;                        match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol);</b>
+<b class="nc"><i>293</i>&nbsp;                        break;</b>
+<i>294</i>&nbsp;                    } else
+<b class="nc"><i>295</i>&nbsp;                        throw new NotValidPlayException(&quot;Non puoi usare questa carta&quot;);</b>
+<i>296</i>&nbsp;
+<i>297</i>&nbsp;                }
+<i>298</i>&nbsp;                /**
+<i>299</i>&nbsp;                 * carte utilizzabili solo se non si è già utilizzato un dado nel turno e che prevedono 2 step
+<i>300</i>&nbsp;                 *il controller setta destRow a 0 o 1 a seconda che sia la prima o la seconda esecuzione
+<i>301</i>&nbsp;                 */
+<i>302</i>&nbsp;                case 11: {
+<b class="nc"><i>303</i>&nbsp;                    if (player.getState().equals(PlayerState.TURNSTARTED)) {</b>
+<b class="nc"><i>304</i>&nbsp;                        match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, 0, destCol);</b>
+<b class="nc"><i>305</i>&nbsp;                        break;</b>
+<i>306</i>&nbsp;                    }
+<i>307</i>&nbsp;                    else {
+<b class="nc"><i>308</i>&nbsp;                        if (player.getState().equals(PlayerState.USEDDICETOOLCARD)) {</b>
+<b class="nc"><i>309</i>&nbsp;                            match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, 1, destCol);</b>
+<b class="nc"><i>310</i>&nbsp;                            break;</b>
+<i>311</i>&nbsp;                        } else
+<b class="nc"><i>312</i>&nbsp;                            throw new NotValidPlayException(&quot;Non puoi usare questa carta&quot;);</b>
+<i>313</i>&nbsp;                    }
+<i>314</i>&nbsp;                }
+<i>315</i>&nbsp;                /**
+<i>316</i>&nbsp;                 * carta che può essere utilizzata solo durante il secondo turno e prima di scegliere il secondo dado
+<i>317</i>&nbsp;                 */
+<i>318</i>&nbsp;                case 7: {
+<b class="nc"><i>319</i>&nbsp;                    if (player.getState().equals(PlayerState.TURNSTARTED) &amp;&amp; !match.getIfFirstTurn(player)) {</b>
+<b class="nc"><i>320</i>&nbsp;                        match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol);</b>
+<b class="nc"><i>321</i>&nbsp;                        break;</b>
+<i>322</i>&nbsp;                    } else
+<b class="nc"><i>323</i>&nbsp;                        throw new NotValidPlayException(&quot;Non puoi usare questa carta&quot;);</b>
+<i>324</i>&nbsp;                }
+<i>325</i>&nbsp;                /**
+<i>326</i>&nbsp;                 * carta che può essere utilizzata solo durante il primo turno
+<i>327</i>&nbsp;                 */
+<i>328</i>&nbsp;                case 8: {
+<b class="nc"><i>329</i>&nbsp;                    if ((player.getState().equals(PlayerState.TURNSTARTED) &amp;&amp; match.getIfFirstTurn(player)) || (player.getState().equals(PlayerState.USEDDICE) &amp;&amp; match.getIfFirstTurn(player))) {</b>
+<b class="nc"><i>330</i>&nbsp;                        match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol);</b>
+<b class="nc"><i>331</i>&nbsp;                        break;</b>
+<i>332</i>&nbsp;                    } else
+<b class="nc"><i>333</i>&nbsp;                        throw new NotValidPlayException(&quot;Non puoi usare questa carta&quot;);</b>
+<i>334</i>&nbsp;                }
+<i>335</i>&nbsp;                /**
+<i>336</i>&nbsp;                 * carta che può essere utilizzata solo durante il primo turno
+<i>337</i>&nbsp;                 */
+<i>338</i>&nbsp;                case 9: {
+<b class="nc"><i>339</i>&nbsp;                    if (player.getState().equals(PlayerState.TURNSTARTED)) {</b>
+<b class="nc"><i>340</i>&nbsp;                        match.useToolCard(player, id, dice, operation, sourceRow, sourceCol, destRow, destCol);</b>
+<b class="nc"><i>341</i>&nbsp;                        endTurn();</b>
+<b class="nc"><i>342</i>&nbsp;                        break;</b>
+<i>343</i>&nbsp;                    } else
+<b class="nc"><i>344</i>&nbsp;                        throw new NotValidPlayException(&quot;Non puoi usare questa carta&quot;);</b>
+<i>345</i>&nbsp;                }
+<i>346</i>&nbsp;                default:
+<i>347</i>&nbsp;                    break;
+<i>348</i>&nbsp;            }
+<b class="nc"><i>349</i>&nbsp;        } catch (NotValidPlayException e) {</b>
+<b class="nc"><i>350</i>&nbsp;            match.notifyNotValidPlayException(player, e.getMessage());</b>
+<b class="nc"><i>351</i>&nbsp;        } catch (NotValidException e) {</b>
+<b class="nc"><i>352</i>&nbsp;            match.notifyNotValidToolCardException(player, id, e.getMessage());</b>
+<b class="nc"><i>353</i>&nbsp;        }</b>
+<b class="nc"><i>354</i>&nbsp;    }</b>
+<i>355</i>&nbsp;
+<i>356</i>&nbsp;    /**
+<i>357</i>&nbsp;     * Metodo chiamato in caso di disconnessione, quindi di cattura di un&#39;eccezione di rete
+<i>358</i>&nbsp;     * @throws RemoteException
+<i>359</i>&nbsp;     */
+<i>360</i>&nbsp;    @Override
+<i>361</i>&nbsp;    public void stopPlayer() throws RemoteException {
+<b class="nc"><i>362</i>&nbsp;        if (player.isOnline()) {</b>
+<b class="nc"><i>363</i>&nbsp;            match.exitPlayer(player);</b>
+<i>364</i>&nbsp;        }
+<b class="nc"><i>365</i>&nbsp;    }</b>
+<i>366</i>&nbsp;
+<i>367</i>&nbsp;
+<i>368</i>&nbsp;    public void timeout(TurnTimer turnTimer) throws RemoteException {
+<b class="nc"><i>369</i>&nbsp;        if (turnTimer == lastTimer) {</b>
+<b class="nc"><i>370</i>&nbsp;            if (player.getState().equals(PlayerState.INIZIALIZED) || player.getState().equals(PlayerState.SCHEMETOCHOOSE)) {</b>
+<b class="nc"><i>371</i>&nbsp;                stopPlayer();</b>
+<i>372</i>&nbsp;            }
+<i>373</i>&nbsp;            else {
+<b class="nc"><i>374</i>&nbsp;                if (!player.getState().equals(PlayerState.READYTOPLAY) &amp;&amp; indexInRound == match.getPlayersRoundIndex() &amp;&amp; match.getPlayerPlaying().equals(player)) {</b>
+<b class="nc"><i>375</i>&nbsp;                    stopPlayer();</b>
+<i>376</i>&nbsp;                }
+<i>377</i>&nbsp;            }
+<i>378</i>&nbsp;        }
+<i>379</i>&nbsp;
+<b class="nc"><i>380</i>&nbsp;    }</b>
+<i>381</i>&nbsp;}
 </div>
 </div>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2018-07-04 21:00</div>
+    <div style="float:right;">generated on 2018-07-05 23:16</div>
 </div>
 </body>
 </html>

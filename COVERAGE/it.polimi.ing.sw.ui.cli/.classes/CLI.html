@@ -53,7 +53,7 @@
     0%
   </span>
   <span class="absValue">
-    (0/ 32)
+    (0/ 33)
   </span>
 </td>
 <td class="coverageStat">
@@ -61,7 +61,7 @@
     0%
   </span>
   <span class="absValue">
-    (0/ 195)
+    (0/ 318)
   </span>
 </td>
 </tr>
@@ -79,666 +79,810 @@
 <i>5</i>&nbsp;import it.polimi.ing.sw.model.Match;
 <i>6</i>&nbsp;import it.polimi.ing.sw.model.Player;
 <i>7</i>&nbsp;import it.polimi.ing.sw.model.Scheme;
-<i>8</i>&nbsp;import it.polimi.ing.sw.model.exceptions.NotValidException;
-<i>9</i>&nbsp;import it.polimi.ing.sw.util.Constants;
-<i>10</i>&nbsp;
-<i>11</i>&nbsp;import java.awt.*;
-<i>12</i>&nbsp;import java.util.ArrayList;
-<i>13</i>&nbsp;import java.util.Scanner;
-<i>14</i>&nbsp;
+<i>8</i>&nbsp;import it.polimi.ing.sw.util.Constants;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;import java.util.ArrayList;
+<i>11</i>&nbsp;import java.util.Scanner;
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;public class CLI implements UiUpdate {
 <i>15</i>&nbsp;
-<i>16</i>&nbsp;public class CLI implements UiUpdate {
-<i>17</i>&nbsp;
-<b class="nc"><i>18</i>&nbsp;    public Scanner scanner = new Scanner(System.in);</b>
-<i>19</i>&nbsp;    public String inText;
-<i>20</i>&nbsp;
+<b class="nc"><i>16</i>&nbsp;    public Scanner scanner = new Scanner(System.in);</b>
+<i>17</i>&nbsp;    public String inText;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;    private View controller;
 <i>21</i>&nbsp;
-<i>22</i>&nbsp;    private View controller;
-<i>23</i>&nbsp;
-<i>24</i>&nbsp;
-<b class="nc"><i>25</i>&nbsp;    public CLI(View controller) {</b>
-<b class="nc"><i>26</i>&nbsp;        this.controller = controller;</b>
-<i>27</i>&nbsp;    }
-<i>28</i>&nbsp;
-<i>29</i>&nbsp;    /*public PlayerController getController() {
-<i>30</i>&nbsp;        if (controller == null)
-<i>31</i>&nbsp;            controller = new PlayerController(getUI());
-<i>32</i>&nbsp;        return controller;
-<i>33</i>&nbsp;    }*/
-<i>34</i>&nbsp;
-<i>35</i>&nbsp;    public View getController() {
-<b class="nc"><i>36</i>&nbsp;        return controller;</b>
-<i>37</i>&nbsp;    }
-<i>38</i>&nbsp;
-<i>39</i>&nbsp;    /*public UiUpdate getUI() {
-<i>40</i>&nbsp;        if (ui == null) {
-<i>41</i>&nbsp;            ui = new CLI();
-<i>42</i>&nbsp;        }
-<i>43</i>&nbsp;        return ui;
-<i>44</i>&nbsp;    }*/
-<i>45</i>&nbsp;
-<i>46</i>&nbsp;    /**
-<i>47</i>&nbsp;     * Inizio come Client o Server.
-<i>48</i>&nbsp;     *
-<i>49</i>&nbsp;     * @param //args
-<i>50</i>&nbsp;     */
-<i>51</i>&nbsp;    /*public static void main(String[] args) {
-<i>52</i>&nbsp;        String serverAddress = Constants.SERVER_ADDRESS;
-<i>53</i>&nbsp;        int socketPort = Constants.SOCKET_PORT;
-<i>54</i>&nbsp;        int rmiPort = Constants.RMI_PORT;
-<i>55</i>&nbsp;
-<i>56</i>&nbsp;        // Controllo se l&#39;utente ha inserito un serverAddress, socketPort o rmiPort. Se li ha inseriti, li utilizzo, altrimenti uso quelli di default
-<i>57</i>&nbsp;        if (args.length != 0) {
-<i>58</i>&nbsp;            try {
-<i>59</i>&nbsp;                serverAddress = args[0];
-<i>60</i>&nbsp;                socketPort = Integer.parseInt(args[1]);
-<i>61</i>&nbsp;                rmiPort = Integer.parseInt(args[0]);
-<i>62</i>&nbsp;            } catch (Exception e) {    //TODO: gestire questa eccezione
-<i>63</i>&nbsp;                System.exit(0);
-<i>64</i>&nbsp;            }
-<i>65</i>&nbsp;        }
-<i>66</i>&nbsp;        if (Constants.START_AS_SERVER_IF_CLIENT_CONNECTION_FAILS) {
-<i>67</i>&nbsp;            System.out.print(&quot;Digita C per iniziare come Client o S per iniziare come Server (Default: Client)&quot;);
-<i>68</i>&nbsp;            inText = scanner.nextLine().toUpperCase();
-<i>69</i>&nbsp;
-<i>70</i>&nbsp;            if (inText.equals(&quot;S&quot;)) {
-<i>71</i>&nbsp;                mainServer(socketPort, rmiPort);
-<i>72</i>&nbsp;            } else if (inText.equals(&quot;C&quot;)) {
-<i>73</i>&nbsp;                mainClient(serverAddress, socketPort, rmiPort);
-<i>74</i>&nbsp;            }
-<i>75</i>&nbsp;            // Default: Client
-<i>76</i>&nbsp;            else {
-<i>77</i>&nbsp;                System.out.println(&quot;Inizio come Client...&quot;);
-<i>78</i>&nbsp;                mainClient(serverAddress, socketPort, rmiPort);
-<i>79</i>&nbsp;            }
-<i>80</i>&nbsp;        } else {
-<i>81</i>&nbsp;            mainClient(serverAddress, socketPort, rmiPort);
-<i>82</i>&nbsp;        }
-<i>83</i>&nbsp;    }
-<i>84</i>&nbsp;
-<i>85</i>&nbsp;    /**
-<i>86</i>&nbsp;     * Avvia Client (RMI o socket).
-<i>87</i>&nbsp;     *
-<i>88</i>&nbsp;     */
-<i>89</i>&nbsp;    /*public void mainClient(String serverAddress, int socketPort, int rmiPort) {
-<i>90</i>&nbsp;        mainClient(serverAddress, socketPort, rmiPort, null);
-<i>91</i>&nbsp;    }
-<i>92</i>&nbsp;
-<i>93</i>&nbsp;    /**
-<i>94</i>&nbsp;     * Avvia Client (RMI o socket)
-<i>95</i>&nbsp;     * @param clientUI
-<i>96</i>&nbsp;     */
-<i>97</i>&nbsp;
-<i>98</i>&nbsp;    /*public PlayerController mainClient(String serverAddress, int socketPort, int rmiPort, UiUpdate clientUI) {
-<i>99</i>&nbsp;        ui = clientUI;
-<i>100</i>&nbsp;
-<i>101</i>&nbsp;        System.out.print(&quot;Digita R per connetterti tramite RMI o S per connetterti tramite socket (Default: RMI)&quot;);
-<i>102</i>&nbsp;        inText = scanner.nextLine().toUpperCase();
-<i>103</i>&nbsp;
-<i>104</i>&nbsp;        if (inText.equals(&quot;S&quot;)) {
-<i>105</i>&nbsp;            inText = &quot;socket&quot;;
-<i>106</i>&nbsp;        } else if (inText.equals(&quot;R&quot;)) {
-<i>107</i>&nbsp;            inText = &quot;RMI&quot;;
-<i>108</i>&nbsp;        }
-<i>109</i>&nbsp;        // Default: RMI
-<i>110</i>&nbsp;        else {
-<i>111</i>&nbsp;            inText = &quot;RMI&quot;;
-<i>112</i>&nbsp;            System.out.println(&quot;Connettendo con RMI...&quot;);
-<i>113</i>&nbsp;        }
-<i>114</i>&nbsp;
-<i>115</i>&nbsp;        boolean success = false;
-<i>116</i>&nbsp;        int attempts = Constants.MAX_CONNECTION_ATTEMPTS;
-<i>117</i>&nbsp;        int sec = Constants.CONNECTION_RETRY_SECONDS * 1000;
-<i>118</i>&nbsp;        while (!success &amp;&amp; attempts &gt; 0) {
-<i>119</i>&nbsp;            try {
-<i>120</i>&nbsp;                attempts--;
-<i>121</i>&nbsp;                PlayerController controller = getController();
-<i>122</i>&nbsp;                controller.startClient(inText, serverAddress, socketPort, rmiPort);
-<i>123</i>&nbsp;                success = true;
-<i>124</i>&nbsp;            } catch (ClientException e) {
-<i>125</i>&nbsp;                if (attempts &gt; 0) {
-<i>126</i>&nbsp;                    System.err.println(e.getMessage() + &quot; (&quot; + &quot;Riprovo in &quot; + sec / 1000 + &quot; secondi&quot; + &quot;, &quot; + attempts
-<i>127</i>&nbsp;                            + &quot; tentativi rimanenti)&quot;);
-<i>128</i>&nbsp;                    try {
-<i>129</i>&nbsp;                        Thread.sleep(sec);
-<i>130</i>&nbsp;                    } catch (InterruptedException ie) {
-<i>131</i>&nbsp;                        // TODO gestire questa eccezione
-<i>132</i>&nbsp;                    }
-<i>133</i>&nbsp;                }
-<i>134</i>&nbsp;            }
-<i>135</i>&nbsp;        }
-<i>136</i>&nbsp;
-<i>137</i>&nbsp;        if (success) {
-<i>138</i>&nbsp;            login();
-<i>139</i>&nbsp;            if (clientUI == null) {
-<i>140</i>&nbsp;
-<i>141</i>&nbsp;            }
-<i>142</i>&nbsp;            else
-<i>143</i>&nbsp;                return getController();
-<i>144</i>&nbsp;        } else {
-<i>145</i>&nbsp;            if (Constants.START_AS_SERVER_IF_CLIENT_CONNECTION_FAILS) {
-<i>146</i>&nbsp;                System.err.println(
-<i>147</i>&nbsp;                        &quot;\nImpossibile stabilire una connessione col server, il programma avvierà un server locale&quot;);
-<i>148</i>&nbsp;
-<i>149</i>&nbsp;                mainServer(socketPort, rmiPort);
-<i>150</i>&nbsp;            } else {
-<i>151</i>&nbsp;                System.err.println(&quot;\nImpossibile stabilire una connessione col server, il programma terminerà a breve&quot;);
-<i>152</i>&nbsp;                System.exit(0);
-<i>153</i>&nbsp;            }
-<i>154</i>&nbsp;        }
-<i>155</i>&nbsp;        return null;
-<i>156</i>&nbsp;    }
-<i>157</i>&nbsp;
-<i>158</i>&nbsp;    /**
-<i>159</i>&nbsp;     * Avvio Server (Client e Server).
-<i>160</i>&nbsp;     *
-<i>161</i>&nbsp;     * @param socketPort
-<i>162</i>&nbsp;     * @param rmiPort
-<i>163</i>&nbsp;     */
-<i>164</i>&nbsp;    /*public void mainServer(int socketPort, int rmiPort) {
-<i>165</i>&nbsp;        try {
-<i>166</i>&nbsp;            Server server = new Server();
-<i>167</i>&nbsp;            server.startServer(socketPort, rmiPort);
-<i>168</i>&nbsp;
-<i>169</i>&nbsp;            System.out.print(&quot;\nServer in ascolto a: &quot;);
-<i>170</i>&nbsp;            System.out.println(&quot;127.0.0.1&quot; + &quot; (RMI: &quot; + rmiPort + &quot;, socket: &quot; + socketPort + &quot;)&quot;);
-<i>171</i>&nbsp;            System.out.println();
-<i>172</i>&nbsp;
-<i>173</i>&nbsp;        } catch (ServerException e) {
-<i>174</i>&nbsp;            System.err.println(e.getMessage());
-<i>175</i>&nbsp;            System.err.println(&quot;Errore di avvio del server locale&quot;);
-<i>176</i>&nbsp;            System.exit(0);
-<i>177</i>&nbsp;        }
-<i>178</i>&nbsp;    }
-<i>179</i>&nbsp;
-<i>180</i>&nbsp;    /**
-<i>181</i>&nbsp;     * Login del Client sul Server.
-<i>182</i>&nbsp;     */
-<i>183</i>&nbsp;    public void login(String message) {
-<b class="nc"><i>184</i>&nbsp;        System.out.println(message);</b>
-<b class="nc"><i>185</i>&nbsp;        inText = scanner.nextLine();</b>
-<b class="nc"><i>186</i>&nbsp;        controller.login(inText);</b>
-<i>187</i>&nbsp;    }
-<i>188</i>&nbsp;
-<i>189</i>&nbsp;
-<i>190</i>&nbsp;    public void chooseNetwork(String message) {
-<i>191</i>&nbsp;        do {
-<b class="nc"><i>192</i>&nbsp;            System.out.println(message);</b>
-<b class="nc"><i>193</i>&nbsp;            inText = scanner.nextLine();</b>
-<b class="nc"><i>194</i>&nbsp;        } while (!inText.toLowerCase().equals(&quot;s&quot;) &amp;&amp; !inText.toLowerCase().equals(&quot;r&quot;));</b>
-<b class="nc"><i>195</i>&nbsp;        controller.chooseNetwork(inText);</b>
-<i>196</i>&nbsp;    }
-<i>197</i>&nbsp;
-<i>198</i>&nbsp;
-<i>199</i>&nbsp;    /**
-<i>200</i>&nbsp;     * Scelta dello schema tra i 4 schemi disponibili da parte di un giocatore
-<i>201</i>&nbsp;     */
-<i>202</i>&nbsp;    public void chooseScheme(Match match, String nickname, String message) {
-<b class="nc"><i>203</i>&nbsp;        ArrayList&lt;Scheme&gt; schemes = match.getPlayer(nickname).getSchemesToChoose();</b>
-<b class="nc"><i>204</i>&nbsp;        showSchemesToChoose(schemes);</b>
-<i>205</i>&nbsp;        int num;
-<i>206</i>&nbsp;        do {
-<b class="nc"><i>207</i>&nbsp;            System.out.println(message);</b>
-<b class="nc"><i>208</i>&nbsp;            num = scanner.nextInt();</b>
-<i>209</i>&nbsp;
-<b class="nc"><i>210</i>&nbsp;        } while (num &lt; 1 || num &gt; 4);</b>
-<b class="nc"><i>211</i>&nbsp;        System.out.println(&quot;Ho scelto schema nella cli&quot;);</b>
-<b class="nc"><i>212</i>&nbsp;        controller.setChosenScheme(schemes.get(num - 1).getId());   //se per esempio qui c&#39;è un errore, se lo gestisce il PlayerController*/</b>
-<b class="nc"><i>213</i>&nbsp;        System.out.println(&quot;Ho scelto schema nella cli, torno subitooo&quot;);</b>
-<i>214</i>&nbsp;    }
-<i>215</i>&nbsp;
-<i>216</i>&nbsp;
-<i>217</i>&nbsp;    public void showSchemesToChoose(ArrayList&lt;Scheme&gt; schemes) {
-<b class="nc"><i>218</i>&nbsp;        for (int i = 0; i &lt; 4; i++) {</b>
-<b class="nc"><i>219</i>&nbsp;            System.out.println(&quot;Schema &quot; + (i + 1) + &quot; (con ID &quot; + schemes.get(i).getId() + &quot;):&quot;);</b>
-<b class="nc"><i>220</i>&nbsp;            ShowScheme show = new ShowScheme(schemes.get(i));</b>
-<b class="nc"><i>221</i>&nbsp;            System.out.println(&quot;&quot;);</b>
-<i>222</i>&nbsp;        }
-<i>223</i>&nbsp;    }
-<i>224</i>&nbsp;
-<i>225</i>&nbsp;
-<i>226</i>&nbsp;    /**
-<i>227</i>&nbsp;     * Scelta dell&#39;azione da parte del giocatore
-<i>228</i>&nbsp;     */
-<i>229</i>&nbsp;    public void chooseAction(Match match, String nickname) {
-<i>230</i>&nbsp;        int choice;
-<b class="nc"><i>231</i>&nbsp;        Boolean ok = true;</b>
-<b class="nc"><i>232</i>&nbsp;        System.out.println(&quot;Digita: \n- 1 se vuoi posizionare un dado sul tuo schema; \n- 2 se vuoi utilizzare una carta utensile; \n- 3 se vuoi visualizzare le informazioni degli altri giocatori; \n- 4 se vuoi terminare il tuo turno; \n- 5 se vuoi uscire dalla partita.&quot;);</b>
-<i>233</i>&nbsp;
-<i>234</i>&nbsp;        do {
-<b class="nc"><i>235</i>&nbsp;            choice = scanner.nextInt();</b>
-<i>236</i>&nbsp;
-<b class="nc"><i>237</i>&nbsp;            switch (choice) {</b>
-<i>238</i>&nbsp;
-<i>239</i>&nbsp;                case 5: {
-<b class="nc"><i>240</i>&nbsp;                    System.out.println(&quot;Sei sicuro che vuoi uscire dalla partita? Digita S per sì o N per no.&quot;);</b>
-<b class="nc"><i>241</i>&nbsp;                    if (scanner.nextLine().toLowerCase().equalsIgnoreCase(&quot;s&quot;)) {</b>
-<i>242</i>&nbsp;                        // TODO: gestire terminazione corretta del programma!
-<b class="nc"><i>243</i>&nbsp;                        System.out.println(&quot;Uscendo dalla partita...&quot;);</b>
-<b class="nc"><i>244</i>&nbsp;                        System.exit(0);</b>
-<i>245</i>&nbsp;                    }
-<i>246</i>&nbsp;                    break;
-<i>247</i>&nbsp;                }
-<i>248</i>&nbsp;
-<i>249</i>&nbsp;                case 1: {
-<b class="nc"><i>250</i>&nbsp;                    handleUseDice(match, false);</b>
-<b class="nc"><i>251</i>&nbsp;                    break;</b>
-<i>252</i>&nbsp;                }
+<i>22</i>&nbsp;
+<b class="nc"><i>23</i>&nbsp;    public CLI(View controller) {</b>
+<b class="nc"><i>24</i>&nbsp;        this.controller = controller;</b>
+<i>25</i>&nbsp;    }
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;    /*public PlayerController getController() {
+<i>28</i>&nbsp;        if (controller == null)
+<i>29</i>&nbsp;            controller = new PlayerController(getUI());
+<i>30</i>&nbsp;        return controller;
+<i>31</i>&nbsp;    }*/
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;    public View getController() {
+<b class="nc"><i>34</i>&nbsp;        return controller;</b>
+<i>35</i>&nbsp;    }
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;    /*public UiUpdate getUI() {
+<i>38</i>&nbsp;        if (ui == null) {
+<i>39</i>&nbsp;            ui = new CLI();
+<i>40</i>&nbsp;        }
+<i>41</i>&nbsp;        return ui;
+<i>42</i>&nbsp;    }*/
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;    /**
+<i>45</i>&nbsp;     * Inizio come Client o Server.
+<i>46</i>&nbsp;     *
+<i>47</i>&nbsp;     * @param //args
+<i>48</i>&nbsp;     */
+<i>49</i>&nbsp;    /*public static void main(String[] args) {
+<i>50</i>&nbsp;        String serverAddress = Constants.SERVER_ADDRESS;
+<i>51</i>&nbsp;        int socketPort = Constants.SOCKET_PORT;
+<i>52</i>&nbsp;        int rmiPort = Constants.RMI_PORT;
+<i>53</i>&nbsp;
+<i>54</i>&nbsp;        // Controllo se l&#39;utente ha inserito un serverAddress, socketPort o rmiPort. Se li ha inseriti, li utilizzo, altrimenti uso quelli di default
+<i>55</i>&nbsp;        if (args.length != 0) {
+<i>56</i>&nbsp;            try {
+<i>57</i>&nbsp;                serverAddress = args[0];
+<i>58</i>&nbsp;                socketPort = Integer.parseInt(args[1]);
+<i>59</i>&nbsp;                rmiPort = Integer.parseInt(args[0]);
+<i>60</i>&nbsp;            } catch (Exception e) {    //TODO: gestire questa eccezione
+<i>61</i>&nbsp;                System.exit(0);
+<i>62</i>&nbsp;            }
+<i>63</i>&nbsp;        }
+<i>64</i>&nbsp;        if (Constants.START_AS_SERVER_IF_CLIENT_CONNECTION_FAILS) {
+<i>65</i>&nbsp;            System.out.print(&quot;Digita C per iniziare come Client o S per iniziare come Server (Default: Client)&quot;);
+<i>66</i>&nbsp;            inText = scanner.nextLine().toUpperCase();
+<i>67</i>&nbsp;
+<i>68</i>&nbsp;            if (inText.equals(&quot;S&quot;)) {
+<i>69</i>&nbsp;                mainServer(socketPort, rmiPort);
+<i>70</i>&nbsp;            } else if (inText.equals(&quot;C&quot;)) {
+<i>71</i>&nbsp;                mainClient(serverAddress, socketPort, rmiPort);
+<i>72</i>&nbsp;            }
+<i>73</i>&nbsp;            // Default: Client
+<i>74</i>&nbsp;            else {
+<i>75</i>&nbsp;                System.out.println(&quot;Inizio come Client...&quot;);
+<i>76</i>&nbsp;                mainClient(serverAddress, socketPort, rmiPort);
+<i>77</i>&nbsp;            }
+<i>78</i>&nbsp;        } else {
+<i>79</i>&nbsp;            mainClient(serverAddress, socketPort, rmiPort);
+<i>80</i>&nbsp;        }
+<i>81</i>&nbsp;    }
+<i>82</i>&nbsp;
+<i>83</i>&nbsp;    /**
+<i>84</i>&nbsp;     * Avvia Client (RMI o socket).
+<i>85</i>&nbsp;     *
+<i>86</i>&nbsp;     */
+<i>87</i>&nbsp;    /*public void mainClient(String serverAddress, int socketPort, int rmiPort) {
+<i>88</i>&nbsp;        mainClient(serverAddress, socketPort, rmiPort, null);
+<i>89</i>&nbsp;    }
+<i>90</i>&nbsp;
+<i>91</i>&nbsp;    /**
+<i>92</i>&nbsp;     * Avvia Client (RMI o socket)
+<i>93</i>&nbsp;     * @param clientUI
+<i>94</i>&nbsp;     */
+<i>95</i>&nbsp;
+<i>96</i>&nbsp;    /*public PlayerController mainClient(String serverAddress, int socketPort, int rmiPort, UiUpdate clientUI) {
+<i>97</i>&nbsp;        ui = clientUI;
+<i>98</i>&nbsp;
+<i>99</i>&nbsp;        System.out.print(&quot;Digita R per connetterti tramite RMI o S per connetterti tramite socket (Default: RMI)&quot;);
+<i>100</i>&nbsp;        inText = scanner.nextLine().toUpperCase();
+<i>101</i>&nbsp;
+<i>102</i>&nbsp;        if (inText.equals(&quot;S&quot;)) {
+<i>103</i>&nbsp;            inText = &quot;socket&quot;;
+<i>104</i>&nbsp;        } else if (inText.equals(&quot;R&quot;)) {
+<i>105</i>&nbsp;            inText = &quot;RMI&quot;;
+<i>106</i>&nbsp;        }
+<i>107</i>&nbsp;        // Default: RMI
+<i>108</i>&nbsp;        else {
+<i>109</i>&nbsp;            inText = &quot;RMI&quot;;
+<i>110</i>&nbsp;            System.out.println(&quot;Connettendo con RMI...&quot;);
+<i>111</i>&nbsp;        }
+<i>112</i>&nbsp;
+<i>113</i>&nbsp;        boolean success = false;
+<i>114</i>&nbsp;        int attempts = Constants.MAX_CONNECTION_ATTEMPTS;
+<i>115</i>&nbsp;        int sec = Constants.CONNECTION_RETRY_SECONDS * 1000;
+<i>116</i>&nbsp;        while (!success &amp;&amp; attempts &gt; 0) {
+<i>117</i>&nbsp;            try {
+<i>118</i>&nbsp;                attempts--;
+<i>119</i>&nbsp;                PlayerController controller = getController();
+<i>120</i>&nbsp;                controller.startClient(inText, serverAddress, socketPort, rmiPort);
+<i>121</i>&nbsp;                success = true;
+<i>122</i>&nbsp;            } catch (ClientException e) {
+<i>123</i>&nbsp;                if (attempts &gt; 0) {
+<i>124</i>&nbsp;                    System.err.println(e.getMessage() + &quot; (&quot; + &quot;Riprovo in &quot; + sec / 1000 + &quot; secondi&quot; + &quot;, &quot; + attempts
+<i>125</i>&nbsp;                            + &quot; tentativi rimanenti)&quot;);
+<i>126</i>&nbsp;                    try {
+<i>127</i>&nbsp;                        Thread.sleep(sec);
+<i>128</i>&nbsp;                    } catch (InterruptedException ie) {
+<i>129</i>&nbsp;                        // TODO gestire questa eccezione
+<i>130</i>&nbsp;                    }
+<i>131</i>&nbsp;                }
+<i>132</i>&nbsp;            }
+<i>133</i>&nbsp;        }
+<i>134</i>&nbsp;
+<i>135</i>&nbsp;        if (success) {
+<i>136</i>&nbsp;            login();
+<i>137</i>&nbsp;            if (clientUI == null) {
+<i>138</i>&nbsp;
+<i>139</i>&nbsp;            }
+<i>140</i>&nbsp;            else
+<i>141</i>&nbsp;                return getController();
+<i>142</i>&nbsp;        } else {
+<i>143</i>&nbsp;            if (Constants.START_AS_SERVER_IF_CLIENT_CONNECTION_FAILS) {
+<i>144</i>&nbsp;                System.err.println(
+<i>145</i>&nbsp;                        &quot;\nImpossibile stabilire una connessione col server, il programma avvierà un server locale&quot;);
+<i>146</i>&nbsp;
+<i>147</i>&nbsp;                mainServer(socketPort, rmiPort);
+<i>148</i>&nbsp;            } else {
+<i>149</i>&nbsp;                System.err.println(&quot;\nImpossibile stabilire una connessione col server, il programma terminerà a breve&quot;);
+<i>150</i>&nbsp;                System.exit(0);
+<i>151</i>&nbsp;            }
+<i>152</i>&nbsp;        }
+<i>153</i>&nbsp;        return null;
+<i>154</i>&nbsp;    }
+<i>155</i>&nbsp;
+<i>156</i>&nbsp;    /**
+<i>157</i>&nbsp;     * Avvio Server (Client e Server).
+<i>158</i>&nbsp;     *
+<i>159</i>&nbsp;     * @param socketPort
+<i>160</i>&nbsp;     * @param rmiPort
+<i>161</i>&nbsp;     */
+<i>162</i>&nbsp;    /*public void mainServer(int socketPort, int rmiPort) {
+<i>163</i>&nbsp;        try {
+<i>164</i>&nbsp;            Server server = new Server();
+<i>165</i>&nbsp;            server.startServer(socketPort, rmiPort);
+<i>166</i>&nbsp;
+<i>167</i>&nbsp;            System.out.print(&quot;\nServer in ascolto a: &quot;);
+<i>168</i>&nbsp;            System.out.println(&quot;127.0.0.1&quot; + &quot; (RMI: &quot; + rmiPort + &quot;, socket: &quot; + socketPort + &quot;)&quot;);
+<i>169</i>&nbsp;            System.out.println();
+<i>170</i>&nbsp;
+<i>171</i>&nbsp;        } catch (ServerException e) {
+<i>172</i>&nbsp;            System.err.println(e.getMessage());
+<i>173</i>&nbsp;            System.err.println(&quot;Errore di avvio del server locale&quot;);
+<i>174</i>&nbsp;            System.exit(0);
+<i>175</i>&nbsp;        }
+<i>176</i>&nbsp;    }
+<i>177</i>&nbsp;
+<i>178</i>&nbsp;    /**
+<i>179</i>&nbsp;     * Login del Client sul Server.
+<i>180</i>&nbsp;     */
+<i>181</i>&nbsp;    public void login(String message) {
+<i>182</i>&nbsp;        try {
+<b class="nc"><i>183</i>&nbsp;            System.out.println(message);</b>
+<b class="nc"><i>184</i>&nbsp;            inText = scanner.nextLine();</b>
+<b class="nc"><i>185</i>&nbsp;            controller.login(inText);</b>
+<b class="nc"><i>186</i>&nbsp;        } catch (NullPointerException e) {</b>
+<b class="nc"><i>187</i>&nbsp;        } catch (NumberFormatException e) {</b>
+<b class="nc"><i>188</i>&nbsp;            System.out.println(&quot;Digita un carattere valido&quot;);</b>
+<b class="nc"><i>189</i>&nbsp;        } catch (IndexOutOfBoundsException e) {</b>
+<b class="nc"><i>190</i>&nbsp;        }</b>
+<i>191</i>&nbsp;    }
+<i>192</i>&nbsp;
+<i>193</i>&nbsp;
+<i>194</i>&nbsp;    public void chooseNetwork(String message) {
+<i>195</i>&nbsp;        try {
+<i>196</i>&nbsp;            do {
+<b class="nc"><i>197</i>&nbsp;                System.out.println(message);</b>
+<b class="nc"><i>198</i>&nbsp;                inText = scanner.nextLine();</b>
+<b class="nc"><i>199</i>&nbsp;            } while (!inText.toLowerCase().equals(&quot;s&quot;) &amp;&amp; !inText.toLowerCase().equals(&quot;r&quot;));</b>
+<b class="nc"><i>200</i>&nbsp;            controller.chooseNetwork(inText);</b>
+<b class="nc"><i>201</i>&nbsp;        } catch (NullPointerException e) {</b>
+<b class="nc"><i>202</i>&nbsp;        } catch (NumberFormatException e) {</b>
+<b class="nc"><i>203</i>&nbsp;            System.out.println(&quot;Digita un carattere valido&quot;);</b>
+<b class="nc"><i>204</i>&nbsp;        } catch (IndexOutOfBoundsException e) {</b>
+<b class="nc"><i>205</i>&nbsp;        }</b>
+<i>206</i>&nbsp;    }
+<i>207</i>&nbsp;
+<i>208</i>&nbsp;
+<i>209</i>&nbsp;    /**
+<i>210</i>&nbsp;     * Scelta dello schema tra i 4 schemi disponibili da parte di un giocatore
+<i>211</i>&nbsp;     */
+<i>212</i>&nbsp;    public void chooseScheme(Match match, String nickname, String message) {
+<i>213</i>&nbsp;        try {
+<b class="nc"><i>214</i>&nbsp;            ArrayList&lt;Scheme&gt; schemes = match.getPlayer(nickname).getSchemesToChoose();</b>
+<b class="nc"><i>215</i>&nbsp;            showSchemesToChoose(schemes);</b>
+<i>216</i>&nbsp;            int num;
+<i>217</i>&nbsp;            do {
+<b class="nc"><i>218</i>&nbsp;                System.out.println(message);</b>
+<b class="nc"><i>219</i>&nbsp;                num = scanner.nextInt();</b>
+<b class="nc"><i>220</i>&nbsp;            } while (num &lt; 1 || num &gt; 4);</b>
+<b class="nc"><i>221</i>&nbsp;            controller.setChosenScheme(schemes.get(num - 1).getId());</b>
+<b class="nc"><i>222</i>&nbsp;        } catch (NullPointerException e) {</b>
+<b class="nc"><i>223</i>&nbsp;        } catch (NumberFormatException e) {</b>
+<b class="nc"><i>224</i>&nbsp;            System.out.println(&quot;Digita un carattere valido&quot;);</b>
+<b class="nc"><i>225</i>&nbsp;        } catch (IndexOutOfBoundsException e) {</b>
+<b class="nc"><i>226</i>&nbsp;        }</b>
+<i>227</i>&nbsp;    }
+<i>228</i>&nbsp;
+<i>229</i>&nbsp;
+<i>230</i>&nbsp;    public void showSchemesToChoose(ArrayList&lt;Scheme&gt; schemes) {
+<i>231</i>&nbsp;        try {
+<b class="nc"><i>232</i>&nbsp;            for (int i = 0; i &lt; 4; i++) {</b>
+<b class="nc"><i>233</i>&nbsp;                System.out.println(&quot;Schema &quot; + (i + 1) + &quot; (con ID &quot; + schemes.get(i).getId() + &quot;):&quot;);</b>
+<b class="nc"><i>234</i>&nbsp;                ShowScheme show = new ShowScheme(schemes.get(i));</b>
+<b class="nc"><i>235</i>&nbsp;                System.out.println(&quot;&quot;);</b>
+<i>236</i>&nbsp;            }
+<b class="nc"><i>237</i>&nbsp;        } catch (NullPointerException e) {</b>
+<b class="nc"><i>238</i>&nbsp;        } catch (NumberFormatException e) {</b>
+<b class="nc"><i>239</i>&nbsp;            System.out.println(&quot;Digita un carattere valido&quot;);</b>
+<b class="nc"><i>240</i>&nbsp;        } catch (IndexOutOfBoundsException e) {</b>
+<b class="nc"><i>241</i>&nbsp;        }</b>
+<i>242</i>&nbsp;    }
+<i>243</i>&nbsp;
+<i>244</i>&nbsp;
+<i>245</i>&nbsp;    /**
+<i>246</i>&nbsp;     * Scelta dell&#39;azione da parte del giocatore
+<i>247</i>&nbsp;     */
+<i>248</i>&nbsp;    public void chooseAction(Match match, String nickname) {
+<i>249</i>&nbsp;        try {
+<i>250</i>&nbsp;            int choice;
+<b class="nc"><i>251</i>&nbsp;            Boolean ok = true;</b>
+<b class="nc"><i>252</i>&nbsp;            System.out.println(&quot;Digita: \n- 1 se vuoi posizionare un dado sul tuo schema; \n- 2 se vuoi utilizzare una carta utensile; \n- 3 se vuoi visualizzare le informazioni degli altri giocatori; \n- 4 se vuoi terminare il tuo turno; \n- 5 se vuoi uscire dalla partita.&quot;);</b>
 <i>253</i>&nbsp;
-<i>254</i>&nbsp;                case 2: {
-<b class="nc"><i>255</i>&nbsp;                    handleUseToolCard(match);   //TODO: metodi per le carte utensili</b>
-<b class="nc"><i>256</i>&nbsp;                    break;</b>
-<i>257</i>&nbsp;                }
+<i>254</i>&nbsp;            do {
+<b class="nc"><i>255</i>&nbsp;                choice = scanner.nextInt();</b>
+<i>256</i>&nbsp;
+<b class="nc"><i>257</i>&nbsp;                switch (choice) {</b>
 <i>258</i>&nbsp;
-<i>259</i>&nbsp;                case 3: {
-<b class="nc"><i>260</i>&nbsp;                    printOtherPlayersInfo(match, nickname);</b>
-<b class="nc"><i>261</i>&nbsp;                    break;</b>
-<i>262</i>&nbsp;                }
-<i>263</i>&nbsp;
-<i>264</i>&nbsp;                case 4: {
-<b class="nc"><i>265</i>&nbsp;                    endTurn();</b>
-<b class="nc"><i>266</i>&nbsp;                    break;</b>
-<i>267</i>&nbsp;                }
+<i>259</i>&nbsp;                    case 5: {
+<b class="nc"><i>260</i>&nbsp;                        System.out.println(&quot;Sei sicuro che vuoi uscire dalla partita? Digita 0 se sei sicuro.&quot;);</b>
+<b class="nc"><i>261</i>&nbsp;                        choice = scanner.nextInt();</b>
+<b class="nc"><i>262</i>&nbsp;                        if (choice==0) {</b>
+<b class="nc"><i>263</i>&nbsp;                            System.out.println(&quot;Uscendo dalla partita...&quot;);</b>
+<b class="nc"><i>264</i>&nbsp;                            controller.stopPlayer();</b>
+<i>265</i>&nbsp;                        }
+<i>266</i>&nbsp;                        break;
+<i>267</i>&nbsp;                    }
 <i>268</i>&nbsp;
-<i>269</i>&nbsp;                default: {
-<b class="nc"><i>270</i>&nbsp;                    ok = false;</b>
-<b class="nc"><i>271</i>&nbsp;                    System.out.println(&quot;Scelta non valida&quot;);</b>
-<i>272</i>&nbsp;                    break;
-<i>273</i>&nbsp;                }
-<i>274</i>&nbsp;            }
-<b class="nc"><i>275</i>&nbsp;        } while (!ok);</b>
-<i>276</i>&nbsp;        //System.out.println(&quot;Ho scelto la lettera nella cli, torno subitooo&quot;);
-<i>277</i>&nbsp;    }
+<i>269</i>&nbsp;                    case 1: {
+<b class="nc"><i>270</i>&nbsp;                        handleUseDice(match, false);</b>
+<b class="nc"><i>271</i>&nbsp;                        break;</b>
+<i>272</i>&nbsp;                    }
+<i>273</i>&nbsp;
+<i>274</i>&nbsp;                    case 2: {
+<b class="nc"><i>275</i>&nbsp;                        handleUseToolCard(match);   //TODO: metodi per le carte utensili</b>
+<b class="nc"><i>276</i>&nbsp;                        break;</b>
+<i>277</i>&nbsp;                    }
 <i>278</i>&nbsp;
-<i>279</i>&nbsp;
-<i>280</i>&nbsp;
-<i>281</i>&nbsp;    /////////////////////////////////////////////////////////////////////////////////////////
-<i>282</i>&nbsp;    // Connessione e disconnessione del Client --&gt; da fare probabilmente
-<i>283</i>&nbsp;    /////////////////////////////////////////////////////////////////////////////////////////
-<i>284</i>&nbsp;
-<i>285</i>&nbsp;    /*public void clientConnection() {
-<i>286</i>&nbsp;        PlayerController controller = getController();
-<i>287</i>&nbsp;        controller.clientConnection();
-<i>288</i>&nbsp;    }
-<i>289</i>&nbsp;
-<i>290</i>&nbsp;    public void clientDisconnection() {
-<i>291</i>&nbsp;        PlayerController controller = getController();
-<i>292</i>&nbsp;        controller.clientDisconnection();
-<i>293</i>&nbsp;    }*/
-<i>294</i>&nbsp;
-<i>295</i>&nbsp;    /////////////////////////////////////////////////////////////////////////////////////////
-<i>296</i>&nbsp;    // Scelta D: posizionare un dado sullo schema
-<i>297</i>&nbsp;    /////////////////////////////////////////////////////////////////////////////////////////
-<i>298</i>&nbsp;
-<i>299</i>&nbsp;    public void handleUseDice(Match match, boolean toolCard9) {
-<i>300</i>&nbsp;        int dice, row, col;
-<i>301</i>&nbsp;        do {
-<b class="nc"><i>302</i>&nbsp;            System.out.println(&quot;Digita l&#39;indice del dado che vuoi posizionare, tra 1 e &quot; + match.getDraftPool().getSize());</b>
-<b class="nc"><i>303</i>&nbsp;            dice = scanner.nextInt();</b>
-<b class="nc"><i>304</i>&nbsp;        } while (dice &lt; 1 || dice &gt; match.getDraftPool().getSize());</b>
-<i>305</i>&nbsp;        do {
-<b class="nc"><i>306</i>&nbsp;            System.out.println(&quot;Digita il numero della riga dello schema in cui vuoi posizionarlo, tra 1 e &quot; + Constants.NUM_ROWS);</b>
-<b class="nc"><i>307</i>&nbsp;            row = scanner.nextInt();</b>
-<b class="nc"><i>308</i>&nbsp;        } while (row &lt; 1 || row &gt; Constants.NUM_ROWS);</b>
-<i>309</i>&nbsp;        do {
-<b class="nc"><i>310</i>&nbsp;            System.out.println(&quot;Digita il numero della colonna dello schema in cui vuoi posizionarlo, tra 1 e &quot; + Constants.NUM_COLS);</b>
-<b class="nc"><i>311</i>&nbsp;            col = scanner.nextInt();</b>
-<b class="nc"><i>312</i>&nbsp;        } while (col &lt; 1 || col &gt; Constants.NUM_COLS);</b>
+<i>279</i>&nbsp;                    case 3: {
+<b class="nc"><i>280</i>&nbsp;                        printOtherPlayersInfo(match, nickname);</b>
+<b class="nc"><i>281</i>&nbsp;                        break;</b>
+<i>282</i>&nbsp;                    }
+<i>283</i>&nbsp;
+<i>284</i>&nbsp;                    case 4: {
+<b class="nc"><i>285</i>&nbsp;                        endTurn();</b>
+<b class="nc"><i>286</i>&nbsp;                        break;</b>
+<i>287</i>&nbsp;                    }
+<i>288</i>&nbsp;
+<i>289</i>&nbsp;                    default: {
+<b class="nc"><i>290</i>&nbsp;                        ok = false;</b>
+<b class="nc"><i>291</i>&nbsp;                        System.out.println(&quot;Scelta non valida&quot;);</b>
+<i>292</i>&nbsp;                        break;
+<i>293</i>&nbsp;                    }
+<i>294</i>&nbsp;                }
+<b class="nc"><i>295</i>&nbsp;            } while (!ok);</b>
+<b class="nc"><i>296</i>&nbsp;        } catch (NullPointerException e) {</b>
+<b class="nc"><i>297</i>&nbsp;        } catch (NumberFormatException e) {</b>
+<b class="nc"><i>298</i>&nbsp;            System.out.println(&quot;Digita un carattere valido&quot;);</b>
+<b class="nc"><i>299</i>&nbsp;        } catch (IndexOutOfBoundsException e) {</b>
+<b class="nc"><i>300</i>&nbsp;        }</b>
+<i>301</i>&nbsp;    }
+<i>302</i>&nbsp;
+<i>303</i>&nbsp;
+<i>304</i>&nbsp;
+<i>305</i>&nbsp;    /////////////////////////////////////////////////////////////////////////////////////////
+<i>306</i>&nbsp;    // Connessione e disconnessione del Client --&gt; da fare probabilmente
+<i>307</i>&nbsp;    /////////////////////////////////////////////////////////////////////////////////////////
+<i>308</i>&nbsp;
+<i>309</i>&nbsp;    /*public void clientConnection() {
+<i>310</i>&nbsp;        PlayerController controller = getController();
+<i>311</i>&nbsp;        controller.clientConnection();
+<i>312</i>&nbsp;    }
 <i>313</i>&nbsp;
-<b class="nc"><i>314</i>&nbsp;        if (toolCard9)</b>
-<b class="nc"><i>315</i>&nbsp;            controller.useToolCard(9, dice - 1, -1,row - 1, col - 1, -1, -1);</b>
-<i>316</i>&nbsp;        else
-<b class="nc"><i>317</i>&nbsp;            controller.useDice(dice - 1, row - 1, col - 1);</b>
-<i>318</i>&nbsp;        //System.out.println(&quot;Ho scelto il dado nella cli, torno subitooo&quot;);
-<i>319</i>&nbsp;
-<i>320</i>&nbsp;    }
-<i>321</i>&nbsp;
+<i>314</i>&nbsp;    public void clientDisconnection() {
+<i>315</i>&nbsp;        PlayerController controller = getController();
+<i>316</i>&nbsp;        controller.clientDisconnection();
+<i>317</i>&nbsp;    }*/
+<i>318</i>&nbsp;
+<i>319</i>&nbsp;    /////////////////////////////////////////////////////////////////////////////////////////
+<i>320</i>&nbsp;    // Scelta D: posizionare un dado sullo schema
+<i>321</i>&nbsp;    /////////////////////////////////////////////////////////////////////////////////////////
 <i>322</i>&nbsp;
-<i>323</i>&nbsp;    public void retryPlaceDice() {
-<i>324</i>&nbsp;        int row, col;
-<i>325</i>&nbsp;        do {
-<b class="nc"><i>326</i>&nbsp;            System.out.println(&quot;Digita il numero della riga dello schema in cui vuoi posizionarlo, tra 1 e &quot; + Constants.NUM_ROWS);</b>
-<b class="nc"><i>327</i>&nbsp;            row = scanner.nextInt();</b>
-<b class="nc"><i>328</i>&nbsp;        } while (row &lt; 1 || row &gt; Constants.NUM_ROWS);</b>
-<i>329</i>&nbsp;        do {
-<b class="nc"><i>330</i>&nbsp;            System.out.println(&quot;Digita il numero della colonna dello schema in cui vuoi posizionarlo, tra 1 e &quot; + Constants.NUM_COLS);</b>
-<b class="nc"><i>331</i>&nbsp;            col = scanner.nextInt();</b>
-<b class="nc"><i>332</i>&nbsp;        } while (col &lt; 1 || col &gt; Constants.NUM_COLS);</b>
-<b class="nc"><i>333</i>&nbsp;            controller.useDice(-1, row - 1, col - 1);</b>
-<i>334</i>&nbsp;    }
-<i>335</i>&nbsp;
-<i>336</i>&nbsp;
-<i>337</i>&nbsp;    /////////////////////////////////////////////////////////////////////////////////////////
-<i>338</i>&nbsp;    // Scelta T: utilizzare una toolcard
-<i>339</i>&nbsp;    /////////////////////////////////////////////////////////////////////////////////////////
-<i>340</i>&nbsp;
-<i>341</i>&nbsp;
-<i>342</i>&nbsp;    public void handleUseToolCard(Match match) {
-<i>343</i>&nbsp;        int num;
-<i>344</i>&nbsp;        do {
-<b class="nc"><i>345</i>&nbsp;            System.out.println(&quot;Digita il numero della carta utensile che vuoi utilizzare, tra 1 e 3&quot;);</b>
-<b class="nc"><i>346</i>&nbsp;            num = scanner.nextInt();</b>
-<b class="nc"><i>347</i>&nbsp;        } while (num &lt; 1 || num &gt; 3);</b>
-<b class="nc"><i>348</i>&nbsp;        int id = match.getToolCards().get(num - 1).getId();</b>
-<b class="nc"><i>349</i>&nbsp;        useToolCard(id, match);</b>
-<i>350</i>&nbsp;    }
-<i>351</i>&nbsp;
-<i>352</i>&nbsp;
-<i>353</i>&nbsp;    public void useToolCard(int id, Match match) {
-<b class="nc"><i>354</i>&nbsp;        switch (id) {</b>
-<i>355</i>&nbsp;            case 1:
-<b class="nc"><i>356</i>&nbsp;                useToolCard1(match);</b>
-<b class="nc"><i>357</i>&nbsp;                break;</b>
-<i>358</i>&nbsp;            case 2:
-<i>359</i>&nbsp;            case 3:
-<i>360</i>&nbsp;            case 4:
-<b class="nc"><i>361</i>&nbsp;                useToolCard23412(id);</b>
-<b class="nc"><i>362</i>&nbsp;                break;</b>
-<i>363</i>&nbsp;            case 5:
-<b class="nc"><i>364</i>&nbsp;                useToolCard5(match);</b>
-<b class="nc"><i>365</i>&nbsp;                break;</b>
-<i>366</i>&nbsp;            case 6:
-<b class="nc"><i>367</i>&nbsp;                useToolCard6(match);</b>
-<b class="nc"><i>368</i>&nbsp;                break;</b>
-<i>369</i>&nbsp;            case 7:
-<i>370</i>&nbsp;            case 8:
-<b class="nc"><i>371</i>&nbsp;                controller.useToolCard(id, -1, -1, -1, -1, -1, -1);</b>
-<b class="nc"><i>372</i>&nbsp;                break;</b>
-<i>373</i>&nbsp;            case 9:
-<b class="nc"><i>374</i>&nbsp;                useToolCard9(match);</b>
-<b class="nc"><i>375</i>&nbsp;                break;</b>
-<i>376</i>&nbsp;            case 10:
-<b class="nc"><i>377</i>&nbsp;                useToolCard10(match);</b>
-<b class="nc"><i>378</i>&nbsp;                break;</b>
-<i>379</i>&nbsp;            case 11:
-<b class="nc"><i>380</i>&nbsp;                useToolCard11(match);</b>
-<b class="nc"><i>381</i>&nbsp;                break;</b>
-<i>382</i>&nbsp;            case 12:
-<b class="nc"><i>383</i>&nbsp;                useToolCard12(match);</b>
-<i>384</i>&nbsp;            default:
-<i>385</i>&nbsp;                break;
-<i>386</i>&nbsp;        }
-<i>387</i>&nbsp;    }
-<i>388</i>&nbsp;
-<i>389</i>&nbsp;
-<i>390</i>&nbsp;    public void useToolCard1(Match match) {
-<i>391</i>&nbsp;        int dice, operation;
-<i>392</i>&nbsp;        do {
-<b class="nc"><i>393</i>&nbsp;            System.out.println(&quot;Digita l&#39;indice del dado che vuoi cambiare, tra 1 e &quot; + match.getDraftPool().getSize());</b>
-<b class="nc"><i>394</i>&nbsp;            dice = scanner.nextInt();</b>
-<b class="nc"><i>395</i>&nbsp;        } while (dice &lt; 1 || dice &gt; match.getDraftPool().getSize());</b>
-<i>396</i>&nbsp;        do {
-<b class="nc"><i>397</i>&nbsp;            System.out.println(&quot;Digita 0 se vuoi aumentare il numero del dado di 1, 1 se vuoi diminuirlo&quot;);</b>
-<b class="nc"><i>398</i>&nbsp;            operation = scanner.nextInt();</b>
-<b class="nc"><i>399</i>&nbsp;        } while ((operation!=0) &amp;&amp; (operation!=1));</b>
-<b class="nc"><i>400</i>&nbsp;        controller.useToolCard(1, dice-1, operation, -1, -1, -1, -1);</b>
-<i>401</i>&nbsp;    }
-<i>402</i>&nbsp;
-<i>403</i>&nbsp;
-<i>404</i>&nbsp;    public void useToolCard23412(int id) {
-<i>405</i>&nbsp;        int sourceRow, sourceCol, destRow, destCol;
-<i>406</i>&nbsp;        do {
-<b class="nc"><i>407</i>&nbsp;            System.out.println(&quot;Digita il numero della riga dello schema del dado che vuoi spostare, tra 1 e &quot; + Constants.NUM_ROWS);</b>
-<b class="nc"><i>408</i>&nbsp;            sourceRow = scanner.nextInt();</b>
-<b class="nc"><i>409</i>&nbsp;        } while (sourceRow &lt; 1 || sourceRow &gt; Constants.NUM_ROWS);</b>
-<i>410</i>&nbsp;        do {
-<b class="nc"><i>411</i>&nbsp;            System.out.println(&quot;Digita il numero della colonna dello schema del dado che vuoi spostare, tra 1 e &quot; + Constants.NUM_COLS);</b>
-<b class="nc"><i>412</i>&nbsp;            sourceCol = scanner.nextInt();</b>
-<b class="nc"><i>413</i>&nbsp;        } while (sourceCol &lt; 1 || sourceCol &gt; Constants.NUM_COLS);</b>
-<i>414</i>&nbsp;        do {
-<b class="nc"><i>415</i>&nbsp;            System.out.println(&quot;Digita il numero della riga dello schema in cui vuoi spostare il dado, tra 1 e &quot; + Constants.NUM_ROWS);</b>
-<b class="nc"><i>416</i>&nbsp;            destRow = scanner.nextInt();</b>
-<b class="nc"><i>417</i>&nbsp;        } while (destRow &lt; 1 || destRow &gt; Constants.NUM_ROWS);</b>
-<i>418</i>&nbsp;        do {
-<b class="nc"><i>419</i>&nbsp;            System.out.println(&quot;Digita il numero della colonna dello schema in cui vuoi spostare il dado, tra 1 e &quot; + Constants.NUM_COLS);</b>
-<b class="nc"><i>420</i>&nbsp;            destCol = scanner.nextInt();</b>
-<b class="nc"><i>421</i>&nbsp;        } while (destCol &lt; 1 || destCol &gt; Constants.NUM_COLS);</b>
-<b class="nc"><i>422</i>&nbsp;        controller.useToolCard(id, -1,-1,sourceRow - 1, sourceCol - 1, destRow - 1, destCol - 1);</b>
-<i>423</i>&nbsp;    }
-<i>424</i>&nbsp;
-<i>425</i>&nbsp;
-<i>426</i>&nbsp;    public void useToolCard5(Match match) {
-<i>427</i>&nbsp;        int dice, round, indexInRound;
-<b class="nc"><i>428</i>&nbsp;        boolean roundTrackIsFull = controller.checkIfRoundTrackIsFull();</b>
-<b class="nc"><i>429</i>&nbsp;        if (!roundTrackIsFull) {</b>
-<b class="nc"><i>430</i>&nbsp;            System.out.println(&quot;Non puoi utilizzare questa carta perché ancora non ci sono dadi sul tracciato dei round&quot;);</b>
-<b class="nc"><i>431</i>&nbsp;            chooseAction(match, controller.getNickname());</b>
-<i>432</i>&nbsp;        }
-<i>433</i>&nbsp;        else {
+<i>323</i>&nbsp;    public void handleUseDice(Match match, boolean toolCard9) {
+<i>324</i>&nbsp;        try {
+<i>325</i>&nbsp;            int dice, row, col;
+<i>326</i>&nbsp;            do {
+<b class="nc"><i>327</i>&nbsp;                System.out.println(&quot;Digita l&#39;indice del dado che vuoi posizionare, tra 1 e &quot; + match.getDraftPool().getSize());</b>
+<b class="nc"><i>328</i>&nbsp;                dice = scanner.nextInt();</b>
+<b class="nc"><i>329</i>&nbsp;            } while (dice &lt; 1 || dice &gt; match.getDraftPool().getSize());</b>
+<i>330</i>&nbsp;            do {
+<b class="nc"><i>331</i>&nbsp;                System.out.println(&quot;Digita il numero della riga dello schema in cui vuoi posizionarlo, tra 1 e &quot; + Constants.NUM_ROWS);</b>
+<b class="nc"><i>332</i>&nbsp;                row = scanner.nextInt();</b>
+<b class="nc"><i>333</i>&nbsp;            } while (row &lt; 1 || row &gt; Constants.NUM_ROWS);</b>
+<i>334</i>&nbsp;            do {
+<b class="nc"><i>335</i>&nbsp;                System.out.println(&quot;Digita il numero della colonna dello schema in cui vuoi posizionarlo, tra 1 e &quot; + Constants.NUM_COLS);</b>
+<b class="nc"><i>336</i>&nbsp;                col = scanner.nextInt();</b>
+<b class="nc"><i>337</i>&nbsp;            } while (col &lt; 1 || col &gt; Constants.NUM_COLS);</b>
+<b class="nc"><i>338</i>&nbsp;            if (toolCard9)</b>
+<b class="nc"><i>339</i>&nbsp;                controller.useToolCard(9, dice - 1, -1,row - 1, col - 1, -1, -1);</b>
+<i>340</i>&nbsp;            else
+<b class="nc"><i>341</i>&nbsp;                controller.useDice(dice - 1, row - 1, col - 1);</b>
+<b class="nc"><i>342</i>&nbsp;        } catch (NullPointerException e) {</b>
+<b class="nc"><i>343</i>&nbsp;        } catch (NumberFormatException e) {</b>
+<b class="nc"><i>344</i>&nbsp;            System.out.println(&quot;Digita un carattere valido&quot;);</b>
+<b class="nc"><i>345</i>&nbsp;        } catch (IndexOutOfBoundsException e) {</b>
+<b class="nc"><i>346</i>&nbsp;        }</b>
+<i>347</i>&nbsp;
+<i>348</i>&nbsp;    }
+<i>349</i>&nbsp;
+<i>350</i>&nbsp;
+<i>351</i>&nbsp;    public void retryPlaceDice() {
+<i>352</i>&nbsp;        try{
+<i>353</i>&nbsp;            int row, col;
+<i>354</i>&nbsp;            do {
+<b class="nc"><i>355</i>&nbsp;                System.out.println(&quot;Digita il numero della riga dello schema in cui vuoi posizionarlo, tra 1 e &quot; + Constants.NUM_ROWS);</b>
+<b class="nc"><i>356</i>&nbsp;                row = scanner.nextInt();</b>
+<b class="nc"><i>357</i>&nbsp;            } while (row &lt; 1 || row &gt; Constants.NUM_ROWS);</b>
+<i>358</i>&nbsp;            do {
+<b class="nc"><i>359</i>&nbsp;                System.out.println(&quot;Digita il numero della colonna dello schema in cui vuoi posizionarlo, tra 1 e &quot; + Constants.NUM_COLS);</b>
+<b class="nc"><i>360</i>&nbsp;                col = scanner.nextInt();</b>
+<b class="nc"><i>361</i>&nbsp;            } while (col &lt; 1 || col &gt; Constants.NUM_COLS);</b>
+<b class="nc"><i>362</i>&nbsp;                controller.useDice(-1, row - 1, col - 1);</b>
+<b class="nc"><i>363</i>&nbsp;        } catch (NullPointerException e) {</b>
+<b class="nc"><i>364</i>&nbsp;        } catch (NumberFormatException e) {</b>
+<b class="nc"><i>365</i>&nbsp;            System.out.println(&quot;Digita un carattere valido&quot;);</b>
+<b class="nc"><i>366</i>&nbsp;        } catch (IndexOutOfBoundsException e) {</b>
+<b class="nc"><i>367</i>&nbsp;        }</b>
+<i>368</i>&nbsp;    }
+<i>369</i>&nbsp;
+<i>370</i>&nbsp;
+<i>371</i>&nbsp;    /////////////////////////////////////////////////////////////////////////////////////////
+<i>372</i>&nbsp;    // Scelta T: utilizzare una toolcard
+<i>373</i>&nbsp;    /////////////////////////////////////////////////////////////////////////////////////////
+<i>374</i>&nbsp;
+<i>375</i>&nbsp;
+<i>376</i>&nbsp;    public void handleUseToolCard(Match match) {
+<i>377</i>&nbsp;        try {
+<i>378</i>&nbsp;            int num;
+<i>379</i>&nbsp;            do {
+<b class="nc"><i>380</i>&nbsp;                System.out.println(&quot;Digita il numero della carta utensile che vuoi utilizzare, tra 1 e 3&quot;);</b>
+<b class="nc"><i>381</i>&nbsp;                num = scanner.nextInt();</b>
+<b class="nc"><i>382</i>&nbsp;            } while (num &lt; 1 || num &gt; 3);</b>
+<b class="nc"><i>383</i>&nbsp;            int id = match.getToolCards().get(num - 1).getId();</b>
+<b class="nc"><i>384</i>&nbsp;            useToolCard(id, match);</b>
+<b class="nc"><i>385</i>&nbsp;        } catch (NullPointerException e) {</b>
+<b class="nc"><i>386</i>&nbsp;        } catch (NumberFormatException e) {</b>
+<b class="nc"><i>387</i>&nbsp;            System.out.println(&quot;Digita un carattere valido&quot;);</b>
+<b class="nc"><i>388</i>&nbsp;        } catch (IndexOutOfBoundsException e) {</b>
+<b class="nc"><i>389</i>&nbsp;        }</b>
+<i>390</i>&nbsp;    }
+<i>391</i>&nbsp;
+<i>392</i>&nbsp;
+<i>393</i>&nbsp;    public void useToolCard(int id, Match match) {
+<b class="nc"><i>394</i>&nbsp;        switch (id) {</b>
+<i>395</i>&nbsp;            case 1:
+<b class="nc"><i>396</i>&nbsp;                useToolCard1(match);</b>
+<b class="nc"><i>397</i>&nbsp;                break;</b>
+<i>398</i>&nbsp;            case 2:
+<i>399</i>&nbsp;            case 3:
+<i>400</i>&nbsp;            case 4:
+<b class="nc"><i>401</i>&nbsp;                useToolCard23412(id);</b>
+<b class="nc"><i>402</i>&nbsp;                break;</b>
+<i>403</i>&nbsp;            case 5:
+<b class="nc"><i>404</i>&nbsp;                useToolCard5(match);</b>
+<b class="nc"><i>405</i>&nbsp;                break;</b>
+<i>406</i>&nbsp;            case 6:
+<b class="nc"><i>407</i>&nbsp;                useToolCard6(match);</b>
+<b class="nc"><i>408</i>&nbsp;                break;</b>
+<i>409</i>&nbsp;            case 7:
+<i>410</i>&nbsp;            case 8:
+<b class="nc"><i>411</i>&nbsp;                controller.useToolCard(id, -1, -1, -1, -1, -1, -1);</b>
+<b class="nc"><i>412</i>&nbsp;                break;</b>
+<i>413</i>&nbsp;            case 9:
+<b class="nc"><i>414</i>&nbsp;                useToolCard9(match);</b>
+<b class="nc"><i>415</i>&nbsp;                break;</b>
+<i>416</i>&nbsp;            case 10:
+<b class="nc"><i>417</i>&nbsp;                useToolCard10(match);</b>
+<b class="nc"><i>418</i>&nbsp;                break;</b>
+<i>419</i>&nbsp;            case 11:
+<b class="nc"><i>420</i>&nbsp;                useToolCard11(match);</b>
+<b class="nc"><i>421</i>&nbsp;                break;</b>
+<i>422</i>&nbsp;            case 12:
+<b class="nc"><i>423</i>&nbsp;                useToolCard12(match);</b>
+<b class="nc"><i>424</i>&nbsp;                break;</b>
+<i>425</i>&nbsp;            default:
+<i>426</i>&nbsp;                break;
+<i>427</i>&nbsp;        }
+<i>428</i>&nbsp;    }
+<i>429</i>&nbsp;
+<i>430</i>&nbsp;
+<i>431</i>&nbsp;    public void useToolCard1(Match match) {
+<i>432</i>&nbsp;        try{
+<i>433</i>&nbsp;            int dice, operation;
 <i>434</i>&nbsp;            do {
-<b class="nc"><i>435</i>&nbsp;                System.out.println(&quot;Digita l&#39;indice del dado della riserva che vuoi scambiare, tra 1 e &quot; + match.getDraftPool().getSize());</b>
+<b class="nc"><i>435</i>&nbsp;                System.out.println(&quot;Digita l&#39;indice del dado che vuoi cambiare, tra 1 e &quot; + match.getDraftPool().getSize());</b>
 <b class="nc"><i>436</i>&nbsp;                dice = scanner.nextInt();</b>
 <b class="nc"><i>437</i>&nbsp;            } while (dice &lt; 1 || dice &gt; match.getDraftPool().getSize());</b>
 <i>438</i>&nbsp;            do {
-<b class="nc"><i>439</i>&nbsp;                System.out.println(&quot;Digita il numero di round a cui appartiene il dado con cui vuoi scambiarlo, tra 1 e &quot; + match.getRoundTrack().getRoundTrackSize());</b>
-<b class="nc"><i>440</i>&nbsp;                round = scanner.nextInt();</b>
-<b class="nc"><i>441</i>&nbsp;            } while (round &lt; 1 || round &gt; match.getRoundTrack().getRoundTrackSize());</b>
-<i>442</i>&nbsp;            do {
-<b class="nc"><i>443</i>&nbsp;                System.out.println(&quot;Digita l&#39;indice del dado nel round che hai scelto, tra 0 e &quot; + (match.getRoundTrack().getNumberOfDices(round) - 1));</b>
-<b class="nc"><i>444</i>&nbsp;                indexInRound = scanner.nextInt();</b>
-<b class="nc"><i>445</i>&nbsp;            } while (indexInRound &lt; 0 || indexInRound &gt; match.getRoundTrack().getNumberOfDices(round) - 1);</b>
-<b class="nc"><i>446</i>&nbsp;            controller.useToolCard(5, dice - 1, -1, round, indexInRound, -1, -1);</b>
-<i>447</i>&nbsp;        }
+<b class="nc"><i>439</i>&nbsp;                System.out.println(&quot;Digita 0 se vuoi aumentare il numero del dado di 1, 1 se vuoi diminuirlo&quot;);</b>
+<b class="nc"><i>440</i>&nbsp;                operation = scanner.nextInt();</b>
+<b class="nc"><i>441</i>&nbsp;            } while ((operation!=0) &amp;&amp; (operation!=1));</b>
+<b class="nc"><i>442</i>&nbsp;            controller.useToolCard(1, dice-1, operation, -1, -1, -1, -1);</b>
+<b class="nc"><i>443</i>&nbsp;        } catch (NullPointerException e) {</b>
+<b class="nc"><i>444</i>&nbsp;        } catch (NumberFormatException e) {</b>
+<b class="nc"><i>445</i>&nbsp;            System.out.println(&quot;Digita un carattere valido&quot;);</b>
+<b class="nc"><i>446</i>&nbsp;        } catch (IndexOutOfBoundsException e) {</b>
+<b class="nc"><i>447</i>&nbsp;        }</b>
 <i>448</i>&nbsp;    }
 <i>449</i>&nbsp;
 <i>450</i>&nbsp;
-<i>451</i>&nbsp;    public void useToolCard6(Match match) {
-<i>452</i>&nbsp;        int dice;
-<i>453</i>&nbsp;        do {
-<b class="nc"><i>454</i>&nbsp;            System.out.println(&quot;Digita l&#39;indice del dado che vuoi tirare, tra 1 e &quot; + match.getDraftPool().getSize());</b>
-<b class="nc"><i>455</i>&nbsp;            dice = scanner.nextInt();</b>
-<b class="nc"><i>456</i>&nbsp;        } while (dice &lt; 1 || dice &gt; match.getDraftPool().getSize());</b>
-<b class="nc"><i>457</i>&nbsp;        controller.useToolCard(6, dice - 1, -1, -1, -1, -1, -1);</b>
-<i>458</i>&nbsp;    }
-<i>459</i>&nbsp;
-<i>460</i>&nbsp;
-<i>461</i>&nbsp;    public void useToolCard9(Match match) {
-<b class="nc"><i>462</i>&nbsp;        handleUseDice(match, true);</b>
-<i>463</i>&nbsp;    }
-<i>464</i>&nbsp;
-<i>465</i>&nbsp;
-<i>466</i>&nbsp;    public void useToolCard10(Match match) {
-<i>467</i>&nbsp;        int dice;
-<i>468</i>&nbsp;        do {
-<b class="nc"><i>469</i>&nbsp;            System.out.println(&quot;Digita l&#39;indice del dado che vuoi cambiare, tra 1 e &quot; + match.getDraftPool().getSize());</b>
-<b class="nc"><i>470</i>&nbsp;            dice = scanner.nextInt();</b>
-<b class="nc"><i>471</i>&nbsp;        } while (dice &lt; 1 || dice &gt; match.getDraftPool().getSize());</b>
-<b class="nc"><i>472</i>&nbsp;        controller.useToolCard(10,dice - 1, -1, -1, -1, -1, -1);</b>
-<i>473</i>&nbsp;    }
-<i>474</i>&nbsp;
-<i>475</i>&nbsp;
-<i>476</i>&nbsp;    public void useToolCard11(Match match) {
-<i>477</i>&nbsp;        int dice;
-<i>478</i>&nbsp;        do {
-<b class="nc"><i>479</i>&nbsp;            System.out.println(&quot;Digita l&#39;indice del dado che vuoi riporre nel sacchetto, tra 1 e &quot; + match.getDraftPool().getSize());</b>
-<b class="nc"><i>480</i>&nbsp;            dice = scanner.nextInt();</b>
-<b class="nc"><i>481</i>&nbsp;        } while (dice &lt; 1 || dice &gt; match.getDraftPool().getSize());</b>
-<b class="nc"><i>482</i>&nbsp;        controller.useToolCard(11, dice - 1, -1, -1, -1, -1, -1);</b>
-<i>483</i>&nbsp;    }
-<i>484</i>&nbsp;
-<i>485</i>&nbsp;
-<i>486</i>&nbsp;    public void useToolCard12(Match match) {
-<b class="nc"><i>487</i>&nbsp;        boolean roundTrackIsFull = controller.checkIfRoundTrackIsFull();</b>
-<b class="nc"><i>488</i>&nbsp;        if (!roundTrackIsFull) {</b>
-<b class="nc"><i>489</i>&nbsp;            System.out.println(&quot;Non puoi utilizzare questa carta perché ancora non ci sono dadi sul tracciato dei round&quot;);</b>
-<b class="nc"><i>490</i>&nbsp;            chooseAction(match, controller.getNickname());</b>
-<i>491</i>&nbsp;        }
-<i>492</i>&nbsp;        else {
-<b class="nc"><i>493</i>&nbsp;            useToolCard23412(12);</b>
-<i>494</i>&nbsp;        }
-<i>495</i>&nbsp;    }
-<i>496</i>&nbsp;
-<i>497</i>&nbsp;
-<i>498</i>&nbsp;    /////////////////////////////////////////////////////////////////////////////////////////
-<i>499</i>&nbsp;    // Scelta I: visualizzare le informazioni degli altri giocatori (nome, schema, segnalini favore)
-<i>500</i>&nbsp;    /////////////////////////////////////////////////////////////////////////////////////////
-<i>501</i>&nbsp;
-<i>502</i>&nbsp;    public void printOtherPlayersInfo(Match match, String nickname) {
-<b class="nc"><i>503</i>&nbsp;        ArrayList&lt;Player&gt; otherPlayers = match.getOtherPlayers(nickname);</b>
-<b class="nc"><i>504</i>&nbsp;        for (Player player : otherPlayers) {</b>
-<b class="nc"><i>505</i>&nbsp;            System.out.println(player.getNickname());</b>
-<b class="nc"><i>506</i>&nbsp;            System.out.println(player.getNumOfToken());</b>
-<b class="nc"><i>507</i>&nbsp;            ShowScheme scheme = new ShowScheme(player.getScheme());</b>
-<b class="nc"><i>508</i>&nbsp;            System.out.println(&quot;&quot;);</b>
-<b class="nc"><i>509</i>&nbsp;            chooseAction(match, nickname);</b>
-<i>510</i>&nbsp;
-<b class="nc"><i>511</i>&nbsp;        }</b>
-<i>512</i>&nbsp;
-<i>513</i>&nbsp;    }
-<i>514</i>&nbsp;
-<i>515</i>&nbsp;
-<i>516</i>&nbsp;    /////////////////////////////////////////////////////////////////////////////////////////
-<i>517</i>&nbsp;    // Scelta E: terminare il turno
-<i>518</i>&nbsp;    /////////////////////////////////////////////////////////////////////////////////////////
-<i>519</i>&nbsp;
-<i>520</i>&nbsp;
-<i>521</i>&nbsp;    public void endTurn() {
-<b class="nc"><i>522</i>&nbsp;        controller.endTurn();</b>
-<i>523</i>&nbsp;    }
+<i>451</i>&nbsp;    public void useToolCard23412(int id) {
+<i>452</i>&nbsp;        try {
+<i>453</i>&nbsp;            int sourceRow, sourceCol, destRow, destCol;
+<i>454</i>&nbsp;            do {
+<b class="nc"><i>455</i>&nbsp;                System.out.println(&quot;Digita il numero della riga dello schema del dado che vuoi spostare, tra 1 e &quot; + Constants.NUM_ROWS);</b>
+<b class="nc"><i>456</i>&nbsp;                sourceRow = scanner.nextInt();</b>
+<b class="nc"><i>457</i>&nbsp;            } while (sourceRow &lt; 1 || sourceRow &gt; Constants.NUM_ROWS);</b>
+<i>458</i>&nbsp;            do {
+<b class="nc"><i>459</i>&nbsp;                System.out.println(&quot;Digita il numero della colonna dello schema del dado che vuoi spostare, tra 1 e &quot; + Constants.NUM_COLS);</b>
+<b class="nc"><i>460</i>&nbsp;                sourceCol = scanner.nextInt();</b>
+<b class="nc"><i>461</i>&nbsp;            } while (sourceCol &lt; 1 || sourceCol &gt; Constants.NUM_COLS);</b>
+<i>462</i>&nbsp;            do {
+<b class="nc"><i>463</i>&nbsp;                System.out.println(&quot;Digita il numero della riga dello schema in cui vuoi spostare il dado, tra 1 e &quot; + Constants.NUM_ROWS);</b>
+<b class="nc"><i>464</i>&nbsp;                destRow = scanner.nextInt();</b>
+<b class="nc"><i>465</i>&nbsp;            } while (destRow &lt; 1 || destRow &gt; Constants.NUM_ROWS);</b>
+<i>466</i>&nbsp;            do {
+<b class="nc"><i>467</i>&nbsp;                System.out.println(&quot;Digita il numero della colonna dello schema in cui vuoi spostare il dado, tra 1 e &quot; + Constants.NUM_COLS);</b>
+<b class="nc"><i>468</i>&nbsp;                destCol = scanner.nextInt();</b>
+<b class="nc"><i>469</i>&nbsp;            } while (destCol &lt; 1 || destCol &gt; Constants.NUM_COLS);</b>
+<b class="nc"><i>470</i>&nbsp;            controller.useToolCard(id, -1,-1,sourceRow - 1, sourceCol - 1, destRow - 1, destCol - 1);</b>
+<b class="nc"><i>471</i>&nbsp;        } catch (NullPointerException e) {</b>
+<b class="nc"><i>472</i>&nbsp;        } catch (NumberFormatException e) {</b>
+<b class="nc"><i>473</i>&nbsp;            System.out.println(&quot;Digita un carattere valido&quot;);</b>
+<b class="nc"><i>474</i>&nbsp;        } catch (IndexOutOfBoundsException e) {</b>
+<b class="nc"><i>475</i>&nbsp;        }</b>
+<i>476</i>&nbsp;    }
+<i>477</i>&nbsp;
+<i>478</i>&nbsp;
+<i>479</i>&nbsp;    public void useToolCard5(Match match) {
+<i>480</i>&nbsp;        try {
+<i>481</i>&nbsp;            int dice, round, indexInRound;
+<b class="nc"><i>482</i>&nbsp;            boolean roundTrackIsFull = controller.checkIfRoundTrackIsFull();</b>
+<b class="nc"><i>483</i>&nbsp;            if (!roundTrackIsFull) {</b>
+<b class="nc"><i>484</i>&nbsp;                System.out.println(&quot;Non puoi utilizzare questa carta perché ancora non ci sono dadi sul tracciato dei round&quot;);</b>
+<b class="nc"><i>485</i>&nbsp;                chooseAction(match, controller.getNickname());</b>
+<i>486</i>&nbsp;            } else {
+<i>487</i>&nbsp;                do {
+<b class="nc"><i>488</i>&nbsp;                    System.out.println(&quot;Digita l&#39;indice del dado della riserva che vuoi scambiare, tra 1 e &quot; + match.getDraftPool().getSize());</b>
+<b class="nc"><i>489</i>&nbsp;                    dice = scanner.nextInt();</b>
+<b class="nc"><i>490</i>&nbsp;                } while (dice &lt; 1 || dice &gt; match.getDraftPool().getSize());</b>
+<i>491</i>&nbsp;                do {
+<b class="nc"><i>492</i>&nbsp;                    System.out.println(&quot;Digita il numero di round a cui appartiene il dado con cui vuoi scambiarlo, tra 1 e &quot; + match.getRoundTrack().getRoundTrackSize());</b>
+<b class="nc"><i>493</i>&nbsp;                    round = scanner.nextInt();</b>
+<b class="nc"><i>494</i>&nbsp;                } while (round &lt; 1 || round &gt; match.getRoundTrack().getRoundTrackSize());</b>
+<i>495</i>&nbsp;                do {
+<b class="nc"><i>496</i>&nbsp;                    System.out.println(&quot;Digita l&#39;indice del dado nel round che hai scelto, tra 0 e &quot; + (match.getRoundTrack().getNumberOfDices(round) - 1));</b>
+<b class="nc"><i>497</i>&nbsp;                    indexInRound = scanner.nextInt();</b>
+<b class="nc"><i>498</i>&nbsp;                } while (indexInRound &lt; 0 || indexInRound &gt; match.getRoundTrack().getNumberOfDices(round) - 1);</b>
+<b class="nc"><i>499</i>&nbsp;                controller.useToolCard(5, dice - 1, -1, round, indexInRound, -1, -1);</b>
+<i>500</i>&nbsp;            }
+<b class="nc"><i>501</i>&nbsp;        } catch (NullPointerException e) {</b>
+<b class="nc"><i>502</i>&nbsp;        } catch (NumberFormatException e) {</b>
+<b class="nc"><i>503</i>&nbsp;            System.out.println(&quot;Digita un carattere valido&quot;);</b>
+<b class="nc"><i>504</i>&nbsp;        } catch (IndexOutOfBoundsException e) {</b>
+<b class="nc"><i>505</i>&nbsp;        }</b>
+<i>506</i>&nbsp;    }
+<i>507</i>&nbsp;
+<i>508</i>&nbsp;
+<i>509</i>&nbsp;    public void useToolCard6(Match match) {
+<i>510</i>&nbsp;        try {
+<i>511</i>&nbsp;            int dice;
+<i>512</i>&nbsp;            do {
+<b class="nc"><i>513</i>&nbsp;                System.out.println(&quot;Digita l&#39;indice del dado che vuoi tirare, tra 1 e &quot; + match.getDraftPool().getSize());</b>
+<b class="nc"><i>514</i>&nbsp;                dice = scanner.nextInt();</b>
+<b class="nc"><i>515</i>&nbsp;            } while (dice &lt; 1 || dice &gt; match.getDraftPool().getSize());</b>
+<b class="nc"><i>516</i>&nbsp;            controller.useToolCard(6, dice - 1, -1, -1, -1, -1, -1);</b>
+<b class="nc"><i>517</i>&nbsp;        } catch (NullPointerException e) {</b>
+<b class="nc"><i>518</i>&nbsp;        } catch (NumberFormatException e) {</b>
+<b class="nc"><i>519</i>&nbsp;            System.out.println(&quot;Digita un carattere valido&quot;);</b>
+<b class="nc"><i>520</i>&nbsp;        } catch (IndexOutOfBoundsException e) {</b>
+<b class="nc"><i>521</i>&nbsp;        }</b>
+<i>522</i>&nbsp;    }
+<i>523</i>&nbsp;
 <i>524</i>&nbsp;
-<i>525</i>&nbsp;
-<i>526</i>&nbsp;    /////////////////////////////////////////////////////////////////////////////////////////
-<i>527</i>&nbsp;    // Metodi che invoca PlayerController su UiUpdate
-<i>528</i>&nbsp;    /////////////////////////////////////////////////////////////////////////////////////////
+<i>525</i>&nbsp;    public void useToolCard9(Match match) {
+<b class="nc"><i>526</i>&nbsp;        handleUseDice(match, true);</b>
+<i>527</i>&nbsp;    }
+<i>528</i>&nbsp;
 <i>529</i>&nbsp;
-<i>530</i>&nbsp;
-<i>531</i>&nbsp;    @Override
-<i>532</i>&nbsp;    public void onLogin(String message) {
-<b class="nc"><i>533</i>&nbsp;        login(message);</b>
-<i>534</i>&nbsp;    }
-<i>535</i>&nbsp;
-<i>536</i>&nbsp;    @Override
-<i>537</i>&nbsp;    public void onActionNotValid(String errorCode) {
-<b class="nc"><i>538</i>&nbsp;        System.out.println(errorCode);</b>
-<i>539</i>&nbsp;
-<i>540</i>&nbsp;    }
-<i>541</i>&nbsp;
-<i>542</i>&nbsp;    @Override
-<i>543</i>&nbsp;    public void onChooseNetwork (String message) {
-<b class="nc"><i>544</i>&nbsp;            chooseNetwork(message);</b>
-<i>545</i>&nbsp;    }
-<i>546</i>&nbsp;
-<i>547</i>&nbsp;    @Override
-<i>548</i>&nbsp;    public void onTurnStart(Match match, String nickname) {
-<b class="nc"><i>549</i>&nbsp;        chooseAction(match, nickname);</b>
-<i>550</i>&nbsp;    }
-<i>551</i>&nbsp;
-<i>552</i>&nbsp;    @Override
-<i>553</i>&nbsp;    public void onPlaceDiceNotValid(String message) {
-<b class="nc"><i>554</i>&nbsp;        System.out.println(message);</b>
-<b class="nc"><i>555</i>&nbsp;        retryPlaceDice();</b>
-<i>556</i>&nbsp;    }
-<i>557</i>&nbsp;
-<i>558</i>&nbsp;    @Override
-<i>559</i>&nbsp;    public void onGameUpdate(Match match, String nickname) {
-<i>560</i>&nbsp;         {
-<b class="nc"><i>561</i>&nbsp;            ShowRoundTrack roundTrack = new ShowRoundTrack(match.getRoundTrack());</b>
-<b class="nc"><i>562</i>&nbsp;            ShowPublicObjectives pub = new ShowPublicObjectives(match.getPublicObjectives());</b>
-<b class="nc"><i>563</i>&nbsp;            ShowPrivateObjectiveCard priv = new ShowPrivateObjectiveCard(match.getPlayer(nickname).getPrivateObjective());</b>
-<b class="nc"><i>564</i>&nbsp;            ShowToolCards tool = new ShowToolCards(match.getToolCards());</b>
-<b class="nc"><i>565</i>&nbsp;            System.out.println(&quot;Hai &quot; + match.getPlayer(nickname).getNumOfToken() + &quot; segnalini favore&quot;);</b>
-<b class="nc"><i>566</i>&nbsp;            ShowDraftPool draft = new ShowDraftPool(match.getDraftPool());</b>
-<b class="nc"><i>567</i>&nbsp;            ShowScheme scheme = new ShowScheme(match.getPlayer(nickname).getScheme());</b>
-<i>568</i>&nbsp;        }
-<i>569</i>&nbsp;    }
-<i>570</i>&nbsp;
-<i>571</i>&nbsp;    @Override
-<i>572</i>&nbsp;    public void onGameEnd(Match match) {
-<b class="nc"><i>573</i>&nbsp;        ShowRoundTrack roundTrack = new ShowRoundTrack(match.getRoundTrack());   //TODO: mettere pedine su roundtrack</b>
-<b class="nc"><i>574</i>&nbsp;        for (int i = 0; i &lt; match.getPlayers().size(); i++) {</b>
-<b class="nc"><i>575</i>&nbsp;            System.out.print(i + 1 + &quot;) &quot; + match.getRanking().get(i).getNickname() + &quot; con &quot;);</b>
-<b class="nc"><i>576</i>&nbsp;            System.out.println(match.getRanking().get(i).getScore() + &quot; punti&quot;);</b>
-<i>577</i>&nbsp;        }
-<i>578</i>&nbsp;    }
+<i>530</i>&nbsp;    public void useToolCard10(Match match) {
+<i>531</i>&nbsp;        try {
+<i>532</i>&nbsp;            int dice;
+<i>533</i>&nbsp;            do {
+<b class="nc"><i>534</i>&nbsp;                System.out.println(&quot;Digita l&#39;indice del dado che vuoi cambiare, tra 1 e &quot; + match.getDraftPool().getSize());</b>
+<b class="nc"><i>535</i>&nbsp;                dice = scanner.nextInt();</b>
+<b class="nc"><i>536</i>&nbsp;            } while (dice &lt; 1 || dice &gt; match.getDraftPool().getSize());</b>
+<b class="nc"><i>537</i>&nbsp;            controller.useToolCard(10, dice - 1, -1, -1, -1, -1, -1);</b>
+<b class="nc"><i>538</i>&nbsp;        } catch (NullPointerException e) {</b>
+<b class="nc"><i>539</i>&nbsp;        } catch (NumberFormatException e) {</b>
+<b class="nc"><i>540</i>&nbsp;            System.out.println(&quot;Digita un carattere valido&quot;);</b>
+<b class="nc"><i>541</i>&nbsp;        } catch (IndexOutOfBoundsException e) {</b>
+<b class="nc"><i>542</i>&nbsp;        }</b>
+<i>543</i>&nbsp;    }
+<i>544</i>&nbsp;
+<i>545</i>&nbsp;
+<i>546</i>&nbsp;    public void useToolCard11(Match match) {
+<i>547</i>&nbsp;        try {
+<i>548</i>&nbsp;            int dice;
+<i>549</i>&nbsp;            do {
+<b class="nc"><i>550</i>&nbsp;                System.out.println(&quot;Digita l&#39;indice del dado che vuoi riporre nel sacchetto, tra 1 e &quot; + match.getDraftPool().getSize());</b>
+<b class="nc"><i>551</i>&nbsp;                dice = scanner.nextInt();</b>
+<b class="nc"><i>552</i>&nbsp;            } while (dice &lt; 1 || dice &gt; match.getDraftPool().getSize());</b>
+<b class="nc"><i>553</i>&nbsp;            controller.useToolCard(11, dice - 1, -1, -1, -1, -1, -1);</b>
+<b class="nc"><i>554</i>&nbsp;        } catch (NullPointerException e) {</b>
+<b class="nc"><i>555</i>&nbsp;        } catch (NumberFormatException e) {</b>
+<b class="nc"><i>556</i>&nbsp;            System.out.println(&quot;Digita un carattere valido&quot;);</b>
+<b class="nc"><i>557</i>&nbsp;        } catch (IndexOutOfBoundsException e) {</b>
+<b class="nc"><i>558</i>&nbsp;        }</b>
+<i>559</i>&nbsp;    }
+<i>560</i>&nbsp;
+<i>561</i>&nbsp;
+<i>562</i>&nbsp;    public void useToolCard12(Match match) {
+<i>563</i>&nbsp;        try {
+<b class="nc"><i>564</i>&nbsp;            boolean roundTrackIsFull = controller.checkIfRoundTrackIsFull();</b>
+<b class="nc"><i>565</i>&nbsp;            if (!roundTrackIsFull) {</b>
+<b class="nc"><i>566</i>&nbsp;                System.out.println(&quot;Non puoi utilizzare questa carta perché ancora non ci sono dadi sul tracciato dei round&quot;);</b>
+<b class="nc"><i>567</i>&nbsp;                chooseAction(match, controller.getNickname());</b>
+<i>568</i>&nbsp;            }
+<i>569</i>&nbsp;            else {
+<b class="nc"><i>570</i>&nbsp;                useToolCard23412(12);</b>
+<i>571</i>&nbsp;            }
+<b class="nc"><i>572</i>&nbsp;        } catch (NullPointerException e) {</b>
+<b class="nc"><i>573</i>&nbsp;        } catch (NumberFormatException e) {</b>
+<b class="nc"><i>574</i>&nbsp;            System.out.println(&quot;Digita un carattere valido&quot;);</b>
+<b class="nc"><i>575</i>&nbsp;        } catch (IndexOutOfBoundsException e) {</b>
+<b class="nc"><i>576</i>&nbsp;        }</b>
+<i>577</i>&nbsp;    }
+<i>578</i>&nbsp;
 <i>579</i>&nbsp;
-<i>580</i>&nbsp;    @Override
-<i>581</i>&nbsp;    public void onSchemeToChoose(Match match, String nickname, String message) {
-<b class="nc"><i>582</i>&nbsp;        chooseScheme(match, nickname, message);</b>
-<i>583</i>&nbsp;    }
-<i>584</i>&nbsp;
-<i>585</i>&nbsp;    @Override
-<i>586</i>&nbsp;    public void onUseToolCardNotValid(int id, Match match, String e) {
-<b class="nc"><i>587</i>&nbsp;        System.out.println(e);</b>
-<b class="nc"><i>588</i>&nbsp;        switch (id) {</b>
-<i>589</i>&nbsp;            case 6:
-<b class="nc"><i>590</i>&nbsp;                onOtherInfoToolCard(6, match);    // perché tanto la 6 può lanciare una notValidException solo nel secondo step</b>
-<b class="nc"><i>591</i>&nbsp;                break;</b>
-<i>592</i>&nbsp;            case 11:
-<b class="nc"><i>593</i>&nbsp;                onOtherInfoToolCard(11, match);   // perché tanto la 11 può lanciare una notValidException solo nel secondo step</b>
-<b class="nc"><i>594</i>&nbsp;                break;</b>
-<i>595</i>&nbsp;            default:
-<b class="nc"><i>596</i>&nbsp;                useToolCard(id, match);</b>
-<i>597</i>&nbsp;                break;
-<i>598</i>&nbsp;        }
-<i>599</i>&nbsp;    }
-<i>600</i>&nbsp;
-<i>601</i>&nbsp;    /*@Override
-<i>602</i>&nbsp;    public void onUseToolCard12IIStepNotValid(Match match, String e) {
-<i>603</i>&nbsp;        System.out.println(e);
-<i>604</i>&nbsp;        onOtherInfoToolCard(12, match);
-<i>605</i>&nbsp;    }*/
+<i>580</i>&nbsp;    /////////////////////////////////////////////////////////////////////////////////////////
+<i>581</i>&nbsp;    // Scelta I: visualizzare le informazioni degli altri giocatori (nome, schema, segnalini favore)
+<i>582</i>&nbsp;    /////////////////////////////////////////////////////////////////////////////////////////
+<i>583</i>&nbsp;
+<i>584</i>&nbsp;    public void printOtherPlayersInfo(Match match, String nickname) {
+<i>585</i>&nbsp;        try {
+<b class="nc"><i>586</i>&nbsp;            ArrayList&lt;Player&gt; otherPlayers = match.getOtherPlayers(nickname);</b>
+<b class="nc"><i>587</i>&nbsp;            for (Player player : otherPlayers) {</b>
+<b class="nc"><i>588</i>&nbsp;                System.out.println(player.getNickname());</b>
+<b class="nc"><i>589</i>&nbsp;                System.out.println(player.getNumOfToken());</b>
+<b class="nc"><i>590</i>&nbsp;                ShowScheme scheme = new ShowScheme(player.getScheme());</b>
+<b class="nc"><i>591</i>&nbsp;                System.out.println(&quot;&quot;);</b>
+<b class="nc"><i>592</i>&nbsp;                chooseAction(match, nickname);</b>
+<b class="nc"><i>593</i>&nbsp;            }</b>
+<b class="nc"><i>594</i>&nbsp;        } catch (NullPointerException e) {</b>
+<b class="nc"><i>595</i>&nbsp;        } catch (NumberFormatException e) {</b>
+<b class="nc"><i>596</i>&nbsp;            System.out.println(&quot;Digita un carattere valido&quot;);</b>
+<b class="nc"><i>597</i>&nbsp;        } catch (IndexOutOfBoundsException e) {</b>
+<b class="nc"><i>598</i>&nbsp;        }</b>
+<i>599</i>&nbsp;
+<i>600</i>&nbsp;    }
+<i>601</i>&nbsp;
+<i>602</i>&nbsp;
+<i>603</i>&nbsp;    /////////////////////////////////////////////////////////////////////////////////////////
+<i>604</i>&nbsp;    // Scelta E: terminare il turno
+<i>605</i>&nbsp;    /////////////////////////////////////////////////////////////////////////////////////////
 <i>606</i>&nbsp;
 <i>607</i>&nbsp;
-<i>608</i>&nbsp;    @Override
-<i>609</i>&nbsp;    public void onOtherInfoToolCard(int id, Match match) {
-<b class="nc"><i>610</i>&nbsp;        switch (id) {</b>
-<i>611</i>&nbsp;            case 4: {
-<i>612</i>&nbsp;                //System.out.println(&quot;Primo dado mosso correttamente, ora muovi il secondo&quot;);
-<b class="nc"><i>613</i>&nbsp;                useToolCard23412(4);</b>
-<i>614</i>&nbsp;            }
-<b class="nc"><i>615</i>&nbsp;            break;</b>
-<i>616</i>&nbsp;            case 6: {
-<b class="nc"><i>617</i>&nbsp;                System.out.println(&quot;Ora digita la casella dove posizionare il dado&quot;);</b>
-<b class="nc"><i>618</i>&nbsp;                retryPlaceDice();</b>
-<i>619</i>&nbsp;            }
-<b class="nc"><i>620</i>&nbsp;            break;</b>
-<i>621</i>&nbsp;            case 11: {
-<i>622</i>&nbsp;                int dice, row, col;
-<i>623</i>&nbsp;                do {
-<b class="nc"><i>624</i>&nbsp;                    System.out.println(&quot;Digita il valore del nuovo dado, tra 1 e 6&quot;);</b>
-<b class="nc"><i>625</i>&nbsp;                    dice = scanner.nextInt();</b>
-<b class="nc"><i>626</i>&nbsp;                } while (dice &lt; 1 || dice &gt; 6);</b>
-<i>627</i>&nbsp;                do {
-<b class="nc"><i>628</i>&nbsp;                    System.out.println(&quot;Digita il numero della riga dello schema in cui vuoi posizionarlo, tra 1 e &quot; + Constants.NUM_ROWS);</b>
-<b class="nc"><i>629</i>&nbsp;                    row = scanner.nextInt();</b>
-<b class="nc"><i>630</i>&nbsp;                } while (row &lt; 1 || row &gt; Constants.NUM_ROWS);</b>
-<i>631</i>&nbsp;                do {
-<b class="nc"><i>632</i>&nbsp;                    System.out.println(&quot;Digita il numero della colonna dello schema in cui vuoi posizionarlo, tra 1 e &quot; + Constants.NUM_COLS);</b>
-<b class="nc"><i>633</i>&nbsp;                    col = scanner.nextInt();</b>
-<b class="nc"><i>634</i>&nbsp;                } while (col &lt; 1 || col &gt; Constants.NUM_COLS);</b>
-<b class="nc"><i>635</i>&nbsp;                controller.useToolCard(11, -1, dice, row-1, col-1, -1, -1);</b>
-<i>636</i>&nbsp;            }
-<b class="nc"><i>637</i>&nbsp;            break;</b>
-<i>638</i>&nbsp;            case 12: {
-<i>639</i>&nbsp;                int choice;
-<i>640</i>&nbsp;                do {
-<b class="nc"><i>641</i>&nbsp;                    System.out.println(&quot;Primo dado mosso correttamente, digita 0 se non vuoi spostare più dadi o 1 se vuoi spostarne un altro&quot;);</b>
-<b class="nc"><i>642</i>&nbsp;                    choice = scanner.nextInt();</b>
-<b class="nc"><i>643</i>&nbsp;                } while (choice!=0 &amp;&amp; choice!=1);</b>
-<b class="nc"><i>644</i>&nbsp;                if (choice==0)</b>
-<b class="nc"><i>645</i>&nbsp;                    controller.useToolCard(12, -2, -1, -1, -1, -1, -1);</b>
-<i>646</i>&nbsp;                    //controller.useToolCard12IIStep(12, -2, -1, -1, -1, -1, -1);
-<i>647</i>&nbsp;                else
-<b class="nc"><i>648</i>&nbsp;                    useToolCard23412(12);</b>
-<i>649</i>&nbsp;            }
-<i>650</i>&nbsp;        }
-<i>651</i>&nbsp;
-<i>652</i>&nbsp;    }
-<i>653</i>&nbsp;
-<i>654</i>&nbsp;
-<i>655</i>&nbsp;    @Override
-<i>656</i>&nbsp;    public void onSuccess(String message) {
-<b class="nc"><i>657</i>&nbsp;        System.out.println(&quot;Arriva notifica schema alla cli&quot;);</b>
-<b class="nc"><i>658</i>&nbsp;        System.out.println(message);</b>
-<i>659</i>&nbsp;    }
-<i>660</i>&nbsp;
-<i>661</i>&nbsp;}
+<i>608</i>&nbsp;    public void endTurn() {
+<b class="nc"><i>609</i>&nbsp;        controller.endTurn();</b>
+<i>610</i>&nbsp;    }
+<i>611</i>&nbsp;
+<i>612</i>&nbsp;
+<i>613</i>&nbsp;    /////////////////////////////////////////////////////////////////////////////////////////
+<i>614</i>&nbsp;    // Metodi che invoca PlayerController su UiUpdate
+<i>615</i>&nbsp;    /////////////////////////////////////////////////////////////////////////////////////////
+<i>616</i>&nbsp;
+<i>617</i>&nbsp;
+<i>618</i>&nbsp;    @Override
+<i>619</i>&nbsp;    public void onLogin(String message) {
+<b class="nc"><i>620</i>&nbsp;        login(message);</b>
+<i>621</i>&nbsp;    }
+<i>622</i>&nbsp;
+<i>623</i>&nbsp;    @Override
+<i>624</i>&nbsp;    public void onActionNotValid(String errorCode) {
+<i>625</i>&nbsp;        try {
+<b class="nc"><i>626</i>&nbsp;            System.out.println(errorCode);</b>
+<b class="nc"><i>627</i>&nbsp;        } catch (NullPointerException e) {</b>
+<b class="nc"><i>628</i>&nbsp;        } catch (NumberFormatException e) {</b>
+<b class="nc"><i>629</i>&nbsp;            System.out.println(&quot;Digita un carattere valido&quot;);</b>
+<b class="nc"><i>630</i>&nbsp;        } catch (IndexOutOfBoundsException e) {</b>
+<b class="nc"><i>631</i>&nbsp;        }</b>
+<i>632</i>&nbsp;
+<i>633</i>&nbsp;    }
+<i>634</i>&nbsp;
+<i>635</i>&nbsp;    @Override
+<i>636</i>&nbsp;    public void onChooseNetwork (String message) {
+<b class="nc"><i>637</i>&nbsp;            chooseNetwork(message);</b>
+<i>638</i>&nbsp;    }
+<i>639</i>&nbsp;
+<i>640</i>&nbsp;    @Override
+<i>641</i>&nbsp;    public void onTurnStart(Match match, String nickname) {
+<b class="nc"><i>642</i>&nbsp;        chooseAction(match, nickname);</b>
+<i>643</i>&nbsp;    }
+<i>644</i>&nbsp;
+<i>645</i>&nbsp;    @Override
+<i>646</i>&nbsp;    public void onPlaceDiceNotValid(String message) {
+<i>647</i>&nbsp;        try {
+<b class="nc"><i>648</i>&nbsp;            System.out.println(message);</b>
+<b class="nc"><i>649</i>&nbsp;            retryPlaceDice();</b>
+<b class="nc"><i>650</i>&nbsp;        } catch (NullPointerException e) {</b>
+<b class="nc"><i>651</i>&nbsp;        } catch (NumberFormatException e) {</b>
+<b class="nc"><i>652</i>&nbsp;            System.out.println(&quot;Digita un carattere valido&quot;);</b>
+<b class="nc"><i>653</i>&nbsp;        } catch (IndexOutOfBoundsException e) {</b>
+<b class="nc"><i>654</i>&nbsp;        }</b>
+<i>655</i>&nbsp;    }
+<i>656</i>&nbsp;
+<i>657</i>&nbsp;    @Override
+<i>658</i>&nbsp;    public void onGameUpdate(Match match, String nickname) {
+<i>659</i>&nbsp;         try {
+<b class="nc"><i>660</i>&nbsp;            ShowRoundTrack roundTrack = new ShowRoundTrack(match.getRoundTrack());</b>
+<b class="nc"><i>661</i>&nbsp;            ShowPublicObjectives pub = new ShowPublicObjectives(match.getPublicObjectives());</b>
+<b class="nc"><i>662</i>&nbsp;            ShowPrivateObjectiveCard priv = new ShowPrivateObjectiveCard(match.getPlayer(nickname).getPrivateObjective());</b>
+<b class="nc"><i>663</i>&nbsp;            ShowToolCards tool = new ShowToolCards(match.getToolCards());</b>
+<b class="nc"><i>664</i>&nbsp;            System.out.println(&quot;Hai &quot; + match.getPlayer(nickname).getNumOfToken() + &quot; segnalini favore&quot;);</b>
+<b class="nc"><i>665</i>&nbsp;            ShowDraftPool draft = new ShowDraftPool(match.getDraftPool());</b>
+<b class="nc"><i>666</i>&nbsp;            ShowScheme scheme = new ShowScheme(match.getPlayer(nickname).getScheme());</b>
+<b class="nc"><i>667</i>&nbsp;         } catch (NullPointerException e) {</b>
+<b class="nc"><i>668</i>&nbsp;         } catch (NumberFormatException e) {</b>
+<b class="nc"><i>669</i>&nbsp;             System.out.println(&quot;Digita un carattere valido&quot;);</b>
+<b class="nc"><i>670</i>&nbsp;         } catch (IndexOutOfBoundsException e) {</b>
+<b class="nc"><i>671</i>&nbsp;         }</b>
+<i>672</i>&nbsp;
+<i>673</i>&nbsp;    }
+<i>674</i>&nbsp;
+<i>675</i>&nbsp;    @Override
+<i>676</i>&nbsp;    public void onGameEnd(Match match) {
+<i>677</i>&nbsp;        try {
+<b class="nc"><i>678</i>&nbsp;            ShowRoundTrack roundTrack = new ShowRoundTrack(match.getRoundTrack());   //TODO: mettere pedine su roundtrack</b>
+<b class="nc"><i>679</i>&nbsp;            for (int i = 0; i &lt; match.getPlayers().size(); i++) {</b>
+<b class="nc"><i>680</i>&nbsp;                System.out.print(i + 1 + &quot;) &quot; + match.getRanking().get(i).getNickname() + &quot; con &quot;);</b>
+<b class="nc"><i>681</i>&nbsp;                System.out.println(match.getRanking().get(i).getScore() + &quot; punti&quot;);</b>
+<i>682</i>&nbsp;            }
+<b class="nc"><i>683</i>&nbsp;        } catch (NullPointerException e) {</b>
+<b class="nc"><i>684</i>&nbsp;        } catch (NumberFormatException e) {</b>
+<b class="nc"><i>685</i>&nbsp;            System.out.println(&quot;Digita un carattere valido&quot;);</b>
+<b class="nc"><i>686</i>&nbsp;        } catch (IndexOutOfBoundsException e) {</b>
+<b class="nc"><i>687</i>&nbsp;        }</b>
+<i>688</i>&nbsp;    }
+<i>689</i>&nbsp;
+<i>690</i>&nbsp;    @Override
+<i>691</i>&nbsp;    public void onSchemeToChoose(Match match, String nickname, String message) {
+<b class="nc"><i>692</i>&nbsp;        chooseScheme(match, nickname, message);</b>
+<i>693</i>&nbsp;    }
+<i>694</i>&nbsp;
+<i>695</i>&nbsp;    @Override
+<i>696</i>&nbsp;    public void onUseToolCardNotValid(int id, Match match, String e) {
+<i>697</i>&nbsp;        try {
+<b class="nc"><i>698</i>&nbsp;            System.out.println(e);</b>
+<b class="nc"><i>699</i>&nbsp;            switch (id) {</b>
+<i>700</i>&nbsp;                case 6:
+<b class="nc"><i>701</i>&nbsp;                    onOtherInfoToolCard(6, match);    // perché tanto la 6 può lanciare una notValidException solo nel secondo step</b>
+<b class="nc"><i>702</i>&nbsp;                    break;</b>
+<i>703</i>&nbsp;                case 11:
+<b class="nc"><i>704</i>&nbsp;                    onOtherInfoToolCard(11, match);   // perché tanto la 11 può lanciare una notValidException solo nel secondo step</b>
+<b class="nc"><i>705</i>&nbsp;                    break;</b>
+<i>706</i>&nbsp;                default:
+<b class="nc"><i>707</i>&nbsp;                    useToolCard(id, match);</b>
+<i>708</i>&nbsp;                    break;
+<i>709</i>&nbsp;            }
+<b class="nc"><i>710</i>&nbsp;        } catch (NullPointerException e1) {</b>
+<b class="nc"><i>711</i>&nbsp;        } catch (NumberFormatException e1) {</b>
+<b class="nc"><i>712</i>&nbsp;            System.out.println(&quot;Digita un carattere valido&quot;);</b>
+<b class="nc"><i>713</i>&nbsp;        } catch (IndexOutOfBoundsException e1) {</b>
+<b class="nc"><i>714</i>&nbsp;        }</b>
+<i>715</i>&nbsp;    }
+<i>716</i>&nbsp;
+<i>717</i>&nbsp;    /*@Override
+<i>718</i>&nbsp;    public void onUseToolCard12IIStepNotValid(Match match, String e) {
+<i>719</i>&nbsp;        System.out.println(e);
+<i>720</i>&nbsp;        onOtherInfoToolCard(12, match);
+<i>721</i>&nbsp;    }*/
+<i>722</i>&nbsp;
+<i>723</i>&nbsp;
+<i>724</i>&nbsp;    @Override
+<i>725</i>&nbsp;    public void onOtherInfoToolCard(int id, Match match) {
+<i>726</i>&nbsp;        try {
+<b class="nc"><i>727</i>&nbsp;            switch (id) {</b>
+<i>728</i>&nbsp;                case 4: {
+<i>729</i>&nbsp;                    //System.out.println(&quot;Primo dado mosso correttamente, ora muovi il secondo&quot;);
+<b class="nc"><i>730</i>&nbsp;                    useToolCard23412(4);</b>
+<i>731</i>&nbsp;                }
+<b class="nc"><i>732</i>&nbsp;                break;</b>
+<i>733</i>&nbsp;                case 6: {
+<b class="nc"><i>734</i>&nbsp;                    System.out.println(&quot;Ora digita la casella dove posizionare il dado&quot;);</b>
+<b class="nc"><i>735</i>&nbsp;                    retryPlaceDice();</b>
+<i>736</i>&nbsp;                }
+<b class="nc"><i>737</i>&nbsp;                break;</b>
+<i>738</i>&nbsp;                case 11: {
+<i>739</i>&nbsp;                    int dice, row, col;
+<i>740</i>&nbsp;                    do {
+<b class="nc"><i>741</i>&nbsp;                        System.out.println(&quot;Digita il valore del nuovo dado, tra 1 e 6&quot;);</b>
+<b class="nc"><i>742</i>&nbsp;                        dice = scanner.nextInt();</b>
+<b class="nc"><i>743</i>&nbsp;                    } while (dice &lt; 1 || dice &gt; 6);</b>
+<i>744</i>&nbsp;                    do {
+<b class="nc"><i>745</i>&nbsp;                        System.out.println(&quot;Digita il numero della riga dello schema in cui vuoi posizionarlo, tra 1 e &quot; + Constants.NUM_ROWS);</b>
+<b class="nc"><i>746</i>&nbsp;                        row = scanner.nextInt();</b>
+<b class="nc"><i>747</i>&nbsp;                    } while (row &lt; 1 || row &gt; Constants.NUM_ROWS);</b>
+<i>748</i>&nbsp;                    do {
+<b class="nc"><i>749</i>&nbsp;                        System.out.println(&quot;Digita il numero della colonna dello schema in cui vuoi posizionarlo, tra 1 e &quot; + Constants.NUM_COLS);</b>
+<b class="nc"><i>750</i>&nbsp;                        col = scanner.nextInt();</b>
+<b class="nc"><i>751</i>&nbsp;                    } while (col &lt; 1 || col &gt; Constants.NUM_COLS);</b>
+<b class="nc"><i>752</i>&nbsp;                    controller.useToolCard(11, -1, dice, row - 1, col - 1, -1, -1);</b>
+<i>753</i>&nbsp;                }
+<b class="nc"><i>754</i>&nbsp;                break;</b>
+<i>755</i>&nbsp;                case 12: {
+<i>756</i>&nbsp;                    int choice;
+<i>757</i>&nbsp;                    do {
+<b class="nc"><i>758</i>&nbsp;                        System.out.println(&quot;Primo dado mosso correttamente, digita 0 se non vuoi spostare più dadi o 1 se vuoi spostarne un altro&quot;);</b>
+<b class="nc"><i>759</i>&nbsp;                        choice = scanner.nextInt();</b>
+<b class="nc"><i>760</i>&nbsp;                    } while (choice != 0 &amp;&amp; choice != 1);</b>
+<b class="nc"><i>761</i>&nbsp;                    if (choice == 0)</b>
+<b class="nc"><i>762</i>&nbsp;                        controller.useToolCard(12, -2, -1, -1, -1, -1, -1);</b>
+<i>763</i>&nbsp;                        //controller.useToolCard12IIStep(12, -2, -1, -1, -1, -1, -1);
+<i>764</i>&nbsp;                    else
+<b class="nc"><i>765</i>&nbsp;                        useToolCard23412(12);</b>
+<i>766</i>&nbsp;                }
+<i>767</i>&nbsp;            }
+<b class="nc"><i>768</i>&nbsp;        } catch (NullPointerException e) {</b>
+<b class="nc"><i>769</i>&nbsp;        } catch (NumberFormatException e) {</b>
+<b class="nc"><i>770</i>&nbsp;            System.out.println(&quot;Digita un carattere valido&quot;);</b>
+<b class="nc"><i>771</i>&nbsp;        } catch (IndexOutOfBoundsException e) {</b>
+<b class="nc"><i>772</i>&nbsp;        }</b>
+<i>773</i>&nbsp;
+<i>774</i>&nbsp;    }
+<i>775</i>&nbsp;
+<i>776</i>&nbsp;    @Override
+<i>777</i>&nbsp;    public void onPlayerDisconnection(String message, String nickname) {
+<b class="nc"><i>778</i>&nbsp;        System.out.println(message);</b>
+<i>779</i>&nbsp;        int choice;
+<b class="nc"><i>780</i>&nbsp;        if (nickname.equals(controller.getNickname())) {</b>
+<i>781</i>&nbsp;            try {
+<i>782</i>&nbsp;                do {
+<b class="nc"><i>783</i>&nbsp;                    choice = scanner.nextInt();</b>
+<b class="nc"><i>784</i>&nbsp;                } while (choice!=0);</b>
+<b class="nc"><i>785</i>&nbsp;            controller.reconnectPlayer();</b>
+<b class="nc"><i>786</i>&nbsp;            } catch (NullPointerException e) {</b>
+<b class="nc"><i>787</i>&nbsp;            } catch (NumberFormatException e) {</b>
+<b class="nc"><i>788</i>&nbsp;                System.out.println(&quot;Digita un carattere valido&quot;);</b>
+<b class="nc"><i>789</i>&nbsp;            } catch (IndexOutOfBoundsException e) {</b>
+<b class="nc"><i>790</i>&nbsp;            }</b>
+<i>791</i>&nbsp;        }
+<i>792</i>&nbsp;    }
+<i>793</i>&nbsp;
+<i>794</i>&nbsp;
+<i>795</i>&nbsp;    @Override
+<i>796</i>&nbsp;    public void onSuccess(String message) {
+<i>797</i>&nbsp;        try {
+<b class="nc"><i>798</i>&nbsp;            System.out.println(message);</b>
+<b class="nc"><i>799</i>&nbsp;        } catch (NullPointerException e) {</b>
+<b class="nc"><i>800</i>&nbsp;        } catch (NumberFormatException e) {</b>
+<b class="nc"><i>801</i>&nbsp;        } catch (IndexOutOfBoundsException e) {</b>
+<b class="nc"><i>802</i>&nbsp;        }</b>
+<i>803</i>&nbsp;    }
+<i>804</i>&nbsp;
+<i>805</i>&nbsp;}
 </div>
 </div>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2018-07-04 21:00</div>
+    <div style="float:right;">generated on 2018-07-05 23:16</div>
 </div>
 </body>
 </html>

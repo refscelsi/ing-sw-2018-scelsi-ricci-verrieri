@@ -58,7 +58,7 @@
 </td>
 <td class="coverageStat">
   <span class="percent">
-    92,1%
+    92.1%
   </span>
   <span class="absValue">
     (128/ 139)
@@ -101,412 +101,415 @@
 <b class="fc"><i>27</i>&nbsp;    }</b>
 <i>28</i>&nbsp;
 <i>29</i>&nbsp;
-<i>30</i>&nbsp;
-<i>31</i>&nbsp;    // METODI SETTERS
-<i>32</i>&nbsp;
-<i>33</i>&nbsp;
-<i>34</i>&nbsp;    public void setDifficulty( int difficulty ) {
-<b class="fc"><i>35</i>&nbsp;        this.difficulty = difficulty;</b>
-<b class="fc"><i>36</i>&nbsp;    }</b>
-<i>37</i>&nbsp;
+<i>30</i>&nbsp;    /**
+<i>31</i>&nbsp;     * Metodi SET
+<i>32</i>&nbsp;     *
+<i>33</i>&nbsp;     */
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;    public void setDifficulty( int difficulty ) {
+<b class="fc"><i>36</i>&nbsp;        this.difficulty = difficulty;</b>
+<b class="fc"><i>37</i>&nbsp;    }</b>
 <i>38</i>&nbsp;
-<i>39</i>&nbsp;    public void setId( int id ) {
-<b class="fc"><i>40</i>&nbsp;        this.id = id;</b>
-<b class="fc"><i>41</i>&nbsp;    }</b>
-<i>42</i>&nbsp;
+<i>39</i>&nbsp;
+<i>40</i>&nbsp;    public void setId( int id ) {
+<b class="fc"><i>41</i>&nbsp;        this.id = id;</b>
+<b class="fc"><i>42</i>&nbsp;    }</b>
 <i>43</i>&nbsp;
-<i>44</i>&nbsp;    public void setIdRetro(int idRetro) {
-<b class="fc"><i>45</i>&nbsp;        this.idRetro = idRetro;</b>
-<b class="fc"><i>46</i>&nbsp;    }</b>
-<i>47</i>&nbsp;
+<i>44</i>&nbsp;
+<i>45</i>&nbsp;    public void setIdRetro(int idRetro) {
+<b class="fc"><i>46</i>&nbsp;        this.idRetro = idRetro;</b>
+<b class="fc"><i>47</i>&nbsp;    }</b>
 <i>48</i>&nbsp;
-<i>49</i>&nbsp;    public void setBoxes( Box[][] boxes ) {
-<b class="fc"><i>50</i>&nbsp;        this.boxes = boxes;</b>
-<b class="fc"><i>51</i>&nbsp;    }</b>
-<i>52</i>&nbsp;
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;    public void setBoxes( Box[][] boxes ) {
+<b class="fc"><i>51</i>&nbsp;        this.boxes = boxes;</b>
+<b class="fc"><i>52</i>&nbsp;    }</b>
 <i>53</i>&nbsp;
-<i>54</i>&nbsp;    public void setNotEmpty() {
-<b class="fc"><i>55</i>&nbsp;        this.isEmpty = false;</b>
-<b class="fc"><i>56</i>&nbsp;    }</b>
-<i>57</i>&nbsp;
+<i>54</i>&nbsp;
+<i>55</i>&nbsp;    public void setNotEmpty() {
+<b class="fc"><i>56</i>&nbsp;        this.isEmpty = false;</b>
+<b class="fc"><i>57</i>&nbsp;    }</b>
 <i>58</i>&nbsp;
 <i>59</i>&nbsp;
-<i>60</i>&nbsp;    // METODI GETTERS
-<i>61</i>&nbsp;
-<i>62</i>&nbsp;
-<i>63</i>&nbsp;    public Box[][] getBoxes() {
-<b class="fc"><i>64</i>&nbsp;        return boxes;</b>
-<i>65</i>&nbsp;    }
-<i>66</i>&nbsp;
-<i>67</i>&nbsp;
-<i>68</i>&nbsp;    public int getDifficulty() {
-<b class="fc"><i>69</i>&nbsp;        return difficulty;</b>
-<i>70</i>&nbsp;    }
-<i>71</i>&nbsp;
-<i>72</i>&nbsp;
-<i>73</i>&nbsp;    public int getId() {
-<b class="fc"><i>74</i>&nbsp;        return id;</b>
-<i>75</i>&nbsp;    }
-<i>76</i>&nbsp;
-<i>77</i>&nbsp;
-<i>78</i>&nbsp;    public Box getBox( int row, int col ) {
-<b class="fc"><i>79</i>&nbsp;        return boxes[row][col];</b>
-<i>80</i>&nbsp;    }
-<i>81</i>&nbsp;
-<i>82</i>&nbsp;
-<i>83</i>&nbsp;    public int getIdRetro() {
-<b class="fc"><i>84</i>&nbsp;        return idRetro;</b>
-<i>85</i>&nbsp;    }
-<i>86</i>&nbsp;
-<i>87</i>&nbsp;
-<i>88</i>&nbsp;    public Boolean getIsEmpty() {
-<b class="fc"><i>89</i>&nbsp;        return isEmpty;</b>
+<i>60</i>&nbsp;    /**
+<i>61</i>&nbsp;     * Metodi GET
+<i>62</i>&nbsp;     *
+<i>63</i>&nbsp;     */
+<i>64</i>&nbsp;
+<i>65</i>&nbsp;
+<i>66</i>&nbsp;    public Box[][] getBoxes() {
+<b class="fc"><i>67</i>&nbsp;        return boxes;</b>
+<i>68</i>&nbsp;    }
+<i>69</i>&nbsp;
+<i>70</i>&nbsp;
+<i>71</i>&nbsp;    public int getDifficulty() {
+<b class="fc"><i>72</i>&nbsp;        return difficulty;</b>
+<i>73</i>&nbsp;    }
+<i>74</i>&nbsp;
+<i>75</i>&nbsp;
+<i>76</i>&nbsp;    public int getId() {
+<b class="fc"><i>77</i>&nbsp;        return id;</b>
+<i>78</i>&nbsp;    }
+<i>79</i>&nbsp;
+<i>80</i>&nbsp;
+<i>81</i>&nbsp;    public Box getBox( int row, int col ) {
+<b class="fc"><i>82</i>&nbsp;        return boxes[row][col];</b>
+<i>83</i>&nbsp;    }
+<i>84</i>&nbsp;
+<i>85</i>&nbsp;
+<i>86</i>&nbsp;    public int getIdRetro() {
+<b class="fc"><i>87</i>&nbsp;        return idRetro;</b>
+<i>88</i>&nbsp;    }
+<i>89</i>&nbsp;
 <i>90</i>&nbsp;
-<i>91</i>&nbsp;    }
-<i>92</i>&nbsp;
+<i>91</i>&nbsp;    public Boolean getIsEmpty() {
+<b class="fc"><i>92</i>&nbsp;        return isEmpty;</b>
 <i>93</i>&nbsp;
-<i>94</i>&nbsp;    /**
-<i>95</i>&nbsp;     *
-<i>96</i>&nbsp;     * Conta il numero di caselle vuote dello schema
-<i>97</i>&nbsp;     *
-<i>98</i>&nbsp;     * @return    il numero delle caselle vuote
-<i>99</i>&nbsp;     *
-<i>100</i>&nbsp;     */
-<i>101</i>&nbsp;    public int countFreeBoxes() {
-<b class="fc"><i>102</i>&nbsp;        int free = 0;</b>
-<b class="fc"><i>103</i>&nbsp;        for (int i = 0; i &lt; Constants.NUM_ROWS; i++)</b>
-<b class="fc"><i>104</i>&nbsp;            for (int j = 0; j &lt; Constants.NUM_COLS; j++)</b>
-<b class="fc"><i>105</i>&nbsp;                if ( !boxes[i][j].isFull() )</b>
-<b class="fc"><i>106</i>&nbsp;                    free++;</b>
-<b class="fc"><i>107</i>&nbsp;        return free;</b>
-<i>108</i>&nbsp;    }
-<i>109</i>&nbsp;
-<i>110</i>&nbsp;
-<i>111</i>&nbsp;    /**
-<i>112</i>&nbsp;     *
-<i>113</i>&nbsp;     * Controlla se lo schema è vuoto, cioè non contiene nessun dado
-<i>114</i>&nbsp;     *
-<i>115</i>&nbsp;     * @return    true se lo schema è vuoto
-<i>116</i>&nbsp;     *
-<i>117</i>&nbsp;     */
-<i>118</i>&nbsp;    public boolean isEmpty() {
-<b class="fc"><i>119</i>&nbsp;        this.isEmpty = true;</b>
-<b class="fc"><i>120</i>&nbsp;        for (int i = 0; i &lt; Constants.NUM_ROWS; i++) {</b>
-<b class="fc"><i>121</i>&nbsp;            for (int j = 0; j &lt; Constants.NUM_COLS; j++) {</b>
-<b class="fc"><i>122</i>&nbsp;                if ( boxes[i][j].isFull() ) {</b>
-<b class="fc"><i>123</i>&nbsp;                    setNotEmpty();</b>
-<i>124</i>&nbsp;                }
-<i>125</i>&nbsp;            }
-<i>126</i>&nbsp;        }
-<b class="fc"><i>127</i>&nbsp;        return this.isEmpty;</b>
-<i>128</i>&nbsp;    }
-<i>129</i>&nbsp;
-<i>130</i>&nbsp;
-<i>131</i>&nbsp;    /**
-<i>132</i>&nbsp;     *
-<i>133</i>&nbsp;     * Controlla se la casella in questione è una casella del bordo dello schema
-<i>134</i>&nbsp;     *
-<i>135</i>&nbsp;     * @param  row   la riga della casella
-<i>136</i>&nbsp;     * @param  col   la colonna della casella
-<i>137</i>&nbsp;     * @param  dice  il dado che si vuole piazzare nella casella
-<i>138</i>&nbsp;     * @return       true se la casella appartiene al bordo dello schema
-<i>139</i>&nbsp;     *
-<i>140</i>&nbsp;     */
-<i>141</i>&nbsp;    public boolean checkFirst( int row, int col, Dice dice ) {
-<b class="fc"><i>142</i>&nbsp;        if ( row == 0 || row == Constants.NUM_ROWS-1 || col == 0 || col == Constants.NUM_COLS-1 ) {</b>
-<b class="fc"><i>143</i>&nbsp;            return (checkBox( row, col, dice ));</b>
-<i>144</i>&nbsp;        } else
-<b class="fc"><i>145</i>&nbsp;            return false;</b>
-<i>146</i>&nbsp;    }
-<i>147</i>&nbsp;
-<i>148</i>&nbsp;
-<i>149</i>&nbsp;    /**
-<i>150</i>&nbsp;     *
-<i>151</i>&nbsp;     * Controlla se due colori sono uguali
-<i>152</i>&nbsp;     *
-<i>153</i>&nbsp;     * @param  color1   uno dei due colori
-<i>154</i>&nbsp;     * @param  color2   l&#39;altro colore
-<i>155</i>&nbsp;     * @return       true se i due colori sono uguali
-<i>156</i>&nbsp;     *
-<i>157</i>&nbsp;     */
-<i>158</i>&nbsp;    public boolean checkColor( Color color1, Color color2 ) {
-<b class="fc"><i>159</i>&nbsp;        return (color1 == color2);</b>
-<i>160</i>&nbsp;    }
-<i>161</i>&nbsp;
-<i>162</i>&nbsp;
-<i>163</i>&nbsp;    /**
-<i>164</i>&nbsp;     *
-<i>165</i>&nbsp;     * Controlla se due sfumature sono uguali
-<i>166</i>&nbsp;     *
-<i>167</i>&nbsp;     * @param  shade1   una delle due sfumature
-<i>168</i>&nbsp;     * @param  shade2   l&#39;altra sfumatura
-<i>169</i>&nbsp;     * @return       true se le due sfumature sono uguali
-<i>170</i>&nbsp;     *
-<i>171</i>&nbsp;     */
-<i>172</i>&nbsp;    public boolean checkShade( int shade1, int shade2 ) {
-<b class="fc"><i>173</i>&nbsp;        return (shade1 == shade2);</b>
-<i>174</i>&nbsp;    }
-<i>175</i>&nbsp;
-<i>176</i>&nbsp;
-<i>177</i>&nbsp;    /**
-<i>178</i>&nbsp;     *
-<i>179</i>&nbsp;     * Controlla che la il dado venga piazzato su una casella che non richieda un dado di colore diverso
-<i>180</i>&nbsp;     *
-<i>181</i>&nbsp;     * @param  row   la riga della casella
-<i>182</i>&nbsp;     * @param  col   la colonna della casella
-<i>183</i>&nbsp;     * @param  dice  il dado che si vuole piazzare nella casella
-<i>184</i>&nbsp;     * @return       true se il controllo va a buon fine
-<i>185</i>&nbsp;     *
-<i>186</i>&nbsp;     */
-<i>187</i>&nbsp;    public boolean checkBoxColor( int row, int col, Dice dice ) {
-<b class="fc"><i>188</i>&nbsp;        return checkColor( boxes[row][col].getColor(), Color.WHITE ) || checkColor( boxes[row][col].getColor(), dice.getDiceColor() );</b>
-<i>189</i>&nbsp;    }
-<i>190</i>&nbsp;
-<i>191</i>&nbsp;
-<i>192</i>&nbsp;    /**
-<i>193</i>&nbsp;     *
-<i>194</i>&nbsp;     * Controlla che la il dado venga piazzato su una casella che non richieda un dado di sfumatura diversa
-<i>195</i>&nbsp;     *
-<i>196</i>&nbsp;     * @param  row   la riga della casella
-<i>197</i>&nbsp;     * @param  col   la colonna della casella
-<i>198</i>&nbsp;     * @param  dice  il dado che si vuole piazzare nella casella
-<i>199</i>&nbsp;     * @return       true se il controllo va a buon fine
-<i>200</i>&nbsp;     *
-<i>201</i>&nbsp;     */
-<i>202</i>&nbsp;    public boolean checkBoxShade( int row, int col, Dice dice ) {
-<b class="fc"><i>203</i>&nbsp;        return checkShade( boxes[row][col].getShade(), 0 ) || checkShade( boxes[row][col].getShade(), dice.getNumFacciaUp() );</b>
-<i>204</i>&nbsp;    }
-<i>205</i>&nbsp;
-<i>206</i>&nbsp;
-<i>207</i>&nbsp;    /**
-<i>208</i>&nbsp;     *
-<i>209</i>&nbsp;     * Controlla che la il dado venga piazzato su una casella che non richieda un dado di colore o sfumatura diversi
-<i>210</i>&nbsp;     *
-<i>211</i>&nbsp;     * @param  row   la riga della casella
-<i>212</i>&nbsp;     * @param  col   la colonna della casella
-<i>213</i>&nbsp;     * @param  dice  il dado che si vuole piazzare nella casella
-<i>214</i>&nbsp;     * @return       true se il controllo va a buon fine
-<i>215</i>&nbsp;     *
-<i>216</i>&nbsp;     */
-<i>217</i>&nbsp;    public boolean checkBox( int row , int col, Dice dice ) {
-<b class="fc"><i>218</i>&nbsp;        return checkBoxColor( row, col, dice ) &amp;&amp; checkBoxShade(row,col, dice );</b>
-<i>219</i>&nbsp;    }
-<i>220</i>&nbsp;
-<i>221</i>&nbsp;
-<i>222</i>&nbsp;    /**
-<i>223</i>&nbsp;     *
-<i>224</i>&nbsp;     * Fa i controlli sulle caselle adiacenti alla casella dove si vuole piazzare il dado:
-<i>225</i>&nbsp;     * op = 0: controllo di piazzamento di un dado
-<i>226</i>&nbsp;     * op = 1: controllo di movimento di un dado
-<i>227</i>&nbsp;     * op = 2: controllo per la toolcard 9
-<i>228</i>&nbsp;     *
-<i>229</i>&nbsp;     * @param  row      la riga della casella
-<i>230</i>&nbsp;     * @param  column   la colonna della casella
-<i>231</i>&nbsp;     * @param  dice     il dado che si vuole piazzare nella casella
-<i>232</i>&nbsp;     * @param  op       op = 0: controllo di piazzamento di un dado
-<i>233</i>&nbsp;     *                  op = 1: controllo di movimento di un dado
-<i>234</i>&nbsp;     *                  op = 2: controllo per la toolcard 9
-<i>235</i>&nbsp;     * @return       true se il controllo va a buon fine
-<i>236</i>&nbsp;     *
-<i>237</i>&nbsp;     */
-<i>238</i>&nbsp;    public boolean checkIfHasDiceAdjacent( int row, int column, Dice dice, int op ) {
-<i>239</i>&nbsp;        Boolean right, left, up, down, upRight, upLeft, downRight, downLeft;
-<i>240</i>&nbsp;
-<b class="fc"><i>241</i>&nbsp;        if ( row == Constants.NUM_ROWS-1 )</b>
-<b class="fc"><i>242</i>&nbsp;            down = false;</b>
-<i>243</i>&nbsp;        else
-<b class="fc"><i>244</i>&nbsp;            down = boxes[row + 1][column].isFull();</b>
-<i>245</i>&nbsp;
-<b class="fc"><i>246</i>&nbsp;        if ( row == 0 )</b>
-<b class="fc"><i>247</i>&nbsp;            up = false;</b>
-<i>248</i>&nbsp;        else
-<b class="fc"><i>249</i>&nbsp;            up = boxes[row - 1][column].isFull();</b>
-<i>250</i>&nbsp;
-<b class="fc"><i>251</i>&nbsp;        if ( column == 0 )</b>
-<b class="fc"><i>252</i>&nbsp;            left = false;</b>
-<i>253</i>&nbsp;        else
-<b class="fc"><i>254</i>&nbsp;            left = boxes[row][column - 1].isFull();</b>
-<i>255</i>&nbsp;
-<b class="fc"><i>256</i>&nbsp;        if ( column == Constants.NUM_COLS-1 )</b>
-<b class="fc"><i>257</i>&nbsp;            right = false;</b>
-<i>258</i>&nbsp;        else
-<b class="fc"><i>259</i>&nbsp;            right = boxes[row][column + 1].isFull();</b>
-<i>260</i>&nbsp;
-<b class="fc"><i>261</i>&nbsp;        if ( column == Constants.NUM_COLS-1 || row == 0 )</b>
-<b class="fc"><i>262</i>&nbsp;            upRight = false;</b>
-<i>263</i>&nbsp;        else
-<b class="fc"><i>264</i>&nbsp;            upRight = boxes[row - 1][column + 1].isFull();</b>
-<i>265</i>&nbsp;
-<b class="fc"><i>266</i>&nbsp;        if ( column == Constants.NUM_COLS-1 || row == Constants.NUM_ROWS-1 )</b>
-<b class="fc"><i>267</i>&nbsp;            downRight = false;</b>
-<i>268</i>&nbsp;        else
-<b class="fc"><i>269</i>&nbsp;            downRight = boxes[row + 1][column + 1].isFull();</b>
-<i>270</i>&nbsp;
-<b class="fc"><i>271</i>&nbsp;        if ( column == 0 || row == 0 )</b>
-<b class="fc"><i>272</i>&nbsp;            upLeft = false;</b>
-<i>273</i>&nbsp;        else
-<b class="fc"><i>274</i>&nbsp;            upLeft = boxes[row - 1][column - 1].isFull();</b>
-<i>275</i>&nbsp;
-<b class="fc"><i>276</i>&nbsp;        if ( column == 0 || row == Constants.NUM_ROWS-1 )</b>
-<b class="fc"><i>277</i>&nbsp;            downLeft = false;</b>
-<i>278</i>&nbsp;        else
-<b class="fc"><i>279</i>&nbsp;            downLeft = boxes[row + 1][column - 1].isFull();</b>
-<i>280</i>&nbsp;
-<b class="fc"><i>281</i>&nbsp;        switch (op) {</b>
-<i>282</i>&nbsp;
-<i>283</i>&nbsp;            case 0: {
-<i>284</i>&nbsp;
-<b class="fc"><i>285</i>&nbsp;                if ( right || left || up || down || upRight || upLeft || downRight || downLeft ) {</b>
-<i>286</i>&nbsp;
-<b class="fc"><i>287</i>&nbsp;                    if ( right ) {</b>
-<b class="fc"><i>288</i>&nbsp;                        right = checkOrthogonal( row, column + 1, dice );</b>
-<b class="fc"><i>289</i>&nbsp;                        if ( !right )</b>
-<b class="nc"><i>290</i>&nbsp;                            return false;</b>
-<i>291</i>&nbsp;                    }
-<b class="fc"><i>292</i>&nbsp;                    if ( left ) {</b>
-<b class="fc"><i>293</i>&nbsp;                        left = checkOrthogonal( row, column - 1, dice );</b>
-<b class="fc"><i>294</i>&nbsp;                        if ( !left )</b>
-<b class="nc"><i>295</i>&nbsp;                            return false;</b>
-<i>296</i>&nbsp;                    }
-<b class="fc"><i>297</i>&nbsp;                    if ( up ) {</b>
-<b class="fc"><i>298</i>&nbsp;                        up = checkOrthogonal( row - 1, column, dice );</b>
-<b class="fc"><i>299</i>&nbsp;                        if ( !up )</b>
-<b class="nc"><i>300</i>&nbsp;                            return false;</b>
-<i>301</i>&nbsp;                    }
-<b class="fc"><i>302</i>&nbsp;                    if ( down ) {</b>
-<b class="fc"><i>303</i>&nbsp;                        down = checkOrthogonal( row + 1, column, dice );</b>
-<b class="fc"><i>304</i>&nbsp;                        if ( !down )</b>
-<b class="nc"><i>305</i>&nbsp;                            return false;</b>
-<i>306</i>&nbsp;                    }
-<b class="fc"><i>307</i>&nbsp;                    return true;</b>
-<i>308</i>&nbsp;                }
-<i>309</i>&nbsp;                break;
-<i>310</i>&nbsp;            }
-<i>311</i>&nbsp;
-<i>312</i>&nbsp;            case 1: {
-<b class="fc"><i>313</i>&nbsp;                if ( right ) {</b>
-<b class="fc"><i>314</i>&nbsp;                    right = checkOrthogonal( row, column + 1, dice );</b>
-<b class="fc"><i>315</i>&nbsp;                    if ( !right )</b>
-<b class="fc"><i>316</i>&nbsp;                        return false;</b>
-<i>317</i>&nbsp;                }
-<b class="fc"><i>318</i>&nbsp;                if ( left ) {</b>
-<b class="fc"><i>319</i>&nbsp;                    left = checkOrthogonal( row, column - 1, dice );</b>
-<b class="fc"><i>320</i>&nbsp;                    if ( !left )</b>
-<b class="nc"><i>321</i>&nbsp;                        return false;</b>
-<i>322</i>&nbsp;                }
-<b class="fc"><i>323</i>&nbsp;                if ( up ) {</b>
-<b class="fc"><i>324</i>&nbsp;                    up = checkOrthogonal( row - 1, column, dice );</b>
-<b class="fc"><i>325</i>&nbsp;                    if ( !up )</b>
-<b class="nc"><i>326</i>&nbsp;                        return false;</b>
-<i>327</i>&nbsp;                }
-<b class="fc"><i>328</i>&nbsp;                if ( down ) {</b>
-<b class="nc"><i>329</i>&nbsp;                    down = checkOrthogonal( row + 1, column, dice );</b>
-<b class="nc"><i>330</i>&nbsp;                    if ( !down )</b>
-<b class="nc"><i>331</i>&nbsp;                        return false;</b>
-<i>332</i>&nbsp;                }
-<b class="fc"><i>333</i>&nbsp;                return true;</b>
-<i>334</i>&nbsp;            }
-<i>335</i>&nbsp;
-<i>336</i>&nbsp;            case 2:
-<i>337</i>&nbsp;
-<b class="fc"><i>338</i>&nbsp;                if ( right || left || up || down || upRight || upLeft || downRight || downLeft )</b>
-<b class="fc"><i>339</i>&nbsp;                    return false;</b>
-<i>340</i>&nbsp;                else
-<b class="fc"><i>341</i>&nbsp;                    return true;</b>
-<i>342</i>&nbsp;
-<i>343</i>&nbsp;        }
-<i>344</i>&nbsp;
-<b class="fc"><i>345</i>&nbsp;        return false;</b>
-<i>346</i>&nbsp;
-<i>347</i>&nbsp;    }
-<i>348</i>&nbsp;
+<i>94</i>&nbsp;    }
+<i>95</i>&nbsp;
+<i>96</i>&nbsp;
+<i>97</i>&nbsp;    /**
+<i>98</i>&nbsp;     *
+<i>99</i>&nbsp;     * Conta il numero di caselle vuote dello schema
+<i>100</i>&nbsp;     *
+<i>101</i>&nbsp;     * @return    il numero delle caselle vuote
+<i>102</i>&nbsp;     *
+<i>103</i>&nbsp;     */
+<i>104</i>&nbsp;    public int countFreeBoxes() {
+<b class="fc"><i>105</i>&nbsp;        int free = 0;</b>
+<b class="fc"><i>106</i>&nbsp;        for (int i = 0; i &lt; Constants.NUM_ROWS; i++)</b>
+<b class="fc"><i>107</i>&nbsp;            for (int j = 0; j &lt; Constants.NUM_COLS; j++)</b>
+<b class="fc"><i>108</i>&nbsp;                if ( !boxes[i][j].isFull() )</b>
+<b class="fc"><i>109</i>&nbsp;                    free++;</b>
+<b class="fc"><i>110</i>&nbsp;        return free;</b>
+<i>111</i>&nbsp;    }
+<i>112</i>&nbsp;
+<i>113</i>&nbsp;
+<i>114</i>&nbsp;    /**
+<i>115</i>&nbsp;     *
+<i>116</i>&nbsp;     * Controlla se lo schema è vuoto, cioè non contiene nessun dado
+<i>117</i>&nbsp;     *
+<i>118</i>&nbsp;     * @return    true se lo schema è vuoto
+<i>119</i>&nbsp;     *
+<i>120</i>&nbsp;     */
+<i>121</i>&nbsp;    public boolean isEmpty() {
+<b class="fc"><i>122</i>&nbsp;        this.isEmpty = true;</b>
+<b class="fc"><i>123</i>&nbsp;        for (int i = 0; i &lt; Constants.NUM_ROWS; i++) {</b>
+<b class="fc"><i>124</i>&nbsp;            for (int j = 0; j &lt; Constants.NUM_COLS; j++) {</b>
+<b class="fc"><i>125</i>&nbsp;                if ( boxes[i][j].isFull() ) {</b>
+<b class="fc"><i>126</i>&nbsp;                    setNotEmpty();</b>
+<i>127</i>&nbsp;                }
+<i>128</i>&nbsp;            }
+<i>129</i>&nbsp;        }
+<b class="fc"><i>130</i>&nbsp;        return this.isEmpty;</b>
+<i>131</i>&nbsp;    }
+<i>132</i>&nbsp;
+<i>133</i>&nbsp;
+<i>134</i>&nbsp;    /**
+<i>135</i>&nbsp;     *
+<i>136</i>&nbsp;     * Controlla se la casella in questione è una casella del bordo dello schema
+<i>137</i>&nbsp;     *
+<i>138</i>&nbsp;     * @param  row   la riga della casella
+<i>139</i>&nbsp;     * @param  col   la colonna della casella
+<i>140</i>&nbsp;     * @param  dice  il dado che si vuole piazzare nella casella
+<i>141</i>&nbsp;     * @return       true se la casella appartiene al bordo dello schema
+<i>142</i>&nbsp;     *
+<i>143</i>&nbsp;     */
+<i>144</i>&nbsp;    public boolean checkFirst( int row, int col, Dice dice ) {
+<b class="fc"><i>145</i>&nbsp;        if ( row == 0 || row == Constants.NUM_ROWS-1 || col == 0 || col == Constants.NUM_COLS-1 ) {</b>
+<b class="fc"><i>146</i>&nbsp;            return (checkBox( row, col, dice ));</b>
+<i>147</i>&nbsp;        } else
+<b class="fc"><i>148</i>&nbsp;            return false;</b>
+<i>149</i>&nbsp;    }
+<i>150</i>&nbsp;
+<i>151</i>&nbsp;
+<i>152</i>&nbsp;    /**
+<i>153</i>&nbsp;     *
+<i>154</i>&nbsp;     * Controlla se due colori sono uguali
+<i>155</i>&nbsp;     *
+<i>156</i>&nbsp;     * @param  color1   uno dei due colori
+<i>157</i>&nbsp;     * @param  color2   l&#39;altro colore
+<i>158</i>&nbsp;     * @return       true se i due colori sono uguali
+<i>159</i>&nbsp;     *
+<i>160</i>&nbsp;     */
+<i>161</i>&nbsp;    public boolean checkColor( Color color1, Color color2 ) {
+<b class="fc"><i>162</i>&nbsp;        return (color1 == color2);</b>
+<i>163</i>&nbsp;    }
+<i>164</i>&nbsp;
+<i>165</i>&nbsp;
+<i>166</i>&nbsp;    /**
+<i>167</i>&nbsp;     *
+<i>168</i>&nbsp;     * Controlla se due sfumature sono uguali
+<i>169</i>&nbsp;     *
+<i>170</i>&nbsp;     * @param  shade1   una delle due sfumature
+<i>171</i>&nbsp;     * @param  shade2   l&#39;altra sfumatura
+<i>172</i>&nbsp;     * @return       true se le due sfumature sono uguali
+<i>173</i>&nbsp;     *
+<i>174</i>&nbsp;     */
+<i>175</i>&nbsp;    public boolean checkShade( int shade1, int shade2 ) {
+<b class="fc"><i>176</i>&nbsp;        return (shade1 == shade2);</b>
+<i>177</i>&nbsp;    }
+<i>178</i>&nbsp;
+<i>179</i>&nbsp;
+<i>180</i>&nbsp;    /**
+<i>181</i>&nbsp;     *
+<i>182</i>&nbsp;     * Controlla che la il dado venga piazzato su una casella che non richieda un dado di colore diverso
+<i>183</i>&nbsp;     *
+<i>184</i>&nbsp;     * @param  row   la riga della casella
+<i>185</i>&nbsp;     * @param  col   la colonna della casella
+<i>186</i>&nbsp;     * @param  dice  il dado che si vuole piazzare nella casella
+<i>187</i>&nbsp;     * @return       true se il controllo va a buon fine
+<i>188</i>&nbsp;     *
+<i>189</i>&nbsp;     */
+<i>190</i>&nbsp;    public boolean checkBoxColor( int row, int col, Dice dice ) {
+<b class="fc"><i>191</i>&nbsp;        return checkColor( boxes[row][col].getColor(), Color.WHITE ) || checkColor( boxes[row][col].getColor(), dice.getDiceColor() );</b>
+<i>192</i>&nbsp;    }
+<i>193</i>&nbsp;
+<i>194</i>&nbsp;
+<i>195</i>&nbsp;    /**
+<i>196</i>&nbsp;     *
+<i>197</i>&nbsp;     * Controlla che la il dado venga piazzato su una casella che non richieda un dado di sfumatura diversa
+<i>198</i>&nbsp;     *
+<i>199</i>&nbsp;     * @param  row   la riga della casella
+<i>200</i>&nbsp;     * @param  col   la colonna della casella
+<i>201</i>&nbsp;     * @param  dice  il dado che si vuole piazzare nella casella
+<i>202</i>&nbsp;     * @return       true se il controllo va a buon fine
+<i>203</i>&nbsp;     *
+<i>204</i>&nbsp;     */
+<i>205</i>&nbsp;    public boolean checkBoxShade( int row, int col, Dice dice ) {
+<b class="fc"><i>206</i>&nbsp;        return checkShade( boxes[row][col].getShade(), 0 ) || checkShade( boxes[row][col].getShade(), dice.getNumFacciaUp() );</b>
+<i>207</i>&nbsp;    }
+<i>208</i>&nbsp;
+<i>209</i>&nbsp;
+<i>210</i>&nbsp;    /**
+<i>211</i>&nbsp;     *
+<i>212</i>&nbsp;     * Controlla che la il dado venga piazzato su una casella che non richieda un dado di colore o sfumatura diversi
+<i>213</i>&nbsp;     *
+<i>214</i>&nbsp;     * @param  row   la riga della casella
+<i>215</i>&nbsp;     * @param  col   la colonna della casella
+<i>216</i>&nbsp;     * @param  dice  il dado che si vuole piazzare nella casella
+<i>217</i>&nbsp;     * @return       true se il controllo va a buon fine
+<i>218</i>&nbsp;     *
+<i>219</i>&nbsp;     */
+<i>220</i>&nbsp;    public boolean checkBox( int row , int col, Dice dice ) {
+<b class="fc"><i>221</i>&nbsp;        return checkBoxColor( row, col, dice ) &amp;&amp; checkBoxShade(row,col, dice );</b>
+<i>222</i>&nbsp;    }
+<i>223</i>&nbsp;
+<i>224</i>&nbsp;
+<i>225</i>&nbsp;    /**
+<i>226</i>&nbsp;     *
+<i>227</i>&nbsp;     * Fa i controlli sulle caselle adiacenti alla casella dove si vuole piazzare il dado:
+<i>228</i>&nbsp;     * op = 0: controllo di piazzamento di un dado
+<i>229</i>&nbsp;     * op = 1: controllo di movimento di un dado
+<i>230</i>&nbsp;     * op = 2: controllo per la toolcard 9
+<i>231</i>&nbsp;     *
+<i>232</i>&nbsp;     * @param  row      la riga della casella
+<i>233</i>&nbsp;     * @param  column   la colonna della casella
+<i>234</i>&nbsp;     * @param  dice     il dado che si vuole piazzare nella casella
+<i>235</i>&nbsp;     * @param  op       op = 0: controllo di piazzamento di un dado
+<i>236</i>&nbsp;     *                  op = 1: controllo di movimento di un dado
+<i>237</i>&nbsp;     *                  op = 2: controllo per la toolcard 9
+<i>238</i>&nbsp;     * @return       true se il controllo va a buon fine
+<i>239</i>&nbsp;     *
+<i>240</i>&nbsp;     */
+<i>241</i>&nbsp;    public boolean checkIfHasDiceAdjacent( int row, int column, Dice dice, int op ) {
+<i>242</i>&nbsp;        Boolean right, left, up, down, upRight, upLeft, downRight, downLeft;
+<i>243</i>&nbsp;
+<b class="fc"><i>244</i>&nbsp;        if ( row == Constants.NUM_ROWS-1 )</b>
+<b class="fc"><i>245</i>&nbsp;            down = false;</b>
+<i>246</i>&nbsp;        else
+<b class="fc"><i>247</i>&nbsp;            down = boxes[row + 1][column].isFull();</b>
+<i>248</i>&nbsp;
+<b class="fc"><i>249</i>&nbsp;        if ( row == 0 )</b>
+<b class="fc"><i>250</i>&nbsp;            up = false;</b>
+<i>251</i>&nbsp;        else
+<b class="fc"><i>252</i>&nbsp;            up = boxes[row - 1][column].isFull();</b>
+<i>253</i>&nbsp;
+<b class="fc"><i>254</i>&nbsp;        if ( column == 0 )</b>
+<b class="fc"><i>255</i>&nbsp;            left = false;</b>
+<i>256</i>&nbsp;        else
+<b class="fc"><i>257</i>&nbsp;            left = boxes[row][column - 1].isFull();</b>
+<i>258</i>&nbsp;
+<b class="fc"><i>259</i>&nbsp;        if ( column == Constants.NUM_COLS-1 )</b>
+<b class="fc"><i>260</i>&nbsp;            right = false;</b>
+<i>261</i>&nbsp;        else
+<b class="fc"><i>262</i>&nbsp;            right = boxes[row][column + 1].isFull();</b>
+<i>263</i>&nbsp;
+<b class="fc"><i>264</i>&nbsp;        if ( column == Constants.NUM_COLS-1 || row == 0 )</b>
+<b class="fc"><i>265</i>&nbsp;            upRight = false;</b>
+<i>266</i>&nbsp;        else
+<b class="fc"><i>267</i>&nbsp;            upRight = boxes[row - 1][column + 1].isFull();</b>
+<i>268</i>&nbsp;
+<b class="fc"><i>269</i>&nbsp;        if ( column == Constants.NUM_COLS-1 || row == Constants.NUM_ROWS-1 )</b>
+<b class="fc"><i>270</i>&nbsp;            downRight = false;</b>
+<i>271</i>&nbsp;        else
+<b class="fc"><i>272</i>&nbsp;            downRight = boxes[row + 1][column + 1].isFull();</b>
+<i>273</i>&nbsp;
+<b class="fc"><i>274</i>&nbsp;        if ( column == 0 || row == 0 )</b>
+<b class="fc"><i>275</i>&nbsp;            upLeft = false;</b>
+<i>276</i>&nbsp;        else
+<b class="fc"><i>277</i>&nbsp;            upLeft = boxes[row - 1][column - 1].isFull();</b>
+<i>278</i>&nbsp;
+<b class="fc"><i>279</i>&nbsp;        if ( column == 0 || row == Constants.NUM_ROWS-1 )</b>
+<b class="fc"><i>280</i>&nbsp;            downLeft = false;</b>
+<i>281</i>&nbsp;        else
+<b class="fc"><i>282</i>&nbsp;            downLeft = boxes[row + 1][column - 1].isFull();</b>
+<i>283</i>&nbsp;
+<b class="fc"><i>284</i>&nbsp;        switch (op) {</b>
+<i>285</i>&nbsp;
+<i>286</i>&nbsp;            case 0: {
+<i>287</i>&nbsp;
+<b class="fc"><i>288</i>&nbsp;                if ( right || left || up || down || upRight || upLeft || downRight || downLeft ) {</b>
+<i>289</i>&nbsp;
+<b class="fc"><i>290</i>&nbsp;                    if ( right ) {</b>
+<b class="fc"><i>291</i>&nbsp;                        right = checkOrthogonal( row, column + 1, dice );</b>
+<b class="fc"><i>292</i>&nbsp;                        if ( !right )</b>
+<b class="nc"><i>293</i>&nbsp;                            return false;</b>
+<i>294</i>&nbsp;                    }
+<b class="fc"><i>295</i>&nbsp;                    if ( left ) {</b>
+<b class="fc"><i>296</i>&nbsp;                        left = checkOrthogonal( row, column - 1, dice );</b>
+<b class="fc"><i>297</i>&nbsp;                        if ( !left )</b>
+<b class="nc"><i>298</i>&nbsp;                            return false;</b>
+<i>299</i>&nbsp;                    }
+<b class="fc"><i>300</i>&nbsp;                    if ( up ) {</b>
+<b class="fc"><i>301</i>&nbsp;                        up = checkOrthogonal( row - 1, column, dice );</b>
+<b class="fc"><i>302</i>&nbsp;                        if ( !up )</b>
+<b class="nc"><i>303</i>&nbsp;                            return false;</b>
+<i>304</i>&nbsp;                    }
+<b class="fc"><i>305</i>&nbsp;                    if ( down ) {</b>
+<b class="fc"><i>306</i>&nbsp;                        down = checkOrthogonal( row + 1, column, dice );</b>
+<b class="fc"><i>307</i>&nbsp;                        if ( !down )</b>
+<b class="nc"><i>308</i>&nbsp;                            return false;</b>
+<i>309</i>&nbsp;                    }
+<b class="fc"><i>310</i>&nbsp;                    return true;</b>
+<i>311</i>&nbsp;                }
+<i>312</i>&nbsp;                break;
+<i>313</i>&nbsp;            }
+<i>314</i>&nbsp;
+<i>315</i>&nbsp;            case 1: {
+<b class="fc"><i>316</i>&nbsp;                if ( right ) {</b>
+<b class="fc"><i>317</i>&nbsp;                    right = checkOrthogonal( row, column + 1, dice );</b>
+<b class="fc"><i>318</i>&nbsp;                    if ( !right )</b>
+<b class="fc"><i>319</i>&nbsp;                        return false;</b>
+<i>320</i>&nbsp;                }
+<b class="fc"><i>321</i>&nbsp;                if ( left ) {</b>
+<b class="fc"><i>322</i>&nbsp;                    left = checkOrthogonal( row, column - 1, dice );</b>
+<b class="fc"><i>323</i>&nbsp;                    if ( !left )</b>
+<b class="nc"><i>324</i>&nbsp;                        return false;</b>
+<i>325</i>&nbsp;                }
+<b class="fc"><i>326</i>&nbsp;                if ( up ) {</b>
+<b class="fc"><i>327</i>&nbsp;                    up = checkOrthogonal( row - 1, column, dice );</b>
+<b class="fc"><i>328</i>&nbsp;                    if ( !up )</b>
+<b class="nc"><i>329</i>&nbsp;                        return false;</b>
+<i>330</i>&nbsp;                }
+<b class="fc"><i>331</i>&nbsp;                if ( down ) {</b>
+<b class="nc"><i>332</i>&nbsp;                    down = checkOrthogonal( row + 1, column, dice );</b>
+<b class="nc"><i>333</i>&nbsp;                    if ( !down )</b>
+<b class="nc"><i>334</i>&nbsp;                        return false;</b>
+<i>335</i>&nbsp;                }
+<b class="fc"><i>336</i>&nbsp;                return true;</b>
+<i>337</i>&nbsp;            }
+<i>338</i>&nbsp;
+<i>339</i>&nbsp;            case 2:
+<i>340</i>&nbsp;
+<b class="fc"><i>341</i>&nbsp;                if ( right || left || up || down || upRight || upLeft || downRight || downLeft )</b>
+<b class="fc"><i>342</i>&nbsp;                    return false;</b>
+<i>343</i>&nbsp;                else
+<b class="fc"><i>344</i>&nbsp;                    return true;</b>
+<i>345</i>&nbsp;
+<i>346</i>&nbsp;        }
+<i>347</i>&nbsp;
+<b class="fc"><i>348</i>&nbsp;        return false;</b>
 <i>349</i>&nbsp;
-<i>350</i>&nbsp;    /**
-<i>351</i>&nbsp;     *
-<i>352</i>&nbsp;     * Controlla che uno specifico dado che tocca ortogonalmente il dado che si vuole piazzare non abbia colore
-<i>353</i>&nbsp;     * o sfumatura uguali
+<i>350</i>&nbsp;    }
+<i>351</i>&nbsp;
+<i>352</i>&nbsp;
+<i>353</i>&nbsp;    /**
 <i>354</i>&nbsp;     *
-<i>355</i>&nbsp;     * @param  i      la riga della casella dove è posizionato questo specifico dado
-<i>356</i>&nbsp;     * @param  y      la colonna della casella dove è posizionato questo specifico dado
-<i>357</i>&nbsp;     * @param  dice   il dado che si vuole piazzare
-<i>358</i>&nbsp;     * @return        true se il controllo va a buon fine
-<i>359</i>&nbsp;     *
-<i>360</i>&nbsp;     */
-<i>361</i>&nbsp;    public Boolean checkOrthogonal( int i, int y, Dice dice ) {
-<b class="fc"><i>362</i>&nbsp;        if ( checkColor( boxes[i][y].getDice().getDiceColor(), dice.getDiceColor() ) || checkShade( boxes[i][y].getDice().getNumFacciaUp(), dice.getNumFacciaUp() ) )</b>
-<b class="fc"><i>363</i>&nbsp;            return false;</b>
-<b class="fc"><i>364</i>&nbsp;        return true;</b>
-<i>365</i>&nbsp;    }
-<i>366</i>&nbsp;
-<i>367</i>&nbsp;
-<i>368</i>&nbsp;    /**
-<i>369</i>&nbsp;     *
-<i>370</i>&nbsp;     * Controlla tutte le restrizioni di piazzamento e se sono rispettate piazza il dado
-<i>371</i>&nbsp;     *
-<i>372</i>&nbsp;     * @param  row      la riga della casella dove è posizionato questo specifico dado
-<i>373</i>&nbsp;     * @param  col      la colonna della casella dove è posizionato questo specifico dado
-<i>374</i>&nbsp;     * @param  dice     il dado che si vuole piazzare
-<i>375</i>&nbsp;     *
-<i>376</i>&nbsp;     */
-<i>377</i>&nbsp;    public void placeDice( int row, int col, Dice dice ) throws NotValidException {
-<b class="fc"><i>378</i>&nbsp;        if ( isEmpty() ) {</b>
-<b class="fc"><i>379</i>&nbsp;            if ( !checkFirst( row,col,dice ) )</b>
-<b class="fc"><i>380</i>&nbsp;                throw new NotValidException( &quot;Devi inserire il primo dado in una casella del bordo dello schema, rispettando le condizioni di piazzamento!&quot; );</b>
-<i>381</i>&nbsp;            else
-<b class="fc"><i>382</i>&nbsp;                setNotEmpty();</b>
-<i>383</i>&nbsp;        } else {
-<b class="fc"><i>384</i>&nbsp;            if(boxes[row][col].isFull()){</b>
-<b class="nc"><i>385</i>&nbsp;                throw new NotValidException(&quot;la casella è piena caro&quot;);</b>
-<i>386</i>&nbsp;            }
-<b class="fc"><i>387</i>&nbsp;            else if (!checkBox( row, col, dice)) {</b>
-<b class="nc"><i>388</i>&nbsp;                throw new NotValidException(&quot;Non stai rispettando le restrizioni di piazzamento!&quot;);</b>
+<i>355</i>&nbsp;     * Controlla che uno specifico dado che tocca ortogonalmente il dado che si vuole piazzare non abbia colore
+<i>356</i>&nbsp;     * o sfumatura uguali
+<i>357</i>&nbsp;     *
+<i>358</i>&nbsp;     * @param  i      la riga della casella dove è posizionato questo specifico dado
+<i>359</i>&nbsp;     * @param  y      la colonna della casella dove è posizionato questo specifico dado
+<i>360</i>&nbsp;     * @param  dice   il dado che si vuole piazzare
+<i>361</i>&nbsp;     * @return        true se il controllo va a buon fine
+<i>362</i>&nbsp;     *
+<i>363</i>&nbsp;     */
+<i>364</i>&nbsp;    public Boolean checkOrthogonal( int i, int y, Dice dice ) {
+<b class="fc"><i>365</i>&nbsp;        if ( checkColor( boxes[i][y].getDice().getDiceColor(), dice.getDiceColor() ) || checkShade( boxes[i][y].getDice().getNumFacciaUp(), dice.getNumFacciaUp() ) )</b>
+<b class="fc"><i>366</i>&nbsp;            return false;</b>
+<b class="fc"><i>367</i>&nbsp;        return true;</b>
+<i>368</i>&nbsp;    }
+<i>369</i>&nbsp;
+<i>370</i>&nbsp;
+<i>371</i>&nbsp;    /**
+<i>372</i>&nbsp;     *
+<i>373</i>&nbsp;     * Controlla tutte le restrizioni di piazzamento e se sono rispettate piazza il dado
+<i>374</i>&nbsp;     *
+<i>375</i>&nbsp;     * @param  row      la riga della casella dove è posizionato questo specifico dado
+<i>376</i>&nbsp;     * @param  col      la colonna della casella dove è posizionato questo specifico dado
+<i>377</i>&nbsp;     * @param  dice     il dado che si vuole piazzare
+<i>378</i>&nbsp;     *
+<i>379</i>&nbsp;     */
+<i>380</i>&nbsp;    public void placeDice( int row, int col, Dice dice ) throws NotValidException {
+<b class="fc"><i>381</i>&nbsp;        if ( isEmpty() ) {</b>
+<b class="fc"><i>382</i>&nbsp;            if ( !checkFirst( row,col,dice ) )</b>
+<b class="fc"><i>383</i>&nbsp;                throw new NotValidException( &quot;Devi inserire il primo dado in una casella del bordo dello schema, rispettando le condizioni di piazzamento!&quot; );</b>
+<i>384</i>&nbsp;            else
+<b class="fc"><i>385</i>&nbsp;                setNotEmpty();</b>
+<i>386</i>&nbsp;        } else {
+<b class="fc"><i>387</i>&nbsp;            if(boxes[row][col].isFull()){</b>
+<b class="nc"><i>388</i>&nbsp;                throw new NotValidException(&quot;la casella è piena caro&quot;);</b>
 <i>389</i>&nbsp;            }
-<b class="fc"><i>390</i>&nbsp;            else if(!checkIfHasDiceAdjacent( row, col, dice, 0 )){</b>
-<b class="fc"><i>391</i>&nbsp;                throw new NotValidException(&quot;Non stai rispettando le restrizioni di piazzamento! &quot;);</b>
+<b class="fc"><i>390</i>&nbsp;            else if (!checkBox( row, col, dice)) {</b>
+<b class="nc"><i>391</i>&nbsp;                throw new NotValidException(&quot;Non stai rispettando le restrizioni di piazzamento!&quot;);</b>
 <i>392</i>&nbsp;            }
-<i>393</i>&nbsp;        }
-<i>394</i>&nbsp;
-<b class="fc"><i>395</i>&nbsp;        boxes[row][col].placeDice( dice );</b>
-<b class="fc"><i>396</i>&nbsp;    }</b>
+<b class="fc"><i>393</i>&nbsp;            else if(!checkIfHasDiceAdjacent( row, col, dice, 0 )){</b>
+<b class="fc"><i>394</i>&nbsp;                throw new NotValidException(&quot;Non stai rispettando le restrizioni di piazzamento! &quot;);</b>
+<i>395</i>&nbsp;            }
+<i>396</i>&nbsp;        }
 <i>397</i>&nbsp;
-<i>398</i>&nbsp;    /**
-<i>399</i>&nbsp;     *
-<i>400</i>&nbsp;     * Crea una copia dello schema (per passarlo dal server al client attraverso Socket)
-<i>401</i>&nbsp;     *
-<i>402</i>&nbsp;     * @return    la copia dello schema
-<i>403</i>&nbsp;     *
-<i>404</i>&nbsp;     */
-<i>405</i>&nbsp;    public Scheme schemeClone(){
-<b class="fc"><i>406</i>&nbsp;        Scheme schemeClone=new Scheme();</b>
-<b class="fc"><i>407</i>&nbsp;        schemeClone.setIdRetro(this.idRetro);</b>
-<b class="fc"><i>408</i>&nbsp;        schemeClone.setId(this.id);</b>
-<b class="fc"><i>409</i>&nbsp;        schemeClone.setDifficulty(this.difficulty);</b>
-<b class="fc"><i>410</i>&nbsp;        Box[][] boxesClone=new Box[4][5];</b>
-<b class="fc"><i>411</i>&nbsp;        for (int i = 0; i &lt; Constants.NUM_ROWS; i++) {</b>
-<b class="fc"><i>412</i>&nbsp;            for (int j = 0; j &lt; Constants.NUM_COLS; j++) {</b>
-<b class="fc"><i>413</i>&nbsp;                if (!boxes[i][j].isFull()) {</b>
-<b class="fc"><i>414</i>&nbsp;                    Box boxClone=boxes[i][j].cloneBox();</b>
-<b class="fc"><i>415</i>&nbsp;                    boxesClone[i][j]=boxClone;</b>
-<b class="fc"><i>416</i>&nbsp;                }</b>
-<i>417</i>&nbsp;                else
-<b class="fc"><i>418</i>&nbsp;                { Box boxClone=boxes[i][j].cloneBox();</b>
-<b class="fc"><i>419</i>&nbsp;                    Dice diceClone= boxes[i][j].getDice().cloneDice();</b>
-<b class="fc"><i>420</i>&nbsp;                    boxClone.placeDice(diceClone);</b>
-<b class="fc"><i>421</i>&nbsp;                    boxesClone[i][j]=boxClone;</b>
-<i>422</i>&nbsp;                }
-<i>423</i>&nbsp;            }
-<i>424</i>&nbsp;        }
-<b class="fc"><i>425</i>&nbsp;        schemeClone.setBoxes(boxesClone);</b>
-<b class="fc"><i>426</i>&nbsp;        return schemeClone;</b>
-<i>427</i>&nbsp;    }
-<i>428</i>&nbsp;
-<i>429</i>&nbsp;}
+<b class="fc"><i>398</i>&nbsp;        boxes[row][col].placeDice( dice );</b>
+<b class="fc"><i>399</i>&nbsp;    }</b>
+<i>400</i>&nbsp;
+<i>401</i>&nbsp;    /**
+<i>402</i>&nbsp;     *
+<i>403</i>&nbsp;     * Crea una copia dello schema (per passarlo dal server al client attraverso Socket)
+<i>404</i>&nbsp;     *
+<i>405</i>&nbsp;     * @return    la copia dello schema
+<i>406</i>&nbsp;     *
+<i>407</i>&nbsp;     */
+<i>408</i>&nbsp;    public Scheme schemeClone(){
+<b class="fc"><i>409</i>&nbsp;        Scheme schemeClone=new Scheme();</b>
+<b class="fc"><i>410</i>&nbsp;        schemeClone.setIdRetro(this.idRetro);</b>
+<b class="fc"><i>411</i>&nbsp;        schemeClone.setId(this.id);</b>
+<b class="fc"><i>412</i>&nbsp;        schemeClone.setDifficulty(this.difficulty);</b>
+<b class="fc"><i>413</i>&nbsp;        Box[][] boxesClone=new Box[4][5];</b>
+<b class="fc"><i>414</i>&nbsp;        for (int i = 0; i &lt; Constants.NUM_ROWS; i++) {</b>
+<b class="fc"><i>415</i>&nbsp;            for (int j = 0; j &lt; Constants.NUM_COLS; j++) {</b>
+<b class="fc"><i>416</i>&nbsp;                if (!boxes[i][j].isFull()) {</b>
+<b class="fc"><i>417</i>&nbsp;                    Box boxClone=boxes[i][j].cloneBox();</b>
+<b class="fc"><i>418</i>&nbsp;                    boxesClone[i][j]=boxClone;</b>
+<b class="fc"><i>419</i>&nbsp;                }</b>
+<i>420</i>&nbsp;                else
+<b class="fc"><i>421</i>&nbsp;                { Box boxClone=boxes[i][j].cloneBox();</b>
+<b class="fc"><i>422</i>&nbsp;                    Dice diceClone= boxes[i][j].getDice().cloneDice();</b>
+<b class="fc"><i>423</i>&nbsp;                    boxClone.placeDice(diceClone);</b>
+<b class="fc"><i>424</i>&nbsp;                    boxesClone[i][j]=boxClone;</b>
+<i>425</i>&nbsp;                }
+<i>426</i>&nbsp;            }
+<i>427</i>&nbsp;        }
+<b class="fc"><i>428</i>&nbsp;        schemeClone.setBoxes(boxesClone);</b>
+<b class="fc"><i>429</i>&nbsp;        return schemeClone;</b>
+<i>430</i>&nbsp;    }
+<i>431</i>&nbsp;
+<i>432</i>&nbsp;}
 </div>
 </div>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2018-07-04 21:00</div>
+    <div style="float:right;">generated on 2018-07-05 23:17</div>
 </div>
 </body>
 </html>

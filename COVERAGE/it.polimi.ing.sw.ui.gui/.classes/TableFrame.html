@@ -42,7 +42,7 @@
     0%
   </span>
   <span class="absValue">
-    (0/ 28)
+    (0/ 27)
   </span>
 </td>
 <td class="coverageStat">
@@ -50,7 +50,7 @@
     0%
   </span>
   <span class="absValue">
-    (0/ 233)
+    (0/ 221)
   </span>
 </td>
 </tr>
@@ -73,25 +73,6 @@
   </span>
 </td>
   </tr>
-  <tr>
-    <td class="name">TableFrame$2</td>
-<td class="coverageStat">
-  <span class="percent">
-    0%
-  </span>
-  <span class="absValue">
-    (0/ 2)
-  </span>
-</td>
-<td class="coverageStat">
-  <span class="percent">
-    0%
-  </span>
-  <span class="absValue">
-    (0/ 2)
-  </span>
-</td>
-  </tr>
 <tr>
   <td class="name"><strong>total</strong></td>
 <td class="coverageStat">
@@ -99,7 +80,7 @@
     0%
   </span>
   <span class="absValue">
-    (0/ 32)
+    (0/ 29)
   </span>
 </td>
 <td class="coverageStat">
@@ -107,7 +88,7 @@
     0%
   </span>
   <span class="absValue">
-    (0/ 240)
+    (0/ 226)
   </span>
 </td>
 </tr>
@@ -480,9 +461,9 @@
 <i>361</i>&nbsp;    }// &lt;/editor-fold&gt;//GEN-END:initComponents
 <i>362</i>&nbsp;
 <i>363</i>&nbsp;    private void endTurnButtonActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_endTurnButtonActionPerformed
-<b class="nc"><i>364</i>&nbsp;        if (gui.isPlaying()){</b>
+<i>364</i>&nbsp;        //if (gui.isPlaying()){
 <b class="nc"><i>365</i>&nbsp;            gui.endTurn();</b>
-<i>366</i>&nbsp;        }
+<i>366</i>&nbsp;        //}
 <i>367</i>&nbsp;    }//GEN-LAST:event_endTurnButtonActionPerformed
 <i>368</i>&nbsp;
 <i>369</i>&nbsp;    private static void setToolCards(List&lt;String&gt; id) {
@@ -507,94 +488,65 @@
 <i>388</i>&nbsp;        }
 <i>389</i>&nbsp;    }
 <i>390</i>&nbsp;
-<i>391</i>&nbsp;    public static void main(String args[]) {
-<i>392</i>&nbsp;        /* Set the Nimbus look and feel */
-<i>393</i>&nbsp;
-<i>394</i>&nbsp;        try {
-<b class="nc"><i>395</i>&nbsp;            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {</b>
-<b class="nc"><i>396</i>&nbsp;                if (&quot;Nimbus&quot;.equals(info.getName())) {</b>
-<b class="nc"><i>397</i>&nbsp;                    javax.swing.UIManager.setLookAndFeel(info.getClassName());</b>
-<b class="nc"><i>398</i>&nbsp;                    break;</b>
-<i>399</i>&nbsp;                }
-<i>400</i>&nbsp;            }
-<b class="nc"><i>401</i>&nbsp;        } catch (ClassNotFoundException ex) {</b>
-<i>402</i>&nbsp;            //java.util.logging.Logger.getLogger(AddScheme.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-<b class="nc"><i>403</i>&nbsp;        } catch (InstantiationException ex) {</b>
-<i>404</i>&nbsp;            //java.util.logging.Logger.getLogger(AddScheme.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-<b class="nc"><i>405</i>&nbsp;        } catch (IllegalAccessException ex) {</b>
-<i>406</i>&nbsp;            //java.util.logging.Logger.getLogger(AddScheme.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-<b class="nc"><i>407</i>&nbsp;        } catch (javax.swing.UnsupportedLookAndFeelException ex) {</b>
-<i>408</i>&nbsp;            //java.util.logging.Logger.getLogger(AddScheme.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-<b class="nc"><i>409</i>&nbsp;        }</b>
-<i>410</i>&nbsp;        /* Create and display the form */
-<i>411</i>&nbsp;
-<b class="nc"><i>412</i>&nbsp;        Match match = new Match();</b>
-<b class="nc"><i>413</i>&nbsp;        java.awt.EventQueue.invokeLater(new Runnable() {</b>
-<i>414</i>&nbsp;            public void run() {
-<b class="nc"><i>415</i>&nbsp;                new TableFrame(match, gui).setVisible(true);</b>
-<i>416</i>&nbsp;            }
-<i>417</i>&nbsp;        });
-<i>418</i>&nbsp;    }
-<i>419</i>&nbsp;
-<i>420</i>&nbsp;    public static void updateDice(int idPlayer, Dice dice, int i, int j) {
-<b class="nc"><i>421</i>&nbsp;        switch (idPlayer) {</b>
-<i>422</i>&nbsp;            case 1:
-<b class="nc"><i>423</i>&nbsp;                player1.setDice(i, j, dice);</b>
-<b class="nc"><i>424</i>&nbsp;                break;</b>
-<i>425</i>&nbsp;            case 2:
-<b class="nc"><i>426</i>&nbsp;                player2.setDice(i, j, dice);</b>
-<b class="nc"><i>427</i>&nbsp;                break;</b>
-<i>428</i>&nbsp;            case 3:
-<b class="nc"><i>429</i>&nbsp;                player3.setDice(i, j, dice);</b>
-<b class="nc"><i>430</i>&nbsp;                break;</b>
-<i>431</i>&nbsp;            case 4:
-<b class="nc"><i>432</i>&nbsp;                player4.setDice(i, j, dice);</b>
-<i>433</i>&nbsp;                break;
-<i>434</i>&nbsp;        }
-<i>435</i>&nbsp;    }
-<i>436</i>&nbsp;
-<i>437</i>&nbsp;    public static void setCurrentComponentName(String nameComponentEntered, Boolean isAdiceGui) {
-<b class="nc"><i>438</i>&nbsp;        currentComponentName = nameComponentEntered;</b>
-<b class="nc"><i>439</i>&nbsp;        TableFrame.isAdiceGui = isAdiceGui;</b>
-<i>440</i>&nbsp;    }
-<i>441</i>&nbsp;
-<i>442</i>&nbsp;    public static String getCurrentComponentName() {
-<b class="nc"><i>443</i>&nbsp;        if (isAdiceGui) {</b>
-<b class="nc"><i>444</i>&nbsp;            return currentComponentName;</b>
-<i>445</i>&nbsp;        } else {
-<b class="nc"><i>446</i>&nbsp;            return NOT_A_DICE;</b>
-<i>447</i>&nbsp;        }
-<i>448</i>&nbsp;    }
-<i>449</i>&nbsp;
-<i>450</i>&nbsp;    public static void setIsAdiceGui(Boolean isAdiceGui) {
-<b class="nc"><i>451</i>&nbsp;        TableFrame.isAdiceGui = isAdiceGui;</b>
-<i>452</i>&nbsp;    }
-<i>453</i>&nbsp;
-<i>454</i>&nbsp;    public static Boolean aToolCardIsUsed() {
-<b class="nc"><i>455</i>&nbsp;        for (CardField card : toolCardList) {</b>
-<b class="nc"><i>456</i>&nbsp;            if (card.getUsed())</b>
-<b class="nc"><i>457</i>&nbsp;                return true;</b>
-<b class="nc"><i>458</i>&nbsp;        }</b>
-<b class="nc"><i>459</i>&nbsp;        return false;</b>
-<i>460</i>&nbsp;    }
-<i>461</i>&nbsp;
-<i>462</i>&nbsp;    private static Boolean isAdiceGui;
-<i>463</i>&nbsp;    private static String currentComponentName;
-<i>464</i>&nbsp;
-<i>465</i>&nbsp;    // Variables declaration - do not modify//GEN-BEGIN:variables
-<i>466</i>&nbsp;    private static javax.swing.JLabel backgroundTableFRameLabel;
-<i>467</i>&nbsp;    private javax.swing.JButton endTurnButton;
-<i>468</i>&nbsp;    private static javax.swing.JPanel objCardPanel;
-<i>469</i>&nbsp;    private javax.swing.JPanel tableFramePanel;
-<i>470</i>&nbsp;    private static javax.swing.JPanel toolCardPanel;
-<i>471</i>&nbsp;    // End of variables declaration//GEN-END:variables
-<i>472</i>&nbsp;}
+<i>391</i>&nbsp;    public static void updateDice(int idPlayer, Dice dice, int i, int j) {
+<b class="nc"><i>392</i>&nbsp;        switch (idPlayer) {</b>
+<i>393</i>&nbsp;            case 1:
+<b class="nc"><i>394</i>&nbsp;                player1.setDice(i, j, dice);</b>
+<b class="nc"><i>395</i>&nbsp;                break;</b>
+<i>396</i>&nbsp;            case 2:
+<b class="nc"><i>397</i>&nbsp;                player2.setDice(i, j, dice);</b>
+<b class="nc"><i>398</i>&nbsp;                break;</b>
+<i>399</i>&nbsp;            case 3:
+<b class="nc"><i>400</i>&nbsp;                player3.setDice(i, j, dice);</b>
+<b class="nc"><i>401</i>&nbsp;                break;</b>
+<i>402</i>&nbsp;            case 4:
+<b class="nc"><i>403</i>&nbsp;                player4.setDice(i, j, dice);</b>
+<i>404</i>&nbsp;                break;
+<i>405</i>&nbsp;        }
+<i>406</i>&nbsp;    }
+<i>407</i>&nbsp;
+<i>408</i>&nbsp;    public static void setCurrentComponentName(String nameComponentEntered, Boolean isAdiceGui) {
+<b class="nc"><i>409</i>&nbsp;        currentComponentName = nameComponentEntered;</b>
+<b class="nc"><i>410</i>&nbsp;        TableFrame.isAdiceGui = isAdiceGui;</b>
+<i>411</i>&nbsp;    }
+<i>412</i>&nbsp;
+<i>413</i>&nbsp;    public static String getCurrentComponentName() {
+<b class="nc"><i>414</i>&nbsp;        if (isAdiceGui) {</b>
+<b class="nc"><i>415</i>&nbsp;            return currentComponentName;</b>
+<i>416</i>&nbsp;        } else {
+<b class="nc"><i>417</i>&nbsp;            return NOT_A_DICE;</b>
+<i>418</i>&nbsp;        }
+<i>419</i>&nbsp;    }
+<i>420</i>&nbsp;
+<i>421</i>&nbsp;    public static void setIsAdiceGui(Boolean isAdiceGui) {
+<b class="nc"><i>422</i>&nbsp;        TableFrame.isAdiceGui = isAdiceGui;</b>
+<i>423</i>&nbsp;    }
+<i>424</i>&nbsp;
+<i>425</i>&nbsp;    public static Boolean aToolCardIsUsed() {
+<b class="nc"><i>426</i>&nbsp;        for (CardField card : toolCardList) {</b>
+<b class="nc"><i>427</i>&nbsp;            if (card.getUsed())</b>
+<b class="nc"><i>428</i>&nbsp;                return true;</b>
+<b class="nc"><i>429</i>&nbsp;        }</b>
+<b class="nc"><i>430</i>&nbsp;        return false;</b>
+<i>431</i>&nbsp;    }
+<i>432</i>&nbsp;
+<i>433</i>&nbsp;    private static Boolean isAdiceGui;
+<i>434</i>&nbsp;    private static String currentComponentName;
+<i>435</i>&nbsp;
+<i>436</i>&nbsp;    // Variables declaration - do not modify//GEN-BEGIN:variables
+<i>437</i>&nbsp;    private static javax.swing.JLabel backgroundTableFRameLabel;
+<i>438</i>&nbsp;    private javax.swing.JButton endTurnButton;
+<i>439</i>&nbsp;    private static javax.swing.JPanel objCardPanel;
+<i>440</i>&nbsp;    private javax.swing.JPanel tableFramePanel;
+<i>441</i>&nbsp;    private static javax.swing.JPanel toolCardPanel;
+<i>442</i>&nbsp;    // End of variables declaration//GEN-END:variables
+<i>443</i>&nbsp;}
 </div>
 </div>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2018-07-04 21:00</div>
+    <div style="float:right;">generated on 2018-07-05 23:17</div>
 </div>
 </body>
 </html>

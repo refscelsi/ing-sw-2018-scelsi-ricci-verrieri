@@ -61,7 +61,7 @@
     0%
   </span>
   <span class="absValue">
-    (0/ 42)
+    (0/ 44)
   </span>
 </td>
 </tr>
@@ -83,98 +83,129 @@
 <i>9</i>&nbsp;import java.net.Socket;
 <i>10</i>&nbsp;import java.rmi.RemoteException;
 <i>11</i>&nbsp;
-<i>12</i>&nbsp;public class ServerUpdateHandler implements Runnable {
-<i>13</i>&nbsp;    private View view;
-<i>14</i>&nbsp;    private Socket socket;
-<i>15</i>&nbsp;    private Match match;
-<i>16</i>&nbsp;
-<b class="nc"><i>17</i>&nbsp;    public ServerUpdateHandler(View view, Socket socket){</b>
-<b class="nc"><i>18</i>&nbsp;        this.view = view;</b>
-<b class="nc"><i>19</i>&nbsp;        this.socket = socket;</b>
-<i>20</i>&nbsp;    }
+<i>12</i>&nbsp;/**
+<i>13</i>&nbsp; * Classe che gestisce gli aggiornamenti da Server (PlayerControllerSocketServer) a Client in caso di connessione Socket, lato Client.
+<i>14</i>&nbsp; * Riceve dei messaggi di tipo MessageFromServer, da cui estrapola le informazioni necessarie per chiamare i metodi della View, a cui
+<i>15</i>&nbsp; * ha un riferimento.
+<i>16</i>&nbsp; *
+<i>17</i>&nbsp; * Tutti metodi di questa classe lanciano e cattura IOException. Nel caso venga catturata tale eccezione,
+<i>18</i>&nbsp; * poichè significa caduta di connessione lato Server viene notificato il Client e poi viene chiusa la connessione.
+<i>19</i>&nbsp; */
+<i>20</i>&nbsp;
 <i>21</i>&nbsp;
-<i>22</i>&nbsp;    @Override
-<i>23</i>&nbsp;    public void run() {
-<b class="nc"><i>24</i>&nbsp;        try (ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {</b>
-<i>25</i>&nbsp;            while (true) {
-<b class="nc"><i>26</i>&nbsp;                MatchToSend matchToSend = (MatchToSend) in.readObject();</b>
-<b class="nc"><i>27</i>&nbsp;                String method = matchToSend.getMethod();</b>
-<b class="nc"><i>28</i>&nbsp;                this.match=matchToSend.getMatch();</b>
-<b class="nc"><i>29</i>&nbsp;                switch (method) {</b>
-<i>30</i>&nbsp;                    case Constants.ONTURNEND: {
-<b class="nc"><i>31</i>&nbsp;                        view.onTurnEnd();</b>
-<b class="nc"><i>32</i>&nbsp;                        break;</b>
-<i>33</i>&nbsp;                    }
-<i>34</i>&nbsp;                    case Constants.ONSUCCES: {
-<i>35</i>&nbsp;                        try {
-<b class="nc"><i>36</i>&nbsp;                            view.onSuccess(matchToSend.getMessage());</b>
-<b class="nc"><i>37</i>&nbsp;                        } catch (RemoteException e) {</b>
-<b class="nc"><i>38</i>&nbsp;                            e.printStackTrace();</b>
-<b class="nc"><i>39</i>&nbsp;                        }</b>
-<b class="nc"><i>40</i>&nbsp;                        break;</b>
-<i>41</i>&nbsp;                    }
-<i>42</i>&nbsp;                    case Constants.ONSETPLAYING: {
-<b class="nc"><i>43</i>&nbsp;                        view.onSetPlaying();</b>
-<b class="nc"><i>44</i>&nbsp;                        break;</b>
-<i>45</i>&nbsp;                    }
-<i>46</i>&nbsp;                    case Constants.ONSCHEMETOCHOOSE: {
-<b class="nc"><i>47</i>&nbsp;                        view.onSchemeToChoose(match);</b>
-<b class="nc"><i>48</i>&nbsp;                        break;</b>
-<i>49</i>&nbsp;                    }
-<i>50</i>&nbsp;                    case Constants.ONGAMEUPDATE: {
-<b class="nc"><i>51</i>&nbsp;                        view.onGameUpdate(match);</b>
-<b class="nc"><i>52</i>&nbsp;                        break;</b>
-<i>53</i>&nbsp;                    }
-<i>54</i>&nbsp;                    case Constants.ONGAMEEND: {
-<b class="nc"><i>55</i>&nbsp;                        view.onGameEnd(match);</b>
-<b class="nc"><i>56</i>&nbsp;                        break;</b>
-<i>57</i>&nbsp;                    }
-<i>58</i>&nbsp;                    case Constants.ONNOTPOSSIBLECONNECTIONEXCEPTION: {
-<b class="nc"><i>59</i>&nbsp;                        view.onNotPossibleConnectionException(matchToSend.getMessage());</b>
-<b class="nc"><i>60</i>&nbsp;                        break;</b>
-<i>61</i>&nbsp;                    }
-<i>62</i>&nbsp;
-<i>63</i>&nbsp;                    case Constants.ONNOTVALIDNICKNAMEEXCEPTION:{
-<b class="nc"><i>64</i>&nbsp;                        view.setLogin(false);</b>
-<b class="nc"><i>65</i>&nbsp;                        view.onNotValidNicknameException(matchToSend.getMessage());</b>
-<b class="nc"><i>66</i>&nbsp;                        break;</b>
-<i>67</i>&nbsp;                    }
-<i>68</i>&nbsp;
-<i>69</i>&nbsp;                    case Constants.ONNOTVALIDPLAYEXCEPTION: {
-<b class="nc"><i>70</i>&nbsp;                        view.onNotValidPlayException(matchToSend.getMessage());</b>
-<b class="nc"><i>71</i>&nbsp;                        break;</b>
-<i>72</i>&nbsp;                    }
-<i>73</i>&nbsp;
-<i>74</i>&nbsp;                    case Constants.ONNOTVALIDUSEDICEEXCEPTION: {
-<b class="nc"><i>75</i>&nbsp;                        view.onNotValidUseDiceException(matchToSend.getMessage());</b>
-<b class="nc"><i>76</i>&nbsp;                        break;</b>
-<i>77</i>&nbsp;                    }
-<i>78</i>&nbsp;
-<i>79</i>&nbsp;                    case Constants.ONNOTVALIDTOOLCARDEXCEPTION: {
-<b class="nc"><i>80</i>&nbsp;                        view.onNotValidToolCardException(matchToSend.getId(),matchToSend.getMessage());</b>
+<i>22</i>&nbsp;public class ServerUpdateHandler implements Runnable {
+<i>23</i>&nbsp;    /**
+<i>24</i>&nbsp;     * Riferimento alla View, sui cui chiamare i metodi
+<i>25</i>&nbsp;     */
+<i>26</i>&nbsp;    private View view;
+<i>27</i>&nbsp;    /**
+<i>28</i>&nbsp;     * riferimento al socket da cui si ricevono i messaggi.
+<i>29</i>&nbsp;     */
+<i>30</i>&nbsp;    private Socket socket;
+<i>31</i>&nbsp;    /**
+<i>32</i>&nbsp;     * Attributo di tipo Match in cui viene salvato il clone ricevuto dal Server, in caso sia necessario alla View per gli
+<i>33</i>&nbsp;     * aggiornamenti
+<i>34</i>&nbsp;     */
+<i>35</i>&nbsp;    private Match match;
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;    /**
+<i>38</i>&nbsp;     * Costruttore a cui passo il riferimento alla View associata e al socket associato
+<i>39</i>&nbsp;     * @param view
+<i>40</i>&nbsp;     * @param socket
+<i>41</i>&nbsp;     */
+<b class="nc"><i>42</i>&nbsp;    public ServerUpdateHandler(View view, Socket socket){</b>
+<b class="nc"><i>43</i>&nbsp;        this.view = view;</b>
+<b class="nc"><i>44</i>&nbsp;        this.socket = socket;</b>
+<i>45</i>&nbsp;    }
+<i>46</i>&nbsp;
+<i>47</i>&nbsp;    /**
+<i>48</i>&nbsp;     * Metodo per ricevere in continuazione i messaggi del Server, in base al nome del metodo vengono
+<i>49</i>&nbsp;     * chiamati diversi aggiornamenti sulla View
+<i>50</i>&nbsp;     */
+<i>51</i>&nbsp;    @Override
+<i>52</i>&nbsp;    public void run() {
+<b class="nc"><i>53</i>&nbsp;        try (ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {</b>
+<i>54</i>&nbsp;            while (true) {
+<b class="nc"><i>55</i>&nbsp;                MessageFromServer messageFromServer = (MessageFromServer) in.readObject();</b>
+<b class="nc"><i>56</i>&nbsp;                String method = messageFromServer.getMethod();</b>
+<b class="nc"><i>57</i>&nbsp;                this.match= messageFromServer.getMatch();</b>
+<b class="nc"><i>58</i>&nbsp;                switch (method) {</b>
+<i>59</i>&nbsp;                    case Constants.ONTURNEND: {
+<b class="nc"><i>60</i>&nbsp;                        view.onTurnEnd();</b>
+<b class="nc"><i>61</i>&nbsp;                        break;</b>
+<i>62</i>&nbsp;                    }
+<i>63</i>&nbsp;                    case Constants.ONSUCCES: {
+<i>64</i>&nbsp;                        try {
+<b class="nc"><i>65</i>&nbsp;                            view.onSuccess(messageFromServer.getMessage());</b>
+<b class="nc"><i>66</i>&nbsp;                        } catch (RemoteException e) {</b>
+<b class="nc"><i>67</i>&nbsp;                            e.printStackTrace();</b>
+<b class="nc"><i>68</i>&nbsp;                        }</b>
+<b class="nc"><i>69</i>&nbsp;                        break;</b>
+<i>70</i>&nbsp;                    }
+<i>71</i>&nbsp;                    case Constants.ONSETPLAYING: {
+<b class="nc"><i>72</i>&nbsp;                        view.onSetPlaying();</b>
+<b class="nc"><i>73</i>&nbsp;                        break;</b>
+<i>74</i>&nbsp;                    }
+<i>75</i>&nbsp;                    case Constants.ONSCHEMETOCHOOSE: {
+<b class="nc"><i>76</i>&nbsp;                        view.onSchemeToChoose(match);</b>
+<b class="nc"><i>77</i>&nbsp;                        break;</b>
+<i>78</i>&nbsp;                    }
+<i>79</i>&nbsp;                    case Constants.ONGAMEUPDATE: {
+<b class="nc"><i>80</i>&nbsp;                        view.onGameUpdate(match);</b>
 <b class="nc"><i>81</i>&nbsp;                        break;</b>
 <i>82</i>&nbsp;                    }
-<i>83</i>&nbsp;
-<i>84</i>&nbsp;                    case &quot;onLogin&quot;:
-<b class="nc"><i>85</i>&nbsp;                        view.setLogin(true);</b>
-<b class="nc"><i>86</i>&nbsp;                        view.onLogin(matchToSend.getMessage());</b>
-<b class="nc"><i>87</i>&nbsp;                        break;</b>
-<i>88</i>&nbsp;                    default:
-<b class="nc"><i>89</i>&nbsp;                        System.out.println(&quot;Ho ricevuto un oggetto che non sono stato in grado di interpretare&quot;);</b>
-<i>90</i>&nbsp;                }
-<b class="nc"><i>91</i>&nbsp;            }</b>
-<b class="nc"><i>92</i>&nbsp;            } catch(IOException e){</b>
-<b class="nc"><i>93</i>&nbsp;            } catch(ClassNotFoundException e){</b>
-<b class="nc"><i>94</i>&nbsp;            }</b>
-<i>95</i>&nbsp;        }
-<i>96</i>&nbsp;
-<i>97</i>&nbsp;}
+<i>83</i>&nbsp;                    case Constants.ONGAMEEND: {
+<b class="nc"><i>84</i>&nbsp;                        view.onGameEnd(match);</b>
+<b class="nc"><i>85</i>&nbsp;                        break;</b>
+<i>86</i>&nbsp;                    }
+<i>87</i>&nbsp;                    case Constants.ONNOTPOSSIBLECONNECTIONEXCEPTION: {
+<b class="nc"><i>88</i>&nbsp;                        view.onNotPossibleConnectionException(messageFromServer.getMessage());</b>
+<b class="nc"><i>89</i>&nbsp;                        break;</b>
+<i>90</i>&nbsp;                    }
+<i>91</i>&nbsp;
+<i>92</i>&nbsp;                    case Constants.ONNOTVALIDNICKNAMEEXCEPTION:{
+<b class="nc"><i>93</i>&nbsp;                        view.setLogin(false);</b>
+<b class="nc"><i>94</i>&nbsp;                        view.onNotValidNicknameException(messageFromServer.getMessage());</b>
+<b class="nc"><i>95</i>&nbsp;                        break;</b>
+<i>96</i>&nbsp;                    }
+<i>97</i>&nbsp;
+<i>98</i>&nbsp;                    case Constants.ONNOTVALIDPLAYEXCEPTION: {
+<b class="nc"><i>99</i>&nbsp;                        view.onNotValidPlayException(messageFromServer.getMessage());</b>
+<b class="nc"><i>100</i>&nbsp;                        break;</b>
+<i>101</i>&nbsp;                    }
+<i>102</i>&nbsp;
+<i>103</i>&nbsp;                    case Constants.ONNOTVALIDUSEDICEEXCEPTION: {
+<b class="nc"><i>104</i>&nbsp;                        view.onNotValidUseDiceException(messageFromServer.getMessage());</b>
+<b class="nc"><i>105</i>&nbsp;                        break;</b>
+<i>106</i>&nbsp;                    }
+<i>107</i>&nbsp;
+<i>108</i>&nbsp;                    case Constants.ONNOTVALIDTOOLCARDEXCEPTION: {
+<b class="nc"><i>109</i>&nbsp;                        view.onNotValidToolCardException(messageFromServer.getId(), messageFromServer.getMessage());</b>
+<b class="nc"><i>110</i>&nbsp;                        break;</b>
+<i>111</i>&nbsp;                    }
+<i>112</i>&nbsp;
+<i>113</i>&nbsp;                    case Constants.ONLOGIN:
+<b class="nc"><i>114</i>&nbsp;                        view.setLogin(true);</b>
+<b class="nc"><i>115</i>&nbsp;                        view.onLogin(messageFromServer.getMessage());</b>
+<b class="nc"><i>116</i>&nbsp;                        break;</b>
+<i>117</i>&nbsp;                    case Constants.ONPLAYERDISCONNECT:
+<b class="nc"><i>118</i>&nbsp;                        view.onPlayerDisconnection(messageFromServer.getMessage());</b>
+<b class="nc"><i>119</i>&nbsp;                        break;</b>
+<i>120</i>&nbsp;                    default:
+<b class="nc"><i>121</i>&nbsp;                        System.out.println(&quot;Ho ricevuto un oggetto che non sono stato in grado di interpretare&quot;);</b>
+<i>122</i>&nbsp;                }
+<b class="nc"><i>123</i>&nbsp;            }</b>
+<b class="nc"><i>124</i>&nbsp;        } catch(IOException e){</b>
+<b class="nc"><i>125</i>&nbsp;        } catch(ClassNotFoundException e){</b>
+<b class="nc"><i>126</i>&nbsp;        }</b>
+<i>127</i>&nbsp;    }
+<i>128</i>&nbsp;}
 </div>
 </div>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2018-07-04 21:00</div>
+    <div style="float:right;">generated on 2018-07-05 23:17</div>
 </div>
 </body>
 </html>

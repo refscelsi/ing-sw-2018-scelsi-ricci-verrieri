@@ -1,0 +1,84 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: PlayerControllerInterface</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ing.sw.controller</a> ]
+</div>
+
+<h1>Coverage Summary for Class: PlayerControllerInterface (it.polimi.ing.sw.controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">PlayerControllerInterface</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ing.sw.controller;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
+<i>4</i>&nbsp;import it.polimi.ing.sw.model.exceptions.NotValidException;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import java.io.IOException;
+<i>7</i>&nbsp;import java.rmi.RemoteException;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;/**
+<i>10</i>&nbsp; * interfaccia implementata sia da PlayerControllerSocketClient sia da PlayerControllerInterfaceRMI,
+<i>11</i>&nbsp; * contiene i metodi chiamati da View a Controller e garantisce un ulteriore livello di trasparenza della rete.
+<i>12</i>&nbsp; */
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;public interface PlayerControllerInterface {
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    void joinMatch() throws IOException;
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;    void checkAllReady() throws RemoteException;
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;    void setChosenScheme(int id) throws RemoteException;
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;    void sendUseDiceRequest(int indexOfDiceInDraftPool, int row, int col) throws RemoteException;
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;    void endTurn() throws RemoteException;
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;    void useToolCard(int id, int dice, int operation, int sourceRow, int sourceCol, int destRow, int destCol) throws RemoteException;
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;    void stopPlayer() throws RemoteException;
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;    void login(String nickname) throws RemoteException;
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    void reconnectPlayer() throws RemoteException;
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;    void startingMyTurn() throws RemoteException;
+<i>35</i>&nbsp;}
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-07-05 23:16</div>
+</div>
+</body>
+</html>

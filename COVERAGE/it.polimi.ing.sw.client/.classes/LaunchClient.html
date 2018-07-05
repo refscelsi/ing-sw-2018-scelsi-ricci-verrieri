@@ -61,7 +61,7 @@
     0%
   </span>
   <span class="absValue">
-    (0/ 5)
+    (0/ 8)
   </span>
 </td>
 </tr>
@@ -74,26 +74,38 @@
 
 <div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ing.sw.client;
 <i>2</i>&nbsp;
-<i>3</i>&nbsp;import java.rmi.RemoteException;
-<i>4</i>&nbsp;
-<i>5</i>&nbsp;// classe che lancia il client e crea un nuovo clientController su cui chiama il mainLoop
-<b class="nc"><i>6</i>&nbsp;public class LaunchClient {</b>
-<i>7</i>&nbsp;    public static void main(String[] args) {
-<i>8</i>&nbsp;        try {
-<b class="nc"><i>9</i>&nbsp;            new View().start();</b>
-<i>10</i>&nbsp;
-<b class="nc"><i>11</i>&nbsp;        } catch (RemoteException e) {</b>
-<b class="nc"><i>12</i>&nbsp;            e.printStackTrace();</b>
-<b class="nc"><i>13</i>&nbsp;        }</b>
-<i>14</i>&nbsp;    }
-<i>15</i>&nbsp;
-<i>16</i>&nbsp;}
+<i>3</i>&nbsp;import it.polimi.ing.sw.util.Constants;
+<i>4</i>&nbsp;import org.apache.commons.lang.StringUtils;
+<i>5</i>&nbsp;import org.codehaus.plexus.util.CollectionUtils;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import java.rmi.RemoteException;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;/**
+<i>10</i>&nbsp; * Classe che lancia classe il client e istanzia la View, su cui chiama @start()
+<i>11</i>&nbsp; */
+<b class="nc"><i>12</i>&nbsp;public class LaunchClient {</b>
+<i>13</i>&nbsp;    public static void main(String[] args) {
+<i>14</i>&nbsp;        try {
+<i>15</i>&nbsp;            String ip;
+<b class="nc"><i>16</i>&nbsp;            if(( null!=args)){</b>
+<b class="nc"><i>17</i>&nbsp;                ip=Constants.SERVER_ADDRESS;</b>
+<i>18</i>&nbsp;            }else{
+<b class="nc"><i>19</i>&nbsp;                ip=args[0];</b>
+<i>20</i>&nbsp;            }
+<b class="nc"><i>21</i>&nbsp;            new View(ip).start();</b>
+<i>22</i>&nbsp;
+<b class="nc"><i>23</i>&nbsp;        } catch (RemoteException e) {</b>
+<b class="nc"><i>24</i>&nbsp;            e.printStackTrace();</b>
+<b class="nc"><i>25</i>&nbsp;        }</b>
+<i>26</i>&nbsp;    }
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;}
 </div>
 </div>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2018-07-04 21:00</div>
+    <div style="float:right;">generated on 2018-07-05 23:17</div>
 </div>
 </body>
 </html>

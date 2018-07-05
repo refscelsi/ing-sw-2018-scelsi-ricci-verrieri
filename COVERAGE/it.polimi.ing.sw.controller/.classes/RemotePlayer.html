@@ -1,0 +1,95 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: RemotePlayer</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ing.sw.controller</a> ]
+</div>
+
+<h1>Coverage Summary for Class: RemotePlayer (it.polimi.ing.sw.controller)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+</tr>
+  <tr>
+    <td class="name">RemotePlayer$$EnhancerByMockitoWithCGLIB$$afa44280</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ing.sw.controller;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
+<i>4</i>&nbsp;import it.polimi.ing.sw.model.Match;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import java.rmi.Remote;
+<i>7</i>&nbsp;import java.rmi.RemoteException;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;/**
+<i>10</i>&nbsp; * Interfaccia implementata sia dalla View che dal PlayerControllerSocketServer, contiene i metodi di
+<i>11</i>&nbsp; * aggiornamento chiamati da Model (@Match) a View.
+<i>12</i>&nbsp; * In caso di connessione RMI i metodi sono direttamente implementati dalla View, in caso di Socket
+<i>13</i>&nbsp; * il PlayerControllerSocketServer manderà un messaggio contenente tutte le informazioni
+<i>14</i>&nbsp; */
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;public interface RemotePlayer extends Remote {
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;    void onLogin(String nickname) throws RemoteException;
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;    void onSchemeToChoose(Match match) throws RemoteException, NotValidPlayException;
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;    void onSuccess(String message) throws RemoteException;
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;    void onGameUpdate(Match match) throws RemoteException;
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;    void onTurnEnd() throws RemoteException;
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;    void onGameEnd(Match match) throws RemoteException;
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;    void onSetPlaying() throws RemoteException;
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    void onOtherInfoToolCard(int id) throws RemoteException;
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;    void onNotValidUseDiceException(String message) throws RemoteException;
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    void onNotValidToolCardException(int id, String message) throws RemoteException;
+<i>37</i>&nbsp;
+<i>38</i>&nbsp;    void onNotValidPlayException(String message) throws RemoteException;
+<i>39</i>&nbsp;
+<i>40</i>&nbsp;    void onNotValidNicknameException(String message) throws RemoteException;
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;    void onNotPossibleConnectionException(String message) throws RemoteException;
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;    void onPlayerDisconnection(String nickname) throws RemoteException;
+<i>45</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-07-05 23:16</div>
+</div>
+</body>
+</html>
