@@ -535,7 +535,7 @@ public class Match implements Serializable {
      */
     public void changePlayersRound(Player firstPlayer) {
         int first = players.indexOf(firstPlayer);
-        //spasso il turno a destra
+        //passo il turno a destra
         if(first<numPlayers-1){
             firstPlayer=players.get(first+1);
             createRoundPlayers(first+1);
@@ -1038,12 +1038,10 @@ public class Match implements Serializable {
             numPlayers--;
         }
         else {
-            System.out.println(player.getNickname() + "\n" +player.getState());
             if (!player.getState().equals(PlayerState.INIZIALIZED)&&!player.getState().equals(PlayerState.SCHEMETOCHOOSE)) {
                 player.setState(PlayerState.READYTOPLAY);
             }
             player.setOffline();
-            System.out.println(player.getNickname() + player.getState());
             numPlayersPlaying = numPlayersPlaying - 1;
             if (numPlayersPlaying == 1) {
                 calculateRanking();

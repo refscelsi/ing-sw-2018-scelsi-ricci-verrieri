@@ -316,7 +316,6 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
                 ui.onActionNotValid(e.getMessage());
                 exit(0);
             }
-            System.out.println("Controllo se sono tutti pronti");
             Runnable taskScheme = () -> {
                 try {
                     controller.checkAllReady();
