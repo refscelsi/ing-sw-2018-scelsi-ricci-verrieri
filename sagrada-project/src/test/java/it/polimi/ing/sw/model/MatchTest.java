@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
-/*public class MatchTest {
+public class MatchTest {
 
     private Match match;
 
@@ -28,7 +28,7 @@ import static org.junit.Assert.*;
     public void getPlayer() {
         try {
             // deve andare a buon fine
-            match.login("Ludo", new View());
+            match.login("Ludo", new View("localhost"));
         } catch (NotValidNicknameException e) {
             System.out.println(e.getMessage());
         } catch (NotPossibleConnectionException e) {
@@ -38,7 +38,7 @@ import static org.junit.Assert.*;
         }
         try {
             // non deve andare a buon fine
-            match.login("Ludo", new View());
+            match.login("Ludo", new View("localhost"));
         } catch (NotValidNicknameException e) {
             System.out.println(e.getMessage());
         } catch (NotPossibleConnectionException e) {
@@ -48,7 +48,7 @@ import static org.junit.Assert.*;
         }
         try {
             // deve andare a buon fine
-            match.login("Ari", new View());
+            match.login("Ari", new View("localhost"));
         } catch (NotValidNicknameException e) {
             System.out.println(e.getMessage());
         } catch (NotPossibleConnectionException e) {
@@ -58,7 +58,7 @@ import static org.junit.Assert.*;
         }
         try {
             // deve andare a buon fine
-            match.login("Ricky", new View());
+            match.login("Ricky", new View("localhost"));
         } catch (NotValidNicknameException e) {
             System.out.println(e.getMessage());
         } catch (NotPossibleConnectionException e) {
@@ -68,7 +68,7 @@ import static org.junit.Assert.*;
         }
         try {
             // deve andare a buon fine
-            match.login("Gino", new View());
+            match.login("Gino", new View("localhost"));
         } catch (NotValidNicknameException e) {
             System.out.println(e.getMessage());
         } catch (NotPossibleConnectionException e) {
@@ -78,7 +78,7 @@ import static org.junit.Assert.*;
         }
         try {
             // non deve andare a buon fine
-            match.login("Tadde", new View());
+            match.login("Tadde", new View("localhost"));
         } catch (NotValidNicknameException e) {
             System.out.println(e.getMessage());
         } catch (NotPossibleConnectionException e) {
@@ -86,10 +86,10 @@ import static org.junit.Assert.*;
         } catch (RemoteException e) {
             System.out.println(e.getMessage());
         }
-        match.getPlayer("Ludo").setState(PlayerState.OFFLINE);
+        match.getPlayer("Ludo").setOnline();
         try {
             // deve andare a buon fine
-            match.login("Ludo", new View());
+            match.login("Ludo", new View("localhost"));
         } catch (NotValidNicknameException e) {
             System.out.println(e.getMessage());
         } catch (NotPossibleConnectionException e) {
@@ -172,7 +172,7 @@ import static org.junit.Assert.*;
     public void login() {
         try {
             // deve andare a buon fine
-            match.login("Ludo", new View());
+            match.login("Ludo", new View("localhost"));
         } catch (NotValidNicknameException e) {
             System.out.println(e.getMessage());
         } catch (NotPossibleConnectionException e) {
@@ -182,7 +182,7 @@ import static org.junit.Assert.*;
         }
         try {
             // non deve andare a buon fine
-            match.login("Ludo", new View());
+            match.login("Ludo", new View("localhost"));
         } catch (NotValidNicknameException e) {
             System.out.println(e.getMessage());
         } catch (NotPossibleConnectionException e) {
@@ -192,7 +192,7 @@ import static org.junit.Assert.*;
         }
         try {
             // deve andare a buon fine
-            match.login("Ari", new View());
+            match.login("Ari", new View("localhost"));
         } catch (NotValidNicknameException e) {
             System.out.println(e.getMessage());
         } catch (NotPossibleConnectionException e) {
@@ -202,7 +202,7 @@ import static org.junit.Assert.*;
         }
         try {
             // deve andare a buon fine
-            match.login("Ricky", new View());
+            match.login("Ricky", new View("localhost"));
         } catch (NotValidNicknameException e) {
             System.out.println(e.getMessage());
         } catch (NotPossibleConnectionException e) {
@@ -212,7 +212,7 @@ import static org.junit.Assert.*;
         }
         try {
             // deve andare a buon fine
-            match.login("Gino", new View());
+            match.login("Gino", new View("localhost"));
         } catch (NotValidNicknameException e) {
             System.out.println(e.getMessage());
         } catch (NotPossibleConnectionException e) {
@@ -222,7 +222,7 @@ import static org.junit.Assert.*;
         }
         try {
             // non deve andare a buon fine
-            match.login("Tadde", new View());
+            match.login("Tadde", new View("localhost"));
         } catch (NotValidNicknameException e) {
             System.out.println(e.getMessage());
         } catch (NotPossibleConnectionException e) {
@@ -230,10 +230,10 @@ import static org.junit.Assert.*;
         } catch (RemoteException e) {
             System.out.println(e.getMessage());
         }
-        match.getPlayer("Ludo").setState(PlayerState.OFFLINE);
+        match.getPlayer("Ludo").setOffline();
         try {
             // deve andare a buon fine
-            match.login("Ludo", new View());
+            match.login("Ludo", new View("localhost"));
         } catch (NotValidNicknameException e) {
             System.out.println(e.getMessage());
         } catch (NotPossibleConnectionException e) {
@@ -241,7 +241,7 @@ import static org.junit.Assert.*;
         } catch (RemoteException e) {
             System.out.println(e.getMessage());
         }
-        assertTrue(match.getNumPlayers()==4 && match.getPlayer("Ludo").getState()!=PlayerState.OFFLINE);
+        assertTrue(match.getNumPlayers()==4 && !match.getPlayer("Ludo").isOnline());
     }
 
     @Test
@@ -392,4 +392,4 @@ import static org.junit.Assert.*;
     @Test
     public void matchClone() {
     }
-    }*/
+    }
