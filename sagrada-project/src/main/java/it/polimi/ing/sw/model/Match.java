@@ -1,6 +1,7 @@
 
 package it.polimi.ing.sw.model;
 
+import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 import it.polimi.ing.sw.controller.PlayerState;
 import it.polimi.ing.sw.controller.RemotePlayer;
 import it.polimi.ing.sw.controller.exceptions.NotPossibleConnectionException;
@@ -387,7 +388,7 @@ public class Match implements Serializable {
                             }
                         }
                     }
-                }, 100000);
+                }, 10000);
             }
         }
 
@@ -509,7 +510,7 @@ public class Match implements Serializable {
             playerPlaying.setState(PlayerState.TURNSTARTED);
             for (Player player : players) {
                 if (!(player.equals(playerPlaying))) {
-                    if (!player.getState().equals(PlayerState.OFFLINE)) {
+                    if (!(player.getState().equals(PlayerState.OFFLINE))) {
                         player.setState(PlayerState.ENDEDTURN);
                     }
                 }
@@ -520,17 +521,21 @@ public class Match implements Serializable {
             draftPool = bag.draw(numPlayers);
             changePlayersRound(firstPlayer);
             firstPlayer = playersRound[0];
-            playerPlaying = firstPlayer;
+            playerPlaying=firstPlayer;
+            if(playerPlaying.getState().equals(PlayerState.OFFLINE)){
+                playerPlaying=playersRound[1];
+            }
+            System.out.println(playerPlaying.getNickname()+ playerPlaying.getState());
             playerPlaying.setState(PlayerState.TURNSTARTED);
             for (Player player : players) {
                 if (!(player.equals(playerPlaying))) {
-                    if (!player.getState().equals(PlayerState.OFFLINE)) {
+                    if (!(player.getState().equals(PlayerState.OFFLINE))) {
                         player.setState(PlayerState.ENDEDTURN);
                     }
                 }
             }
             notifyChangement();
-            notifyStartTurn(firstPlayer);
+            notifyStartTurn(playerPlaying);
         }
     }
 
@@ -1078,14 +1083,18 @@ public class Match implements Serializable {
             numPlayers--;
             return;
         } else {
-            if (!player.getState().equals(PlayerState.OFFLINE)) {
+            System.out.println(player.getNickname() + "\n" +player.getState());
+            if (!(player.getState().equals(PlayerState.OFFLINE))) {
+                System.out.println("perchè conto così male??");
                 player.setState(PlayerState.OFFLINE);
+                System.out.println(player.getNickname() + player.getState());
                 numPlayersPlaying = numPlayersPlaying - 1;
                 if (numPlayersPlaying == 1) {
                     calculateRanking();
                     notifyGameEnd();
-                    return;
+                    return; /*
                 } else if (playerPlaying.equals(player)) {
+
                     System.out.println("primo if");
                     if (playersRoundIndex < numPlayers * 2 - 1) {
                         playersRoundIndex++;
@@ -1110,11 +1119,13 @@ public class Match implements Serializable {
                     } else if (playersRoundIndex == ((numPlayers * 2) - 1)) {
                         playersRoundIndex = 0;
                         endRound();
-                    }
+                    }*/
                 }
             }
         }
     }
+
+
 
     /**
      * METODI PER AGGIORNARE LA VIEW

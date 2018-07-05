@@ -2,12 +2,21 @@ package it.polimi.ing.sw.model;
 
 import java.io.Serializable;
 
+/**
+ * Classe che rappresenta la casella di uno schema
+ */
+
+
 public class Box implements Serializable{
     private int x;
     private int y;
     private Dice dice;
     private Color color;
     private int shade;
+
+    /**
+     * Diversi costruttori usati in caso la casella abbia delle particolarità o meno
+     */
 
     public Box(){
         color=Color.WHITE;
