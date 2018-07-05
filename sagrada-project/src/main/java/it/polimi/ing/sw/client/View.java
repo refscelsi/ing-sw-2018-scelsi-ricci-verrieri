@@ -33,7 +33,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
      * nella classifica finale.
      */
 
-    private static final String SERVER_ADDRESS = Constants.SERVER_ADDRESS;
+    private static String SERVER_ADDRESS = Constants.SERVER_ADDRESS;
     private static final int SERVER_SOCKET_PORT = Constants.SOCKET_PORT;
     private static final int SERVER_RMI_PORT = Constants.RMI_PORT;
     private boolean isLogged;
@@ -52,8 +52,10 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
     private ArrayList<String> playersDisconnected;
 
 
-    public View() throws RemoteException {
+    public View(String ip) throws RemoteException {
         super();
+        //this.ip=ip;
+        SERVER_ADDRESS=ip;
         isLogged = false;
         isGameStarted = false;
         isPlaying = false;
