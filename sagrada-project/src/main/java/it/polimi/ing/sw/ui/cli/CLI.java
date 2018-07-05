@@ -8,6 +8,7 @@ import it.polimi.ing.sw.model.Scheme;
 import it.polimi.ing.sw.util.Constants;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 
@@ -181,7 +182,7 @@ public class CLI implements UiUpdate {
     public void login(String message) {
         try {
             System.out.println(message);
-            inText = scanner.nextLine();
+            inText = scanner.nextLine().toLowerCase();
             controller.login(inText);
         } catch (NullPointerException e) {
         } catch (NumberFormatException e) {
@@ -235,8 +236,6 @@ public class CLI implements UiUpdate {
                 System.out.println("");
             }
         } catch (NullPointerException e) {
-        } catch (NumberFormatException e) {
-            System.out.println("Digita un carattere valido");
         } catch (IndexOutOfBoundsException e) {
         }
     }
@@ -297,6 +296,7 @@ public class CLI implements UiUpdate {
         } catch (NumberFormatException e) {
             System.out.println("Digita un carattere valido");
         } catch (IndexOutOfBoundsException e) {
+        } catch (InputMismatchException e) {
         }
     }
 
@@ -323,22 +323,35 @@ public class CLI implements UiUpdate {
     public void handleUseDice(Match match, boolean toolCard9) {
         try {
             int dice, row, col;
+            System.out.println("Digita 9 in qualsiasi momento per tornare al menù principale.");
             do {
                 System.out.println("Digita l'indice del dado che vuoi posizionare, tra 1 e " + match.getDraftPool().getSize());
                 dice = scanner.nextInt();
-            } while (dice < 1 || dice > match.getDraftPool().getSize());
-            do {
-                System.out.println("Digita il numero della riga dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_ROWS);
-                row = scanner.nextInt();
-            } while (row < 1 || row > Constants.NUM_ROWS);
-            do {
-                System.out.println("Digita il numero della colonna dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_COLS);
-                col = scanner.nextInt();
-            } while (col < 1 || col > Constants.NUM_COLS);
-            if (toolCard9)
-                controller.useToolCard(9, dice - 1, -1,row - 1, col - 1, -1, -1);
-            else
-                controller.useDice(dice - 1, row - 1, col - 1);
+            } while ((dice < 1 || dice > match.getDraftPool().getSize()) && dice != 9);
+            if (dice == 9)
+                chooseAction(controller.getMatch(), controller.getNickname());
+            else {
+                do {
+                    System.out.println("Digita il numero della riga dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_ROWS);
+                    row = scanner.nextInt();
+                } while ((row < 1 || row > Constants.NUM_ROWS) && row != 9);
+                if (row == 9)
+                    chooseAction(controller.getMatch(), controller.getNickname());
+                else {
+                    do {
+                        System.out.println("Digita il numero della colonna dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_COLS);
+                        col = scanner.nextInt();
+                    } while ((col < 1 || col > Constants.NUM_COLS) && col != 9);
+                    if (col == 9)
+                        chooseAction(controller.getMatch(), controller.getNickname());
+                    else {
+                        if (toolCard9)
+                            controller.useToolCard(9, dice - 1, -1, row - 1, col - 1, -1, -1);
+                        else
+                            controller.useDice(dice - 1, row - 1, col - 1);
+                    }
+                }
+            }
         } catch (NullPointerException e) {
         } catch (NumberFormatException e) {
             System.out.println("Digita un carattere valido");
@@ -349,17 +362,26 @@ public class CLI implements UiUpdate {
 
 
     public void retryPlaceDice() {
-        try{
+        try {
             int row, col;
+            System.out.println("Digita 9 in qualsiasi momento per tornare al menù principale.");
             do {
                 System.out.println("Digita il numero della riga dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_ROWS);
                 row = scanner.nextInt();
-            } while (row < 1 || row > Constants.NUM_ROWS);
-            do {
-                System.out.println("Digita il numero della colonna dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_COLS);
-                col = scanner.nextInt();
-            } while (col < 1 || col > Constants.NUM_COLS);
-                controller.useDice(-1, row - 1, col - 1);
+            } while ((row < 1 || row > Constants.NUM_ROWS) && row != 9);
+            if (row == 9)
+                chooseAction(controller.getMatch(), controller.getNickname());
+            else {
+                do {
+                    System.out.println("Digita il numero della colonna dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_COLS);
+                    col = scanner.nextInt();
+                } while ((col < 1 || col > Constants.NUM_COLS) && col != 9);
+                if (col == 9)
+                    chooseAction(controller.getMatch(), controller.getNickname());
+                else {
+                    controller.useDice(-1, row - 1, col - 1);
+                }
+            }
         } catch (NullPointerException e) {
         } catch (NumberFormatException e) {
             System.out.println("Digita un carattere valido");
@@ -376,12 +398,17 @@ public class CLI implements UiUpdate {
     public void handleUseToolCard(Match match) {
         try {
             int num;
+            System.out.println("Digita 9 in qualsiasi momento per tornare al menù principale.");
             do {
                 System.out.println("Digita il numero della carta utensile che vuoi utilizzare, tra 1 e 3");
                 num = scanner.nextInt();
-            } while (num < 1 || num > 3);
-            int id = match.getToolCards().get(num - 1).getId();
-            useToolCard(id, match);
+            } while ((num < 1 || num > 3) && num != 9);
+            if (num == 9)
+                chooseAction(controller.getMatch(), controller.getNickname());
+            else {
+                int id = match.getToolCards().get(num - 1).getId();
+                useToolCard(id, match);
+            }
         } catch (NullPointerException e) {
         } catch (NumberFormatException e) {
             System.out.println("Digita un carattere valido");
@@ -431,15 +458,24 @@ public class CLI implements UiUpdate {
     public void useToolCard1(Match match) {
         try{
             int dice, operation;
+            System.out.println("Digita 9 in qualsiasi momento per tornare al menù principale.");
             do {
                 System.out.println("Digita l'indice del dado che vuoi cambiare, tra 1 e " + match.getDraftPool().getSize());
                 dice = scanner.nextInt();
-            } while (dice < 1 || dice > match.getDraftPool().getSize());
-            do {
-                System.out.println("Digita 0 se vuoi aumentare il numero del dado di 1, 1 se vuoi diminuirlo");
-                operation = scanner.nextInt();
-            } while ((operation!=0) && (operation!=1));
-            controller.useToolCard(1, dice-1, operation, -1, -1, -1, -1);
+            } while ((dice < 1 || dice > match.getDraftPool().getSize()) && dice != 9);
+            if (dice == 9)
+                chooseAction(controller.getMatch(), controller.getNickname());
+            else {
+                do {
+                    System.out.println("Digita 0 se vuoi aumentare il numero del dado di 1, 1 se vuoi diminuirlo");
+                    operation = scanner.nextInt();
+                } while ((operation != 0) && (operation != 1) && (operation != 9));
+                if (operation == 9)
+                    chooseAction(controller.getMatch(), controller.getNickname());
+                else {
+                    controller.useToolCard(1, dice - 1, operation, -1, -1, -1, -1);
+                }
+            }
         } catch (NullPointerException e) {
         } catch (NumberFormatException e) {
             System.out.println("Digita un carattere valido");
@@ -451,23 +487,40 @@ public class CLI implements UiUpdate {
     public void useToolCard23412(int id) {
         try {
             int sourceRow, sourceCol, destRow, destCol;
+            System.out.println("Digita 9 in qualsiasi momento per tornare al menù principale.");
             do {
                 System.out.println("Digita il numero della riga dello schema del dado che vuoi spostare, tra 1 e " + Constants.NUM_ROWS);
                 sourceRow = scanner.nextInt();
-            } while (sourceRow < 1 || sourceRow > Constants.NUM_ROWS);
-            do {
-                System.out.println("Digita il numero della colonna dello schema del dado che vuoi spostare, tra 1 e " + Constants.NUM_COLS);
-                sourceCol = scanner.nextInt();
-            } while (sourceCol < 1 || sourceCol > Constants.NUM_COLS);
-            do {
-                System.out.println("Digita il numero della riga dello schema in cui vuoi spostare il dado, tra 1 e " + Constants.NUM_ROWS);
-                destRow = scanner.nextInt();
-            } while (destRow < 1 || destRow > Constants.NUM_ROWS);
-            do {
-                System.out.println("Digita il numero della colonna dello schema in cui vuoi spostare il dado, tra 1 e " + Constants.NUM_COLS);
-                destCol = scanner.nextInt();
-            } while (destCol < 1 || destCol > Constants.NUM_COLS);
-            controller.useToolCard(id, -1,-1,sourceRow - 1, sourceCol - 1, destRow - 1, destCol - 1);
+            } while ((sourceRow < 1 || sourceRow > Constants.NUM_ROWS) && (sourceRow != 9));
+            if (sourceRow == 9)
+                chooseAction(controller.getMatch(), controller.getNickname());
+            else {
+                do {
+                    System.out.println("Digita il numero della colonna dello schema del dado che vuoi spostare, tra 1 e " + Constants.NUM_COLS);
+                    sourceCol = scanner.nextInt();
+                } while ((sourceCol < 1 || sourceCol > Constants.NUM_COLS) && sourceCol != 9);
+                if (sourceCol == 9)
+                    chooseAction(controller.getMatch(), controller.getNickname());
+                else {
+                    do {
+                        System.out.println("Digita il numero della riga dello schema in cui vuoi spostare il dado, tra 1 e " + Constants.NUM_ROWS);
+                        destRow = scanner.nextInt();
+                    } while ((destRow < 1 || destRow > Constants.NUM_ROWS) && destRow != 9);
+                    if (destRow == 9)
+                        chooseAction(controller.getMatch(), controller.getNickname());
+                    else {
+                        do {
+                            System.out.println("Digita il numero della colonna dello schema in cui vuoi spostare il dado, tra 1 e " + Constants.NUM_COLS);
+                            destCol = scanner.nextInt();
+                        } while ((destCol < 1 || destCol > Constants.NUM_COLS) && destCol != 9);
+                        if (destCol == 9)
+                            chooseAction(controller.getMatch(), controller.getNickname());
+                        else {
+                            controller.useToolCard(id, -1, -1, sourceRow - 1, sourceCol - 1, destRow - 1, destCol - 1);
+                        }
+                    }
+                }
+            }
         } catch (NullPointerException e) {
         } catch (NumberFormatException e) {
             System.out.println("Digita un carattere valido");
@@ -479,6 +532,7 @@ public class CLI implements UiUpdate {
     public void useToolCard5(Match match) {
         try {
             int dice, round, indexInRound;
+            System.out.println("Digita 9 in qualsiasi momento per tornare al menù principale.");
             boolean roundTrackIsFull = controller.checkIfRoundTrackIsFull();
             if (!roundTrackIsFull) {
                 System.out.println("Non puoi utilizzare questa carta perché ancora non ci sono dadi sul tracciato dei round");
@@ -487,16 +541,29 @@ public class CLI implements UiUpdate {
                 do {
                     System.out.println("Digita l'indice del dado della riserva che vuoi scambiare, tra 1 e " + match.getDraftPool().getSize());
                     dice = scanner.nextInt();
-                } while (dice < 1 || dice > match.getDraftPool().getSize());
-                do {
-                    System.out.println("Digita il numero di round a cui appartiene il dado con cui vuoi scambiarlo, tra 1 e " + match.getRoundTrack().getRoundTrackSize());
-                    round = scanner.nextInt();
-                } while (round < 1 || round > match.getRoundTrack().getRoundTrackSize());
-                do {
-                    System.out.println("Digita l'indice del dado nel round che hai scelto, tra 0 e " + (match.getRoundTrack().getNumberOfDices(round) - 1));
-                    indexInRound = scanner.nextInt();
-                } while (indexInRound < 0 || indexInRound > match.getRoundTrack().getNumberOfDices(round) - 1);
-                controller.useToolCard(5, dice - 1, -1, round, indexInRound, -1, -1);
+                } while ((dice < 1 || dice > match.getDraftPool().getSize()) && dice != 9);
+                if (dice == 9)
+                    chooseAction(controller.getMatch(), controller.getNickname());
+                else {
+                    do {
+                        System.out.println("Digita il numero di round a cui appartiene il dado con cui vuoi scambiarlo, tra 1 e " + match.getRoundTrack().getRoundTrackSize());
+                        round = scanner.nextInt();
+                    } while ((round < 1 || round > match.getRoundTrack().getRoundTrackSize()) && round != 9);
+                    if (round == 9)
+                        chooseAction(controller.getMatch(), controller.getNickname());
+                    else {
+                        do {
+                            System.out.println("Digita l'indice del dado nel round che hai scelto, tra 0 e " + (match.getRoundTrack().getNumberOfDices(round) - 1));
+                            indexInRound = scanner.nextInt();
+                        }
+                        while ((indexInRound < 0 || indexInRound > match.getRoundTrack().getNumberOfDices(round) - 1) && indexInRound != 9);
+                        if (indexInRound == 9)
+                            chooseAction(controller.getMatch(), controller.getNickname());
+                        else {
+                            controller.useToolCard(5, dice - 1, -1, round, indexInRound, -1, -1);
+                        }
+                    }
+                }
             }
         } catch (NullPointerException e) {
         } catch (NumberFormatException e) {
@@ -509,11 +576,16 @@ public class CLI implements UiUpdate {
     public void useToolCard6(Match match) {
         try {
             int dice;
+            System.out.println("Digita 9 in qualsiasi momento per tornare al menù principale.");
             do {
                 System.out.println("Digita l'indice del dado che vuoi tirare, tra 1 e " + match.getDraftPool().getSize());
                 dice = scanner.nextInt();
-            } while (dice < 1 || dice > match.getDraftPool().getSize());
-            controller.useToolCard(6, dice - 1, -1, -1, -1, -1, -1);
+            } while ((dice < 1 || dice > match.getDraftPool().getSize()) && dice != 9);
+            if (dice == 9)
+                chooseAction(controller.getMatch(), controller.getNickname());
+            else {
+                controller.useToolCard(6, dice - 1, -1, -1, -1, -1, -1);
+            }
         } catch (NullPointerException e) {
         } catch (NumberFormatException e) {
             System.out.println("Digita un carattere valido");
@@ -530,11 +602,16 @@ public class CLI implements UiUpdate {
     public void useToolCard10(Match match) {
         try {
             int dice;
+            System.out.println("Digita 9 in qualsiasi momento per tornare al menù principale.");
             do {
                 System.out.println("Digita l'indice del dado che vuoi cambiare, tra 1 e " + match.getDraftPool().getSize());
                 dice = scanner.nextInt();
-            } while (dice < 1 || dice > match.getDraftPool().getSize());
-            controller.useToolCard(10, dice - 1, -1, -1, -1, -1, -1);
+            } while ((dice < 1 || dice > match.getDraftPool().getSize()) && dice != 9);
+            if (dice == 9)
+                chooseAction(controller.getMatch(), controller.getNickname());
+            else {
+                controller.useToolCard(10, dice - 1, -1, -1, -1, -1, -1);
+            }
         } catch (NullPointerException e) {
         } catch (NumberFormatException e) {
             System.out.println("Digita un carattere valido");
@@ -546,11 +623,16 @@ public class CLI implements UiUpdate {
     public void useToolCard11(Match match) {
         try {
             int dice;
+            System.out.println("Digita 9 in qualsiasi momento per tornare al menù principale.");
             do {
                 System.out.println("Digita l'indice del dado che vuoi riporre nel sacchetto, tra 1 e " + match.getDraftPool().getSize());
                 dice = scanner.nextInt();
-            } while (dice < 1 || dice > match.getDraftPool().getSize());
-            controller.useToolCard(11, dice - 1, -1, -1, -1, -1, -1);
+            } while ((dice < 1 || dice > match.getDraftPool().getSize()) && dice != 9);
+            if (dice == 9)
+                chooseAction(controller.getMatch(), controller.getNickname());
+            else {
+                controller.useToolCard(11, dice - 1, -1, -1, -1, -1, -1);
+            }
         } catch (NullPointerException e) {
         } catch (NumberFormatException e) {
             System.out.println("Digita un carattere valido");
@@ -561,6 +643,7 @@ public class CLI implements UiUpdate {
 
     public void useToolCard12(Match match) {
         try {
+            System.out.println("Digita 9 in qualsiasi momento per tornare al menù principale.");
             boolean roundTrackIsFull = controller.checkIfRoundTrackIsFull();
             if (!roundTrackIsFull) {
                 System.out.println("Non puoi utilizzare questa carta perché ancora non ci sono dadi sul tracciato dei round");
@@ -675,7 +758,7 @@ public class CLI implements UiUpdate {
     @Override
     public void onGameEnd(Match match) {
         try {
-            ShowRoundTrack roundTrack = new ShowRoundTrack(match.getRoundTrack());   //TODO: mettere pedine su roundtrack
+            //ShowRoundTrack roundTrack = new ShowRoundTrack(match.getRoundTrack());   //TODO: mettere pedine su roundtrack
             for (int i = 0; i < match.getPlayers().size(); i++) {
                 System.out.print(i + 1 + ") " + match.getRanking().get(i).getNickname() + " con ");
                 System.out.println(match.getRanking().get(i).getScore() + " punti");
@@ -708,8 +791,6 @@ public class CLI implements UiUpdate {
                     break;
             }
         } catch (NullPointerException e1) {
-        } catch (NumberFormatException e1) {
-            System.out.println("Digita un carattere valido");
         } catch (IndexOutOfBoundsException e1) {
         }
     }
@@ -737,19 +818,32 @@ public class CLI implements UiUpdate {
                 break;
                 case 11: {
                     int dice, row, col;
+                    System.out.println("Digita 9 in qualsiasi momento per tornare al menù principale.");
                     do {
                         System.out.println("Digita il valore del nuovo dado, tra 1 e 6");
                         dice = scanner.nextInt();
-                    } while (dice < 1 || dice > 6);
-                    do {
-                        System.out.println("Digita il numero della riga dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_ROWS);
-                        row = scanner.nextInt();
-                    } while (row < 1 || row > Constants.NUM_ROWS);
-                    do {
-                        System.out.println("Digita il numero della colonna dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_COLS);
-                        col = scanner.nextInt();
-                    } while (col < 1 || col > Constants.NUM_COLS);
-                    controller.useToolCard(11, -1, dice, row - 1, col - 1, -1, -1);
+                    } while ((dice < 1 || dice > 6) && dice != 9);
+                    if (dice == 9)
+                        chooseAction(controller.getMatch(), controller.getNickname());
+                    else {
+                        do {
+                            System.out.println("Digita il numero della riga dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_ROWS);
+                            row = scanner.nextInt();
+                        } while ((row < 1 || row > Constants.NUM_ROWS) && row != 9);
+                        if (row == 9)
+                            chooseAction(controller.getMatch(), controller.getNickname());
+                        else {
+                            do {
+                                System.out.println("Digita il numero della colonna dello schema in cui vuoi posizionarlo, tra 1 e " + Constants.NUM_COLS);
+                                col = scanner.nextInt();
+                            } while ((col < 1 || col > Constants.NUM_COLS) && col != 9);
+                            if (col == 9)
+                                chooseAction(controller.getMatch(), controller.getNickname());
+                            else {
+                                controller.useToolCard(11, -1, dice, row - 1, col - 1, -1, -1);
+                            }
+                        }
+                    }
                 }
                 break;
                 case 12: {
