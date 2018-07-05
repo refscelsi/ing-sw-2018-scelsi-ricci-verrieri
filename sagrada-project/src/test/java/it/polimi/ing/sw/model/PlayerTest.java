@@ -35,7 +35,7 @@ public class PlayerTest {
             }
         }
         scheme = new Scheme(60, 4, boxes);
-        state=PlayerState.FINISHTURN;
+        state=PlayerState.READYTOPLAY;
         color=Color.GREEN;
         privateObjectiveCard1 = new PrivateObjectiveCard(Color.GREEN);
 
@@ -57,7 +57,7 @@ public class PlayerTest {
     @Test
     public void getState() {
         player.setState(state);
-        assertTrue(player.getState().equals(PlayerState.FINISHTURN));
+        assertTrue(player.getState().equals(PlayerState.READYTOPLAY));
     }
 
     @Test
@@ -105,11 +105,11 @@ public class PlayerTest {
         assertTrue(player.getScore()==4);
     }
 
-    @Test
+   /* @Test
     public void isLogged() {
         player.setLogged(true);
         assertTrue(player.isLogged());
-    }
+    }*/
 
     @Test
     public void setNumOfToken() {
@@ -142,15 +142,15 @@ public class PlayerTest {
 
     @Test
     public void setState() {
-        player.setState(PlayerState.FINISHTURN);
-        assertTrue(player.getState().equals(PlayerState.FINISHTURN));
+        player.setState(PlayerState.READYTOPLAY);
+        assertTrue(player.getState().equals(PlayerState.READYTOPLAY));
     }
 
-    @Test
+   /* @Test
     public void setLogged() {
         player.setLogged(true);
         assertTrue(player.isLogged());
-    }
+    }*/
 
     @Test
     public void setNickname() {
@@ -173,7 +173,7 @@ public class PlayerTest {
     @Test
     public void playerClone() {
         player.setNumOfToken(5);
-        player.setState(PlayerState.FINISHTURN);
+        player.setState(PlayerState.READYTOPLAY);
         player.setScheme(scheme);
         player.setPrivateObjective(privateObjectiveCard1);
         Player player1=new Player("pippo");

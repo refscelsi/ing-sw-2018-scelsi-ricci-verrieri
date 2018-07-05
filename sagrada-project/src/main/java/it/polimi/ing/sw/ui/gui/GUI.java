@@ -309,6 +309,11 @@ public class GUI implements UiUpdate {
     }
 
     @Override
+    public void onPlayerDisconnection(String message, String nickname) {
+
+    }
+
+    @Override
     public void onSuccess(String message) {
         if (null != message) {
             /*

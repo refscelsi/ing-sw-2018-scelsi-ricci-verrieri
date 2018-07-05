@@ -140,6 +140,11 @@ public class PlayerControllerSocketClient implements PlayerControllerInterface {
         }
     }
 
+    @Override
+    public void reconnectPlayer() throws RemoteException {
+
+    }
+
     public void stopMatch(){
         System.out.println("Il server è caduto, la partita è finita");
         System.exit(0);

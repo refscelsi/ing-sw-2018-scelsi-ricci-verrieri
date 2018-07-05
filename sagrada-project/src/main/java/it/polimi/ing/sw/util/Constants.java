@@ -12,7 +12,8 @@ public class Constants {
     public static final String SERVER_ADDRESS = "127.0.0.1";
     public static final int SOCKET_PORT = 1097;
     public static final int RMI_PORT = 1099;
-    public static final int timerTime = 100000;
+    public static final int timerTime = 50000;
+    public static final int timerStartMatchTime = 10000;
 
     /**
      * Metodi del PlayerInterface

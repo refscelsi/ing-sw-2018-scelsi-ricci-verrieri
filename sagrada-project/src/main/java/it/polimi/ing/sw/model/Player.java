@@ -14,7 +14,7 @@ public class Player implements Serializable{
     private String nickname;
     private int numOfToken;
     private int score;
-    private boolean isLogged;
+    //private boolean isLogged;
     private boolean isOnline;
     private Scheme scheme;
     private PrivateObjectiveCard privateObjective;
@@ -86,9 +86,9 @@ public class Player implements Serializable{
         this.score = score;
     }
 
-   public boolean isLogged(){
+    /*public boolean isLogged(){
         return this.isLogged;
-   }
+    }*/
 
     public void setNumOfToken(int numOfToken) {
         this.numOfToken = numOfToken;
@@ -117,9 +117,9 @@ public class Player implements Serializable{
     }
 
 
-    public void setLogged(boolean isLogged){
+    /*public void setLogged(boolean isLogged){
         this.isLogged=isLogged;
-    }
+    }*/
 
     public void setNickname(String nickname){
         this.nickname=nickname;
@@ -142,7 +142,7 @@ public class Player implements Serializable{
         Player playerClone=new Player(this.nickname);
         playerClone.setPrivateObjective(this.privateObjective);
         playerClone.setNumOfToken(this.numOfToken);
-        playerClone.setLogged(this.isLogged);
+        //playerClone.setLogged(this.isLogged);
         playerClone.setState(this.state);
         playerClone.setSchemesToChoose(this.schemesToChoose);
         if(this.scheme!=null) {

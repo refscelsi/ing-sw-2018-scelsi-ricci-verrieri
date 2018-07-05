@@ -295,5 +295,10 @@ public class PlayerControllerSocketServer implements RemotePlayer, Runnable {
 
     }
 
+    @Override
+    public void onPlayerDisconnection(String nickname) throws RemoteException {
+
+    }
+
 
 }
