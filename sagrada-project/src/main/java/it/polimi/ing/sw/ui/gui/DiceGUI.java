@@ -179,7 +179,7 @@ public class DiceGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_diceLabelMouseExited
 
     private void diceLabelMousePressed(java.awt.event.MouseEvent evt) throws RemoteException {//GEN-FIRST:event_diceLabelMousePressed
-        if (gui.isPlaying()) {
+        //if (gui.isPlaying()) {
             if (TableFrame.aToolCardIsUsed()) {
                 switch (TableFrame.idSelectedTc) {
                     case "1":
@@ -212,7 +212,7 @@ public class DiceGUI extends javax.swing.JPanel {
                     //}
                 }
             }
-        }
+        //}
 
     }//GEN-LAST:event_diceLabelMousePressed
 
