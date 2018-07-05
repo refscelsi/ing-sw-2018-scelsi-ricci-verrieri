@@ -195,9 +195,12 @@ public class AddScheme extends javax.swing.JFrame {
         save();
     }//GEN-LAST:event_saveAsNewButtonActionPerformed
 
+/*
 
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
+        */
+/* Set the Nimbus look and feel *//*
+
 
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels( )) {
@@ -215,13 +218,16 @@ public class AddScheme extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             //java.util.logging.Logger.getLogger(AddScheme.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        /* Create and display the form */
+        */
+/* Create and display the form *//*
+
         java.awt.EventQueue.invokeLater(new Runnable( ) {
             public void run() {
                 new AddScheme( ).setVisible(true);
             }
         });
     }
+*/
 
     //<editor-fold defaultstate="collapsed" desc=" openFile Method ">
     public void openFile() {
