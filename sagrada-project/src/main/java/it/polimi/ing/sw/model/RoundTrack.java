@@ -6,9 +6,19 @@ import it.polimi.ing.sw.util.Constants;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Classe che rappresenta il Tracciato dei Round , considerato come un Array di DraftPool
+ */
+
 public class RoundTrack implements Serializable{
 
+    /**
+     * Insieme delle riserve da cui è costituito il tracciato
+     */
     private DraftPool[] roundTrack;
+    /**
+     * numero del Round che si sta giocando
+     */
     private int round;
 
 
@@ -18,15 +28,20 @@ public class RoundTrack implements Serializable{
     }
 
 
-    // aggiunge sul roundTrack tutti i dadi avanzati alla fine del round
-
+    /**
+     * Metodo per aggiungere sul roundTrack tutti i dadi avanzati alla fine del Round
+     * @param draftPool , i dadi da inserire sul Tracciato
+     */
     public void addDicesRound(DraftPool draftPool){
         roundTrack[round] = new DraftPool();
         roundTrack[round].addDraftPool(draftPool);
         round++;
     }
 
-    public int getRound(){return round;}
+
+    public boolean isEmpty() {
+        return round==0;
+    }
 
     public void setRoundTrack(DraftPool[] roundTrack) {
         this.roundTrack = roundTrack;
@@ -37,15 +52,21 @@ public class RoundTrack implements Serializable{
     }
 
 
-    // ritorna tutto il roundTrack
-
     public DraftPool[] getRoundTrack() {
         return roundTrack;
     }
 
+    public int getRound(){return round;}
 
-    // ritorna i dadi avanzati alla fine di un determinato round
+    public int getRoundTrackSize() {
+        return round;
+    }
 
+    /**
+     * Metodo che restituisce i dadi avanzati alla fine di un determinato Round
+     * @param round
+     * @return
+     */
     public DraftPool getDicesRound(int round){
         if (this.round+1>=round&&!isEmpty())
             return roundTrack[round-1];
@@ -54,23 +75,16 @@ public class RoundTrack implements Serializable{
     }
 
 
-    // ritorna il numero di dadi avanzati alla fine di un determinato round
-
+    /**
+     * Metodo che restituisce il numero di dadi avanzati alla fine di un determinato round
+     * @param round
+     * @return
+     */
     public int getNumberOfDices(int round) {
         if (this.round+1>=round&&!isEmpty())
             return roundTrack[round-1].getSize();
         else
             return 0;
-    }
-
-
-    public int getRoundTrackSize() {
-        return round;
-    }
-
-
-    public boolean isEmpty() {
-        return round==0;
     }
 
 
@@ -89,8 +103,10 @@ public class RoundTrack implements Serializable{
     }
 
 
-    // ritorna tutti i colori dei dadi presenti sul roundtrack
-
+    /**
+     * @return tutti i colori dei dadi presenti sul Tracciato
+     *
+     */
     public ArrayList<Color> getColorsInRoundTrack() {
         ArrayList<Color> colors = new ArrayList<Color>();
         for (int i=0; i<round; i++)
@@ -99,7 +115,10 @@ public class RoundTrack implements Serializable{
         return colors;
     }
 
-
+    /**
+     * Metodo che clona il RoundTrack
+     * @return un nuovo oggetto dado con le stesse caratteristiche del Tracciato clonato
+     */
     public RoundTrack cloneRoundTrack(){
         RoundTrack roundTrackClone=new RoundTrack();
         roundTrackClone.setRound(this.round);

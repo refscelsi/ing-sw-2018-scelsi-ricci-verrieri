@@ -86,7 +86,6 @@ public class PlayerControllerSocketServer implements RemotePlayer, Runnable {
         try (ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream())) {
             while (true) {
                 String input = (String) in.readObject();
-                System.out.println(input);
                 try {
                     jsonObject = (JSONObject) parser.parse(input);
                 } catch (ParseException e) {

@@ -7,11 +7,14 @@ import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.model.Player;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.model.exceptions.NotValidNicknameException;
+import it.polimi.ing.sw.util.Constants;
 import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Classe che implementa i metodi di PlayerControllerInterface.
@@ -44,6 +47,11 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
      * Riferimento al nickname in caso il giocatore si riconnetta
      */
     private String nickname;
+    /**
+     * Riferimento all'ultimo timer del giocatore lanciato
+     */
+    Timer timer = new Timer();
+    TimerTask lastTimer;
 
 
     /**
@@ -111,7 +119,7 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
      * @throws RemoteException
      */
     @Override
-    public void checkAllReady() throws RemoteException {
+    public synchronized void checkAllReady() throws RemoteException {
         try {
             if (player.getState().equals(PlayerState.READYTOPLAY)) {
                 match.checkAllReady();
@@ -128,7 +136,7 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
      * @throws RemoteException
      */
     @Override
-    public void setChosenScheme(int id) throws RemoteException {
+    public synchronized void setChosenScheme(int id) throws RemoteException {
         try {
             if (player.getState().equals(PlayerState.SCHEMETOCHOOSE)) {
                 match.chooseScheme(this.player, id);
@@ -149,6 +157,8 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
      */
     @Override
     public void sendUseDiceRequest(int indexOfDiceInDraftPool, int row, int col) throws RemoteException {
+        lastTimer = new TurnTimer(this);
+        timer.schedule(lastTimer, Constants.timerTime);
         try {
             switch (player.getState()) {
                 case USEDDICE:
@@ -179,6 +189,8 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
      */
     @Override
     public void endTurn() throws RemoteException {
+        lastTimer = new TurnTimer(this);
+        timer.schedule(lastTimer, Constants.timerTime);
         try {
             if (player.getState().equals(PlayerState.READYTOPLAY) || player.getState().equals(PlayerState.INIZIALIZED) || player.getState().equals(PlayerState.OFFLINE)) {
                 throw new NotValidPlayException("Finisci il turno!");
@@ -204,6 +216,8 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
      */
     @Override
     public void useToolCard(int id, int dice, int operation, int sourceRow, int sourceCol, int destRow, int destCol) throws RemoteException {
+        lastTimer = new TurnTimer(this);
+        timer.schedule(lastTimer, Constants.timerTime);
         try {
             switch (id) {
                 /**
@@ -317,5 +331,8 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
     }
 
 
-
+    public void timeout(TurnTimer turnTimer) throws RemoteException {
+        if (turnTimer == lastTimer)
+            stopPlayer();
+    }
 }
