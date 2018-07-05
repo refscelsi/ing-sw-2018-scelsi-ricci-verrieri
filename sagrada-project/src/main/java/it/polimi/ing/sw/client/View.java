@@ -50,7 +50,8 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
     private int dice;
     private String networkChoice;
     private ArrayList<String> playersDisconnected;
-
+    private Thread thread3;
+    private Boolean recentOnline;
 
     public View() throws RemoteException {
         super();
@@ -126,6 +127,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
 
     @Override
     public void onLogin(String nickname) throws RemoteException {
+        recentOnline = false;
         this.nickname = nickname;
         this.isLogged = true;
         ui.onSuccess("Complimenti, ti sei loggato come " + nickname);
@@ -143,6 +145,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
 
     @Override
     public void onSchemeToChoose(Match match) {
+        recentOnline = false;
         this.match = match;
         Runnable task2 = () -> {
             ui.onSchemeToChoose(match, nickname, "Scegli il numero del tuo schema");
@@ -152,6 +155,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
 
     @Override
     public void onSuccess(String message) throws RemoteException {
+        recentOnline = true;
         ui.onSuccess(message);
     }
 
@@ -168,6 +172,7 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
 
     @Override
     public void onTurnEnd() {
+        recentOnline = false;
         isPlaying = false;
         ui.onSuccess("In attesa che giochino gli altri giocatori...");
     }
@@ -181,6 +186,13 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
 
     @Override
     public void onSetPlaying() {
+        recentOnline = false;
+        try {
+            controller.startingMyTurn();
+        } catch (RemoteException e) {
+            ui.onActionNotValid(e.getMessage());
+            exit(0);
+        }
         Runnable task1 = () -> {
             ui.onTurnStart(match, nickname);
         };
@@ -190,11 +202,8 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
 
     @Override
     public void onOtherInfoToolCard(int id) {
-        /*Runnable task3 = () -> {*/
-            ui.onOtherInfoToolCard(id, match);
-        /*};
-        Thread thread3 = new Thread(task3);
-        thread3.start();*/
+        recentOnline = false;
+        ui.onOtherInfoToolCard(id, match);
     }
 
     @Override
@@ -225,11 +234,12 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
 
     @Override
     public void onPlayerDisconnection(String nickname) throws RemoteException {
+        recentOnline = true;
         if (nickname.equals(this.nickname)) {
             Runnable task3 = () -> {
                 ui.onPlayerDisconnection("Sei uscito dalla partita, digita 0 per rientrare", nickname);
             };
-            Thread thread3 = new Thread(task3);
+            thread3 = new Thread(task3);
             thread3.start();
         }
         else
@@ -268,7 +278,6 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
             ConnectionInterface loginController = (ConnectionInterface) reg.lookup("ConnectionController");
             controller = loginController.connectRMI(nickname, this);
             controller.login(nickname);
-            System.out.println("forza chievo");
 
         } catch ( AccessException e ) {
             e.printStackTrace();
@@ -291,69 +300,84 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         this.controller = playerInterfaceSocket;
         try {
             controller.login(nickname);
-            System.out.println("forza chievo");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void setChosenScheme(int id) {
-        System.out.println("Ho scelto schema nella view");
-        try {
-            controller.setChosenScheme(id);
-        } catch (RemoteException e) {
-            ui.onActionNotValid(e.getMessage());
-            exit(0);
+        if (!recentOnline) {
+            try {
+                controller.setChosenScheme(id);
+            } catch (RemoteException e) {
+                ui.onActionNotValid(e.getMessage());
+                exit(0);
+            }
+            System.out.println("Controllo se sono tutti pronti");
+            Runnable taskScheme = () -> {
+                try {
+                    controller.checkAllReady();
+                } catch (RemoteException e) {
+                    ui.onActionNotValid(e.getMessage());
+                    exit(0);
+                }
+            };
+            new Thread(taskScheme).start();
         }
-        System.out.println("Controllo se sono tutti pronti");
-        Runnable taskScheme=()->{
-        try {
-            controller.checkAllReady();
-        } catch (RemoteException e) {
-            ui.onActionNotValid(e.getMessage());
-            exit(0);
-        }
-        };
-        new Thread(taskScheme).start();
+        else
+            ui.onActionNotValid("Non è il tuo turno.");
     }
 
 
     public void useDice(int indexOfDiceInDraftPool, int row, int col) {
-        if (indexOfDiceInDraftPool == -1)
-            indexOfDiceInDraftPool = dice;
-        else
-            dice = indexOfDiceInDraftPool;
-        try {
-            controller.sendUseDiceRequest(indexOfDiceInDraftPool, row, col);
-        } catch (RemoteException e) {
-            ui.onActionNotValid(e.getMessage());
-            exit(0);
+        if (!recentOnline) {
+            if (indexOfDiceInDraftPool == -1)
+                indexOfDiceInDraftPool = dice;
+            else
+                dice = indexOfDiceInDraftPool;
+            try {
+                controller.sendUseDiceRequest(indexOfDiceInDraftPool, row, col);
+            } catch (RemoteException e) {
+                ui.onActionNotValid(e.getMessage());
+                exit(0);
+            }
         }
+        else
+            ui.onActionNotValid("Non è il tuo turno.");
     }
 
 
     public void endTurn() {
-        try {
-            controller.endTurn();
-        } catch (RemoteException e) {
-            ui.onActionNotValid(e.getMessage());
-            exit(0);
+        if (!recentOnline) {
+            try {
+                controller.endTurn();
+            } catch (RemoteException e) {
+                ui.onActionNotValid(e.getMessage());
+                exit(0);
+            }
         }
+        else
+            ui.onActionNotValid("Non è il tuo turno.");
     }
 
 
     public void stopPlayer() {
-        try {
-            controller.stopPlayer();
-        } catch (RemoteException e) {
-            ui.onActionNotValid(e.getMessage());
-            exit(0);
+        if (!recentOnline) {
+            try {
+                controller.stopPlayer();
+            } catch (RemoteException e) {
+                ui.onActionNotValid(e.getMessage());
+                exit(0);
+            }
         }
+        else
+            ui.onActionNotValid("Non è il tuo turno.");
     }
 
 
     public void reconnectPlayer() {
         try {
+            System.out.println("Mi riconnettooooo");
             controller.reconnectPlayer();
         } catch (RemoteException e) {
             ui.onActionNotValid(e.getMessage());
@@ -366,16 +390,20 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
 
 
     public void useToolCard(int id, int dice, int operation, int sourceRow, int sourceCol, int destRow, int destCol) {
-        if (id==6)
-            this.dice = dice;
-        if (dice==-1)
-            dice = this.dice;
-        try {
-            controller.useToolCard(id, dice, operation, sourceRow, sourceCol, destRow, destCol);
-        } catch (RemoteException e) {
-            ui.onActionNotValid(e.getMessage());
-            exit(0);
+        if (!recentOnline) {
+                if (id==6)
+                this.dice = dice;
+            if (dice==-1)
+                dice = this.dice;
+            try {
+                controller.useToolCard(id, dice, operation, sourceRow, sourceCol, destRow, destCol);
+            } catch (RemoteException e) {
+                ui.onActionNotValid(e.getMessage());
+                exit(0);
+            }
         }
+        else
+            ui.onActionNotValid("Non è il tuo turno.");
     }
 
     public Match getMatch() {

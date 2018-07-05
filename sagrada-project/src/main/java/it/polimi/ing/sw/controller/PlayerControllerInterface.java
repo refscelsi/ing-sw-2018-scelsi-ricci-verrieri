@@ -30,6 +30,8 @@ public interface PlayerControllerInterface {
     void login(String nickname) throws RemoteException;
 
     void reconnectPlayer() throws RemoteException;
+
+    void startingMyTurn() throws RemoteException;
 }
 
 

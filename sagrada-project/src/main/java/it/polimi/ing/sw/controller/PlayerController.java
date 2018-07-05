@@ -107,10 +107,20 @@ public class PlayerController extends UnicastRemoteObject implements PlayerContr
     }
 
     @Override
+    public void startingMyTurn() throws RemoteException {
+        lastTimer = new TurnTimer(this);
+        timer.schedule(lastTimer, Constants.timerTime);
+        indexInRound = match.getPlayersRoundIndex();
+    }
+
+
+    @Override
     public void reconnectPlayer() throws RemoteException {
+        System.out.println("Mi riconnettooooo");
         if (!player.isOnline()) {
             if (match.isMatchStarted()) {
                 player.setOnline();
+                match.incrementNumPlayersPlaying();
                 match.notifySuccess(player, "Sei rientrato in partita");
             }
             else

@@ -625,10 +625,14 @@ public class Match implements Serializable {
         } while (!playersRound[playersRoundIndex].isOnline());
         playerPlaying = playersRound[playersRoundIndex];
         playerPlaying.setState(PlayerState.TURNSTARTED);
-        if (roundChanged == true && playersRoundIndex == 0)
+        if (!roundChanged || playersRoundIndex != 0)
             notifyStartTurn(playerPlaying);
     }
 
+
+    public void incrementNumPlayersPlaying() {
+        numPlayersPlaying++;
+    }
 
     /**
      * Metodo che gestisce la fine di un Round, aggiunge i dadi al Tracciato dei Round e fa partire un nuovo Round.
@@ -1119,7 +1123,6 @@ public class Match implements Serializable {
     private void notifyPlayerDisconnection(String nickname) throws RemoteException {
         for (Player player : players) {
             try {
-                System.out.println("Notifico");
                 playerMap.get(player).onPlayerDisconnection(nickname);
             } catch (RemoteException e) {
                 exitPlayer(player);
@@ -1161,7 +1164,6 @@ public class Match implements Serializable {
         for (Player player : players) {
             try {
                 if (player.isOnline()) {
-                    System.out.println(player.getNickname() + player.getState());
                     playerMap.get(player).onSchemeToChoose(this.matchClone());
                 }
             } catch (RemoteException e) {

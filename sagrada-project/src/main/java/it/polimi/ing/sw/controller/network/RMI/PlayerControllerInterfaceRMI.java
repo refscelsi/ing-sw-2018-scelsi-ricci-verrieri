@@ -28,4 +28,6 @@ public interface PlayerControllerInterfaceRMI extends Remote, PlayerControllerIn
     void stopPlayer() throws RemoteException;
 
     void login(String nickname) throws RemoteException;
+
+    void startingMyTurn() throws RemoteException;
 }
