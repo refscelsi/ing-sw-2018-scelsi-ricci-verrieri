@@ -380,6 +380,7 @@ public class CLI implements UiUpdate {
                 break;
             case 12:
                 useToolCard12(match);
+                break;
             default:
                 break;
         }

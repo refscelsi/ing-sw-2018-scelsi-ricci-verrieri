@@ -361,9 +361,9 @@ public class TableFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void endTurnButtonActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {//GEN-FIRST:event_endTurnButtonActionPerformed
-        if (gui.isPlaying()){
+        //if (gui.isPlaying()){
             gui.endTurn();
-        }
+        //}
     }//GEN-LAST:event_endTurnButtonActionPerformed
 
     private static void setToolCards(List<String> id) {

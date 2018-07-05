@@ -27,9 +27,7 @@ public class GUI implements UiUpdate {
 
     private Match resetMatch;
 
-    public View getController() throws RemoteException {
-        if (controller == null)
-            controller = new View();
+    public View getController() {
         return controller;
     }
 
