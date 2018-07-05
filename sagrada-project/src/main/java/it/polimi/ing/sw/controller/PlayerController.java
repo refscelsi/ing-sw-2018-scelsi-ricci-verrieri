@@ -8,7 +8,6 @@ import it.polimi.ing.sw.model.Player;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 import it.polimi.ing.sw.model.exceptions.NotValidNicknameException;
 import it.polimi.ing.sw.util.Constants;
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
