@@ -507,6 +507,7 @@ public class Match implements Serializable {
             createRoundPlayers(0);
             playerPlaying = firstPlayer;
             playersRoundIndex = 0;
+            checkOffline(playerPlaying);
             playerPlaying.setState(PlayerState.TURNSTARTED);
             for (Player player : players) {
                 if (!(player.equals(playerPlaying))) {
@@ -522,9 +523,7 @@ public class Match implements Serializable {
             changePlayersRound(firstPlayer);
             firstPlayer = playersRound[0];
             playerPlaying=firstPlayer;
-            if(playerPlaying.getState().equals(PlayerState.OFFLINE)){
-                playerPlaying=playersRound[1];
-            }
+            checkOffline(playerPlaying);
             System.out.println(playerPlaying.getNickname()+ playerPlaying.getState());
             playerPlaying.setState(PlayerState.TURNSTARTED);
             for (Player player : players) {
@@ -539,6 +538,35 @@ public class Match implements Serializable {
         }
     }
 
+
+    /**
+     * Metodo di supporto per la gestione di eventuali players offline
+     * @param player
+     */
+    public void checkOffline(Player player) throws RemoteException {
+        if(player.getState().equals(PlayerState.OFFLINE)){
+            playersRoundIndex++;
+            if(playersRoundIndex>(numPlayers*2)-1){
+                playersRoundIndex=0;
+                endRound();
+            }
+            else {
+                playerPlaying = playersRound[playersRoundIndex];
+                if(numPlayers==4){
+                    if(player.getState().equals(PlayerState.OFFLINE)) {
+                    playersRoundIndex++;
+                        if(playersRoundIndex>(numPlayers*2)-1){
+                            playersRoundIndex=0;
+                            endRound();
+                        }
+                        else{
+                            playerPlaying = playersRound[playersRoundIndex];
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     /**
      * Metodo che modifica l'Array dell'ordine dei giocatori nel round dopo l'inizio di un nuovo Round
@@ -603,14 +631,8 @@ public class Match implements Serializable {
                 playersRoundIndex++;
                 playerPlaying.setState(PlayerState.ENDEDTURN);
                 notifyEndTurn(playerPlaying);
-                if (playersRound[playersRoundIndex].getState().equals(PlayerState.OFFLINE)) {
-                    playersRoundIndex++;
-                    if (playersRoundIndex > ((numPlayers * 2) - 1)) {
-                        playersRoundIndex = 0;
-                        endRound();
-                    }
-                }
                 playerPlaying = playersRound[playersRoundIndex];
+                checkOffline(playerPlaying);
                 playerPlaying.setState(PlayerState.TURNSTARTED);
                 notifyStartTurn(playerPlaying);
             }
@@ -618,23 +640,8 @@ public class Match implements Serializable {
                 playersRoundIndex++;
                 playerPlaying.setState(PlayerState.ENDEDTURN);
                 notifyEndTurn(playerPlaying);
-                if (playersRound[playersRoundIndex].getState().equals(PlayerState.OFFLINE)) {
-                    playersRoundIndex++;
-                    if (playersRoundIndex > ((numPlayers * 2) - 1)) {
-                        playersRoundIndex = 0;
-                        endRound();
-                    }
-                    else {
-                        if (playersRound[playersRoundIndex].getState().equals(PlayerState.OFFLINE)) {
-                            playersRoundIndex++;
-                            if (playersRoundIndex > ((numPlayers * 2) - 1)) {
-                                playersRoundIndex = 0;
-                                endRound();
-                            }
-                        }
-                    }
-                }
                 playerPlaying = playersRound[playersRoundIndex];
+                checkOffline(playerPlaying);
                 playerPlaying.setState(PlayerState.TURNSTARTED);
                 notifyStartTurn(playerPlaying);
             }
@@ -1076,7 +1083,6 @@ public class Match implements Serializable {
      */
     public void exitPlayer(Player player) throws RemoteException {
         if (!matchStarted) {
-            System.out.println("aiuto");
             players.remove(player);
             playerMap.remove(player);
             numPlayersPlaying--;
@@ -1085,24 +1091,22 @@ public class Match implements Serializable {
         } else {
             System.out.println(player.getNickname() + "\n" +player.getState());
             if (!(player.getState().equals(PlayerState.OFFLINE))) {
-                System.out.println("perchè conto così male??");
                 player.setState(PlayerState.OFFLINE);
                 System.out.println(player.getNickname() + player.getState());
                 numPlayersPlaying = numPlayersPlaying - 1;
                 if (numPlayersPlaying == 1) {
                     calculateRanking();
                     notifyGameEnd();
-                    return; /*
-                } else if (playerPlaying.equals(player)) {
-
-                    System.out.println("primo if");
+                    return;
+                }
+                //da ricontrollare
+                else if (playerPlaying.equals(player)) {
                     if (playersRoundIndex < numPlayers * 2 - 1) {
                         playersRoundIndex++;
-                        System.out.println("secondo if");
                         if (!playersRound[playersRoundIndex].getState().equals(PlayerState.OFFLINE)) {
+                            playerPlaying.setState(PlayerState.OFFLINE);
                             playerPlaying = playersRound[playersRoundIndex];
                             playerPlaying.setState(PlayerState.TURNSTARTED);
-                            System.out.println("terzo if");
                             notifyStartTurn(playerPlaying);
                         } else {
                             playersRoundIndex++;
@@ -1119,7 +1123,7 @@ public class Match implements Serializable {
                     } else if (playersRoundIndex == ((numPlayers * 2) - 1)) {
                         playersRoundIndex = 0;
                         endRound();
-                    }*/
+                    }
                 }
             }
         }
