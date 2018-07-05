@@ -206,7 +206,6 @@ public class CLI implements UiUpdate {
         do {
             System.out.println(message);
             num = scanner.nextInt();
-
         } while (num < 1 || num > 4);
         System.out.println("Ho scelto schema nella cli");
         controller.setChosenScheme(schemes.get(num - 1).getId());   //se per esempio qui c'è un errore, se lo gestisce il PlayerController*/
@@ -241,7 +240,7 @@ public class CLI implements UiUpdate {
                     if (scanner.nextLine().toLowerCase().equalsIgnoreCase("s")) {
                         // TODO: gestire terminazione corretta del programma!
                         System.out.println("Uscendo dalla partita...");
-                        System.exit(0);
+                        controller.stopPlayer();
                     }
                     break;
                 }
