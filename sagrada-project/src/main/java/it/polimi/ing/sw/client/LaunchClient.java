@@ -12,13 +12,10 @@ import java.rmi.RemoteException;
 public class LaunchClient {
     public static void main(String[] args) {
         try {
-            String ip;
             if(( null!=args)){
-                ip=Constants.SERVER_ADDRESS;
-            }else{
-                ip=args[0];
+                Constants.SERVER_ADDRESS=args[0];
             }
-            new View(ip).start();
+            new View().start();
 
         } catch (RemoteException e) {
             e.printStackTrace();

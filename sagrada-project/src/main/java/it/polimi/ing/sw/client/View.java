@@ -23,6 +23,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static it.polimi.ing.sw.util.Constants.SERVER_ADDRESS;
 import static java.lang.System.exit;
 
 public class View extends UnicastRemoteObject implements RemotePlayer {
@@ -33,7 +34,6 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
      * nella classifica finale.
      */
 
-    private static String SERVER_ADDRESS = Constants.SERVER_ADDRESS;
     private static final int SERVER_SOCKET_PORT = Constants.SOCKET_PORT;
     private static final int SERVER_RMI_PORT = Constants.RMI_PORT;
     private boolean isLogged;
@@ -53,10 +53,8 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
     private Thread thread3;
     private Boolean recentOnline;
 
-    public View(String ip) throws RemoteException {
+    public View() throws RemoteException {
         super();
-        //this.ip=ip;
-        SERVER_ADDRESS=ip;
         isLogged = false;
         isGameStarted = false;
         isPlaying = false;
