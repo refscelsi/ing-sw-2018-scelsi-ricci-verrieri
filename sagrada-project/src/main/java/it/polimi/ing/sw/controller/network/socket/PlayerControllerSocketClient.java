@@ -114,7 +114,7 @@ public class PlayerControllerSocketClient implements PlayerControllerInterface {
     @Override
     public void useToolCard(int id, int dice, int operation, int sourceRow, int sourceCol, int destRow, int destCol) {
         Gson gson= new Gson();
-        String json=gson.toJson(new MessageFromClient(Constants.TOOLCARD, null));
+        String json=gson.toJson(new MessageFromClient(Constants.TOOLCARD, id, dice, operation, sourceRow, sourceCol, destRow, destCol));
         try {
             out.writeObject(json);
             out.flush();

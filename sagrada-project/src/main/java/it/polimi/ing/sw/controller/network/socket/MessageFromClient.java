@@ -48,7 +48,7 @@ public class MessageFromClient {
         this.id=id;
     }
 
-    public MessageFromClient(String method, int id, int dice, int operation, int indexDice, int row, int col, int destRow, int destCol) {
+    public MessageFromClient(String method, int id, int dice, int operation, int row, int col, int destRow, int destCol) {
         this.method = method;
         this.id=id;
         this.dice=dice;

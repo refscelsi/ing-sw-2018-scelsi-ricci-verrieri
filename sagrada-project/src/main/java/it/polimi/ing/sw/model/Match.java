@@ -279,7 +279,6 @@ public class Match implements Serializable {
                 if (!matchStarted) {
                     if (checkNickname(nickname)) {
                         Player player = new Player(nickname);
-                        //player.setLogged(true);
                         playerMap.put(player, remotePlayer);
                         players.add(player);
                         remotePlayers.add(remotePlayer);
@@ -486,7 +485,6 @@ public class Match implements Serializable {
             createRoundPlayers(0);
             playerPlaying = firstPlayer;
             playersRoundIndex = 0;
-            //checkOffline(playerPlaying);
             for (Player player : players) {
                 if (!(player.equals(playerPlaying))) {
                     if (player.isOnline()) {
@@ -506,9 +504,6 @@ public class Match implements Serializable {
             changePlayersRound(firstPlayer);
             firstPlayer = playersRound[0];
             playerPlaying = firstPlayer;
-            //checkOffline(playerPlaying);
-            System.out.println(playerPlaying.getNickname() + playerPlaying.getState());
-            //playerPlaying.setState(PlayerState.TURNSTARTED);
             for (Player player : players) {
                 if (!(player.equals(playerPlaying))) {
                     if (player.isOnline()) {

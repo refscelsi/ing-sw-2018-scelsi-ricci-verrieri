@@ -508,8 +508,8 @@ public class CLI implements UiUpdate {
                 System.out.println(player.getNumOfToken());
                 ShowScheme scheme = new ShowScheme(player.getScheme());
                 System.out.println("");
-                chooseAction(match, nickname);
             }
+            chooseAction(match, nickname);
         } catch (NullPointerException e) {
         } catch (NumberFormatException e) {
             System.out.println("Digita un carattere valido");

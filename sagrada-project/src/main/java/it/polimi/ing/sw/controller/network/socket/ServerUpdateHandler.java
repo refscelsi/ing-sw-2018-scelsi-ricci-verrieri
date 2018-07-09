@@ -117,6 +117,9 @@ public class ServerUpdateHandler implements Runnable {
                     case Constants.ONPLAYERDISCONNECT:
                         view.onPlayerDisconnection(messageFromServer.getMessage());
                         break;
+                    case Constants.ONOTHERINFOTOOLCARD:
+                        view.onOtherInfoToolCard(messageFromServer.getId());
+                        break;
                     default:
                         System.out.println("Ho ricevuto un oggetto che non sono stato in grado di interpretare");
                 }

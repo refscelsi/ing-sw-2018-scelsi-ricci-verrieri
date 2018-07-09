@@ -4,6 +4,7 @@ import it.polimi.ing.sw.client.View;
 import it.polimi.ing.sw.controller.PlayerState;
 import it.polimi.ing.sw.controller.RemotePlayer;
 import it.polimi.ing.sw.controller.exceptions.NotPossibleConnectionException;
+import it.polimi.ing.sw.controller.exceptions.NotValidPlayException;
 import it.polimi.ing.sw.model.exceptions.NotValidNicknameException;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,6 +22,7 @@ public class MatchTest {
     @Before
     public void before() {
         match = new Match();
+
     }
 
 
@@ -100,12 +102,65 @@ public class MatchTest {
         assertTrue(match.getPlayer("Ludo") != null && match.getPlayer("Tadde") == null);
     }
 
-    @Test
-    public void getPlayersRoundIndex() {
+    @Test/*(expected=NullPointerException.class)*/
+    public void getPlayersRoundIndex(){
+        try {
+            // deve andare a buon fine
+            match.login("Ludo", new View("localhost"));
+        } catch (NotValidNicknameException e) {
+            System.out.println(e.getMessage());
+        } catch (NotPossibleConnectionException e) {
+            System.out.println(e.getMessage());
+        } catch (RemoteException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            // deve andare a buon fine
+            match.login("Ari", new View("localhost"));
+        } catch (NotValidNicknameException e) {
+            System.out.println(e.getMessage());
+        } catch (NotPossibleConnectionException e) {
+            System.out.println(e.getMessage());
+        } catch (RemoteException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            // deve andare a buon fine
+            match.login("Ricky", new View("localhost"));
+        } catch (NotValidNicknameException e) {
+            System.out.println(e.getMessage());
+        } catch (NotPossibleConnectionException e) {
+            System.out.println(e.getMessage());
+        } catch (RemoteException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            // deve andare a buon fine
+            match.login("Gino", new View("localhost"));
+        } catch (NotValidNicknameException e) {
+            System.out.println(e.getMessage());
+        } catch (NotPossibleConnectionException e) {
+            System.out.println(e.getMessage());
+        } catch (RemoteException e) {
+            System.out.println(e.getMessage());
+        }
+        //match.createRoundPlayers(0);
+        try {
+            match.startMatch();
+        } catch (RemoteException e) {
+            System.out.println(e.getMessage());
+        } catch (NotValidPlayException e) {
+            System.out.println(e.getMessage());
+        }
+        assertTrue(match.getPlayersRoundIndex()==0);
     }
 
     @Test
     public void getDraftPool() {
+        Bag bag = new Bag();
+        DraftPool draftPool = bag.draw(3);
+        match.setDraftPool(draftPool);
+        assertTrue(draftPool.equals(match.getDraftPool()));
     }
 
     @Test
