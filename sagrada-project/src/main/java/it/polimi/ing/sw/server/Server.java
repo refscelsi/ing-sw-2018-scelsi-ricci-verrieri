@@ -13,6 +13,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
+import static it.polimi.ing.sw.util.Constants.SERVER_ADDRESS;
 import static it.polimi.ing.sw.util.Constants.SOCKET_PORT;
 
 /**
@@ -22,7 +23,11 @@ import static it.polimi.ing.sw.util.Constants.SOCKET_PORT;
 
 public class Server {
     public static void main(String args[]){
+        if(null!=args[0]){
+            SERVER_ADDRESS=args[0];
+        }
         try {
+            System.setProperty("java.rmi.server.hostname",SERVER_ADDRESS);
             Registry reg = LocateRegistry.createRegistry(1099);
             Match match= new Match();
             ConnectionController connectionController = new ConnectionController(match);

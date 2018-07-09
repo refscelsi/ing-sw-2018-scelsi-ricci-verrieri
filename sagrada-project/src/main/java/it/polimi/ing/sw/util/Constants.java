@@ -15,7 +15,7 @@ public class Constants {
      * Connessione
      */
 
-    public static String SERVER_ADDRESS = "172.20.10.2";
+    public static String SERVER_ADDRESS = "localhost";
     public static final int SOCKET_PORT = 1097;
     public static final int RMI_PORT = 1099;
     public static final int timerTime = 5000000;

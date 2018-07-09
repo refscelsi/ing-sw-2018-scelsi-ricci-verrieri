@@ -30,7 +30,7 @@ public class MatchTest {
     public void getPlayer() {
         try {
             // deve andare a buon fine
-            match.login("Ludo", new View("localhost"));
+            match.login("Ludo", new View());
         } catch (NotValidNicknameException e) {
             System.out.println(e.getMessage());
         } catch (NotPossibleConnectionException e) {
@@ -40,7 +40,7 @@ public class MatchTest {
         }
         try {
             // non deve andare a buon fine
-            match.login("Ludo", new View("localhost"));
+            match.login("Ludo", new View());
         } catch (NotValidNicknameException e) {
             System.out.println(e.getMessage());
         } catch (NotPossibleConnectionException e) {
@@ -50,7 +50,7 @@ public class MatchTest {
         }
         try {
             // deve andare a buon fine
-            match.login("Ari", new View("localhost"));
+            match.login("Ari", new View());
         } catch (NotValidNicknameException e) {
             System.out.println(e.getMessage());
         } catch (NotPossibleConnectionException e) {
@@ -60,7 +60,7 @@ public class MatchTest {
         }
         try {
             // deve andare a buon fine
-            match.login("Ricky", new View("localhost"));
+            match.login("Ricky", new View());
         } catch (NotValidNicknameException e) {
             System.out.println(e.getMessage());
         } catch (NotPossibleConnectionException e) {
@@ -70,7 +70,7 @@ public class MatchTest {
         }
         try {
             // deve andare a buon fine
-            match.login("Gino", new View("localhost"));
+            match.login("Gino", new View());
         } catch (NotValidNicknameException e) {
             System.out.println(e.getMessage());
         } catch (NotPossibleConnectionException e) {
@@ -80,7 +80,7 @@ public class MatchTest {
         }
         try {
             // non deve andare a buon fine
-            match.login("Tadde", new View("localhost"));
+            match.login("Tadde", new View());
         } catch (NotValidNicknameException e) {
             System.out.println(e.getMessage());
         } catch (NotPossibleConnectionException e) {
@@ -91,7 +91,7 @@ public class MatchTest {
         match.getPlayer("Ludo").setOnline();
         try {
             // deve andare a buon fine
-            match.login("Ludo", new View("localhost"));
+            match.login("Ludo", new View());
         } catch (NotValidNicknameException e) {
             System.out.println(e.getMessage());
         } catch (NotPossibleConnectionException e) {
@@ -106,7 +106,7 @@ public class MatchTest {
     public void getPlayersRoundIndex(){
         try {
             // deve andare a buon fine
-            match.login("Ludo", new View("localhost"));
+            match.login("Ludo", new View());
         } catch (NotValidNicknameException e) {
             System.out.println(e.getMessage());
         } catch (NotPossibleConnectionException e) {
@@ -116,7 +116,7 @@ public class MatchTest {
         }
         try {
             // deve andare a buon fine
-            match.login("Ari", new View("localhost"));
+            match.login("Ari", new View());
         } catch (NotValidNicknameException e) {
             System.out.println(e.getMessage());
         } catch (NotPossibleConnectionException e) {
@@ -126,7 +126,7 @@ public class MatchTest {
         }
         try {
             // deve andare a buon fine
-            match.login("Ricky", new View("localhost"));
+            match.login("Ricky", new View());
         } catch (NotValidNicknameException e) {
             System.out.println(e.getMessage());
         } catch (NotPossibleConnectionException e) {
@@ -136,7 +136,7 @@ public class MatchTest {
         }
         try {
             // deve andare a buon fine
-            match.login("Gino", new View("localhost"));
+            match.login("Gino", new View());
         } catch (NotValidNicknameException e) {
             System.out.println(e.getMessage());
         } catch (NotPossibleConnectionException e) {
@@ -227,7 +227,7 @@ public class MatchTest {
     public void login() {
         try {
             // deve andare a buon fine
-            match.login("Ludo", new View("localhost"));
+            match.login("Ludo", new View());
         } catch (NotValidNicknameException e) {
             System.out.println(e.getMessage());
         } catch (NotPossibleConnectionException e) {
@@ -237,7 +237,7 @@ public class MatchTest {
         }
         try {
             // non deve andare a buon fine
-            match.login("Ludo", new View("localhost"));
+            match.login("Ludo", new View());
         } catch (NotValidNicknameException e) {
             System.out.println(e.getMessage());
         } catch (NotPossibleConnectionException e) {
@@ -247,7 +247,7 @@ public class MatchTest {
         }
         try {
             // deve andare a buon fine
-            match.login("Ari", new View("localhost"));
+            match.login("Ari", new View());
         } catch (NotValidNicknameException e) {
             System.out.println(e.getMessage());
         } catch (NotPossibleConnectionException e) {
@@ -257,7 +257,7 @@ public class MatchTest {
         }
         try {
             // deve andare a buon fine
-            match.login("Ricky", new View("localhost"));
+            match.login("Ricky", new View());
         } catch (NotValidNicknameException e) {
             System.out.println(e.getMessage());
         } catch (NotPossibleConnectionException e) {
@@ -267,7 +267,7 @@ public class MatchTest {
         }
         try {
             // deve andare a buon fine
-            match.login("Gino", new View("localhost"));
+            match.login("Gino", new View());
         } catch (NotValidNicknameException e) {
             System.out.println(e.getMessage());
         } catch (NotPossibleConnectionException e) {
@@ -277,7 +277,7 @@ public class MatchTest {
         }
         try {
             // non deve andare a buon fine
-            match.login("Tadde", new View("localhost"));
+            match.login("Tadde", new View());
         } catch (NotValidNicknameException e) {
             System.out.println(e.getMessage());
         } catch (NotPossibleConnectionException e) {
@@ -288,7 +288,7 @@ public class MatchTest {
         match.getPlayer("Ludo").setOffline();
         try {
             // deve andare a buon fine
-            match.login("Ludo", new View("localhost"));
+            match.login("Ludo", new View());
         } catch (NotValidNicknameException e) {
             System.out.println(e.getMessage());
         } catch (NotPossibleConnectionException e) {

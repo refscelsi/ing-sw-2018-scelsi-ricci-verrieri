@@ -21,6 +21,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.Properties;
 import java.util.Scanner;
 
 import static it.polimi.ing.sw.util.Constants.SERVER_ADDRESS;
