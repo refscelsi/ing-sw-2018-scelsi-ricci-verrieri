@@ -51,7 +51,8 @@ public class ServerUpdateHandler implements Runnable {
     @Override
     public void run() {
         try (ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {
-            while (true) {
+            boolean condition=true;
+            while (condition) {
                 MessageFromServer messageFromServer = (MessageFromServer) in.readObject();
                 String method = messageFromServer.getMethod();
                 this.match= messageFromServer.getMatch();
@@ -90,7 +91,7 @@ public class ServerUpdateHandler implements Runnable {
                     }
 
                     case Constants.ONNOTVALIDNICKNAMEEXCEPTION:{
-                        view.setLogin(false);
+                        //view.setLogin(false);
                         view.onNotValidNicknameException(messageFromServer.getMessage());
                         break;
                     }
@@ -111,7 +112,7 @@ public class ServerUpdateHandler implements Runnable {
                     }
 
                     case Constants.ONLOGIN:
-                        view.setLogin(true);
+                        //view.setLogin(true);
                         view.onLogin(messageFromServer.getMessage());
                         break;
                     case Constants.ONPLAYERDISCONNECT:
