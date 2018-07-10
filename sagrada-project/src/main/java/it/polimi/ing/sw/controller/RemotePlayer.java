@@ -6,6 +6,7 @@ import it.polimi.ing.sw.model.Match;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
+
 /**
  * Interfaccia implementata sia dalla View che dal PlayerControllerSocketServer, contiene i metodi di
  * aggiornamento chiamati da Model (@Match) a View.

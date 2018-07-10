@@ -1243,7 +1243,7 @@ public class Match implements Serializable {
         }
         ArrayList<ToolCard> toolCardsClone = new ArrayList<ToolCard>();
         for (int i = 0; i < toolCards.size(); i++) {
-            ToolCard toolCardCopy = toolCards.get(i);
+            ToolCard toolCardCopy = toolCards.get(i).toolCardClone();
             toolCardsClone.add(toolCardCopy);
         }
         matchClone.setToolCards(toolCardsClone);
