@@ -3,7 +3,14 @@ package it.polimi.ing.sw.client;
 import it.polimi.ing.sw.model.Match;
 import it.polimi.ing.sw.model.exceptions.NotValidException;
 
-//interfaccia remota, implementata da PlayerController, che riceve gli aggiornamenti dal Model
+
+/**
+ * Interfaccia implementata sia dalla CLI che dalla GUI, contiene i metodi di
+ * aggiornamento chiamati da View alla user interface utilizzata dal giocatore.
+ * In caso di utilizzo di CLI i metodi sono direttamente implementati dalla CLI, in caso di GUI
+ * i metodi sono direttamente implementati da GUI.
+ */
+
 public interface UiUpdate {
 
     void onLogin(String message);

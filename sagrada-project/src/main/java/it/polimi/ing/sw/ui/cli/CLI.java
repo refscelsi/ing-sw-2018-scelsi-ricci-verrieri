@@ -46,7 +46,9 @@ public class CLI implements UiUpdate {
         }
     }
 
-
+    /**
+     * Scelta della rete
+     */
     public void chooseNetwork(String message) {
         try {
             do {
@@ -82,11 +84,13 @@ public class CLI implements UiUpdate {
         }
     }
 
-
+    /**
+     * Visualizzazione dei 4 schemi tra cui scegliere
+     */
     public void showSchemesToChoose(ArrayList<Scheme> schemes) {
         try {
             for (int i = 0; i < 4; i++) {
-                System.out.println("Schema " + (i + 1) + " (con ID " + schemes.get(i).getId() + "):");
+                System.out.println("Schema " + (i + 1) + " (con ID " + schemes.get(i).getId() + " e difficoltà " + schemes.get(i).getDifficulty() + ")");
                 ShowScheme show = new ShowScheme(schemes.get(i));
                 System.out.println("");
             }
@@ -155,7 +159,9 @@ public class CLI implements UiUpdate {
         }
     }
 
-
+    /**
+     * Scelta di un dado e della casella in cui piazzarlo
+     */
     public void handleUseDice(Match match, boolean toolCard9) {
         try {
             int dice, row, col;
@@ -196,7 +202,9 @@ public class CLI implements UiUpdate {
 
     }
 
-
+    /**
+     * Scelta della casella dove piazzare un dado già scelto
+     */
     public void retryPlaceDice() {
         try {
             int row, col;
@@ -231,6 +239,9 @@ public class CLI implements UiUpdate {
     /////////////////////////////////////////////////////////////////////////////////////////
 
 
+    /**
+     * Scelta della carta utensile da utilizzare
+     */
     public void handleUseToolCard(Match match) {
         try {
             int num;
@@ -533,12 +544,17 @@ public class CLI implements UiUpdate {
     // Metodi che invoca PlayerController su UiUpdate
     /////////////////////////////////////////////////////////////////////////////////////////
 
-
+    /**
+     * Metodo di aggiornamento del login
+     */
     @Override
     public void onLogin(String message) {
         login(message);
     }
 
+    /**
+     * Errore di azione non valida
+     */
     @Override
     public void onActionNotValid(String errorCode) {
         try {
@@ -551,16 +567,25 @@ public class CLI implements UiUpdate {
 
     }
 
+    /**
+     * Metodo che richiede la scelta di rete
+     */
     @Override
     public void onChooseNetwork (String message) {
             chooseNetwork(message);
     }
 
+    /**
+     * Metodo di richiesta di azione di gioco
+     */
     @Override
     public void onTurnStart(Match match, String nickname) {
         chooseAction(match, nickname);
     }
 
+    /**
+     * Errore di infrazione delle regole di piazzamento
+     */
     @Override
     public void onPlaceDiceNotValid(String message) {
         try {
@@ -573,6 +598,9 @@ public class CLI implements UiUpdate {
         }
     }
 
+    /**
+     * Aggiornamento qualunque del model
+     */
     @Override
     public void onGameUpdate(Match match, String nickname) {
          try {
@@ -591,6 +619,9 @@ public class CLI implements UiUpdate {
 
     }
 
+    /**
+     * Aggiornamento di fine partita
+     */
     @Override
     public void onGameEnd(Match match) {
         try {
@@ -606,11 +637,17 @@ public class CLI implements UiUpdate {
         }
     }
 
+    /**
+     * Scelta dello schema tra i 4
+     */
     @Override
     public void onSchemeToChoose(Match match, String nickname, String message) {
         chooseScheme(match, nickname, message);
     }
 
+    /**
+     * Errore nell'utilizzo di una carta utensile
+     */
     @Override
     public void onUseToolCardNotValid(int id, Match match, String e) {
         try {
@@ -631,8 +668,9 @@ public class CLI implements UiUpdate {
         }
     }
 
-
-
+    /**
+     * Richiesta di altre informazioni per finire di utilizzare una carta utensile
+     */
     @Override
     public void onOtherInfoToolCard(int id, Match match) {
         try {
@@ -696,6 +734,9 @@ public class CLI implements UiUpdate {
 
     }
 
+    /**
+     * Aggiornamento di avvenuta disconnessione
+     */
     @Override
     public void onPlayerDisconnection(String message, String nickname) {
         System.out.println(message);
@@ -714,7 +755,9 @@ public class CLI implements UiUpdate {
         }
     }
 
-
+    /**
+     * Notifica il successo di un'azione
+     */
     @Override
     public void onSuccess(String message) {
         try {

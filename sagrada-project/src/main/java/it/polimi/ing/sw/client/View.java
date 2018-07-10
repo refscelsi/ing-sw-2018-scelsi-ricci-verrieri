@@ -37,32 +37,61 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
 
     private static final int SERVER_SOCKET_PORT = Constants.SOCKET_PORT;
     private static final int SERVER_RMI_PORT = Constants.RMI_PORT;
-    private boolean isLogged;
-    private boolean isPlaying;     // flag per vedere se è il turno del giocatore a cui appartiene questa view
+
+    /**
+     * Flag per vedere se è il turno del giocatore a cui appartiene questa view
+     */
+    private boolean isPlaying;
+
+    /**
+     * Riferimento al model
+     */
     private Match match;
-    private boolean isGameStarted;     // flag per vedere se la partita è iniziata: non so se sarà utile o meno
-    private boolean isOnline;
-    private PlayerControllerInterface controller;//il client può chiamare solo i metodi di PlayerInterfaceSocket
-    private ConnectionInterface loginController;
+
+    /**
+     * Riferimento al PlayerController di questa view
+     */
+    private PlayerControllerInterface controller;
+
+    /**
+     * Riferimento alla user interface collegata a questa view, che può essere una CLI o una GUI
+     */
     private UiUpdate ui;
     private String input;
     private static Scanner scanner = new Scanner(System.in);
+
+    /**
+     * Riferimento al nickname del giocatore a cui è assegnata questa view
+     */
     private String nickname;
     private int dice;
+
+    /**
+     * Riferimento alla scelta del giocatore per quanto riguarda la rete: RMI o Socket
+     */
     private String networkChoice;
-    private ArrayList<String> playersDisconnected;
+
+    /**
+     * Riferimento al thread dove vengono lanciati i metodi per la scelta della mossa sulla user interface
+     */
     private Thread thread3;
+
+    /**
+     * Flag per capire se il giocatore si è appena riconnesso
+     */
     private Boolean recentOnline;
 
+    /**
+     * Metodo costruttore
+     */
     public View() throws RemoteException {
         super();
-        isLogged = false;
-        isGameStarted = false;
         isPlaying = false;
-        playersDisconnected = new ArrayList<String>();
     }
 
-
+    /**
+     * Metodo per la scelta della user interface
+     */
     public void start() throws RemoteException {
         try {
             System.out.println("Benvenuto in Sagrada, vuoi giocare con la Cli [c] o con la Gui [g]?");
@@ -93,44 +122,37 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
     /////////////////////////////////////////////////////////////////////////////////////////
 
 
-    public boolean isGameStarted() {
-        return isGameStarted;
-    }
-
-    public boolean isLogged() {
-        return isLogged;
-    }
-
     public boolean isPlaying() {
         return isPlaying;
-    }
-
-    public boolean isOnline() {
-        return isOnline;
     }
 
     public String getNickname() {
         return nickname;
     }
 
+    /**
+     * Controlla se il tracciato dei round è pieno
+     */
     public boolean checkIfRoundTrackIsFull() {
         return match.getRoundTrack().getRoundTrackSize()!=0;
     }
 
-    public void setLogin(boolean isLogged){
-        this.isLogged=isLogged;
+    public Match getMatch() {
+        return match;
     }
+
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Metodi con cui il model notifica la view in seguito ad un aggiornamento (vedi interfaccia RemotePlayerRMI)
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+    /**
+     * Metodo per il login del client
+     */
     @Override
     public void onLogin(String nickname) throws RemoteException {
         recentOnline = false;
         this.nickname = nickname;
-        this.isLogged = true;
         ui.onSuccess("Complimenti, ti sei loggato come " + nickname);
         if(this.nickname==nickname){
             Runnable taskJoin = ()->{
@@ -144,6 +166,9 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         }
     }
 
+    /**
+     * Notifica per la scelta dello schema
+     */
     @Override
     public void onSchemeToChoose(Match match) {
         recentOnline = false;
@@ -154,23 +179,27 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         new Thread(task2).start();
     }
 
+    /**
+     * Notifica del successo di un'azione
+     */
     @Override
     public void onSuccess(String message) throws RemoteException {
         recentOnline = true;
         ui.onSuccess(message);
     }
 
-
+    /**
+     * Notifica di un qualsiasi cambiamento nel model
+     */
     @Override
     public void onGameUpdate(Match match) {
         this.match = match;
-        /*while (playersDisconnected.size()!=0) {
-            ui.onPlayerDisconnection("Il giocatore " + playersDisconnected.get(playersDisconnected.size()-1) + " non è più in partita.", nickname);
-            playersDisconnected.remove(playersDisconnected.get(playersDisconnected.size()-1));
-        }*/
         ui.onGameUpdate(match, nickname);
     }
 
+    /**
+     * Notifica della fine del turno del giocatore
+     */
     @Override
     public void onTurnEnd() {
         recentOnline = false;
@@ -178,13 +207,19 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         ui.onSuccess("In attesa che giochino gli altri giocatori...");
     }
 
+    /**
+     * Notifica di fine partita
+     */
     @Override
     public void onGameEnd(Match match) {
         this.match = match;
         ui.onGameEnd(match);
     }
 
-
+    /**
+     * Notifica di possibilità di eseguire una mossa (viene chiamata ad inizio turno e dopo l'esecuzione di
+     * qualsiasi mossa che prevede la possibilità di eseguirne un'altra)
+     */
     @Override
     public void onSetPlaying() {
         recentOnline = false;
@@ -201,38 +236,67 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         thread1.start();
     }
 
+    /**
+     * Notifica che la carta utensile ha bisogno di altre informazioni per finire la sua esecuzione
+     * @param   id  l'id della carta utensile
+     */
     @Override
     public void onOtherInfoToolCard(int id) {
         recentOnline = false;
         ui.onOtherInfoToolCard(id, match);
     }
 
+    /**
+     * Notifica che il dado è stato piazzato infrangendo le condizioni di piazzamento
+     * @param  message   il messaggio di errore
+     */
     @Override
     public void onNotValidUseDiceException(String message) {
         ui.onPlaceDiceNotValid(message);
     }
 
+    /**
+     * Notifica che la carta utensile è stata utilizzata infrangendo le regole
+     * @param  id        l'id della carta utensile
+     * @param  message   il messaggio di errore
+     */
     @Override
     public void onNotValidToolCardException(int id, String message) {
         ui.onUseToolCardNotValid(id, match, message);
     }
 
+    /**
+     * Notifica che la mossa è stata eseguita in un momento in cui non poteva essere eseguita
+     * @param  message   il messaggio di errore
+     */
     @Override
     public void onNotValidPlayException(String message) {
         ui.onActionNotValid(message);
         ui.onTurnStart(match, nickname);
     }
 
+    /**
+     * Notifica che la carta utensile è stata utilizzata infrangendo le regole
+     * @param  message   il messaggio di errore
+     */
     @Override
     public void onNotValidNicknameException(String message) {
         ui.onLogin(message + " Inserisci un nickname differente");
     }
 
+    /**
+     * Notifica che non è stato possibile unirsi alla partita
+     * @param  message   il messaggio di errore
+     */
     @Override
     public void onNotPossibleConnectionException(String message) {
         ui.onActionNotValid(message);
     }
 
+    /**
+     * Notifica che un giocatore è uscito dal gioco
+     * @param  nickname   il nickname del giocatore che è uscito
+     */
     @Override
     public void onPlayerDisconnection(String nickname) throws RemoteException {
         recentOnline = true;
@@ -243,8 +307,6 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
             thread3 = new Thread(task3);
             thread3.start();
         }
-        else
-            playersDisconnected.add(nickname);
     }
 
 
@@ -253,13 +315,17 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
      *
      */
 
-
+    /**
+     * Metodo per la scelta della rete
+     */
     public void chooseNetwork (String choice) {
         networkChoice = choice;
         ui.onLogin("Scegli il tuo nickname: ");
     }
 
-
+    /**
+     * Metodo per il login in RMI o Socket
+     */
     public void login(String nickname) {
         if (networkChoice.equals("r"))
             loginPlayerRMI(nickname);
@@ -269,11 +335,9 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
 
 
     /**
-     * Metodo per effettuare il login presso il Server.
-     *
+     * Metodo per effettuare il login in RMI presso il Server.
      * @param nickname nickname da usare per il login presso il Server.
      */
-
     public void loginPlayerRMI(String nickname) {
         try {
             Registry reg = LocateRegistry.getRegistry(SERVER_ADDRESS, SERVER_RMI_PORT);
@@ -290,7 +354,11 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         }
     }
 
-        public void loginPlayerSocket(String nickname) {
+    /**
+     * Metodo per effettuare il login in Socket presso il Server.
+     * @param nickname nickname da usare per il login presso il Server.
+     */
+    public void loginPlayerSocket(String nickname) {
         PlayerControllerSocketClient playerInterfaceSocket = null;
         try {
             Socket socket = new Socket(SERVER_ADDRESS, Constants.SOCKET_PORT);
@@ -307,6 +375,10 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
         }
     }
 
+    /**
+     * Metodo per mandare al server lo schema scelto
+     * @param id l'id dello schema scelto
+     */
     public void setChosenScheme(int id) {
         if (!recentOnline) {
             try {
@@ -330,6 +402,12 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
     }
 
 
+    /**
+     * Metodo per mandare la richiesta di piazzamento di un dado al server
+     * @param indexOfDiceInDraftPool  indice del dado nella riserva
+     * @param row                     la riga dello schema in cui si vuole piazzare il dado
+     * @param col                     la colonna dello schema in cui si vuole piazzare il dado
+     */
     public void useDice(int indexOfDiceInDraftPool, int row, int col) {
         if (!recentOnline) {
             if (indexOfDiceInDraftPool == -1)
@@ -347,7 +425,9 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
             ui.onActionNotValid("Non è il tuo turno.");
     }
 
-
+    /**
+     * Metodo per terminare il proprio turno presso il server
+     */
     public void endTurn() {
         if (!recentOnline) {
             try {
@@ -361,7 +441,9 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
             ui.onActionNotValid("Non è il tuo turno.");
     }
 
-
+    /**
+     * Metodo per uscire dalla partita
+     */
     public void stopPlayer() {
         if (!recentOnline) {
             try {
@@ -375,7 +457,9 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
             ui.onActionNotValid("Non è il tuo turno.");
     }
 
-
+    /**
+     * Metodo per rientrare in partita
+     */
     public void reconnectPlayer() {
         try {
             controller.reconnectPlayer();
@@ -391,10 +475,13 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
 
      */
 
-
+    /**
+     * Metodo per inviare al server la richiesta di utilizzo di una carta utensile
+     * @param id l'id della carta utensile
+     */
     public void useToolCard(int id, int dice, int operation, int sourceRow, int sourceCol, int destRow, int destCol) {
         if (!recentOnline) {
-                if (id==6)
+            if (id==6)
                 this.dice = dice;
             if (dice==-1)
                 dice = this.dice;
@@ -409,8 +496,5 @@ public class View extends UnicastRemoteObject implements RemotePlayer {
             ui.onActionNotValid("Non è il tuo turno.");
     }
 
-    public Match getMatch() {
-        return match;
-    }
 
 }

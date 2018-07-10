@@ -1050,7 +1050,7 @@ public class Match implements Serializable {
         }
     }
 
-    private void notifyPlayerDisconnection(String nickname) throws RemoteException {
+    public void notifyPlayerDisconnection(String nickname) throws RemoteException {
         for (Player player : players) {
             try {
                 playerMap.get(player).onPlayerDisconnection(nickname);
@@ -1090,7 +1090,7 @@ public class Match implements Serializable {
      * @throws RemoteException
      * @throws NotValidPlayException
      */
-    private void notifyStartedMatch() throws RemoteException, NotValidPlayException {
+    public void notifyStartedMatch() throws RemoteException, NotValidPlayException {
         for (Player player : players) {
             try {
                 if (player.isOnline()) {
@@ -1108,7 +1108,7 @@ public class Match implements Serializable {
      * @param player
      * @throws RemoteException
      */
-    private void notifyStartTurn(Player player) throws RemoteException {
+    public void notifyStartTurn(Player player) throws RemoteException {
         try {
             playerMap.get(player).onSetPlaying();
         } catch (RemoteException e) {
